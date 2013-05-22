@@ -1,0 +1,8 @@
+#vendors
+vendor/
+
+#node modules
+node_modules/
+
+#IDE files
+.idea/

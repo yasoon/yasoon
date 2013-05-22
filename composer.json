@@ -1,0 +1,16 @@
+{
+    "name": "yasoon/site",
+    "version": "0.0.1",
+    "require": {
+        "php": ">=5.4.6",
+        "ext-mysql": "*",
+
+        "symfony/symfony": "2.2.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": ">=2.1",
+        "symfony/monolog-bundle": "2.2.*",
+        "sensio/framework-extra-bundle": "2.2.*",
+        "jms/di-extra-bundle": "1.3.*"
+    },
+    "minimum-stability": "dev"
+}
