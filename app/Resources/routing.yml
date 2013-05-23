@@ -1,0 +1,4 @@
+yasoon_site:
+  resource: "@YasoonSiteBundle/Controller/"
+  type:     annotation
+  prefix: /

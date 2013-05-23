@@ -1,4 +1,4 @@
 framework:
   secret: %secret%
   test: ~
-  router: routing.yml
+  router: {resource: routing.yml}

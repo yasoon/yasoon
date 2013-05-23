@@ -26,6 +26,7 @@ class AppKernel extends Kernel{
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \JMS\AopBundle\JMSAopBundle(),
             new \JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Yasoon\Site\YasoonSiteBundle()
         ];
 
@@ -41,6 +42,6 @@ class AppKernel extends Kernel{
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/'.$this->getEnvironment().'yml');
+        $loader->load(__DIR__.'/config/'.$this->getEnvironment().'/config.yml');
     }
 }
