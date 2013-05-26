@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Author
  *
- * @ORM\Table(name="post")
+ * @ORM\Table(name="answer")
  * @ORM\Entity
  */
 class AnswerEntity

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Author
  *
- * @ORM\Table(name="post")
+ * @ORM\Table(name="question")
  * @ORM\Entity
  */
 class QuestionEntity
@@ -55,7 +55,7 @@ class QuestionEntity
     /**
      * @var PostEntity $post
      *
-     * @ORM\ManyToOne(targetEntity="PammAccount")
+     * @ORM\ManyToOne(targetEntity="PostEntity")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     protected $post;
