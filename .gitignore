@@ -6,3 +6,7 @@ node_modules/
 
 #IDE files
 .idea/
+
+#cache
+app/cache/
+app/logs/

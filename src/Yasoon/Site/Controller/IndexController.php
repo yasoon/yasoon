@@ -21,7 +21,6 @@ class IndexController {
         $html = <<<HTML
 index page
 HTML;
-
         return new Response($html);
     }
 
