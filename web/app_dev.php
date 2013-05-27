@@ -5,7 +5,7 @@
  */
 use Symfony\Component\HttpFoundation\Request;
 
-$loader = require_once __DIR__.'/../vendor/autoload.php';
+$loader = require_once __DIR__.'/../app/autoload.php';
 
 require_once __DIR__.'/../app/AppKernel.php';
 

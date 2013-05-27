@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "36d71eb63274884fd0f2ea169bd49d85",
+    "hash": "828cedbe7d8ffbb0b7f35d6a8d357efa",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -151,12 +151,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "df2138bcb467533bfe6b3a01301d480aec008b93"
+                "reference": "3db3ab843ff76774bee4679d4cb3a10cffb0a935"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/df2138bcb467533bfe6b3a01301d480aec008b93",
-                "reference": "df2138bcb467533bfe6b3a01301d480aec008b93",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/3db3ab843ff76774bee4679d4cb3a10cffb0a935",
+                "reference": "3db3ab843ff76774bee4679d4cb3a10cffb0a935",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -210,7 +210,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2013-03-17 14:01:33"
+            "time": "2013-05-26 05:21:22"
         },
         {
             "name": "doctrine/common",
@@ -550,12 +550,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "425f375899b9b054867ea3a3cb752dabdd874651"
+                "reference": "9787b27518bf4e4da1523ced6bfca74e98397907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/425f375899b9b054867ea3a3cb752dabdd874651",
-                "reference": "425f375899b9b054867ea3a3cb752dabdd874651",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/9787b27518bf4e4da1523ced6bfca74e98397907",
+                "reference": "9787b27518bf4e4da1523ced6bfca74e98397907",
                 "shasum": ""
             },
             "require": {
@@ -612,7 +612,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-05-11 07:51:12"
+            "time": "2013-05-26 07:27:03"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -979,6 +979,52 @@
             "time": "2012-12-21 11:40:51"
         },
         {
+            "name": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "target-dir": "Sensio/Bundle/DistributionBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensio/SensioDistributionBundle.git",
+                "reference": "v2.3.0-RC1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/v2.3.0-RC1",
+                "reference": "v2.3.0-RC1",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": ">=2.2,<3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sensio\\Bundle\\DistributionBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "The base bundle for the Symfony Distributions",
+            "keywords": [
+                "configuration",
+                "distribution"
+            ],
+            "time": "2013-05-01 16:04:52"
+        },
+        {
             "name": "sensio/framework-extra-bundle",
             "version": "2.2.x-dev",
             "target-dir": "Sensio/Bundle/FrameworkExtraBundle",
@@ -1024,6 +1070,54 @@
                 "controllers"
             ],
             "time": "2013-04-11 06:46:09"
+        },
+        {
+            "name": "sensio/generator-bundle",
+            "version": "dev-master",
+            "target-dir": "Sensio/Bundle/GeneratorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensio/SensioGeneratorBundle.git",
+                "reference": "4162cc4d89fceaa97a2a6152dc3a9e0760f8d0a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensio/SensioGeneratorBundle/zipball/4162cc4d89fceaa97a2a6152dc3a9e0760f8d0a0",
+                "reference": "4162cc4d89fceaa97a2a6152dc3a9e0760f8d0a0",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": ">=2.0,<3.0",
+                "symfony/framework-bundle": ">=2.2,<3.0"
+            },
+            "require-dev": {
+                "doctrine/orm": ">=2.2,<3.0,>=2.2.3",
+                "symfony/doctrine-bridge": ">=2.2,<3.0",
+                "twig/twig": ">=1.11.0,<2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sensio\\Bundle\\GeneratorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "This bundle generates code for you",
+            "time": "2013-05-23 15:42:30"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -1188,12 +1282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "ba88c755579c06e7ccb5ee73c6e27e88a1fed114"
+                "reference": "b081e3f1ed64b8246bfcadef3e66233ab2c0ffd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/ba88c755579c06e7ccb5ee73c6e27e88a1fed114",
-                "reference": "ba88c755579c06e7ccb5ee73c6e27e88a1fed114",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/b081e3f1ed64b8246bfcadef3e66233ab2c0ffd9",
+                "reference": "b081e3f1ed64b8246bfcadef3e66233ab2c0ffd9",
                 "shasum": ""
             },
             "require": {
@@ -1229,7 +1323,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-05-17 10:06:31"
+            "time": "2013-05-25 15:56:42"
         }
     ],
     "packages-dev": [
@@ -1239,9 +1333,10 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "sensio/distribution-bundle": 20,
+        "sensio/generator-bundle": 20
+    },
     "platform": {
         "php": ">=5.4.6",
         "ext-mysql": "*"

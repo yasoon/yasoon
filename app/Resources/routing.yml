@@ -1,4 +1,8 @@
+#yasson_api:
+#  resource: "@YassonSiteBundle/Resources/config/api_routing.yml"
+#  prefix: /api/
+
 yasoon_site:
-  resource: "@YasoonSiteBundle/Controller/"
-  type:     annotation
+  resource: "@YasoonSiteBundle/Resources/config/routing.yml"
   prefix: /
+

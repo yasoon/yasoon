@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class IndexController {
 
     /**
+     * @Route("/")
      *
      * @return Response
      */
