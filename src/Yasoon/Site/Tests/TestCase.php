@@ -51,7 +51,7 @@ class TestCase extends WebTestCase{
      * @return $this
      */
     public function assertSuccess() {
-        $this->assertEquals(200, $this->response);
+        $this->assertEquals(200, $this->response->getStatusCode());
 
         return $this;
     }

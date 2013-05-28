@@ -6,27 +6,28 @@
 
 namespace Yasoon\Site\Service;
 
+use JMS\DiExtraBundle\Annotation as DI;
 
 use Doctrine\Tests\Common\Annotations\Ticket\Doctrine\ORM\Entity;
 
-class AbstractApiService {
+abstract class AbstractApiService {
 
     /**
      * @DI\Inject("doctrine.orm.entity_manager")
      */
-    protected $em;
+    public $em;
 
-    public function add(Entity $entity) {
+    protected  function addEntity($entity) {
         $this->em->persist($entity);
         $this->em->flush();
     }
 
-    public function update(Entity $entity) {
+    protected function updateEntity(Entity $entity) {
         $this->em->merge($entity);
         $this->em->flush();
     }
 
-    public function delete(Entity $entity) {
+    protected function deleteEntity(Entity $entity) {
         $this->em->remove($entity);
         $this->em->flush();
     }

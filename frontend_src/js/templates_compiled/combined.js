@@ -6,7 +6,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "fck";
+  return "noch einmal";
   });
 
 var Handlebars = require('handlebars');

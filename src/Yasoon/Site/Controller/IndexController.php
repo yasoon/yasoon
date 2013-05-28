@@ -20,7 +20,19 @@ class IndexController {
     public function indexAction() {
 
         $html = <<<HTML
-index page
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mobile invest testing app</title>
+</head>
+<body>
+</div>
+</body>
+</html>
+
+
 HTML;
         return new Response($html);
     }

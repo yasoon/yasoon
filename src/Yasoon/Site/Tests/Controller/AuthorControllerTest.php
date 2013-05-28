@@ -16,7 +16,7 @@ class AuthorControllerTest extends TestCase {
 
     /** @test */
     public function addAction() {
-                $model = [];
+        $model = ['name' => 'test author'];
 
         $this->request('POST', $this->url('add'), ['model' => $model])->assertSuccess();
     }

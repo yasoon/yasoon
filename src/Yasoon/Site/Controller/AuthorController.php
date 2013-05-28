@@ -74,7 +74,7 @@ class AuthorController {
     }
 
     /**
-     * @Route("/get_posts_list/{authorId}, requirements={"authorId" = "\d+"})
+     * @Route("/get_posts_list/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      *
      * @param $authorId
@@ -88,7 +88,7 @@ class AuthorController {
     }
 
     /**
-     * @Route("get_questions_list/{authorId}, requirements={"authorId" = "\d+"})
+     * @Route("get_questions_list/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
     public function getQuestionsAction($authorId)
@@ -100,7 +100,7 @@ class AuthorController {
 
 
     /**
-     * @Route("get_blank/{authorId}, requirements={"authorId" = "\d+"})
+     * @Route("get_blank/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
     public function getBlankAction($authorId)

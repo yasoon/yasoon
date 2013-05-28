@@ -23,3 +23,9 @@ doctrine:
         connection: default
         mappings:
           YasoonSiteBundle: ~
+
+jms_di_extra:
+  locations:
+    all_bundles: false
+    bundles: ['YasoonSiteBundle']
+    directories: ["%kernel.root_dir%/../src"]

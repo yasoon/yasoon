@@ -12,7 +12,7 @@ use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 
 /**
- * @DI\Service("yasoon.author.service")
+ * @DI\Service("yasoon.service.post")
  */
 class PostService extends AbstractApiService {
 
@@ -25,7 +25,7 @@ class PostService extends AbstractApiService {
             ->setText($model['text'])
             ->setAuthor($model['authorId']);
 
-        parent::add($entity);
+        parent::addEntity($entity);
     }
 
     /**
@@ -38,7 +38,7 @@ class PostService extends AbstractApiService {
             ->setText($model['text'])
             ->setAuthor($model['authorId']);
 
-        parent::update($entity);
+        parent::updateEntity($entity);
     }
 
     /**
@@ -47,7 +47,7 @@ class PostService extends AbstractApiService {
     public function delete(array $model) {
         $entity = (new PostEntity())
             ->setId($model['id']);
-        parent::delete($entity);
+        parent::deleteEntity($entity);
     }
 
     /**
