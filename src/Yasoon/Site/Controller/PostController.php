@@ -12,20 +12,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
-use Yasoon\Site\Service\AuthorService;
+use Yasoon\Site\Service\PostService;
 
 /**
- * Class AuthorController
+ * Class PostController
  *
- * @Route("/api/author")
+ * @Route("/api/post")
  * @package Yasoon\Site\Controller
  */
-class AuthorController {
+class PostController {
 
     /**
-     * @var AuthorService
+     * @var PostService
      *
-     * @DI\Inject("yasoon.service.author")
+     * @DI\Inject("yasoon.service.post")
      */
     private $service;
 
@@ -71,64 +71,6 @@ class AuthorController {
         $id = $this->service->delete($model);
 
         return ['id' => $id];
-    }
-
-    /**
-     * @Route("/get_posts_list/{authorId}, requirements={"authorId" = "\d+"})
-     * @Method({"GET"})
-     *
-     * @return array
-     */
-    public function getPostsList()
-    {
-        $result = [];
-
-        return $result;
-    }
-
-    /**
-     * @Route("/get_post/{postId}", requirements={"postId" = "\d+"})
-     * @Method({"GET"})
-     *
-     */
-    public function getPost()
-    {
-        $result = [];
-
-        return $result;
-    }
-
-    /**
-     * @Route("get_blank/{authorId}, requirements={"authorId" = "\d+"})
-     * @Method({"GET"})
-     */
-    public function getBlank()
-    {
-        $result = [];
-
-        return $result;
-    }
-
-    /**
-     * @Route("get_post_questions/{postId}", requirements={"postId" = "\d+"})
-     * @Method({"GET"})
-     */
-    public function getPostQuestions()
-    {
-        $result = [];
-
-        return $result;
-    }
-
-    /**
-     * @Route("get_author_questions/{authorId}, requirements={"authorId" = "\d+"})
-     * @Method({"GET"})
-     */
-    public function getAuthorQuestions()
-    {
-        $result = [];
-
-        return $result;
     }
 
 }

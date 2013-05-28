@@ -1,3 +1,0 @@
-index:
-  path: /
-  defaults: { _controller: YasoonSiteBundle:Index:index }

@@ -1,7 +1,0 @@
-#author_add:
-#  path: /author/{id}/add
-#  defaults:
-#author_edit:
-#
-#author_delete:
-#
