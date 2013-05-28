@@ -11,8 +11,10 @@ use Doctrine\Tests\Common\Annotations\Ticket\Doctrine\ORM\Entity;
 
 class AbstractApiService {
 
-    /** @DI\Inject("doctrine.orm.entity_manager") */
-    private $em;
+    /**
+     * @DI\Inject("doctrine.orm.entity_manager")
+     */
+    protected $em;
 
     public function add(Entity $entity) {
         $this->em->persist($entity);

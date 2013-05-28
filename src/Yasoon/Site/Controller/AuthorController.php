@@ -65,7 +65,7 @@ class AuthorController {
      * @param Request $request
      * @return array
      */
-    public function removeAction(Request $request) {
+    public function deleteAction(Request $request) {
         $model = $request->request->get('model');
 
         $id = $this->service->delete($model);
@@ -77,58 +77,38 @@ class AuthorController {
      * @Route("/get_posts_list/{authorId}, requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      *
+     * @param $authorId
      * @return array
      */
-    public function getPostsList()
+    public function getPostsAction($authorId)
     {
-        $result = [];
+        $result = $this->service->getPosts($authorId);
 
         return $result;
     }
 
     /**
-     * @Route("/get_post/{postId}", requirements={"postId" = "\d+"})
+     * @Route("get_questions_list/{authorId}, requirements={"authorId" = "\d+"})
      * @Method({"GET"})
-     *
      */
-    public function getPost()
+    public function getQuestionsAction($authorId)
     {
-        $result = [];
+        $result = $this->service->getQuestions($authorId);
 
         return $result;
     }
+
 
     /**
      * @Route("get_blank/{authorId}, requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
-    public function getBlank()
+    public function getBlankAction($authorId)
     {
-        $result = [];
+        $result = $this->service->getBlank($authorId);
 
         return $result;
     }
 
-    /**
-     * @Route("get_post_questions/{postId}", requirements={"postId" = "\d+"})
-     * @Method({"GET"})
-     */
-    public function getPostQuestions()
-    {
-        $result = [];
-
-        return $result;
-    }
-
-    /**
-     * @Route("get_author_questions/{authorId}, requirements={"authorId" = "\d+"})
-     * @Method({"GET"})
-     */
-    public function getAuthorQuestions()
-    {
-        $result = [];
-
-        return $result;
-    }
 
 }

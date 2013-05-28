@@ -64,4 +64,124 @@ class AnswerEntity
      * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     protected $date;
+
+    /**
+     * @param \Yasoon\Site\Entity\AuthorEntity $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\AuthorEntity
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param int $authorId
+     */
+    public function setAuthorId($authorId)
+    {
+        $this->authorId = $authorId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAuthorId()
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param $question
+     * @return $this
+     */
+    public function setQuestion($question)
+    {
+        $this->question = $question;
+        return $this;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\QuestionEntity
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * @param $questionId
+     * @return $this
+     */
+    public function setQuestionId($questionId)
+    {
+        $this->questionId = $questionId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuestionId()
+    {
+        return $this->questionId;
+    }
+
+    /**
+     * @param $text
+     * @return $this
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+
 }

@@ -73,4 +73,30 @@ class PostController {
         return ['id' => $id];
     }
 
+    /**
+     * @Route("/get/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     *
+     */
+    public function getPostAction($postId)
+    {
+        $result = $this->service->getPost($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_questions/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     *
+     */
+    public function getQuestionsAction($postId)
+    {
+        $result = $this->service->getQuestions($postId);
+
+        return $result;
+    }
+
+
+
 }
