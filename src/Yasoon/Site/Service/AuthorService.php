@@ -50,6 +50,24 @@ class AuthorService extends AbstractApiService {
         $this->deleteEntity($entity);
     }
 
+    public function getShortInfo($authorId)
+    {
+        $data = $this->em->createQueryBuilder()
+            ->select('author.name, count(posts) as postsCount, count(answers) as answersCount')
+            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
+            ->leftJoin('author.posts', 'posts')
+            ->leftJoin('author.answers', 'answers')
+            ->getQuery()->getSingleResult();
+
+        $result = [
+          'name' => $data['name'],
+          'posts' => $data['postsCount'],
+          'answers' => $data['answersCount']
+        ];
+
+        return $result;
+    }
+
     /**
      * @param $authorId
      * @return array

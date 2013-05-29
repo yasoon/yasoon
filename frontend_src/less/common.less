@@ -1,0 +1,77 @@
+@border: 1px solid #c2c2c2;
+
+#top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  border-bottom: @border;
+  background: #eeeeee;
+}
+
+#left {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  border-right: @border;
+}
+
+#center {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 75%;
+
+  .authorPosts {
+    #switcher {
+      height: 50px;
+      width: 100%;
+      line-height: 50px;
+      div {
+        float: left;
+        width: 50%;
+        text-align: center;
+        cursor: pointer;
+        font-weight: 800;
+      }
+      .active {
+        color:  #007e00;
+        border-bottom: 1px solid #008300;
+      }
+    }
+    #newPost {
+      min-height: 50px;
+      width: 100%;
+      line-height: 50px;
+      border-bottom: @border;
+      #newPostButton {
+        cursor: pointer;
+      }
+    }
+  }
+  .activePost {
+    padding: 10px;
+    .activePostCaption {
+      width: 98%;
+      border: @border;
+      font-weight: 800;
+    }
+    .activePostPreview {
+      overflow: none;
+      width: 98%;
+      border: @border;
+      min-height: 40px;
+    }
+    .activePostBody {
+      overflow: none;
+      width: 98%;
+      border: @border;
+      min-height: 100px;
+    }
+  }
+}
+
+

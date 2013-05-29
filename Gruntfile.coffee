@@ -9,6 +9,8 @@ module.exports = (grunt) ->
            'frontend_src/js/templates_compiled/combined.js': 'frontend_src/templates/*.hbs'
         options:
           exportCommonJS: 'handlebars'
+          namespace: 'JST'
+          AMD: true
     coffee:
       glob_to_multiple:
         expand: true

@@ -10,7 +10,7 @@ define [
     initialize: ->
       super
 
-      @initRouter routes
+      @initRouter routes, pushState: false
 
       @initDispatcher controllerSuffix: '-controller'
 

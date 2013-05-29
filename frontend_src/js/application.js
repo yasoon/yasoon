@@ -17,7 +17,9 @@ define(['chaplin', 'routes'], function(Chaplin, routes) {
 
     Application.prototype.initialize = function() {
       Application.__super__.initialize.apply(this, arguments);
-      this.initRouter(routes);
+      this.initRouter(routes, {
+        pushState: false
+      });
       this.initDispatcher({
         controllerSuffix: '-controller'
       });

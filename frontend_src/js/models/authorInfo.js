@@ -2,23 +2,22 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin'], function(Chaplin) {
+define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
   'use strict';
-  var View;
-  return View = (function(_super) {
+  var AuthorInfo;
+  return AuthorInfo = (function(_super) {
 
-    __extends(View, _super);
+    __extends(AuthorInfo, _super);
 
-    function View() {
-      return View.__super__.constructor.apply(this, arguments);
+    function AuthorInfo() {
+      return AuthorInfo.__super__.constructor.apply(this, arguments);
     }
 
-    View.prototype.getTemplateFunction = function() {
-      var templateFunc;
-      return templateFunc = JST[this.templateName];
+    AuthorInfo.prototype.url = function() {
+      return "api/author/get_short_info/" + this.id;
     };
 
-    return View;
+    return AuthorInfo;
 
-  })(Chaplin.View);
+  })(Model);
 });

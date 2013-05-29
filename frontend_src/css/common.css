@@ -1,0 +1,68 @@
+#top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #c2c2c2;
+  background: #eeeeee;
+}
+#left {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  border-right: 1px solid #c2c2c2;
+}
+#center {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 75%;
+}
+#center .authorPosts #switcher {
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+}
+#center .authorPosts #switcher div {
+  float: left;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 800;
+}
+#center .authorPosts #switcher .active {
+  color: #007e00;
+  border-bottom: 1px solid #008300;
+}
+#center .authorPosts #newPost {
+  min-height: 50px;
+  width: 100%;
+  line-height: 50px;
+  border-bottom: 1px solid #c2c2c2;
+}
+#center .authorPosts #newPost #newPostButton {
+  cursor: pointer;
+}
+#center .activePost {
+  padding: 10px;
+}
+#center .activePost .activePostCaption {
+  width: 98%;
+  border: 1px solid #c2c2c2;
+  font-weight: 800;
+}
+#center .activePost .activePostPreview {
+  overflow: none;
+  width: 98%;
+  border: 1px solid #c2c2c2;
+  min-height: 40px;
+}
+#center .activePost .activePostBody {
+  overflow: none;
+  width: 98%;
+  border: 1px solid #c2c2c2;
+  min-height: 100px;
+}

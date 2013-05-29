@@ -74,7 +74,21 @@ class AuthorController {
     }
 
     /**
-     * @Route("/get_posts_list/{authorId}", requirements={"authorId" = "\d+"})
+     * @Route("/get_short_info/{authorId}", requirements={"authorId" = "\d+"})
+     * @Method({"GET"})
+     *
+     * @param $authorId
+     *
+     * @return array
+     */
+    public function getShortInfoAction($authorId) {
+        $result = $this->service->getShortInfo($authorId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_posts/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      *
      * @param $authorId
@@ -88,7 +102,7 @@ class AuthorController {
     }
 
     /**
-     * @Route("get_questions_list/{authorId}", requirements={"authorId" = "\d+"})
+     * @Route("get_questions/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
     public function getQuestionsAction($authorId)

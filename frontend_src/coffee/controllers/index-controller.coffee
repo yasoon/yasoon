@@ -1,7 +1,7 @@
 define [
          'controllers/base/controller'
          'views/index-view'
-       ], (Controller, HelloWorldView) ->
+], (Controller, HelloWorldView) ->
   'use strict'
 
   class HelloController extends Controller

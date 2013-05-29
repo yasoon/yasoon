@@ -36,6 +36,13 @@ class AuthorEntity
     protected $posts;
 
     /**
+     * @var AnswersEntity[]
+     *
+     * @ORM\OneToMany(targetEntity="AnswerEntity", mappedBy="author")
+     */
+    protected $answers;
+
+    /**
      * @param $id
      * @return $this
      */
