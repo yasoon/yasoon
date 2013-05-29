@@ -20,10 +20,10 @@ define(['chaplin'], function(Chaplin) {
     };
 
     Model.prototype.formatUrl = function(url) {
-      return "http://localhost:83/" + url;
+      return 'http://' + document.domain + ("/" + url);
     };
 
-    Model.prototype.fetch = function(callback) {
+    Model.prototype.request = function(callback) {
       var request,
         _this = this;
       request = {

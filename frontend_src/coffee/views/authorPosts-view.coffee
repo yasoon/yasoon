@@ -11,8 +11,8 @@ define [
     container: '#center'
     regions:
       '#newPost': 'newPost'
+      '#postsQueue': 'queue'
 
     templateName: 'authorPosts'
 
-    getTemplateData: ->
-      {author: @model.data}
+

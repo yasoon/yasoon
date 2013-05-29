@@ -20,16 +20,11 @@ define(['views/base/view', 'JST'], function(View, JST) {
     AuthorPostsView.prototype.container = '#center';
 
     AuthorPostsView.prototype.regions = {
-      '#newPost': 'newPost'
+      '#newPost': 'newPost',
+      '#postsQueue': 'queue'
     };
 
     AuthorPostsView.prototype.templateName = 'authorPosts';
-
-    AuthorPostsView.prototype.getTemplateData = function() {
-      return {
-        author: this.model.data
-      };
-    };
 
     return AuthorPostsView;
 

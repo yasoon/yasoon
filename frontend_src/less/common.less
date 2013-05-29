@@ -1,5 +1,14 @@
 @border: 1px solid #c2c2c2;
 
+* {
+  font-family: Arial;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
 #top {
   position: absolute;
   top: 0;
@@ -54,6 +63,8 @@
   }
   .activePost {
     padding: 10px;
+    background: #f6f6f6;
+    border: @border;
     .activePostCaption {
       width: 98%;
       border: @border;
@@ -70,6 +81,19 @@
       width: 98%;
       border: @border;
       min-height: 100px;
+    }
+  }
+  #postsQueue {
+    .post {
+      border-bottom: @border;
+      width: 100%;
+      padding: 20px;
+      cursor: pointer;
+      .caption {
+        font-size: 14pt;
+        font-weight: 800;
+      }
+
     }
   }
 }

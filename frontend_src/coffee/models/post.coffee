@@ -5,17 +5,33 @@ define [
   'use strict'
 
   class Post extends Model
-   url: -> "api/post/get/#{@id}"
+   fetch: (callback) ->
+      @url= -> "api/post/get/#{@id}"
+      @request(callback)
 
    update: ->
      console.log 'update'
 
-   add: ->
+   add: (callback) ->
      @fetchParams.method = "POST"
-     @fetchParams.data = {authorId: @data.authorId, caption: @data.caption, preview: @data.preview, text: @data.text }
+     @fetchParams.data =
+        model:
+          authorId: @data.authorId
+          caption:  @data.caption
+          preview:  @data.preview
+          text:     @data.text
 
-   sync: ->
+     @url = -> "api/post/add"
+
+     addCallback = =>
+
+       @publishEvent 'postAdded', @data
+       callback()
+
+     @request(addCallback)
+
+   sync: (callback) ->
      if @data.id
-       @update()
+       @update(callback)
      else
-       @add()
+       @add(callback)

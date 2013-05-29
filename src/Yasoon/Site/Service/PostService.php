@@ -18,14 +18,33 @@ class PostService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @return array
      */
     public function add(array $model) {
-        $entity = (new PostEntity())
+        /** @var $postEntity PostEntity */
+        $postEntity = (new PostEntity())
+            ->setCaption($model['caption'])
             ->setPreview($model['preview'])
             ->setText($model['text'])
-            ->setAuthor($model['authorId']);
+            ->setAuthorId($model['authorId'])
+            ->setDate(new \DateTime());
 
-        parent::addEntity($entity);
+        $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
+
+        $this->em->persist($postEntity);
+        $this->em->flush();
+
+        $result = [
+            'id'       => $postEntity->getId(),
+            'caption'  => $postEntity->getCaption(),
+            'preview'  => $postEntity->getPreview(),
+            'text'     => $postEntity->getText(),
+            'authorId' => $postEntity->getAuthorId(),
+            'date'     => $postEntity->getDate()->format('Y-m-d H:i')
+        ];
+
+        return $result;
+
     }
 
     /**
@@ -60,6 +79,8 @@ class PostService extends AbstractApiService {
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($postId);
         $result = [
             'id'      => $post->getId(),
+            'caption' => $post->getCaption(),
+            'authorId'=> $post->getAuthorId(),
             'preview' => $post->getPreview(),
             'text'    => $post->getText(),
             'date'    => $post->getDate()->format('Y-m-d')

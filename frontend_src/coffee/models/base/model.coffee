@@ -15,11 +15,11 @@ define [
       data: {}
 
     formatUrl: (url) ->
-       "http://localhost:83/#{url}"
-#      'http://'+document.domain+':'+document.port"/#{url}"
+#       "http://localhost:83/#{url}"
+      'http://'+document.domain+"/#{url}"
 
 
-    fetch: (callback) ->
+    request: (callback) ->
       request =
         url: @formatUrl(@url())
         method: @fetchParams.method

@@ -5,4 +5,15 @@ define [
   'use strict'
 
   class AuthorInfo extends Model
-   url: -> "api/author/get_short_info/#{@id}"
+   fetch: (callback) ->
+     @url =  -> "api/author/get_short_info/#{@id}"
+     @request(callback)
+
+   initialize: ->
+       super
+       @subscribeEvent 'postAdded', @postAddedHandler
+
+   postAddedHandler: (post) ->
+     if @data.id is parseInt(post.authorId)
+       @data.posts++
+       @trigger 'updated'

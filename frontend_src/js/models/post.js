@@ -13,29 +13,44 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return Post.__super__.constructor.apply(this, arguments);
     }
 
-    Post.prototype.url = function() {
-      return "api/post/get/" + this.id;
+    Post.prototype.fetch = function(callback) {
+      this.url = function() {
+        return "api/post/get/" + this.id;
+      };
+      return this.request(callback);
     };
 
     Post.prototype.update = function() {
       return console.log('update');
     };
 
-    Post.prototype.add = function() {
+    Post.prototype.add = function(callback) {
+      var addCallback,
+        _this = this;
       this.fetchParams.method = "POST";
-      return this.fetchParams.data = {
-        authorId: this.data.authorId,
-        caption: this.data.caption,
-        preview: this.data.preview,
-        text: this.data.text
+      this.fetchParams.data = {
+        model: {
+          authorId: this.data.authorId,
+          caption: this.data.caption,
+          preview: this.data.preview,
+          text: this.data.text
+        }
       };
+      this.url = function() {
+        return "api/post/add";
+      };
+      addCallback = function() {
+        _this.publishEvent('postAdded', _this.data);
+        return callback();
+      };
+      return this.request(addCallback);
     };
 
-    Post.prototype.sync = function() {
+    Post.prototype.sync = function(callback) {
       if (this.data.id) {
-        return this.update();
+        return this.update(callback);
       } else {
-        return this.add();
+        return this.add(callback);
       }
     };
 

@@ -53,15 +53,16 @@ class AuthorService extends AbstractApiService {
     public function getShortInfo($authorId)
     {
         $data = $this->em->createQueryBuilder()
-            ->select('author.name, count(posts) as postsCount, count(answers) as answersCount')
+            ->select('author.id, author.name, count(posts) as postsCount, count(answers) as answersCount')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.posts', 'posts')
             ->leftJoin('author.answers', 'answers')
             ->getQuery()->getSingleResult();
 
         $result = [
-          'name' => $data['name'],
-          'posts' => $data['postsCount'],
+          'id'      => $data['id'],
+          'name'    => $data['name'],
+          'posts'   => $data['postsCount'],
           'answers' => $data['answersCount']
         ];
 
@@ -77,10 +78,15 @@ class AuthorService extends AbstractApiService {
         $result= [];
 
         /** @var PostEntity[] $posts */
-        $posts = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->findBy(['authorId' => $authorId]);
+        $posts = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')
+            ->findBy(
+                ['authorId' => $authorId],
+                ['date' => 'DESC']
+            );
         foreach ($posts as $post) {
             $result[] = [
                 'id'      => $post->getId(),
+                'caption' => $post->getCaption(),
                 'preview' => $post->getPreview(),
                 'date'    => $post->getDate()
             ];

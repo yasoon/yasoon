@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-view', 'models/authorPosts', 'views/authorPosts-view', 'models/post', 'views/post-view'], function(Controller, AuthorInfo, AuthorInfoView, AuthorPosts, AuthorPostsView, Post, PostView) {
+define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-view', 'models/authorPosts', 'views/authorPosts-view', 'models/post', 'views/post-view', 'views/authorPostsQueue-view'], function(Controller, AuthorInfo, AuthorInfoView, AuthorPosts, AuthorPostsView, Post, PostView, AuthorPostsQueueView) {
   'use strict';
   var AuthorController;
   return AuthorController = (function(_super) {
@@ -28,17 +28,18 @@ define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-vi
         id: params.id
       });
       return this.authorPosts.fetch(function() {
-        var newPostView, post, postsView;
-        postsView = new AuthorPostsView({
-          model: _this.authorPosts
-        });
-        post = new Post();
-        post.data.authorId = params.id;
+        var newPost, newPostView, postsQueue, postsView;
+        postsView = new AuthorPostsView();
+        newPost = new Post();
+        newPost.data.authorId = params.id;
         newPostView = new PostView({
-          model: post
+          model: newPost
         });
         newPostView.region = 'newPost';
-        return newPostView.setButtonMode();
+        newPostView.setButtonMode();
+        return postsQueue = new AuthorPostsQueueView({
+          model: _this.authorPosts
+        });
       });
     };
 

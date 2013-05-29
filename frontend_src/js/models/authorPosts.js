@@ -13,8 +13,23 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return AuthorPosts.__super__.constructor.apply(this, arguments);
     }
 
-    AuthorPosts.prototype.url = function() {
-      return "api/author/get_posts/" + this.id;
+    AuthorPosts.prototype.fetch = function(callback) {
+      this.url = function() {
+        return "api/author/get_posts/" + this.id;
+      };
+      return this.request(callback);
+    };
+
+    AuthorPosts.prototype.initialize = function() {
+      AuthorPosts.__super__.initialize.apply(this, arguments);
+      return this.subscribeEvent('postAdded', this.postAddedHandler);
+    };
+
+    AuthorPosts.prototype.postAddedHandler = function(post) {
+      if (this.id === post.authorId) {
+        this.data.unshift(post);
+        return this.trigger('updated');
+      }
     };
 
     return AuthorPosts;

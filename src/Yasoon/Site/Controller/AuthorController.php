@@ -37,12 +37,10 @@ class AuthorController {
     public function addAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->add($model);
-
-        return ['id' => $id];
+        return $this->service->add($model);
     }
 
-    /**
+    /**$id =
      * @Route("/update")
      * @Method({"POST"})
      *
@@ -53,9 +51,7 @@ class AuthorController {
     public function updateAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->update($model);
-
-        return ['id' => $id];
+        return $this->service->update($model);
     }
 
     /**
@@ -68,9 +64,7 @@ class AuthorController {
     public function deleteAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->delete($model);
-
-        return ['id' => $id];
+        return $this->service->delete($model);
     }
 
     /**

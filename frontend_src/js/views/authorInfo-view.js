@@ -21,6 +21,10 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     AuthorInfoView.prototype.templateName = 'authorInfo';
 
+    AuthorInfoView.prototype.listen = {
+      'updated model': 'render'
+    };
+
     AuthorInfoView.prototype.getTemplateData = function() {
       return {
         author: this.model.data

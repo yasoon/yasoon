@@ -4,16 +4,16 @@ define [
 ], (View, JST) ->
   'use strict'
 
-  class AuthorInfoView extends View
+  class AuthorPostsQueueView extends View
   # Automatically render after initialize.
     autoRender: true
-    className: 'authorInfo'
-    container: '#left'
+    className: 'authorPosts'
+    region: 'queue'
 
-    templateName: 'authorInfo'
+    templateName: 'authorPostsQueue'
 
     listen:
       'updated model': 'render'
 
     getTemplateData: ->
-      {author: @model.data}
+      {posts: @model.data}

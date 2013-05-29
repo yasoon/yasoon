@@ -6,10 +6,13 @@ define [
          'views/authorPosts-view'
          'models/post'
          'views/post-view'
+         'views/authorPostsQueue-view'
+
 ], (Controller,
     AuthorInfo, AuthorInfoView,
     AuthorPosts, AuthorPostsView,
-    Post, PostView
+    Post, PostView,
+    AuthorPostsQueueView
 ) ->
   'use strict'
 
@@ -21,11 +24,14 @@ define [
 
       @authorPosts = new AuthorPosts(id: params.id)
       @authorPosts.fetch =>
-        postsView = new AuthorPostsView(model: @authorPosts)
-        post = new Post();
-        post.data.authorId = params.id
-        newPostView = new PostView(model: post)
+        postsView = new AuthorPostsView()
+
+        newPost = new Post();
+        newPost.data.authorId = params.id
+        newPostView = new PostView(model: newPost)
         newPostView.region = 'newPost'
         newPostView.setButtonMode();
+
+        postsQueue = new AuthorPostsQueueView(model: @authorPosts)
 
 

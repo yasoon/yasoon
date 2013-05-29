@@ -40,7 +40,16 @@ define(['views/base/view', 'JST'], function(View, JST) {
       }
       this.mode = 'active';
       this.render();
-      return this.$el.find('.activePost').focus();
+      return this.$el.find('.activePostCaption').focus();
+    };
+
+    PostView.prototype.setPassiveMode = function() {
+      this.templateName = 'postPassive';
+      if (this.mode != null) {
+        this.modesHistory.push(this.mode);
+      }
+      this.mode = 'passive';
+      return this.render();
     };
 
     PostView.prototype.events = {
@@ -55,7 +64,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
       'keyup .activePostBody': function(e) {
         this.model.data.text = this.$el.find('.activePostBody').val();
         if (!this.previewTouched) {
-          this.model.data.preview = this.model.data.text;
+          this.model.data.preview = this.model.data.text.substring(0, 255);
           return this.$el.find('.activePostPreview').val(this.model.data.preview);
         }
       },
@@ -79,8 +88,14 @@ define(['views/base/view', 'JST'], function(View, JST) {
         return this.model.data.caption = this.$el.find('.activePostCaption').val();
       },
       'click #sendPostButton': function() {
+        var _this = this;
         this.$el.find('#sendPostButton').hide();
-        return this.model.sync();
+        return this.model.sync(function() {
+          _this.model.data = {
+            authorId: _this.model.data.authorId
+          };
+          return _this.setButtonMode();
+        });
       }
     };
 

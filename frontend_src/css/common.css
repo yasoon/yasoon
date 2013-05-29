@@ -1,3 +1,10 @@
+* {
+  font-family: Arial;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
 #top {
   position: absolute;
   top: 0;
@@ -48,6 +55,8 @@
 }
 #center .activePost {
   padding: 10px;
+  background: #f6f6f6;
+  border: 1px solid #c2c2c2;
 }
 #center .activePost .activePostCaption {
   width: 98%;
@@ -65,4 +74,14 @@
   width: 98%;
   border: 1px solid #c2c2c2;
   min-height: 100px;
+}
+#center #postsQueue .post {
+  border-bottom: 1px solid #c2c2c2;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+}
+#center #postsQueue .post .caption {
+  font-size: 14pt;
+  font-weight: 800;
 }

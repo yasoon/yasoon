@@ -43,9 +43,9 @@ class PostEntity
     protected $authorId;
 
     /**
-     * @var AuthorEntity
+     * @var AuthorEntity $author
      *
-     * @ORM\ManyToOne(targetEntity="AuthorEntity")
+     * @ORM\ManyToOne(targetEntity="AuthorEntity",  inversedBy="posts")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     protected $author;
@@ -57,6 +57,12 @@ class PostEntity
      */
     protected $date;
 
+    /**
+     * @var string $caption
+     *
+     * @ORM\Column(name="caption", type="string", nullable=false)
+     */
+    protected $caption;
     /**
      * @param $author
      * @return $this
@@ -164,6 +170,26 @@ class PostEntity
     {
         return $this->text;
     }
+
+    /**
+     * @param $caption
+     * @return $this
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = $caption;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+
 
 
 }

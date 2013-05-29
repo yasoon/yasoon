@@ -5,4 +5,15 @@ define [
   'use strict'
 
   class AuthorPosts extends Model
-   url: -> "api/author/get_posts/#{@id}"
+    fetch: (callback) ->
+      @url = -> "api/author/get_posts/#{@id}"
+      @request(callback)
+
+    initialize: ->
+      super
+      @subscribeEvent 'postAdded', @postAddedHandler
+
+    postAddedHandler: (post) ->
+      if @id is post.authorId
+        @data.unshift post
+        @trigger 'updated'
