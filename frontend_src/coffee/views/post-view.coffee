@@ -14,15 +14,23 @@ define [
 
     modesHistory: []
 
-    @previewTouched = false
+    initialize: ->
+      super
+      if @model.data.preview
+        @previewTouched = true
+      else
+        @previewTouched = false
 
     setButtonMode: ->
+      #@model.data = {id: @model.data.id, authorId: @model.data.authorId}
+      @$el.empty()
       @templateName = 'newPostButton'
       @modesHistory.push(@mode) if @mode?
       @mode = 'button'
       @render()
 
     setActiveMode: ->
+      @$el.empty()
       @templateName = 'postActive'
       @modesHistory.push(@mode) if @mode?
       @mode = 'active'
@@ -30,10 +38,20 @@ define [
       @$el.find('.activePostCaption').focus()
 
     setPassiveMode: ->
+      @$el.empty()
       @templateName = 'postPassive'
       @modesHistory.push(@mode) if @mode?
       @mode = 'passive'
       @render()
+
+    setPreviousMode: ->
+      console.log @modesHistory
+      if @modesHistory[@modesHistory.length-1] is 'button'
+        @setButtonMode()
+      else if @modesHistory[@modesHistory.length-1] is 'active'
+        @setActiveMode()
+      else if @modesHistory[@modesHistory.length-1] is 'passive'
+        @setPassiveMode()
 
     events:
       'click #newPostButton': ->
@@ -41,7 +59,7 @@ define [
 
       'keydown .activePost': (e) ->
         if e.keyCode is 27 #esc
-          return @setButtonMode()
+          @setPreviousMode()
 
 
       'keyup .activePostBody': (e) ->
@@ -66,8 +84,14 @@ define [
       'click #sendPostButton': ->
         @$el.find('#sendPostButton').hide()
         @model.sync =>
-          @model.data = {authorId: @model.data.authorId}
-          @setButtonMode()
+          @setPreviousMode()
+
+      'click #editPostButton': ->
+        @setActiveMode()
+
+      'click #deletePostButton': ->
+        @model.delete =>
+          @publishEvent 'redirect', "#author/#{@model.data.authorId}/posts"
 
 
     getTemplateData: ->

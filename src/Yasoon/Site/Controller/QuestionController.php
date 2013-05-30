@@ -37,9 +37,7 @@ class QuestionController {
     public function addAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->add($model);
-
-        return ['id' => $id];
+        return $this->service->add($model);
     }
 
     /**
@@ -53,9 +51,7 @@ class QuestionController {
     public function updateAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->update($model);
-
-        return ['id' => $id];
+        return $this->service->update($model);
     }
 
     /**
@@ -68,9 +64,7 @@ class QuestionController {
     public function removeAction(Request $request) {
         $model = $request->request->get('model');
 
-        $id = $this->service->delete($model);
-
-        return ['id' => $id];
+        return $this->service->delete($model);
     }
 
 }

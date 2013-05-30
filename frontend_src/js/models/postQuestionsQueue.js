@@ -4,18 +4,18 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
   'use strict';
-  var AuthorPosts;
-  return AuthorPosts = (function(_super) {
+  var PostQuestionsQueue;
+  return PostQuestionsQueue = (function(_super) {
 
-    __extends(AuthorPosts, _super);
+    __extends(PostQuestionsQueue, _super);
 
-    function AuthorPosts() {
-      return AuthorPosts.__super__.constructor.apply(this, arguments);
+    function PostQuestionsQueue() {
+      return PostQuestionsQueue.__super__.constructor.apply(this, arguments);
     }
 
-    AuthorPosts.prototype.fetch = function(callback) {
+    PostQuestionsQueue.prototype.fetch = function(callback) {
       this.url = function() {
-        return "api/author/get_posts/" + this.id;
+        return "api/post/get_questions/" + this.id;
       };
       this.fetchParams = {
         method: 'GET',
@@ -24,19 +24,19 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return this.request(callback);
     };
 
-    AuthorPosts.prototype.initialize = function() {
-      AuthorPosts.__super__.initialize.apply(this, arguments);
-      return this.subscribeEvent('postAdded', this.postAddedHandler);
+    PostQuestionsQueue.prototype.initialize = function() {
+      PostQuestionsQueue.__super__.initialize.apply(this, arguments);
+      return this.subscribeEvent('questionAdded', this.questionAddedHandler);
     };
 
-    AuthorPosts.prototype.postAddedHandler = function(post) {
+    PostQuestionsQueue.prototype.questionAddedHandler = function(post) {
       if (this.id === post.authorId) {
         this.data.unshift(post);
         return this.trigger('updated');
       }
     };
 
-    return AuthorPosts;
+    return PostQuestionsQueue;
 
   })(Model);
 });

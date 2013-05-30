@@ -15,5 +15,14 @@ define [
     listen:
       'updated model': 'render'
 
+    events:
+      'click .post': (e) ->
+        target = $(e.target)
+        while not target.hasClass('post')
+          target = target.parent()
+
+        @publishEvent 'redirect', '#post/'+target.attr('id')
+
+
     getTemplateData: ->
       {posts: @model.data}

@@ -43,6 +43,16 @@ define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-vi
       });
     };
 
+    AuthorController.prototype.initialize = function() {
+      AuthorController.__super__.initialize.apply(this, arguments);
+      return this.subscribeEvent('dispose', this.disposeHandler);
+    };
+
+    AuthorController.prototype.disposeHandler = function() {
+      console.log('dispose');
+      return this.dispose;
+    };
+
     return AuthorController;
 
   })(Controller);

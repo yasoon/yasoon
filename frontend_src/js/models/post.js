@@ -17,11 +17,32 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       this.url = function() {
         return "api/post/get/" + this.id;
       };
+      this.fetchParams.method = "GET";
+      this.fetchParams.data = {};
       return this.request(callback);
     };
 
-    Post.prototype.update = function() {
-      return console.log('update');
+    Post.prototype.update = function(callback) {
+      var editCallback,
+        _this = this;
+      this.fetchParams.method = "POST";
+      this.fetchParams.data = {
+        model: {
+          id: this.data.id,
+          authorId: this.data.authorId,
+          caption: this.data.caption,
+          preview: this.data.preview,
+          text: this.data.text
+        }
+      };
+      this.url = function() {
+        return "api/post/update";
+      };
+      editCallback = function() {
+        _this.publishEvent('postUpdated', _this.data);
+        return callback();
+      };
+      return this.request(editCallback);
     };
 
     Post.prototype.add = function(callback) {
@@ -44,6 +65,25 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         return callback();
       };
       return this.request(addCallback);
+    };
+
+    Post.prototype["delete"] = function(callback) {
+      var deleteCallback,
+        _this = this;
+      this.fetchParams.method = "POST";
+      this.fetchParams.data = {
+        model: {
+          id: this.data.id
+        }
+      };
+      this.url = function() {
+        return "api/post/delete";
+      };
+      deleteCallback = function() {
+        _this.publishEvent('postDeleted', _this.data);
+        return callback();
+      };
+      return this.request(deleteCallback());
     };
 
     Post.prototype.sync = function(callback) {

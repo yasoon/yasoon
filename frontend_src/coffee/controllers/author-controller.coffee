@@ -35,3 +35,10 @@ define [
         postsQueue = new AuthorPostsQueueView(model: @authorPosts)
 
 
+    initialize: ->
+      super
+      @subscribeEvent 'dispose', @disposeHandler
+
+    disposeHandler: ->
+      console.log 'dispose'
+      @dispose

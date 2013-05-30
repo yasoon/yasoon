@@ -83,6 +83,59 @@ a {
       min-height: 100px;
     }
   }
+
+  #newQuestionButton {
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    border-bottom: @border;
+    text-align: center;
+  }
+
+  .activeQuestion {
+    padding: 10px;
+    background: #f6f6f6;
+    border: @border;
+    .activeQuestionBody {
+      overflow: none;
+      width: 98%;
+      border: @border;
+      min-height: 100px;
+    }
+  }
+
+
+  .passivePost {
+    padding: 10px;
+    //background: #f6f6f6;
+    border-bottom: @border;
+    border-left: @border;
+  }
+  .passivePostCaption {
+    width: 98%;
+    font-weight: 800;
+    background: #fff;
+    margin: 5px;
+    padding: 5px;
+  }
+  .passivePostPreview {
+    overflow: none;
+    width: 98%;
+    min-height: 40px;
+    background: #fff;
+    margin: 5px;
+    padding: 5px;
+  }
+  .passivePostBody {
+    overflow: none;
+    width: 98%;
+    min-height: 100px;
+    background: #fff;
+    margin: 5px;
+    padding: 5px;
+  }
+
   #postsQueue {
     .post {
       border-bottom: @border;

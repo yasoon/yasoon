@@ -25,6 +25,17 @@ define(['views/base/view', 'JST'], function(View, JST) {
       'updated model': 'render'
     };
 
+    AuthorPostsQueueView.prototype.events = {
+      'click .post': function(e) {
+        var target;
+        target = $(e.target);
+        while (!target.hasClass('post')) {
+          target = target.parent();
+        }
+        return this.publishEvent('redirect', '#post/' + target.attr('id'));
+      }
+    };
+
     AuthorPostsQueueView.prototype.getTemplateData = function() {
       return {
         posts: this.model.data

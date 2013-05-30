@@ -1,7 +1,8 @@
 define [
   'chaplin'
   'routes'
-], (Chaplin, routes) ->
+  'controllers/redirect-controller'
+], (Chaplin, routes, RedirectController) ->
   'use strict'
 
   class Application extends Chaplin.Application
@@ -13,6 +14,8 @@ define [
       @initRouter routes, pushState: false
 
       @initDispatcher controllerSuffix: '-controller'
+
+      @initControllers()
 
       @initLayout()
 
@@ -26,3 +29,6 @@ define [
 
     initMediator: ->
       Chaplin.mediator.seal()
+
+    initControllers: ->
+      new RedirectController()

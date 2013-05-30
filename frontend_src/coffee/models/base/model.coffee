@@ -15,7 +15,6 @@ define [
       data: {}
 
     formatUrl: (url) ->
-#       "http://localhost:83/#{url}"
       'http://'+document.domain+"/#{url}"
 
 

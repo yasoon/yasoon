@@ -22,9 +22,17 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     PostView.prototype.modesHistory = [];
 
-    PostView.previewTouched = false;
+    PostView.prototype.initialize = function() {
+      PostView.__super__.initialize.apply(this, arguments);
+      if (this.model.data.preview) {
+        return this.previewTouched = true;
+      } else {
+        return this.previewTouched = false;
+      }
+    };
 
     PostView.prototype.setButtonMode = function() {
+      this.$el.empty();
       this.templateName = 'newPostButton';
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
@@ -34,6 +42,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     };
 
     PostView.prototype.setActiveMode = function() {
+      this.$el.empty();
       this.templateName = 'postActive';
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
@@ -44,6 +53,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     };
 
     PostView.prototype.setPassiveMode = function() {
+      this.$el.empty();
       this.templateName = 'postPassive';
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
@@ -52,13 +62,24 @@ define(['views/base/view', 'JST'], function(View, JST) {
       return this.render();
     };
 
+    PostView.prototype.setPreviousMode = function() {
+      console.log(this.modesHistory);
+      if (this.modesHistory[this.modesHistory.length - 1] === 'button') {
+        return this.setButtonMode();
+      } else if (this.modesHistory[this.modesHistory.length - 1] === 'active') {
+        return this.setActiveMode();
+      } else if (this.modesHistory[this.modesHistory.length - 1] === 'passive') {
+        return this.setPassiveMode();
+      }
+    };
+
     PostView.prototype.events = {
       'click #newPostButton': function() {
         return this.setActiveMode();
       },
       'keydown .activePost': function(e) {
         if (e.keyCode === 27) {
-          return this.setButtonMode();
+          return this.setPreviousMode();
         }
       },
       'keyup .activePostBody': function(e) {
@@ -91,10 +112,16 @@ define(['views/base/view', 'JST'], function(View, JST) {
         var _this = this;
         this.$el.find('#sendPostButton').hide();
         return this.model.sync(function() {
-          _this.model.data = {
-            authorId: _this.model.data.authorId
-          };
-          return _this.setButtonMode();
+          return _this.setPreviousMode();
+        });
+      },
+      'click #editPostButton': function() {
+        return this.setActiveMode();
+      },
+      'click #deletePostButton': function() {
+        var _this = this;
+        return this.model["delete"](function() {
+          return _this.publishEvent('redirect', "#author/" + _this.model.data.authorId + "/posts");
         });
       }
     };

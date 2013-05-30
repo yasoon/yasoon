@@ -4,24 +4,46 @@ define [
          'views/authorInfo-view'
          'models/post'
          'views/post-view'
-
+         'models/postQuestionsQueue',
+         'views/postQuestionsQueue-view'
+         'views/postPage-view'
+         'models/question'
+         'views/question-view'
 ], (Controller,
     AuthorInfo, AuthorInfoView,
-    Post, PostView
+    Post, PostView,
+    PostQuestionsQueue, PostQuestionsQueueView,
+    PostPageView,
+    Question, QuestionView
 ) ->
   'use strict'
 
-  class AuthorController extends Controller
+  class PostController extends Controller
     postAction: (params) ->
       @post = new Post(id: params.id)
       @post.fetch =>
+        postPageView = new PostPageView()
+
         postView = new PostView(model: @post)
-        postView.container = '#center'
+        postView.region = 'post'
         postView.setPassiveMode()
 
         @authorInfo = new AuthorInfo(id: @post.data.authorId)
         @authorInfo.fetch =>
-           infoView = new AuthorInfoView(model: @authorInfo)
+          infoView = new AuthorInfoView(model: @authorInfo)
+
+        @postQuestionsQueue = new PostQuestionsQueue(id: params.id)
+        @postQuestionsQueue.fetch =>
+          queueView = new PostQuestionsQueueView(model: @postQuestionsQueue)
+
+        @newQuestion = new Question()
+        @newQuestion.data.postId = params.id
+        @newQuestion.data.authorId = @post.data.authorId
+
+        @newQuestionView = new QuestionView(model: @newQuestion)
+        @newQuestionView.region = 'newQuestion'
+        @newQuestionView.setButtonMode()
+
 #
 #      @authorPosts = new AuthorPosts(id: params.id)
 #      @authorPosts.fetch =>

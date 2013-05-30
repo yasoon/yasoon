@@ -14,6 +14,10 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     }
 
     AuthorInfo.prototype.fetch = function(callback) {
+      this.fetchParams = {
+        method: 'GET',
+        data: {}
+      };
       this.url = function() {
         return "api/author/get_short_info/" + this.id;
       };
@@ -22,12 +26,28 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
 
     AuthorInfo.prototype.initialize = function() {
       AuthorInfo.__super__.initialize.apply(this, arguments);
-      return this.subscribeEvent('postAdded', this.postAddedHandler);
+      this.subscribeEvent('postAdded', this.postAddedHandler);
+      this.subscribeEvent('postDeleted', this.postDeletedHandler);
+      return this.subscribeEvent('answerAdded', this.answerAddedHandler);
     };
 
     AuthorInfo.prototype.postAddedHandler = function(post) {
       if (this.data.id === parseInt(post.authorId)) {
         this.data.posts++;
+        return this.trigger('updated');
+      }
+    };
+
+    AuthorInfo.prototype.postDeletedHandler = function(post) {
+      if (this.data.id === parseInt(post.authorId)) {
+        this.data.posts--;
+        return this.trigger('updated');
+      }
+    };
+
+    AuthorInfo.prototype.answerAddedHandler = function(post) {
+      if (this.data.id === parseInt(post.authorId)) {
+        this.data.answers++;
         return this.trigger('updated');
       }
     };

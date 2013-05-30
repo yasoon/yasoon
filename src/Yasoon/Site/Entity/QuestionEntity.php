@@ -50,13 +50,13 @@ class QuestionEntity
      */
     protected $answerId;
 
-    /**
-     * @var AnswerEntity
-     *
-     * @ORM\OneToOne(targetEntity="AnswerEntity")
-     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
-     */
-    protected $answer;
+//    /**
+//     * @var AnswerEntity
+//     *
+//     * @ORM\OneToOne(targetEntity="AnswerEntity")
+//     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id", nullable=true)
+//     */
+//    protected $answer;
 
     /**
      * PostId can be null. If so, it's a common question to author, not for a post

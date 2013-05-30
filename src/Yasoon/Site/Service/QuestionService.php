@@ -12,35 +12,34 @@ use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 
 /**
- * @DI\Service("yasoon.service.post")
+ * @DI\Service("yasoon.service.question")
  */
-class PostService extends AbstractApiService {
+class QuestionService extends AbstractApiService {
 
     /**
      * @param array $model
      * @return array
      */
     public function add(array $model) {
-        /** @var $postEntity PostEntity */
-        $postEntity = (new PostEntity())
-            ->setCaption($model['caption'])
-            ->setPreview($model['preview'])
-            ->setText($model['text'])
-            ->setAuthorId($model['authorId'])
-            ->setDate(new \DateTime());
 
-        $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
 
-        $this->em->persist($postEntity);
-        $this->em->flush();
+//        /** @var $postEntity PostEntity */
+//        $entity = (new QuestionEntity())
+//            ->setText($model['text'])
+//            ->setDate(new \DateTime())
+//            ->setIsInBlank(false);
+//
+//        $entity->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $model['authorId']));
+//
+//        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
+//
+//        $this->em->persist($entity);
+//        $this->em->flush();
 
         $result = [
             'id'       => $postEntity->getId(),
-            'caption'  => $postEntity->getCaption(),
-            'preview'  => $postEntity->getPreview(),
             'text'     => $postEntity->getText(),
-            'authorId' => $postEntity->getAuthorId(),
-            'date'     => $postEntity->getDate()->format('Y-m-d H:i')
+            'authorId' => $postEntity->getAuthorId()
         ];
 
         return $result;

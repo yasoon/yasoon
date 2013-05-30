@@ -75,6 +75,53 @@ a {
   border: 1px solid #c2c2c2;
   min-height: 100px;
 }
+#center #newQuestionButton {
+  cursor: pointer;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #c2c2c2;
+  text-align: center;
+}
+#center .activeQuestion {
+  padding: 10px;
+  background: #f6f6f6;
+  border: 1px solid #c2c2c2;
+}
+#center .activeQuestion .activeQuestionBody {
+  overflow: none;
+  width: 98%;
+  border: 1px solid #c2c2c2;
+  min-height: 100px;
+}
+#center .passivePost {
+  padding: 10px;
+  border-bottom: 1px solid #c2c2c2;
+  border-left: 1px solid #c2c2c2;
+}
+#center .passivePostCaption {
+  width: 98%;
+  font-weight: 800;
+  background: #fff;
+  margin: 5px;
+  padding: 5px;
+}
+#center .passivePostPreview {
+  overflow: none;
+  width: 98%;
+  min-height: 40px;
+  background: #fff;
+  margin: 5px;
+  padding: 5px;
+}
+#center .passivePostBody {
+  overflow: none;
+  width: 98%;
+  min-height: 100px;
+  background: #fff;
+  margin: 5px;
+  padding: 5px;
+}
 #center #postsQueue .post {
   border-bottom: 1px solid #c2c2c2;
   width: 100%;

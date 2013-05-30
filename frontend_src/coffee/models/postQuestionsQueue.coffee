@@ -4,9 +4,9 @@ define [
 ], (Chaplin, Model) ->
   'use strict'
 
-  class AuthorPosts extends Model
+  class PostQuestionsQueue extends Model
     fetch: (callback) ->
-      @url = -> "api/author/get_posts/#{@id}"
+      @url = -> "api/post/get_questions/#{@id}"
       @fetchParams =
         method: 'GET'
         data: {}
@@ -14,9 +14,9 @@ define [
 
     initialize: ->
       super
-      @subscribeEvent 'postAdded', @postAddedHandler
+      @subscribeEvent 'questionAdded', @questionAddedHandler
 
-    postAddedHandler: (post) ->
+    questionAddedHandler: (post) ->
       if @id is post.authorId
         @data.unshift post
         @trigger 'updated'
