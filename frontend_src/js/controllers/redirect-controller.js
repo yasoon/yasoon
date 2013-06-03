@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'chaplin/mediator'], function(Controller, Mediator) {
+define(['controllers/base/controller', 'chaplin'], function(Controller, Chaplin) {
   'use strict';
   var RedirectController,
     _this = this;
@@ -23,7 +23,7 @@ define(['controllers/base/controller', 'chaplin/mediator'], function(Controller,
 
     RedirectController.prototype.initialize = function() {
       RedirectController.__super__.initialize.apply(this, arguments);
-      return Mediator.subscribe('redirect', this.redirect);
+      return Chaplin.mediator.subscribe('redirect', this.redirect);
     };
 
     RedirectController.prototype.redirect = function(url) {

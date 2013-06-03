@@ -4,6 +4,7 @@ define(function() {
   'use strict';  return function(match) {
     match('', 'index#indexAction');
     match('author/:id/posts', 'author#postsAction');
-    return match('post/:id', 'post#postAction');
+    match('post/:id', 'post#postAction');
+    return match('admin/blank', 'admin#blankAction');
   };
 });

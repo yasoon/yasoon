@@ -31,5 +31,5 @@ define [
 
         success: (data) =>
           @data = data
-          callback?()
+          callback?(data)
       )

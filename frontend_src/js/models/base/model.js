@@ -37,7 +37,7 @@ define(['chaplin'], function(Chaplin) {
         data: request.requestData,
         success: function(data) {
           _this.data = data;
-          return typeof callback === "function" ? callback() : void 0;
+          return typeof callback === "function" ? callback(data) : void 0;
         }
       });
     };

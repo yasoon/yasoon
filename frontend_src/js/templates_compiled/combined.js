@@ -59,6 +59,49 @@ function program1(depth0,data) {
 
 var Handlebars = require('handlebars');
 var template = Handlebars.template, templates = JST = JST || {};
+templates['blankQuestionActive'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<textarea id='"
+    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' class='question'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</textarea>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['blankQuestionPassive'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div id='"
+    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' class='question'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</div>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['blankQuestions'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div id=\"questions\"></div>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
 templates['newPostButton'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};

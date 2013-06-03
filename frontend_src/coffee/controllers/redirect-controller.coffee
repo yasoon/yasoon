@@ -1,14 +1,14 @@
 define [
   'controllers/base/controller'
-  'chaplin/mediator'
-], (Controller, Mediator) ->
+  'chaplin'
+], (Controller, Chaplin) ->
   'use strict'
 
   #component with no view, listens 'redirect' events and makes some tiny stuff
   class RedirectController extends Controller
     initialize: ->
       super
-      Mediator.subscribe 'redirect', @redirect
+      Chaplin.mediator.subscribe 'redirect', @redirect
 
     redirect: (url) =>
       @publishEvent 'dispose'

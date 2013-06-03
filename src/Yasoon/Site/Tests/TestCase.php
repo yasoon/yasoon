@@ -20,12 +20,12 @@ class TestCase extends WebTestCase{
     /**
      * @var Response
      */
-    private $response = null;
+    protected  $response = null;
 
     /**
      * @var bool
      */
-    private $responseRecieved = false;
+    protected  $responseRecieved = false;
 
     /**
      * @param $method
