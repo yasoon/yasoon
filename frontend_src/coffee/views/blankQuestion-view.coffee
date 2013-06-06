@@ -12,14 +12,20 @@ define [
 
     templateName: 'blankQuestion'
 
-    @setPassiveMode()
+    initialize: ->
+      super
+      @setPassiveMode()
 
     events:
-      'click .question':->
+      'keyup .body': (e) ->
+        @model.data.text = @$el.find('.body').val()
+
+      'click #newButton': ->
         @setActiveMode()
 
-
-
+      'click #sendButton': ->
+        @model.sync =>
+          @setPreviousMode()
 
     getTemplateData: =>
       {question: @model.data}

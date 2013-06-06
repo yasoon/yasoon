@@ -62,17 +62,6 @@ define(['views/base/view', 'JST'], function(View, JST) {
       return this.render();
     };
 
-    PostView.prototype.setPreviousMode = function() {
-      console.log(this.modesHistory);
-      if (this.modesHistory[this.modesHistory.length - 1] === 'button') {
-        return this.setButtonMode();
-      } else if (this.modesHistory[this.modesHistory.length - 1] === 'active') {
-        return this.setActiveMode();
-      } else if (this.modesHistory[this.modesHistory.length - 1] === 'passive') {
-        return this.setPassiveMode();
-      }
-    };
-
     PostView.prototype.events = {
       'click #newPostButton': function() {
         return this.setActiveMode();

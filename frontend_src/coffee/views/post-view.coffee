@@ -44,15 +44,6 @@ define [
       @mode = 'passive'
       @render()
 
-    setPreviousMode: ->
-      console.log @modesHistory
-      if @modesHistory[@modesHistory.length-1] is 'button'
-        @setButtonMode()
-      else if @modesHistory[@modesHistory.length-1] is 'active'
-        @setActiveMode()
-      else if @modesHistory[@modesHistory.length-1] is 'passive'
-        @setPassiveMode()
-
     events:
       'click #newPostButton': ->
         @setActiveMode()
@@ -60,7 +51,6 @@ define [
       'keydown .activePost': (e) ->
         if e.keyCode is 27 #esc
           @setPreviousMode()
-
 
       'keyup .activePostBody': (e) ->
         @model.data.text = @$el.find('.activePostBody').val()

@@ -45,6 +45,7 @@ class BlankQuestionController {
     public function addAction(Request $request) {
         $model = $request->request->get('model');
 
+
         return $this->service->add($model);
     }
 

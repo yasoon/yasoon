@@ -7,8 +7,8 @@ define [
   class BlankQuestion extends Model
     initialize: (data) ->
       super
-      @data.id = data.id
-      @data.text = data.text
+      @data.id = data.id if data?
+      @data.text = data.text if data?
 
     update: (callback) ->
       @fetchParams.method = "POST"
@@ -35,6 +35,7 @@ define [
 
       addCallback = =>
         @trigger 'inserted'
+        @publishEvent 'postAdded', @
         callback()
 
       @request(addCallback)

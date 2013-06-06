@@ -20,13 +20,18 @@ define [
 
       @request(fetchCallback)
 
-
-
     initialize: ->
       super
       @subscribeEvent 'postAdded', @postAddedHandler
+      @subscribeEvent 'postUpdated', @postUpdatedHandler
 
     postAddedHandler: (post) ->
       if @id is post.authorId
         @data.unshift post
         @trigger 'updated'
+
+    postUpdatedHandler: (post) ->
+      if @id is post.authorId
+        @data.unshift post
+        @trigger 'updated'
+

@@ -11,25 +11,33 @@ define [
 
     setButtonMode:(callback) ->
        @$el.empty()
-       @currentTemplateName = "#{templateName}Button"
+       @currentTemplateName = "#{@templateName}Button"
        @modesHistory.push(@mode) if @mode?
        @mode = 'button'
        @render()
-       callback()
+       callback?()
 
     setActiveMode: (callback) ->
        @$el.empty()
-       @currentTemplateName = "#{templateName}Active"
+       @currentTemplateName = "#{@templateName}Active"
        @modesHistory.push(@mode) if @mode?
        @mode = 'active'
        @render()
-       callback()
+       callback?()
 
     setPassiveMode: (callback) ->
        @$el.empty()
-       @currentTemplateName = "#{templateName}Passive"
+       @currentTemplateName = "#{@templateName}Passive"
        @modesHistory.push(@mode) if @mode?
        @mode = 'passive'
        @render()
-       callback()
+       callback?()
+
+    setPreviousMode: ->
+      if @modesHistory[@modesHistory.length-1] is 'button'
+        @setButtonMode()
+      else if @modesHistory[@modesHistory.length-1] is 'active'
+        @setActiveMode()
+      else if @modesHistory[@modesHistory.length-1] is 'passive'
+        @setPassiveMode()
 

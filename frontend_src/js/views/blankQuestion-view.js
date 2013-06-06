@@ -26,11 +26,23 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     BlankQuestionView.prototype.templateName = 'blankQuestion';
 
-    BlankQuestionView.setPassiveMode();
+    BlankQuestionView.prototype.initialize = function() {
+      BlankQuestionView.__super__.initialize.apply(this, arguments);
+      return this.setPassiveMode();
+    };
 
     BlankQuestionView.prototype.events = {
-      'click .question': function() {
+      'keyup .body': function(e) {
+        return this.model.data.text = this.$el.find('.body').val();
+      },
+      'click #newButton': function() {
         return this.setActiveMode();
+      },
+      'click #sendButton': function() {
+        var _this = this;
+        return this.model.sync(function() {
+          return _this.setPreviousMode();
+        });
       }
     };
 

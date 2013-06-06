@@ -67,10 +67,21 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
   buffer += "<textarea id='"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' class='question'>"
+    + "' class='body'>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</textarea>";
+    + "</textarea>\n<div id='sendButton'>send</div>";
   return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['blankQuestionButton'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div id=\"newButton\">Новый</div>";
   });
 
 var Handlebars = require('handlebars');

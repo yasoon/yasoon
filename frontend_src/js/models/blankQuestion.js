@@ -15,8 +15,12 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
 
     BlankQuestion.prototype.initialize = function(data) {
       BlankQuestion.__super__.initialize.apply(this, arguments);
-      this.data.id = data.id;
-      return this.data.text = data.text;
+      if (data != null) {
+        this.data.id = data.id;
+      }
+      if (data != null) {
+        return this.data.text = data.text;
+      }
     };
 
     BlankQuestion.prototype.update = function(callback) {
@@ -53,6 +57,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       };
       addCallback = function() {
         _this.trigger('inserted');
+        _this.publishEvent('postAdded', _this);
         return callback();
       };
       return this.request(addCallback);

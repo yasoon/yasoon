@@ -38,10 +38,18 @@ define(['chaplin', 'models/base/model', 'models/blankQuestion'], function(Chapli
 
     BlankQuestions.prototype.initialize = function() {
       BlankQuestions.__super__.initialize.apply(this, arguments);
-      return this.subscribeEvent('postAdded', this.postAddedHandler);
+      this.subscribeEvent('postAdded', this.postAddedHandler);
+      return this.subscribeEvent('postUpdated', this.postUpdatedHandler);
     };
 
     BlankQuestions.prototype.postAddedHandler = function(post) {
+      if (this.id === post.authorId) {
+        this.data.unshift(post);
+        return this.trigger('updated');
+      }
+    };
+
+    BlankQuestions.prototype.postUpdatedHandler = function(post) {
       if (this.id === post.authorId) {
         this.data.unshift(post);
         return this.trigger('updated');

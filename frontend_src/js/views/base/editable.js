@@ -22,35 +22,45 @@ define(['views/base/view'], function(View) {
 
     EditableView.prototype.setButtonMode = function(callback) {
       this.$el.empty();
-      this.currentTemplateName = "" + templateName + "Button";
+      this.currentTemplateName = "" + this.templateName + "Button";
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'button';
       this.render();
-      return callback();
+      return typeof callback === "function" ? callback() : void 0;
     };
 
     EditableView.prototype.setActiveMode = function(callback) {
       this.$el.empty();
-      this.currentTemplateName = "" + templateName + "Active";
+      this.currentTemplateName = "" + this.templateName + "Active";
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'active';
       this.render();
-      return callback();
+      return typeof callback === "function" ? callback() : void 0;
     };
 
     EditableView.prototype.setPassiveMode = function(callback) {
       this.$el.empty();
-      this.currentTemplateName = "" + templateName + "Passive";
+      this.currentTemplateName = "" + this.templateName + "Passive";
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'passive';
       this.render();
-      return callback();
+      return typeof callback === "function" ? callback() : void 0;
+    };
+
+    EditableView.prototype.setPreviousMode = function() {
+      if (this.modesHistory[this.modesHistory.length - 1] === 'button') {
+        return this.setButtonMode();
+      } else if (this.modesHistory[this.modesHistory.length - 1] === 'active') {
+        return this.setActiveMode();
+      } else if (this.modesHistory[this.modesHistory.length - 1] === 'passive') {
+        return this.setPassiveMode();
+      }
     };
 
     return EditableView;

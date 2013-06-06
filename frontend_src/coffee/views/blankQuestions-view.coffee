@@ -2,7 +2,8 @@ define [
          'views/base/view'
          'JST'
          'views/blankQuestion-view'
-], (View, JST, BlankQuestionView) ->
+          'models/blankQuestion'
+], (View, JST, BlankQuestionView, BlankQuestion) ->
   'use strict'
 
   class BlankQuestionsView extends View
@@ -15,8 +16,12 @@ define [
 
     templateName: 'blankQuestions'
 
+    listen:
+      'updated model': 'render'
+
     render: ->
       super
       for question in @model.questions
         view = new BlankQuestionView(model: question)
 
+      newView = (new BlankQuestionView(model: new BlankQuestion)).setButtonMode()

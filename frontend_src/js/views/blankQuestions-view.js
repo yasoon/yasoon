@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'views/blankQuestion-view'], function(View, JST, BlankQuestionView) {
+define(['views/base/view', 'JST', 'views/blankQuestion-view', 'models/blankQuestion'], function(View, JST, BlankQuestionView, BlankQuestion) {
   'use strict';
   var BlankQuestionsView;
   return BlankQuestionsView = (function(_super) {
@@ -25,18 +25,23 @@ define(['views/base/view', 'JST', 'views/blankQuestion-view'], function(View, JS
 
     BlankQuestionsView.prototype.templateName = 'blankQuestions';
 
+    BlankQuestionsView.prototype.listen = {
+      'updated model': 'render'
+    };
+
     BlankQuestionsView.prototype.render = function() {
-      var question, view, _i, _len, _ref, _results;
+      var newView, question, view, _i, _len, _ref;
       BlankQuestionsView.__super__.render.apply(this, arguments);
       _ref = this.model.questions;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         question = _ref[_i];
-        _results.push(view = new BlankQuestionView({
+        view = new BlankQuestionView({
           model: question
-        }));
+        });
       }
-      return _results;
+      return newView = (new BlankQuestionView({
+        model: new BlankQuestion
+      })).setButtonMode();
     };
 
     return BlankQuestionsView;
