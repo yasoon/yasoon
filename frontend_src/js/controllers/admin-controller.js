@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'models/blankQuestions', 'views/blankQuestions-view'], function(Controller, BlankQuestions, BlankQuestionsView) {
+define(['controllers/base/controller', 'views/page/admin/blank', 'models/blankQuestion/queue', 'views/blankQuestion/queue', 'models/blankQuestion/model', 'views/blankQuestion/view'], function(Controller, AdminBlankPageView, BlankQuestionsQueue, BlankQuestionsQueueView, BlankQuestion, BlankQuestionView) {
   'use strict';
   var AdminController;
   return AdminController = (function(_super) {
@@ -14,12 +14,24 @@ define(['controllers/base/controller', 'models/blankQuestions', 'views/blankQues
     }
 
     AdminController.prototype.blankAction = function() {
-      var _this = this;
-      this.blankQuestions = new BlankQuestions;
-      return this.blankQuestions.fetch(function() {
-        return new BlankQuestionsView({
-          model: _this.blankQuestions
+      var blankQuestionsView,
+        _this = this;
+      blankQuestionsView = new AdminBlankPageView();
+      this.queue = new BlankQuestionsQueue();
+      return this.queue.fetch(function() {
+        var newQuestion, newQuestionView, queueView;
+        queueView = new BlankQuestionsQueueView({
+          model: _this.queue
         });
+        newQuestion = new BlankQuestion;
+        newQuestion.data = {
+          place: _this.queue.questions.length + 1
+        };
+        newQuestionView = new BlankQuestionView({
+          model: newQuestion
+        });
+        newQuestionView.region = 'new';
+        return newQuestionView.setButtonMode();
       });
     };
 

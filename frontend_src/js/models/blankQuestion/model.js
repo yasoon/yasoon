@@ -13,16 +13,6 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return BlankQuestion.__super__.constructor.apply(this, arguments);
     }
 
-    BlankQuestion.prototype.initialize = function(data) {
-      BlankQuestion.__super__.initialize.apply(this, arguments);
-      if (data != null) {
-        this.data.id = data.id;
-      }
-      if (data != null) {
-        return this.data.text = data.text;
-      }
-    };
-
     BlankQuestion.prototype.update = function(callback) {
       var editCallback,
         _this = this;
@@ -37,7 +27,6 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         return "api/blank_question/update";
       };
       editCallback = function() {
-        _this.trigger('updated');
         return callback();
       };
       return this.request(editCallback);
@@ -49,15 +38,15 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       this.fetchParams.method = "POST";
       this.fetchParams.data = {
         model: {
-          text: this.data.text
+          text: this.data.text,
+          place: this.data.place
         }
       };
+      console.log(this.fetchParams.data);
       this.url = function() {
         return "api/blank_question/add";
       };
       addCallback = function() {
-        _this.trigger('inserted');
-        _this.publishEvent('postAdded', _this);
         return callback();
       };
       return this.request(addCallback);
@@ -76,18 +65,9 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         return "api/blank_question/delete";
       };
       deleteCallback = function() {
-        _this.trigger('deleted');
-        return callback();
+        return typeof callback === "function" ? callback() : void 0;
       };
       return this.request(deleteCallback());
-    };
-
-    BlankQuestion.prototype.sync = function(callback) {
-      if (this.data.id) {
-        return this.update(callback);
-      } else {
-        return this.add(callback);
-      }
     };
 
     return BlankQuestion;

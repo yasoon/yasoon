@@ -132,3 +132,14 @@ a {
   font-size: 14pt;
   font-weight: 800;
 }
+#center .blankQuestion {
+  border-bottom: 1px solid #c2c2c2;
+  margin: 10px;
+  padding: 10px;
+}
+#center .blankQuestion textarea {
+  overflow: none;
+  width: 98%;
+  border: 1px solid #c2c2c2;
+  min-height: 100px;
+}

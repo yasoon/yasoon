@@ -22,13 +22,15 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function getAll() {
+        /** @var BlankQuestionEntity[] $allQuestions  */
         $allQuestions = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->findAll();
 
         $result = [];
         foreach ($allQuestions as $question) {
             $result[] = [
                 'id' => $question->getId(),
-                'text' => $question->getText()
+                'text' => $question->getText(),
+                'place' => $question->getPlace()
             ];
         }
 
@@ -40,14 +42,16 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function add(array $model) {
-        $question = (new BlankQuestionEntity())->setText($model['text']);
+        /** @var BlankQuestionEntity $question  */
+        $question = (new BlankQuestionEntity())->setText($model['text'])->setPlace($model['place']);
 
         $this->em->persist($question);
         $this->em->flush();
 
         return [
           'id' => $question->getId(),
-          'text' => $question->getText()
+          'text' => $question->getText(),
+          'place' => $question->getPlace()
         ];
     }
 
@@ -56,6 +60,7 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function update(array $model) {
+        /** @var BlankQuestionEntity $question  */
         $question = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->find($model['id']);
 
         $question->setText($model['text']);
@@ -65,7 +70,8 @@ class BlankQuestionService extends AbstractApiService {
 
         $result = [
             'id'       => $question->getId(),
-            'text'     => $question->getText()
+            'text'     => $question->getText(),
+            'place' => $question->getPlace()
         ];
 
         return $result;
@@ -74,11 +80,18 @@ class BlankQuestionService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @return array
      */
     public function delete(array $model) {
-        $post = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->find($model['id']);
+        $question = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->find($model['id']);
 
-        $this->em->remove($post);
+        $this->em->remove($question);
         $this->em->flush();
+
+        $result = [
+          'id' => $model['id']
+        ];
+
+        return $result;
     }
 }

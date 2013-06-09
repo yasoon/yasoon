@@ -13,43 +13,59 @@ define(['views/base/view'], function(View) {
       return EditableView.__super__.constructor.apply(this, arguments);
     }
 
-    EditableView.prototype.modesHistory = [];
-
     EditableView.prototype.getTemplateFunction = function() {
       var templateFunc;
       return templateFunc = JST[this.currentTemplateName];
     };
 
+    EditableView.prototype.setRegion = function(region) {
+      this.region = region;
+      return this;
+    };
+
+    EditableView.prototype.initialize = function() {
+      EditableView.__super__.initialize.apply(this, arguments);
+      return this.modesHistory = [];
+    };
+
+    EditableView.prototype.rendered = false;
+
+    EditableView.prototype.softrender = function() {
+      if (this.rendered) {
+        return this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
+      } else {
+        this.render();
+        return this.rendered = true;
+      }
+    };
+
     EditableView.prototype.setButtonMode = function(callback) {
-      this.$el.empty();
       this.currentTemplateName = "" + this.templateName + "Button";
+      this.softrender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'button';
-      this.render();
       return typeof callback === "function" ? callback() : void 0;
     };
 
     EditableView.prototype.setActiveMode = function(callback) {
-      this.$el.empty();
       this.currentTemplateName = "" + this.templateName + "Active";
+      this.softrender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'active';
-      this.render();
       return typeof callback === "function" ? callback() : void 0;
     };
 
     EditableView.prototype.setPassiveMode = function(callback) {
-      this.$el.empty();
       this.currentTemplateName = "" + this.templateName + "Passive";
+      this.softrender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'passive';
-      this.render();
       return typeof callback === "function" ? callback() : void 0;
     };
 

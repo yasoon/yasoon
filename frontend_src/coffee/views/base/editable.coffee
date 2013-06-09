@@ -4,33 +4,47 @@ define [
   'use strict'
 
   class EditableView extends View
-    modesHistory: []
+
 
     getTemplateFunction: ->
        templateFunc = JST[@currentTemplateName]
 
+    setRegion: (region) ->
+      @region = region
+      @
+
+    initialize: ->
+      super
+      @modesHistory =  []
+
+    rendered: false
+
+    softrender: ->
+      if @rendered
+        @$el.html JST[@currentTemplateName](@getTemplateData())
+      else
+        @render()
+        @rendered = true
+
     setButtonMode:(callback) ->
-       @$el.empty()
        @currentTemplateName = "#{@templateName}Button"
+       @softrender()
        @modesHistory.push(@mode) if @mode?
        @mode = 'button'
-       @render()
        callback?()
 
     setActiveMode: (callback) ->
-       @$el.empty()
-       @currentTemplateName = "#{@templateName}Active"
-       @modesHistory.push(@mode) if @mode?
-       @mode = 'active'
-       @render()
-       callback?()
+      @currentTemplateName = "#{@templateName}Active"
+      @softrender()
+      @modesHistory.push(@mode) if @mode?
+      @mode = 'active'
+      callback?()
 
     setPassiveMode: (callback) ->
-       @$el.empty()
        @currentTemplateName = "#{@templateName}Passive"
+       @softrender()
        @modesHistory.push(@mode) if @mode?
        @mode = 'passive'
-       @render()
        callback?()
 
     setPreviousMode: ->

@@ -28,6 +28,13 @@ class BlankQuestionEntity
      */
     protected $text;
 
+    /**
+     * @var int $place
+     *
+     * @ORM\Column(name="place", type="integer", nullable=false)
+     */
+    protected $place;
+
 
     /**
      * @param $id
@@ -64,5 +71,24 @@ class BlankQuestionEntity
     {
         return $this->text;
     }
+
+    /**
+     * @param $place
+     * @return $this
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
 
 }

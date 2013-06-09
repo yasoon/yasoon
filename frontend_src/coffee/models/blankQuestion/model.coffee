@@ -5,10 +5,6 @@ define [
   'use strict'
 
   class BlankQuestion extends Model
-    initialize: (data) ->
-      super
-      @data.id = data.id if data?
-      @data.text = data.text if data?
 
     update: (callback) ->
       @fetchParams.method = "POST"
@@ -20,22 +16,23 @@ define [
       @url = -> "api/blank_question/update"
 
       editCallback = =>
-        @trigger 'updated'
         callback()
 
       @request(editCallback)
 
     add: (callback) ->
+
       @fetchParams.method = "POST"
       @fetchParams.data =
         model:
           text:     @data.text
+          place:    @data.place
 
+      console.log @fetchParams.data
       @url = -> "api/blank_question/add"
 
       addCallback = =>
-        @trigger 'inserted'
-        @publishEvent 'postAdded', @
+#        @publishEvent 'postAdded', @
         callback()
 
       @request(addCallback)
@@ -49,14 +46,6 @@ define [
       @url = -> "api/blank_question/delete"
 
       deleteCallback = =>
-        @trigger 'deleted'
-        callback()
+        callback?()
 
       @request(deleteCallback())
-
-
-    sync: (callback) ->
-      if @data.id
-        @update(callback)
-      else
-        @add(callback)
