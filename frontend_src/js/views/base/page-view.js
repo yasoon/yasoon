@@ -17,7 +17,7 @@ define(['views/base/view'], function(View) {
 
     PageView.prototype.className = 'pageView';
 
-    PageView.prototype.container = '#center';
+    PageView.prototype.container = 'body';
 
     return PageView;
 

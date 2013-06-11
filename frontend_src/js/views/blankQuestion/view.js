@@ -22,7 +22,7 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     BlankQuestionView.prototype.autoRender = false;
 
-    BlankQuestionView.prototype.className = 'blankQuestion';
+    BlankQuestionView.prototype.className = 'blankQuestion a-quertion';
 
     BlankQuestionView.prototype.tagName = 'li';
 

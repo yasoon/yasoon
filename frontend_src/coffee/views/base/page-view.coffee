@@ -6,4 +6,4 @@ define [
   class PageView extends View
     autoRender: true
     className: 'pageView'
-    container: '#center'
+    container: 'body'

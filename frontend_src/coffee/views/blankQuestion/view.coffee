@@ -8,7 +8,7 @@ define [
     templateName: 'blankQuestion_view'
   # Automatically render after initialize.
     autoRender: false
-    className: 'blankQuestion'
+    className: 'blankQuestion a-quertion'
     tagName: 'li'
 
     setActiveMode: ->

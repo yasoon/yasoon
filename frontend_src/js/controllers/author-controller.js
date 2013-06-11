@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-view', 'models/authorPosts', 'views/authorPosts-view', 'models/post', 'views/post-view', 'views/authorPostsQueue-view'], function(Controller, AuthorInfo, AuthorInfoView, AuthorPosts, AuthorPostsView, Post, PostView, AuthorPostsQueueView) {
+define(['controllers/base/controller', 'views/page/author/posts', 'models/author/info', 'views/author/info'], function(Controller, PostsPageView, AuthorInfo, AuthorInfoView) {
   'use strict';
   var AuthorController;
   return AuthorController = (function(_super) {
@@ -15,30 +15,13 @@ define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-vi
 
     AuthorController.prototype.postsAction = function(params) {
       var _this = this;
-      this.authorInfo = new AuthorInfo({
+      this.pageView = new PostsPageView();
+      this.info = new AuthorInfo({
         id: params.id
       });
-      this.authorInfo.fetch(function() {
-        var infoView;
-        return infoView = new AuthorInfoView({
-          model: _this.authorInfo
-        });
-      });
-      this.authorPosts = new AuthorPosts({
-        id: params.id
-      });
-      return this.authorPosts.fetch(function() {
-        var newPost, newPostView, postsQueue, postsView;
-        postsView = new AuthorPostsView();
-        newPost = new Post();
-        newPost.data.authorId = params.id;
-        newPostView = new PostView({
-          model: newPost
-        });
-        newPostView.region = 'newPost';
-        newPostView.setButtonMode();
-        return postsQueue = new AuthorPostsQueueView({
-          model: _this.authorPosts
+      return this.info.fetch(function() {
+        return _this.infoView = new AuthorInfoView({
+          model: _this.info
         });
       });
     };

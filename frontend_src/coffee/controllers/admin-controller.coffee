@@ -23,7 +23,7 @@ define [
 
     #Work with questions in blank
     blankAction: ->
-      blankQuestionsView = new AdminBlankPageView()
+      @blankQuestionsView = new AdminBlankPageView()
       @queue              = new BlankQuestionsQueue()
       @queue.fetch =>
         queueView = new BlankQuestionsQueueView(model: @queue)

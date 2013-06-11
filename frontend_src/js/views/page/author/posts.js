@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page-view', 'JST', 'views/footer', 'views/header/admin_blank'], function(PageView, JST, FooterView, HeaderView) {
+define(['views/base/page-view', 'JST', 'views/footer', 'views/header/author_posts'], function(PageView, JST, FooterView, HeaderView) {
   'use strict';
   var AdminBlankPageView;
   return AdminBlankPageView = (function(_super) {
@@ -19,10 +19,11 @@ define(['views/base/page-view', 'JST', 'views/footer', 'views/header/admin_blank
       '#queue': 'queue',
       '#new': 'new',
       'footer': 'footer',
-      'header': 'header'
+      'header': 'header',
+      '#authorInfo': 'info'
     };
 
-    AdminBlankPageView.prototype.templateName = 'admin_blank-page';
+    AdminBlankPageView.prototype.templateName = 'author_posts-page';
 
     AdminBlankPageView.prototype.render = function() {
       var footerView, headerView;

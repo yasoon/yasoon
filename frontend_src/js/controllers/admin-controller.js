@@ -14,9 +14,8 @@ define(['controllers/base/controller', 'views/page/admin/blank', 'models/blankQu
     }
 
     AdminController.prototype.blankAction = function() {
-      var blankQuestionsView,
-        _this = this;
-      blankQuestionsView = new AdminBlankPageView();
+      var _this = this;
+      this.blankQuestionsView = new AdminBlankPageView();
       this.queue = new BlankQuestionsQueue();
       return this.queue.fetch(function() {
         var newQuestion, newQuestionView, queueView;
