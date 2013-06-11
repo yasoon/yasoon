@@ -38,6 +38,7 @@ JST = {}
     // Specify the paths of vendor libraries
     paths: {
       jquery: 'lib/jquery-2.0.1.min',
+      jqueryui: 'lib/jquery-ui-1.10.3.custom.min',
       underscore: 'lib/underscore-1.4.4.min',
       backbone: 'lib/backbone-1.0.0.min',
       handlebars: 'lib/handlebars-runtime-1.0.0.rc.4',
@@ -60,7 +61,8 @@ JST = {}
       JST: {
         deps: ['handlebars'],
         exports: 'JST'
-      }
+      },
+      'jqueryui.sortable': ['jqueryui']
     }
     // For easier development, disable browser caching
     // Of course, this should be removed in a production environment

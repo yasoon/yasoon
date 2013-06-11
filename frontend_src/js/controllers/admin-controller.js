@@ -31,7 +31,13 @@ define(['controllers/base/controller', 'views/page/admin/blank', 'models/blankQu
           model: newQuestion
         });
         newQuestionView.region = 'new';
-        return newQuestionView.setButtonMode();
+        newQuestionView.setButtonMode();
+        _this.subscribeEvent('blankQuestionAdded', function() {
+          return newQuestion.data.place++;
+        });
+        return _this.subscribeEvent('blankQuestionDeleted', function() {
+          return newQuestion.data.place--;
+        });
       });
     };
 

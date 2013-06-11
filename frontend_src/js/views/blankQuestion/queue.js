@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'models/blankQuestion/model', 'views/blankQuestion/view'], function(View, JST, BlankQuestion, BlankQuestionView) {
+define(['views/base/view', 'JST', 'models/blankQuestion/model', 'views/blankQuestion/view', 'jqueryui', 'models/blankQuestion/placesMap'], function(View, JST, BlankQuestion, BlankQuestionView, Sortable, PlacesMap) {
   'use strict';
   var BlankQuestionsQueueView;
   return BlankQuestionsQueueView = (function(_super) {
@@ -13,7 +13,7 @@ define(['views/base/view', 'JST', 'models/blankQuestion/model', 'views/blankQues
       return BlankQuestionsQueueView.__super__.constructor.apply(this, arguments);
     }
 
-    BlankQuestionsQueueView.prototype.className = 'list';
+    BlankQuestionsQueueView.prototype.className = 'blankQuestionList';
 
     BlankQuestionsQueueView.prototype.autoRender = true;
 
@@ -25,18 +25,76 @@ define(['views/base/view', 'JST', 'models/blankQuestion/model', 'views/blankQues
 
     BlankQuestionsQueueView.prototype.templateName = 'blankQuestion_queue';
 
-    BlankQuestionsQueueView.prototype.render = function() {
-      var question, _i, _len, _ref, _results;
-      BlankQuestionsQueueView.__super__.render.apply(this, arguments);
+    BlankQuestionsQueueView.prototype.initialize = function() {
+      BlankQuestionsQueueView.__super__.initialize.apply(this, arguments);
+      this.subscribeEvent('blankQuestionAdded', this.addQuestion);
+      return this.subscribeEvent('blankQuestionDeleted', this.deleteQuestion);
+    };
+
+    BlankQuestionsQueueView.prototype.addQuestion = function(question) {
+      console.log(this.model.questions);
+      this.model.questions.push(question);
+      console.log(this.model.questions);
+      return this.render();
+    };
+
+    BlankQuestionsQueueView.prototype.deleteQuestion = function(question) {
+      var key, qst, _i, _len, _ref;
       _ref = this.model.questions;
-      _results = [];
+      for (key = _i = 0, _len = _ref.length; _i < _len; key = ++_i) {
+        qst = _ref[key];
+        if (qst.data.id === question.data.id) {
+          this.model.questions.splice(key, 1);
+          break;
+        }
+      }
+      this.$el.find("#" + question.data.id).remove();
+      return this.refreshOrder();
+    };
+
+    BlankQuestionsQueueView.prototype.buildPlacesMap = function() {
+      var placesMap, question, _i, _len, _ref;
+      placesMap = new PlacesMap();
+      _ref = this.$el.find('.question');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         question = _ref[_i];
-        _results.push((new BlankQuestionView({
-          model: question
-        })).setRegion('list').setPassiveMode());
+        placesMap.map.push($(question).attr('id'));
       }
-      return _results;
+      return placesMap;
+    };
+
+    BlankQuestionsQueueView.prototype.refreshOrder = function() {
+      var newOrder, placesMap, question, _i, _len, _ref;
+      placesMap = this.buildPlacesMap();
+      newOrder = [];
+      _ref = this.model.questions;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        question = _ref[_i];
+        question.data.place = placesMap.map.indexOf('' + question.data.id) + 1;
+        newOrder[placesMap.map.indexOf('' + question.data.id)] = question;
+      }
+      this.model.questions = newOrder;
+      placesMap.sync();
+      return this.render();
+    };
+
+    BlankQuestionsQueueView.prototype.render = function() {
+      var question, _i, _len, _ref,
+        _this = this;
+      BlankQuestionsQueueView.__super__.render.apply(this, arguments);
+      _ref = this.model.questions;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        question = _ref[_i];
+        (new BlankQuestionView({
+          model: question
+        })).setRegion('list').setPassiveMode();
+      }
+      return this.$el.find('#list').sortable({
+        cursor: 'move',
+        update: function() {
+          return _this.refreshOrder();
+        }
+      });
     };
 
     return BlankQuestionsQueueView;

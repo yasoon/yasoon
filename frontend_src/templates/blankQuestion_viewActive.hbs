@@ -1,8 +1,9 @@
-
-<textarea id='{{question.id}}' class='body'>{{question.text}}</textarea>
-<div id="buttons">
-    <div id='sendButton'>send</div>
-    {{#if question.id}}
-    <div id='deleteButton'>delete</div>
-    {{/if}}
+<div class = 'question' id='{{question.id}}'>
+    <textarea id='{{question.id}}' class='body'>{{question.text}}</textarea>
+    <div id="buttons">
+        <div id='sendButton'>send</div>
+        {{#if question.id}}
+        <div id='deleteButton'>delete</div>
+        {{/if}}
+    </div>
 </div>

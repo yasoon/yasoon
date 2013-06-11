@@ -25,7 +25,6 @@ define(['chaplin', 'models/base/model', 'models/blankQuestion/model'], function(
           questionData = _ref[_i];
           question = new BlankQuestion;
           question.data = questionData;
-          console.log(question.data);
           _this.questions.push(question);
         }
         return typeof callback === "function" ? callback() : void 0;

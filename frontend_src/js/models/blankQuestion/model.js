@@ -16,6 +16,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     BlankQuestion.prototype.update = function(callback) {
       var editCallback,
         _this = this;
+      this.fetchParams = {};
       this.fetchParams.method = "POST";
       this.fetchParams.data = {
         model: {
@@ -35,6 +36,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     BlankQuestion.prototype.add = function(callback) {
       var addCallback,
         _this = this;
+      this.fetchParams = {};
       this.fetchParams.method = "POST";
       this.fetchParams.data = {
         model: {
@@ -42,11 +44,20 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           place: this.data.place
         }
       };
-      console.log(this.fetchParams.data);
       this.url = function() {
         return "api/blank_question/add";
       };
       addCallback = function() {
+        var addedQuestion;
+        addedQuestion = new BlankQuestion;
+        addedQuestion.data = {
+          id: _this.data.id,
+          place: _this.data.place,
+          text: _this.data.text
+        };
+        _this.publishEvent('blankQuestionAdded', addedQuestion);
+        _this.data.id = void 0;
+        _this.data.text = '';
         return callback();
       };
       return this.request(addCallback);
@@ -55,6 +66,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     BlankQuestion.prototype["delete"] = function(callback) {
       var deleteCallback,
         _this = this;
+      this.fetchParams = {};
       this.fetchParams.method = "POST";
       this.fetchParams.data = {
         model: {
@@ -65,6 +77,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         return "api/blank_question/delete";
       };
       deleteCallback = function() {
+        _this.publishEvent('blankQuestionDeleted', _this);
         return typeof callback === "function" ? callback() : void 0;
       };
       return this.request(deleteCallback());

@@ -23,7 +23,8 @@ class BlankQuestionService extends AbstractApiService {
      */
     public function getAll() {
         /** @var BlankQuestionEntity[] $allQuestions  */
-        $allQuestions = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->findAll();
+        $allQuestions = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')
+            ->findBy([], ['place' => 'asc']);
 
         $result = [];
         foreach ($allQuestions as $question) {
@@ -94,4 +95,24 @@ class BlankQuestionService extends AbstractApiService {
 
         return $result;
     }
+
+    /**
+     * @param array $map
+     * @return array
+     */
+    public function updatePlaces(array $map) {
+        $values = [];
+        foreach ($map as $place => $id) {
+            $place = (int)$place + 1;
+            $id =    (int)$id;
+            $values[] = "('$id', '$place')";
+        }
+        $sql = 'INSERT INTO blank_question (id, place) VALUES  '.implode(',', $values).
+        'ON DUPLICATE KEY UPDATE place=VALUES(place)';
+
+        $this->em->getConnection()->executeQuery($sql);
+
+        return ['ok' => 'ok'];
+    }
+
 }

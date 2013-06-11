@@ -33,3 +33,10 @@ define [
         newQuestionView.region = 'new'
         newQuestionView.setButtonMode()
 
+        @subscribeEvent 'blankQuestionAdded', ->
+          newQuestion.data.place++
+        @subscribeEvent 'blankQuestionDeleted', ->
+          newQuestion.data.place--
+
+
+

@@ -24,6 +24,8 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     BlankQuestionView.prototype.className = 'blankQuestion';
 
+    BlankQuestionView.prototype.tagName = 'li';
+
     BlankQuestionView.prototype.setActiveMode = function() {
       BlankQuestionView.__super__.setActiveMode.apply(this, arguments);
       return this.$el.find('.body').focus();
@@ -34,7 +36,9 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
         return this.setActiveMode();
       },
       'click .question': function() {
-        return this.setActiveMode();
+        if (this.mode === 'passive') {
+          return this.setActiveMode();
+        }
       },
       'keydown .body': function(e) {
         if (e.keyCode === 27) {
@@ -53,9 +57,6 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
           });
         } else {
           return this.model.add(function() {
-            _this.model.data = {
-              place: parseInt(_this.model.data.place) + 1
-            };
             return _this.setButtonMode();
           });
         }

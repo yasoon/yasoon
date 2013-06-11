@@ -76,4 +76,17 @@ class BlankQuestionController {
         return $this->service->delete($model);
     }
 
+    /**
+     * @Route("/update_places")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function updatePlaces(Request $request) {
+        $map = $request->request->get('map');
+
+        return $this->service->updatePlaces($map);
+    }
+
 }

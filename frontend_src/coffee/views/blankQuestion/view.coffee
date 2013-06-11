@@ -9,6 +9,7 @@ define [
   # Automatically render after initialize.
     autoRender: false
     className: 'blankQuestion'
+    tagName: 'li'
 
     setActiveMode: ->
       super
@@ -21,7 +22,7 @@ define [
 
       #passive events
       'click .question': ->
-        @setActiveMode()
+        @setActiveMode() if @mode is 'passive'
 
       #active events
       'keydown .body': (e) ->
@@ -38,7 +39,6 @@ define [
             @setPreviousMode()
         else
           @model.add =>
-            @model.data = {place: parseInt(@model.data.place) + 1 }
             @setButtonMode()
 
       'click #deleteButton': (e) ->
