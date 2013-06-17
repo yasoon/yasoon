@@ -96,7 +96,7 @@ class AuthorController {
     }
 
     /**
-     * @Route("get_questions/{authorId}", requirements={"authorId" = "\d+"})
+     * @Route("/get_questions/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
     public function getQuestionsAction($authorId)
@@ -108,7 +108,7 @@ class AuthorController {
 
 
     /**
-     * @Route("get_blank/{authorId}", requirements={"authorId" = "\d+"})
+     * @Route("/get_blank/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      */
     public function getBlankAction($authorId)

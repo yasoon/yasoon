@@ -28,6 +28,56 @@ class AuthorEntity
      */
     protected $name;
 
+
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", nullable=false)
+     */
+    protected $email;
+
+    /**
+     * @var bool $subscribed
+     *
+     * @ORM\Column(name="subscribed", type="string", nullable=false)
+     */
+    protected $subscribed;
+
+    /**
+     * @var string $description
+     *
+     * @ORM\Column(name="description", type="string", nullable=false)
+     */
+    protected $description;
+
+    /**
+     * @var \DateTime $publicationDate
+     *
+     * @ORM\Column(name="publication_date", type="datetime", nullable=false)
+     */
+    protected $publicationDate;
+
+    /**
+     * @var string $job
+     *
+     * @ORM\Column(name="job", type="string", nullable=true)
+     */
+    protected $job;
+
+    /**
+     * @var string $dream
+     *
+     * @ORM\Column(name="dream", type="string", nullable=true)
+     */
+    protected $dream;
+
+    /**
+     * @var string $interest
+     *
+     * @ORM\Column(name="interest", type="string", nullable=true)
+     */
+    protected $interest;
+
     /**
      * @var PostEntity[]
      *
@@ -35,12 +85,13 @@ class AuthorEntity
      */
     protected $posts;
 
+
     /**
-     * @var AnswersEntity[]
+     * @var QuestionEntity[]
      *
-     * @ORM\OneToMany(targetEntity="AnswerEntity", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="QuestionEntity", mappedBy="author")
      */
-    protected $answers;
+    protected $questions;
 
     /**
      * @param $id

@@ -12,4 +12,15 @@ define [
 
     templateName: 'header_author_posts'
 
+    events:
+      'click #loginButton': ->
+        @publishEvent 'login'
+      'click #logoutButton': ->
+        @publishEvent 'logout'
 
+    initialize: ->
+      super
+
+
+    getTemplateData: ->
+      {authorized: @authorized}

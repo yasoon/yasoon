@@ -21,15 +21,19 @@ class PostService extends AbstractApiService {
      * @return array
      */
     public function add(array $model) {
+
+        $authorId = 1; //@TODO получать из сесии
+
+
         /** @var $postEntity PostEntity */
         $postEntity = (new PostEntity())
             ->setCaption($model['caption'])
             ->setPreview($model['preview'])
             ->setText($model['text'])
-            ->setAuthorId($model['authorId'])
+            ->setAuthorId($authorId)
             ->setDate(new \DateTime());
 
-        $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
+        $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
 
         $this->em->persist($postEntity);
         $this->em->flush();
@@ -119,7 +123,7 @@ class PostService extends AbstractApiService {
         foreach ($questions as $question) {
             $result[] = [
                 'id'         => $question->getId(),
-                'text'       => $question->getText(),
+                'text'       => $question->getCaption(),
                 'answerText' => $question->getAnswer()->getText()
             ];
         }

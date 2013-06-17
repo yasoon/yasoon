@@ -4,18 +4,23 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['views/base/page-view', 'JST', 'views/footer', 'views/header/author_posts'], function(PageView, JST, FooterView, HeaderView) {
   'use strict';
-  var AdminBlankPageView;
-  return AdminBlankPageView = (function(_super) {
+  var AuthorPostsPageView;
+  return AuthorPostsPageView = (function(_super) {
 
-    __extends(AdminBlankPageView, _super);
+    __extends(AuthorPostsPageView, _super);
 
-    function AdminBlankPageView() {
-      return AdminBlankPageView.__super__.constructor.apply(this, arguments);
+    function AuthorPostsPageView() {
+      return AuthorPostsPageView.__super__.constructor.apply(this, arguments);
     }
 
-    AdminBlankPageView.prototype.className = 'postPage';
+    AuthorPostsPageView.prototype.className = 'postPage';
 
-    AdminBlankPageView.prototype.regions = {
+    AuthorPostsPageView.prototype.initialize = function(params) {
+      AuthorPostsPageView.__super__.initialize.apply(this, arguments);
+      return this.authorId = params.authorId;
+    };
+
+    AuthorPostsPageView.prototype.regions = {
       '#queue': 'queue',
       '#new': 'new',
       'footer': 'footer',
@@ -23,16 +28,25 @@ define(['views/base/page-view', 'JST', 'views/footer', 'views/header/author_post
       '#authorInfo': 'info'
     };
 
-    AdminBlankPageView.prototype.templateName = 'author_posts-page';
+    AuthorPostsPageView.prototype.templateName = 'author_posts-page';
 
-    AdminBlankPageView.prototype.render = function() {
+    AuthorPostsPageView.prototype.events = {
+      'click #toStories': function() {
+        return this.publishEvent('redirect', "#author/" + this.authorId + "/posts");
+      },
+      'click #toAnswers': function() {
+        return this.publishEvent('redirect', "#author/" + this.authorId + "/questions");
+      }
+    };
+
+    AuthorPostsPageView.prototype.render = function() {
       var footerView, headerView;
-      AdminBlankPageView.__super__.render.apply(this, arguments);
+      AuthorPostsPageView.__super__.render.apply(this, arguments);
       footerView = new FooterView();
       return headerView = new HeaderView();
     };
 
-    return AdminBlankPageView;
+    return AuthorPostsPageView;
 
   })(PageView);
 });

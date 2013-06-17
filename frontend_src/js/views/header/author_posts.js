@@ -21,6 +21,25 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     HeaderAuthorPosts.prototype.templateName = 'header_author_posts';
 
+    HeaderAuthorPosts.prototype.events = {
+      'click #loginButton': function() {
+        return this.publishEvent('login');
+      },
+      'click #logoutButton': function() {
+        return this.publishEvent('logout');
+      }
+    };
+
+    HeaderAuthorPosts.prototype.initialize = function() {
+      return HeaderAuthorPosts.__super__.initialize.apply(this, arguments);
+    };
+
+    HeaderAuthorPosts.prototype.getTemplateData = function() {
+      return {
+        authorized: this.authorized
+      };
+    };
+
     return HeaderAuthorPosts;
 
   })(View);

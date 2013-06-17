@@ -24,9 +24,9 @@ class QuestionEntity
     /**
      * @var string $text
      *
-     * @ORM\Column(name="text", type="string", nullable=false)
+     * @ORM\Column(name="caption", type="string", nullable=false)
      */
-    protected $text;
+    protected $caption;
 
     /**
      * @var int $authorId
@@ -44,38 +44,6 @@ class QuestionEntity
     protected $author;
 
     /**
-     * @var int $answerId
-     *
-     * @ORM\Column(name="answer_id", type="integer", nullable=true)
-     */
-    protected $answerId;
-
-//    /**
-//     * @var AnswerEntity
-//     *
-//     * @ORM\OneToOne(targetEntity="AnswerEntity")
-//     * @ORM\JoinColumn(name="answer_id", referencedColumnName="id", nullable=true)
-//     */
-//    protected $answer;
-
-    /**
-     * PostId can be null. If so, it's a common question to author, not for a post
-     *
-     * @var int $postId
-     *
-     * @ORM\Column(name="post_id", type="integer", nullable=true)
-     */
-    protected $postId;
-
-    /**
-     * @var PostEntity $post
-     *
-     * @ORM\ManyToOne(targetEntity="PostEntity")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     */
-    protected $post;
-
-    /**
      * @var \DateTime $date
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
@@ -88,6 +56,13 @@ class QuestionEntity
      * @ORM\Column(name="is_in_blank", type="boolean", nullable=false)
      */
     protected $isInBlank;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="answer", type="string", nullable=false)
+     */
+    protected $answer;
 
     /**
      * @param $author
@@ -219,54 +194,36 @@ class QuestionEntity
      * @param $text
      * @return $this
      */
-    public function setText($text)
+    public function setCaption($text)
     {
-        $this->text = $text;
+        $this->caption = $text;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getText()
+    public function getCaption()
     {
-        return $this->text;
+        return $this->caption;
     }
 
     /**
-     * @param $answer
+     * @param string $answer
      * @return $this
      */
     public function setAnswer($answer)
     {
-        $this->answer = $answer;
+        $this->answer =  $answer;
         return $this;
     }
 
     /**
-     * @return \Yasoon\Site\Entity\AnswerEntity
+     * @return string
      */
     public function getAnswer()
     {
         return $this->answer;
-    }
-
-    /**
-     * @param $answerId
-     * @return $this
-     */
-    public function setAnswerId($answerId)
-    {
-        $this->answerId = $answerId;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAnswerId()
-    {
-        return $this->answerId;
     }
 
 

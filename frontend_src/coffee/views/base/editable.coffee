@@ -19,7 +19,7 @@ define [
 
     rendered: false
 
-    softrender: ->
+    softRender: ->
       if @rendered
         @$el.html JST[@currentTemplateName](@getTemplateData())
       else
@@ -28,24 +28,27 @@ define [
 
     setButtonMode:(callback) ->
        @currentTemplateName = "#{@templateName}Button"
-       @softrender()
+       @softRender()
        @modesHistory.push(@mode) if @mode?
        @mode = 'button'
        callback?()
+       @
 
     setActiveMode: (callback) ->
       @currentTemplateName = "#{@templateName}Active"
-      @softrender()
+      @softRender()
       @modesHistory.push(@mode) if @mode?
       @mode = 'active'
       callback?()
+      @
 
     setPassiveMode: (callback) ->
        @currentTemplateName = "#{@templateName}Passive"
-       @softrender()
+       @softRender()
        @modesHistory.push(@mode) if @mode?
        @mode = 'passive'
        callback?()
+       @
 
     setPreviousMode: ->
       if @modesHistory[@modesHistory.length-1] is 'button'

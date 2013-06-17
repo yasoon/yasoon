@@ -23,9 +23,7 @@ define [
       @subscribeEvent 'blankQuestionDeleted', @deleteQuestion
 
     addQuestion: (question) ->
-      console.log @model.questions
       @model.questions.push(question)
-      console.log @model.questions
       @render()
 
     deleteQuestion: (question) ->

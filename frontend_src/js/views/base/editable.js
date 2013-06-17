@@ -30,7 +30,7 @@ define(['views/base/view'], function(View) {
 
     EditableView.prototype.rendered = false;
 
-    EditableView.prototype.softrender = function() {
+    EditableView.prototype.softRender = function() {
       if (this.rendered) {
         return this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
       } else {
@@ -41,32 +41,41 @@ define(['views/base/view'], function(View) {
 
     EditableView.prototype.setButtonMode = function(callback) {
       this.currentTemplateName = "" + this.templateName + "Button";
-      this.softrender();
+      this.softRender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'button';
-      return typeof callback === "function" ? callback() : void 0;
+      if (typeof callback === "function") {
+        callback();
+      }
+      return this;
     };
 
     EditableView.prototype.setActiveMode = function(callback) {
       this.currentTemplateName = "" + this.templateName + "Active";
-      this.softrender();
+      this.softRender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'active';
-      return typeof callback === "function" ? callback() : void 0;
+      if (typeof callback === "function") {
+        callback();
+      }
+      return this;
     };
 
     EditableView.prototype.setPassiveMode = function(callback) {
       this.currentTemplateName = "" + this.templateName + "Passive";
-      this.softrender();
+      this.softRender();
       if (this.mode != null) {
         this.modesHistory.push(this.mode);
       }
       this.mode = 'passive';
-      return typeof callback === "function" ? callback() : void 0;
+      if (typeof callback === "function") {
+        callback();
+      }
+      return this;
     };
 
     EditableView.prototype.setPreviousMode = function() {

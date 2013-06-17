@@ -11,7 +11,7 @@ define [
       Chaplin.mediator.subscribe 'redirect', @redirect
 
     redirect: (url) =>
-      @publishEvent 'dispose'
+#      @publishEvent 'dispose'
       document.location = url
 
     redirectAction: (params) =>

@@ -7,3 +7,6 @@ define [
     autoRender: true
     className: 'pageView'
     container: 'body'
+
+    softRender: ->
+      #page views must not be re-rendered

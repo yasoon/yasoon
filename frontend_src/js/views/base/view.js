@@ -18,6 +18,22 @@ define(['chaplin'], function(Chaplin) {
       return templateFunc = JST[this.templateName];
     };
 
+    View.prototype.softRender = function() {
+      return this.$el.html(JST[this.templateName](this.getTemplateData()));
+    };
+
+    View.prototype.initialize = function() {
+      this.authorized = true;
+      this.subscribeEvent('logout', function() {
+        this.authorized = false;
+        return this.softRender();
+      });
+      return this.subscribeEvent('login', function() {
+        this.authorized = true;
+        return this.softRender();
+      });
+    };
+
     return View;
 
   })(Chaplin.View);

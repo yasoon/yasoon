@@ -21,25 +21,22 @@ class QuestionService extends AbstractApiService {
      * @return array
      */
     public function add(array $model) {
+        $entity = (new QuestionEntity())
+            ->setCaption($model['caption'])
+            ->setDate(new \DateTime())
+            ->setIsInBlank(false);
 
+        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
 
-//        /** @var $postEntity PostEntity */
-//        $entity = (new QuestionEntity())
-//            ->setText($model['text'])
-//            ->setDate(new \DateTime())
-//            ->setIsInBlank(false);
-//
-//        $entity->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $model['authorId']));
-//
-//        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
-//
-//        $this->em->persist($entity);
-//        $this->em->flush();
+        $this->em->persist($entity);
+        $this->em->flush();
 
         $result = [
-            'id'       => $postEntity->getId(),
-            'text'     => $postEntity->getText(),
-            'authorId' => $postEntity->getAuthorId()
+            'id'       => $entity->getId(),
+            'caption'  => $entity->getCaption(),
+            'date'     => $entity->getDate()->format('Y-m-d'),
+            'authorId' => $entity->getAuthorId(),
+            'answer'   => ''
         ];
 
         return $result;
@@ -50,22 +47,22 @@ class QuestionService extends AbstractApiService {
      * @param array $model
      */
     public function update(array $model) {
-        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($model['id']);
 
-        $post->setCaption($model['caption'])
-            ->setPreview($model['preview'])
-            ->setText($model['text']);
+        /** @var QuestionEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
 
-        $this->em->merge($post);
+        $entity->setCaption($model['caption'])
+            ->setAnswer($model['answer']);
+
+        $this->em->merge($entity);
         $this->em->flush();
 
         $result = [
-            'id'       => $post->getId(),
-            'caption'  => $post->getCaption(),
-            'preview'  => $post->getPreview(),
-            'text'     => $post->getText(),
-            'authorId' => $post->getAuthorId(),
-            'date'     => $post->getDate()->format('Y-m-d H:i')
+            'id'       => $entity->getId(),
+            'caption'  => $entity->getCaption(),
+            'answer'   => $entity->getAnswer(),
+            'authorId' => $entity->getAuthorId(),
+            'date'     => $entity->getDate()->format('Y-m-d')
         ];
 
         return $result;
@@ -76,7 +73,7 @@ class QuestionService extends AbstractApiService {
      * @param array $model
      */
     public function delete(array $model) {
-        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($model['id']);
+        $post = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
 
         $this->em->remove($post);
         $this->em->flush();
@@ -118,7 +115,7 @@ class QuestionService extends AbstractApiService {
         foreach ($questions as $question) {
             $result[] = [
                 'id'         => $question->getId(),
-                'text'       => $question->getText(),
+                'text'       => $question->getCaption(),
                 'answerText' => $question->getAnswer()->getText()
             ];
         }

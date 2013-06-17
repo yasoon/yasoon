@@ -12,8 +12,5 @@ define [
 
     templateName: 'author_info'
 
-#    listen:
-#      'updated model': 'render'
-
     getTemplateData: ->
-      {author: @model.data}
+      {author: @model.data, authorized: @authorized}

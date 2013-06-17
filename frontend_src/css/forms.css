@@ -76,6 +76,7 @@ textarea.error {
 [type="text"],
 [type="password"],
 textarea,
+.textarea,
 [type="date"],
 select {
   border: none;
@@ -194,7 +195,7 @@ a,
   display: inline-block;
   *display: inline;
   zoom: 1;
-  color: red;
+  color: red !important;
 }
 .hr {
   border-top: 1px solid #e2e2e2;
@@ -285,6 +286,9 @@ a,
   *width: 620px;
   padding-bottom: 50px;
 }
+.post-edit article {
+  border: 0;
+}
 .post-edit-tools {
   background: #f3f3f3;
 }
@@ -297,6 +301,20 @@ a,
 }
 .post-edit-tools .item:active {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+#wysihtml5-toolbar {
+  max-width: 620px;
+  margin: 0 auto;
+  *width: 620px;
+  position: relative;
+  top: 0;
+}
+#wysihtml5-toolbar a {
+  float: left;
+  border-right: 1px solid #E2E2E2;
+  padding: 0 10px;
+  line-height: 30px;
+  cursor: pointer;
 }
 .a-quertion {
   cursor: pointer;

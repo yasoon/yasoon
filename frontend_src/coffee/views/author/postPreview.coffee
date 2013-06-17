@@ -4,16 +4,13 @@ define [
 ], (View, JST) ->
   'use strict'
 
-  class AuthorInfoView extends View
+  class AuthorPostPreviewView extends View
   # Automatically render after initialize.
     autoRender: true
-    className: 'authorInfo'
-    container: '#left'
+    className: 'content'
+    region: 'list'
 
-    templateName: 'authorInfo'
-
-    listen:
-      'updated model': 'render'
+    templateName: 'author_postPreview'
 
     getTemplateData: ->
       {author: @model.data}

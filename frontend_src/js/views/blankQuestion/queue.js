@@ -32,9 +32,7 @@ define(['views/base/view', 'JST', 'models/blankQuestion/model', 'views/blankQues
     };
 
     BlankQuestionsQueueView.prototype.addQuestion = function(question) {
-      console.log(this.model.questions);
       this.model.questions.push(question);
-      console.log(this.model.questions);
       return this.render();
     };
 

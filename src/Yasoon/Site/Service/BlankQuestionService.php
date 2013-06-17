@@ -29,9 +29,9 @@ class BlankQuestionService extends AbstractApiService {
         $result = [];
         foreach ($allQuestions as $question) {
             $result[] = [
-                'id' => $question->getId(),
+                'id'   => (int)$question->getId(),
                 'text' => $question->getText(),
-                'place' => $question->getPlace()
+                'place'=> (int)$question->getPlace()
             ];
         }
 
@@ -50,9 +50,9 @@ class BlankQuestionService extends AbstractApiService {
         $this->em->flush();
 
         return [
-          'id' => $question->getId(),
+          'id' => (int)$question->getId(),
           'text' => $question->getText(),
-          'place' => $question->getPlace()
+          'place' => (int)$question->getPlace()
         ];
     }
 
@@ -70,9 +70,9 @@ class BlankQuestionService extends AbstractApiService {
         $this->em->flush();
 
         $result = [
-            'id'       => $question->getId(),
+            'id'       => (int)$question->getId(),
             'text'     => $question->getText(),
-            'place' => $question->getPlace()
+            'place'    => (int)$question->getPlace()
         ];
 
         return $result;
@@ -112,7 +112,7 @@ class BlankQuestionService extends AbstractApiService {
 
         $this->em->getConnection()->executeQuery($sql);
 
-        return ['ok' => 'ok'];
+        return $map;
     }
 
 }

@@ -24,4 +24,3 @@ define [
         data: {}
 
       @request fetchCallback
-

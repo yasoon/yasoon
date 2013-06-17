@@ -1,0 +1,15 @@
+<article>
+    <div class="like-title">
+        <span class="like-this"></span>
+        <h1>{{post.caption}} <span class="media-pub">{{post.date}}</span></h1>
+    </div>
+    <div class="content">
+        {{post.text}}
+    </div>
+</article>
+<div class="di t-center">
+        <a class="btn" id='editButton'>Edit</a>
+    {{#if post.id}}
+        <a class="btn btn-danger"  id='deleteButton'>Delete</a>
+    {{/if}}
+</div>

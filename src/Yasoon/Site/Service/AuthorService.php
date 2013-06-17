@@ -52,18 +52,37 @@ class AuthorService extends AbstractApiService {
 
     public function getShortInfo($authorId)
     {
+
         $data = $this->em->createQueryBuilder()
-            ->select('author.id, author.name, count(posts) as postsCount, count(answers) as answersCount')
+            ->select('author.id, author.name, author.description, author.publicationDate,
+            author.job, author.interest, author.dream, posts.id as postId, questions.id as questionId')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.posts', 'posts')
-            ->leftJoin('author.answers', 'answers')
-            ->getQuery()->getSingleResult();
+            ->leftJoin('author.questions', 'questions', 'WITH', 'questions.answer IS NOT NULL')
+            ->getQuery()->getResult();
+
+
+        //@TODO пипец костыль (устал и хочу спать). Исправить на нормальный подсчёт sql-ем или ещё как
+        $posts = []; $questions = [];
+        foreach ($data as $row) {
+            $posts[] = $row['postId'];
+            $questions[] = $row['questionId'];
+        }
+        $data = $row;
+        $data['postsCount'] = count(array_unique($posts));
+        $data['answersCount'] = count(array_unique($questions));
+        //------------------- костыль моде офф
 
         $result = [
-          'id'      => $data['id'],
-          'name'    => $data['name'],
-          'posts'   => $data['postsCount'],
-          'answers' => $data['answersCount']
+            'id'      => $data['id'],
+            'name'    => $data['name'],
+            'description' => $data['description'],
+            'publicationDate' => $data['publicationDate']->format('Y-m-d'),
+            'job' => $data['job'],
+            'interest' => $data['interest'],
+            'dream' => $data['dream'],
+            'posts'   => $data['postsCount'],
+            'answers' => $data['answersCount']
         ];
 
         return $result;
@@ -103,18 +122,20 @@ class AuthorService extends AbstractApiService {
 
         $result = [];
 
-        /** @var QuestionEntity[] $questions */
-        $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')
-            ->findBy([
-                'authorId' => $authorId,
-                'postId'   => null,
-                'isInBlank' => false
-                ]);
+        $questions = $this->em->createQueryBuilder()
+            ->select('question')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+            ->where("question.authorId = $authorId")
+            ->andWhere('question.isInBlank = 0')
+            ->orderBy('question.id', 'DESC')
+            ->getQuery()->getResult();
 
         foreach ($questions as $question) {
             $result[] = [
               'id'  => $question->getId(),
-              'text' => $question->getText()
+              'caption' => $question->getCaption(),
+              'date'    => $question->getDate()->format('Y-m-d'),
+              'answer' => $question->getAnswer()
             ];
         }
 
@@ -132,22 +153,18 @@ class AuthorService extends AbstractApiService {
 
         /** @var QuestionEntity[] $questions */
         $questions= $this->em->createQueryBuilder()
-            ->select('question, answer')
+            ->select('question')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
-            ->leftJoin('question.answer', 'answer')
             ->where('question.isInBlank = true')
             ->andWhere("question.authorId = $authorId")
-            ->getQuety()->getResult();
+            ->getQuery()->getResult();
 
         foreach ($questions as $question) {
-            $qst = [
-                'id'   => $question->getId(),
-                'text' => $question->getText()
+            $result[] = [
+                'id'     => $question->getId(),
+                'caption'   => $question->getCaption(),
+                'answer' => $question->getAnswer()
             ];
-            $answer = ($answer = $question->getAnswer() === null) ? null : [
-                'text' => $answer->getText()
-            ];
-            $result[] = ['question' => $qst, 'answer' => $answer];
         }
 
         return $result;

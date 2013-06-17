@@ -27,7 +27,6 @@ define(['controllers/base/controller', 'chaplin'], function(Controller, Chaplin)
     };
 
     RedirectController.prototype.redirect = function(url) {
-      this.publishEvent('dispose');
       return document.location = url;
     };
 

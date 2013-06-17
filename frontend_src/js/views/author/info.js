@@ -23,7 +23,8 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     AuthorInfoView.prototype.getTemplateData = function() {
       return {
-        author: this.model.data
+        author: this.model.data,
+        authorized: this.authorized
       };
     };
 
