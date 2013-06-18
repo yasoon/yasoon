@@ -23,7 +23,8 @@ define [
       @subscribeEvent 'questionDeleted', @deleteQuestion
 
     addQuestion: (question) ->
-      @model.questions.push(question)
+      console.log 'qwe'
+      @model.questions.splice(0, 0, question)
       @render()
 
     deleteQuestion: (question) ->
@@ -38,9 +39,22 @@ define [
     getTemplateData: ->
       {questions: @model.questions, authorized: @authorized}
 
+    addSortable: ->
+      if @authorized
+        @$el.find('#list').sortable(
+          cursor: 'move'
+          update: =>
+            #@refreshOrder()
+        )
+        @$el.find('#list').sortable('enable')
+
+      else
+        @$el.find('#list').sortable('disable')
+
     softRender: ->
       for view in @views
         view.softRender()
+      @addSortable()
 
     render: ->
       super
@@ -49,6 +63,8 @@ define [
       @views = []
       for question in @model.questions
         @views.push (new QuestionView(model: question)).setRegion('list').setPassiveMode()
+
+      @addSortable()
 
 
 

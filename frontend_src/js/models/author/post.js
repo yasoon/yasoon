@@ -17,6 +17,20 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return Post.__super__.initialize.apply(this, arguments);
     };
 
+    Post.prototype.fetch = function(callback) {
+      var addCallback,
+        _this = this;
+      this.fetchParams = {};
+      this.fetchParams.method = "GET";
+      this.url = function() {
+        return "api/post/get/" + this.id;
+      };
+      addCallback = function() {
+        return callback();
+      };
+      return this.request(addCallback);
+    };
+
     Post.prototype.update = function(callback) {
       var editCallback,
         _this = this;

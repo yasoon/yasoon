@@ -4,12 +4,17 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
   'use strict';
-  var Question;
+  var Question,
+    _this = this;
   return Question = (function(_super) {
 
     __extends(Question, _super);
 
     function Question() {
+      var _this = this;
+      this.addInterview = function(callback) {
+        return Question.prototype.addInterview.apply(_this, arguments);
+      };
       return Question.__super__.constructor.apply(this, arguments);
     }
 
@@ -40,6 +45,38 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         return callback();
       };
       return this.request(editCallback);
+    };
+
+    Question.prototype.addInterview = function(callback) {
+      var addCallback,
+        _this = this;
+      this.fetchParams = {};
+      this.fetchParams.method = "POST";
+      this.fetchParams.data = {
+        model: {
+          caption: this.data.caption,
+          authorId: this.data.authorId,
+          answer: this.data.answer
+        }
+      };
+      this.url = function() {
+        return "api/question/add_interview";
+      };
+      addCallback = function() {
+        var addedQuestion;
+        addedQuestion = new Question;
+        addedQuestion.data = {
+          id: _this.data.id,
+          caption: _this.data.caption,
+          date: _this.data.date,
+          answer: _this.data.answer
+        };
+        _this.publishEvent('questionAdded', addedQuestion);
+        _this.data.id = void 0;
+        _this.data.text = '';
+        return typeof callback === "function" ? callback() : void 0;
+      };
+      return this.request(addCallback);
     };
 
     Question.prototype.add = function(callback) {

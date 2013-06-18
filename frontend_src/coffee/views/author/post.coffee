@@ -71,7 +71,7 @@ define [
       @$el.find('#body').focus()
 
     getTemplateData: =>
-      {post: @model.data}
+      {post: @model.data, authorized: @authorized}
 
     render: ->
       super

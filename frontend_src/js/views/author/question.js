@@ -46,6 +46,9 @@ define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST,
           return this.setPreviousMode();
         }
       },
+      'click #previewButton': function(e) {
+        return this.setPassiveMode();
+      },
       'click iframe': function() {
         return console.log('asd');
       },

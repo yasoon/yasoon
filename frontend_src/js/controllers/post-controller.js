@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-view', 'models/post', 'views/post-view', 'models/postQuestionsQueue', 'views/postQuestionsQueue-view', 'views/postPage-view', 'models/question', 'views/question-view'], function(Controller, AuthorInfo, AuthorInfoView, Post, PostView, PostQuestionsQueue, PostQuestionsQueueView, PostPageView, Question, QuestionView) {
+define(['controllers/base/controller', 'views/page/author/blank', 'models/author/info', 'views/author/info', 'models/author/interviewQueue', 'views/author/interviewQueue', 'views/page/author/post', 'models/author/post', 'views/author/post'], function(Controller, BlankPageView, AuthorInfo, AuthorInfoView, InterviewQueue, InterviewQueueView, PostPageView, Post, PostView) {
   'use strict';
   var PostController;
   return PostController = (function(_super) {
@@ -15,43 +15,47 @@ define(['controllers/base/controller', 'models/authorInfo', 'views/authorInfo-vi
 
     PostController.prototype.postAction = function(params) {
       var _this = this;
+      if (params.id === 'blank') {
+        return this.blankAction(params);
+      }
+      this.view = new PostPageView();
+      this.info = new AuthorInfo({
+        id: params.authorId
+      });
+      this.info.fetch(function() {
+        return _this.infoView = new AuthorInfoView({
+          model: _this.info
+        });
+      });
       this.post = new Post({
         id: params.id
       });
       return this.post.fetch(function() {
-        var postPageView, postView;
-        postPageView = new PostPageView();
-        postView = new PostView({
+        _this.view = new PostView({
           model: _this.post
         });
-        postView.region = 'post';
-        postView.setPassiveMode();
-        _this.authorInfo = new AuthorInfo({
-          id: _this.post.data.authorId
+        return _this.view.setRegion('post').setPassiveMode();
+      });
+    };
+
+    PostController.prototype.blankAction = function(params) {
+      var _this = this;
+      this.view = new BlankPageView();
+      this.info = new AuthorInfo({
+        id: params.authorId
+      });
+      this.info.fetch(function() {
+        return _this.infoView = new AuthorInfoView({
+          model: _this.info
         });
-        _this.authorInfo.fetch(function() {
-          var infoView;
-          return infoView = new AuthorInfoView({
-            model: _this.authorInfo
-          });
+      });
+      this.interview = new InterviewQueue({
+        authorId: params.authorId
+      });
+      return this.interview.fetch(function() {
+        return new InterviewQueueView({
+          model: _this.interview
         });
-        _this.postQuestionsQueue = new PostQuestionsQueue({
-          id: params.id
-        });
-        _this.postQuestionsQueue.fetch(function() {
-          var queueView;
-          return queueView = new PostQuestionsQueueView({
-            model: _this.postQuestionsQueue
-          });
-        });
-        _this.newQuestion = new Question();
-        _this.newQuestion.data.postId = params.id;
-        _this.newQuestion.data.authorId = _this.post.data.authorId;
-        _this.newQuestionView = new QuestionView({
-          model: _this.newQuestion
-        });
-        _this.newQuestionView.region = 'newQuestion';
-        return _this.newQuestionView.setButtonMode();
       });
     };
 

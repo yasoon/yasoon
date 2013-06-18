@@ -106,7 +106,8 @@ define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST,
 
     PostView.prototype.getTemplateData = function() {
       return {
-        post: this.model.data
+        post: this.model.data,
+        authorized: this.authorized
       };
     };
 

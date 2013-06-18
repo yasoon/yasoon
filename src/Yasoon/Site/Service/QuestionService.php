@@ -16,6 +16,7 @@ use Yasoon\Site\Entity\QuestionEntity;
  */
 class QuestionService extends AbstractApiService {
 
+
     /**
      * @param array $model
      * @return array
@@ -45,6 +46,35 @@ class QuestionService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @return array
+     */
+    public function addInterview(array $model) {
+        $entity = (new QuestionEntity())
+            ->setCaption($model['caption'])
+            ->setAnswer(isset($model['answer'])? $model['answer'] : '')
+            ->setDate(new \DateTime())
+            ->setIsInBlank(true);
+
+        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $this->clientId));
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        $result = [
+            'id'       => $entity->getId(),
+            'caption'  => $entity->getCaption(),
+            'date'     => $entity->getDate()->format('Y-m-d'),
+            'authorId' => $entity->getAuthorId(),
+            'answer'   => $entity->getAnswer()
+        ];
+
+        return $result;
+
+    }
+
+    /**
+     * @param array $model
+     * @return array
      */
     public function update(array $model) {
 

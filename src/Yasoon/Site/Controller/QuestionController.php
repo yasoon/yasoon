@@ -41,6 +41,17 @@ class QuestionController {
     }
 
     /**
+     * @Route("/add_interview")
+     *
+     * @Method({"POST"})
+     */
+    public function addInterviewAction(Request $request) {
+        $model = $request->request->get('model');
+
+        return $this->service->addInterview($model);
+    }
+
+    /**
      * @Route("/update")
      * @Method({"POST"})
      *

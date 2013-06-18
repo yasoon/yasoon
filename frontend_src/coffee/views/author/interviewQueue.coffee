@@ -2,9 +2,10 @@ define [
   'views/base/view'
   'JST'
   'views/author/question'
-  'views/author/newQuestion'
+  'views/author/newInterviewQuestion'
   'models/author/question'
-], (View, JST, QuestionView, NewQuestionView, Question) ->
+  'jqueryui',
+], (View, JST, QuestionView, NewInterviewQuestionView, Question, Sortable) ->
   'use strict'
 
   class AuthorQuestionsQueue extends View
@@ -15,12 +16,12 @@ define [
       '#list': 'list'
       '#new': 'newQuestion'
 
-    templateName: 'author_questionsQueue'
+    templateName: 'author_interviewQueue'
 
     initialize: ->
       super
-#      @subscribeEvent 'questionAdded',   @addQuestion
-#      @subscribeEvent 'questionDeleted', @deleteQuestion
+      @subscribeEvent 'questionAdded',   @addQuestion
+      @subscribeEvent 'questionDeleted', @deleteQuestion
 
     addQuestion: (question) ->
       @model.questions.push(question)
@@ -38,17 +39,43 @@ define [
     getTemplateData: ->
       {questions: @model.questions, authorized: @authorized}
 
+    addSortable: ->
+      if @authorized
+        @$el.find('#list').sortable(
+          cursor: 'move'
+          update: =>
+            #@refreshOrder()
+        )
+        @$el.find('#list').sortable('enable')
+
+      else
+        @$el.find('#list').sortable('disable')
+
     softRender: ->
       for view in @views
         view.softRender()
 
+      @newQuestionView.dispose()
+      if @authorized
+        @newQuestionView = new NewInterviewQuestionView(model: new Question(authorId: @model.authorId))
+
+      @addSortable()
+
+
     render: ->
       super
-
-      #@newQuestionView = new NewQuestionView(model: new Question(authorId: @model.authorId))
       @views = []
+      activeIsSet = false
       for question in @model.questions
-        @views.push (new QuestionView(model: question)).setRegion('list').setPassiveMode()
+        questionView =  (new QuestionView(model: question)).setRegion('list')
+#        if activeIsSet is false  and question.data.answer is ''
+#          questionView.setActiveMode() #открываем для редактирования первый неотвеченный вопрос
+#          activeIsSet = true
+#        else
+        questionView.setPassiveMode()
 
+      @views.push(questionView)
 
+      @newQuestionView = new NewInterviewQuestionView(model: new Question(authorId: @model.authorId))
 
+      @addSortable()

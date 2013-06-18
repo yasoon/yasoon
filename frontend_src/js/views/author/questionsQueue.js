@@ -33,7 +33,8 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
     };
 
     AuthorQuestionsQueue.prototype.addQuestion = function(question) {
-      this.model.questions.push(question);
+      console.log('qwe');
+      this.model.questions.splice(0, 0, question);
       return this.render();
     };
 
@@ -57,19 +58,31 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
       };
     };
 
+    AuthorQuestionsQueue.prototype.addSortable = function() {
+      var _this = this;
+      if (this.authorized) {
+        this.$el.find('#list').sortable({
+          cursor: 'move',
+          update: function() {}
+        });
+        return this.$el.find('#list').sortable('enable');
+      } else {
+        return this.$el.find('#list').sortable('disable');
+      }
+    };
+
     AuthorQuestionsQueue.prototype.softRender = function() {
-      var view, _i, _len, _ref, _results;
+      var view, _i, _len, _ref;
       _ref = this.views;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         view = _ref[_i];
-        _results.push(view.softRender());
+        view.softRender();
       }
-      return _results;
+      return this.addSortable();
     };
 
     AuthorQuestionsQueue.prototype.render = function() {
-      var question, _i, _len, _ref, _results;
+      var question, _i, _len, _ref;
       AuthorQuestionsQueue.__super__.render.apply(this, arguments);
       this.newQuestionView = new NewQuestionView({
         model: new Question({
@@ -78,14 +91,13 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
       });
       this.views = [];
       _ref = this.model.questions;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         question = _ref[_i];
-        _results.push(this.views.push((new QuestionView({
+        this.views.push((new QuestionView({
           model: question
-        })).setRegion('list').setPassiveMode()));
+        })).setRegion('list').setPassiveMode());
       }
-      return _results;
+      return this.addSortable();
     };
 
     return AuthorQuestionsQueue;

@@ -29,6 +29,27 @@ define [
 
       @request(editCallback)
 
+    addInterview: (callback) =>
+      @fetchParams = {}
+      @fetchParams.method = "POST"
+      @fetchParams.data =
+        model:
+          caption:  @data.caption
+          authorId: @data.authorId
+          answer:   @data.answer
+
+      @url = -> "api/question/add_interview"
+      addCallback = =>
+        addedQuestion = new Question
+        addedQuestion.data = id: @data.id, caption: @data.caption, date: @data.date, answer: @data.answer
+        @publishEvent 'questionAdded', addedQuestion
+        @data.id = undefined
+        @data.text = ''
+        callback?()
+
+      @request(addCallback)
+
+
     add: (callback) ->
       @fetchParams = {}
       @fetchParams.method = "POST"

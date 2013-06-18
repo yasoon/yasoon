@@ -15,17 +15,17 @@ input[type="submit"]:focus, input[type="button"]:focus{ outline : none}
 [type="search"]:focus,[type="text"]:focus,[type="password"]:focus{
 	color: #000;
 }
-textarea{
+textarea, .textarea{
 	min-height: 150px;
 }
-textarea.big{
+textarea.big, .textarea .big{
 	min-height: 450px;
 }
-[type="search"]:focus,[type="text"]:focus,[type="password"]:focus, textarea:focus{
+[type="search"]:focus,[type="text"]:focus,[type="password"]:focus, textarea:focus, .textarea:focus{
 	box-shadow: inset 0 0 5px rgba(0,0,0,.2);
 }
 
-[type="search"].error +div,[type="text"].error +div,[type="password"].error +div, textarea +div, [type="date"].error +div, select.error +div,textarea.error +div{
+[type="search"].error +div,[type="text"].error +div,[type="password"].error +div, textarea +div, .textarea + div,[type="date"].error +div, select.error +div,textarea.error +div, .textarea.error +div{
 	color: red;
 }
 [type="search"].error,[type="text"].error,[type="password"].error, textarea, [type="date"].error, select.error,textarea.error{

@@ -7,9 +7,11 @@
         {{post.text}}
     </div>
 </article>
-<div class="di t-center">
-        <a class="btn" id='editButton'>Edit</a>
-    {{#if post.id}}
-        <a class="btn btn-danger"  id='deleteButton'>Delete</a>
-    {{/if}}
-</div>
+{{#if authorized}}
+    <div class="di t-center">
+            <a class="btn" id='editButton'>Edit</a>
+        {{#if post.id}}
+            <a class="btn btn-danger"  id='deleteButton'>Delete</a>
+        {{/if}}
+    </div>
+{{/if}}

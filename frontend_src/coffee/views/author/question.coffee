@@ -29,6 +29,9 @@ define [
         if e.keyCode is 27 #esc
           @setPreviousMode()
 
+      'click #previewButton': (e) ->
+        @setPassiveMode()
+
       'click iframe': ->
         console.log 'asd'
 

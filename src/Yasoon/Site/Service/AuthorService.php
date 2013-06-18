@@ -77,7 +77,7 @@ class AuthorService extends AbstractApiService {
             'id'      => $data['id'],
             'name'    => $data['name'],
             'description' => $data['description'],
-            'publicationDate' => $data['publicationDate']->format('Y-m-d'),
+            'publicationDate' => $data['publicationDate']->format('d/m/Y'),
             'job' => $data['job'],
             'interest' => $data['interest'],
             'dream' => $data['dream'],
@@ -102,13 +102,33 @@ class AuthorService extends AbstractApiService {
                 ['authorId' => $authorId],
                 ['date' => 'DESC']
             );
+
         foreach ($posts as $post) {
             $result[] = [
                 'id'      => $post->getId(),
                 'caption' => $post->getCaption(),
                 'preview' => $post->getPreview(),
-                'date'    => $post->getDate()
+                'date'    => $post->getDate()->format('d/m/Y'),
+                'authorId'=> $post->getAuthorId()
             ];
+        }
+
+        $interviewQuestions= $this->em->createQueryBuilder()
+            ->select('question')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+            ->where('question.isInBlank = 1')
+            ->andWhere('question.answer IS NOT NULL')
+            ->orderBy('question.date', 'desc')
+            ->getQuery()->getResult();
+
+        if (isset($interviewQuestions[0])) {
+            array_unshift($result, [
+              'id'      => 'blank',
+              'caption' => 'Интервью',
+              'preview' => 'Пост, составленный из ответов на вопросы интервью',
+              'date'    => $interviewQuestions[0]->getDate()->format('d/m/Y'),
+              'authorId'=> $post->getAuthorId()
+            ]);
         }
 
         return $result;
@@ -134,7 +154,7 @@ class AuthorService extends AbstractApiService {
             $result[] = [
               'id'  => $question->getId(),
               'caption' => $question->getCaption(),
-              'date'    => $question->getDate()->format('Y-m-d'),
+              'date'    => $question->getDate()->format('d/m/Y'),
               'answer' => $question->getAnswer()
             ];
         }

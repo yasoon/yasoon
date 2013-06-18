@@ -10,10 +10,10 @@ define [
     initialize:(obj) ->
       @questions = []
       super
-      #@authorId = obj.authorId
+      @authorId = obj.authorId if obj.authorId?
 
     fetch: (callback) ->
-
+      console.log 'aaa'
       fetchCallback = =>
         for questionData in @data
           question = new Question

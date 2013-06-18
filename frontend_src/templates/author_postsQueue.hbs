@@ -5,15 +5,17 @@
 </article>
 {{/if}}
 
-{{#each posts}}
-<article>
-    <div class="like-title">
-        <span class="like-this"><i></i> 0 <span>likes</span></span>
-        <h2><a href="#posts/{{id}}">{{caption}}</a> <span class="post-date">{{data}}</span></h2>
-    </div>
-    <div class="content">
-        <p>{{preview}}</p>
-    </div>
-    <div class="hr"></div>
-</article>
-{{/each}}
+<div class ='posts'>
+    {{#each posts}}
+    <article>
+        <div class="like-title">
+            <span class="like-this"><i></i> 0 <span>likes</span></span>
+            <h2><a href="#author/{{authorId}}/posts/{{id}}">{{caption}}</a> <span class="post-date">{{date}}</span></h2>
+        </div>
+        <div class="content">
+            <p>{{preview}}</p>
+        </div>
+        <div class="hr"></div>
+    </article>
+    {{/each}}
+</div>

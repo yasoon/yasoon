@@ -9,6 +9,17 @@ define [
     initialize: (obj) ->
       super
 
+    fetch: (callback) ->
+      @fetchParams = {}
+      @fetchParams.method = "GET"
+
+      @url = -> "api/post/get/#{@id}"
+
+      addCallback = =>
+        callback()
+
+      @request(addCallback)
+
     update: (callback) ->
       @fetchParams = {}
       @fetchParams.method = "POST"

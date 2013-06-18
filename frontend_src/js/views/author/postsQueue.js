@@ -25,7 +25,30 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     AuthorPostsQueue.prototype.templateName = 'author_postsQueue';
 
+    AuthorPostsQueue.prototype.addSortable = function() {
+      var _this = this;
+      if (this.authorized) {
+        return this.$el.find('.posts').sortable({
+          cursor: 'move',
+          update: function() {}
+        });
+      } else {
+        return this.$el.find('.posts').sortable('enable');
+      }
+    };
+
+    AuthorPostsQueue.prototype.render = function() {
+      AuthorPostsQueue.__super__.render.apply(this, arguments);
+      return this.addSortable();
+    };
+
+    AuthorPostsQueue.prototype.softRender = function() {
+      AuthorPostsQueue.__super__.softRender.apply(this, arguments);
+      return this.addSortable();
+    };
+
     AuthorPostsQueue.prototype.getTemplateData = function() {
+      console.log(this.model.posts);
       return {
         posts: this.model.posts,
         authorized: this.authorized

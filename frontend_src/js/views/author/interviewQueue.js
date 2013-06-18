@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQuestion', 'models/author/question'], function(View, JST, QuestionView, NewQuestionView, Question) {
+define(['views/base/view', 'JST', 'views/author/question', 'views/author/newInterviewQuestion', 'models/author/question', 'jqueryui'], function(View, JST, QuestionView, NewInterviewQuestionView, Question, Sortable) {
   'use strict';
   var AuthorQuestionsQueue;
   return AuthorQuestionsQueue = (function(_super) {
@@ -24,10 +24,12 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
       '#new': 'newQuestion'
     };
 
-    AuthorQuestionsQueue.prototype.templateName = 'author_questionsQueue';
+    AuthorQuestionsQueue.prototype.templateName = 'author_interviewQueue';
 
     AuthorQuestionsQueue.prototype.initialize = function() {
-      return AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
+      AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
+      this.subscribeEvent('questionAdded', this.addQuestion);
+      return this.subscribeEvent('questionDeleted', this.deleteQuestion);
     };
 
     AuthorQuestionsQueue.prototype.addQuestion = function(question) {
@@ -55,30 +57,57 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
       };
     };
 
+    AuthorQuestionsQueue.prototype.addSortable = function() {
+      var _this = this;
+      if (this.authorized) {
+        this.$el.find('#list').sortable({
+          cursor: 'move',
+          update: function() {}
+        });
+        return this.$el.find('#list').sortable('enable');
+      } else {
+        return this.$el.find('#list').sortable('disable');
+      }
+    };
+
     AuthorQuestionsQueue.prototype.softRender = function() {
-      var view, _i, _len, _ref, _results;
+      var view, _i, _len, _ref;
       _ref = this.views;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         view = _ref[_i];
-        _results.push(view.softRender());
+        view.softRender();
       }
-      return _results;
+      this.newQuestionView.dispose();
+      if (this.authorized) {
+        this.newQuestionView = new NewInterviewQuestionView({
+          model: new Question({
+            authorId: this.model.authorId
+          })
+        });
+      }
+      return this.addSortable();
     };
 
     AuthorQuestionsQueue.prototype.render = function() {
-      var question, _i, _len, _ref, _results;
+      var activeIsSet, question, questionView, _i, _len, _ref;
       AuthorQuestionsQueue.__super__.render.apply(this, arguments);
       this.views = [];
+      activeIsSet = false;
       _ref = this.model.questions;
-      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         question = _ref[_i];
-        _results.push(this.views.push((new QuestionView({
+        questionView = (new QuestionView({
           model: question
-        })).setRegion('list').setPassiveMode()));
+        })).setRegion('list');
+        questionView.setPassiveMode();
       }
-      return _results;
+      this.views.push(questionView);
+      this.newQuestionView = new NewInterviewQuestionView({
+        model: new Question({
+          authorId: this.model.authorId
+        })
+      });
+      return this.addSortable();
     };
 
     return AuthorQuestionsQueue;
