@@ -77,14 +77,7 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newInte
         view = _ref[_i];
         view.softRender();
       }
-      this.newQuestionView.dispose();
-      if (this.authorized) {
-        this.newQuestionView = new NewInterviewQuestionView({
-          model: new Question({
-            authorId: this.model.authorId
-          })
-        });
-      }
+      this.manageAuthAreas();
       return this.addSortable();
     };
 
@@ -99,7 +92,12 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newInte
         questionView = (new QuestionView({
           model: question
         })).setRegion('list');
-        questionView.setPassiveMode();
+        if (activeIsSet === false && question.data.answer === '') {
+          questionView.setActiveMode();
+          activeIsSet = true;
+        } else {
+          questionView.setPassiveMode();
+        }
       }
       this.views.push(questionView);
       this.newQuestionView = new NewInterviewQuestionView({
@@ -107,6 +105,7 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newInte
           authorId: this.model.authorId
         })
       });
+      this.manageAuthAreas();
       return this.addSortable();
     };
 

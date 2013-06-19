@@ -22,6 +22,21 @@ define(['chaplin'], function(Chaplin) {
       return this.$el.html(JST[this.templateName](this.getTemplateData()));
     };
 
+    View.prototype.manageAuthAreas = function() {
+      var el, _i, _len, _ref, _results;
+      _ref = this.$el.find('.auth-area');
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        el = _ref[_i];
+        if (this.authorized) {
+          _results.push($(el).show());
+        } else {
+          _results.push($(el).hide());
+        }
+      }
+      return _results;
+    };
+
     View.prototype.initialize = function() {
       this.authorized = true;
       this.subscribeEvent('logout', function() {

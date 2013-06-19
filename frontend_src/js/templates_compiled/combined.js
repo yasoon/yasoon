@@ -50,10 +50,13 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_interviewQueue'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<div id=\"list\"></div>\n\n<div id = 'new'></div>\n";
+  buffer += "<div class='auth-area'>\n    <div class=\"di\"><input type=\"text\" placeholder=\"Заголовок интервью\" id=\"caption\" value='"
+    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "'></div>\n    <div class=\"di\">\n        <select>\n            <option>Computers</option>\n            <option>Economy</option>\n            <option>Art</option>\n            <option>Science</option>\n            <option>Manufactory</option>\n            <option>Museums</option>\n            <option>Airplanes</option>\n            <option>Hand made with love</option>\n            <option>Hobbies</option>\n            <option>House riding</option>\n            <option>Racing sports</option>\n            <option>Olympic sports</option>\n        </select>\n    </div>\n</div>\n\n<div id=\"list\"></div>\n\n<div class='auth-area'>\n    <div id = 'new'></div>\n</div>\n";
+  return buffer;
   });
 
 var Handlebars = require('handlebars');
@@ -142,9 +145,9 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"di\">\n    <select>\n        <option>Computers</option>\n        <option>Economy</option>\n        <option>Art</option>\n        <option>Science</option>\n        <option>Manufactory</option>\n        <option>Museums</option>\n        <option>Airplanes</option>\n        <option>Hand made with love</option>\n        <option>Hobbies</option>\n        <option>House riding</option>\n        <option>Racing sports</option>\n        <option>Olympic sports</option>\n    </select>\n</div>\n<div class=\"di\"><input type=\"text\" placeholder=\"Header of the story\" id=\"caption\" value='"
+  buffer += "<div class=\"di\"><input type=\"text\" placeholder=\"Header of the story\" id=\"caption\" value='"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'></div>\n<div class=\"di\">\n    <textarea placeholder=\"Description. Questions that help user to write a story\" id='preview'>"
+    + "'></div>\n<div class=\"di\">\n    <select>\n        <option>Computers</option>\n        <option>Economy</option>\n        <option>Art</option>\n        <option>Science</option>\n        <option>Manufactory</option>\n        <option>Museums</option>\n        <option>Airplanes</option>\n        <option>Hand made with love</option>\n        <option>Hobbies</option>\n        <option>House riding</option>\n        <option>Racing sports</option>\n        <option>Olympic sports</option>\n    </select>\n</div>\n\n<div class=\"di\">\n    <textarea placeholder=\"Description. Questions that help user to write a story\" id='preview'>"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</textarea>\n</div>\n\n<div class=\"di\">\n    <div class=\"post-edit-tools\">\n        <div class=\"item\"><b>b</b></div>\n        <div class=\"item\"><b><i>It</i></b></div>\n        <div class=\"item\"><b>Quote</b></div>\n        <div class=\"item\">Upload a picture</div>\n        <div class=\"clearfix\"></div>\n    </div>\n    <textarea class=\"big\" placeholder=\"Description. Questions that help user to write a story\" id='body'>"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))

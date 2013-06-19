@@ -55,9 +55,7 @@ define [
       for view in @views
         view.softRender()
 
-      @newQuestionView.dispose()
-      if @authorized
-        @newQuestionView = new NewInterviewQuestionView(model: new Question(authorId: @model.authorId))
+      @manageAuthAreas()
 
       @addSortable()
 
@@ -68,14 +66,16 @@ define [
       activeIsSet = false
       for question in @model.questions
         questionView =  (new QuestionView(model: question)).setRegion('list')
-#        if activeIsSet is false  and question.data.answer is ''
-#          questionView.setActiveMode() #открываем для редактирования первый неотвеченный вопрос
-#          activeIsSet = true
-#        else
-        questionView.setPassiveMode()
+        if activeIsSet is false  and question.data.answer is ''
+          questionView.setActiveMode() #открываем для редактирования первый неотвеченный вопрос
+          activeIsSet = true
+        else
+          questionView.setPassiveMode()
 
       @views.push(questionView)
 
       @newQuestionView = new NewInterviewQuestionView(model: new Question(authorId: @model.authorId))
+
+      @manageAuthAreas()
 
       @addSortable()
