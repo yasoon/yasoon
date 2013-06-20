@@ -12,5 +12,9 @@ define [
 
     templateName: 'author_info'
 
+    render: ->
+      super
+      @manageAuthAreas()
+
     getTemplateData: ->
       {author: @model.data, authorized: @authorized}

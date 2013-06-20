@@ -21,6 +21,11 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     AuthorInfoView.prototype.templateName = 'author_info';
 
+    AuthorInfoView.prototype.render = function() {
+      AuthorInfoView.__super__.render.apply(this, arguments);
+      return this.manageAuthAreas();
+    };
+
     AuthorInfoView.prototype.getTemplateData = function() {
       return {
         author: this.model.data,

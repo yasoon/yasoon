@@ -17,10 +17,6 @@
 </div>
 
 <div class="di">
-    <textarea placeholder="Description. Questions that help user to write a story" id='preview'>{{post.preview}}</textarea>
-</div>
-
-<div class="di">
     <div class="post-edit-tools">
         <div class="item"><b>b</b></div>
         <div class="item"><b><i>It</i></b></div>
@@ -28,8 +24,15 @@
         <div class="item">Upload a picture</div>
         <div class="clearfix"></div>
     </div>
-    <textarea class="big" placeholder="Description. Questions that help user to write a story" id='body'>{{post.text}}</textarea>
+    <textarea class="big" placeholder="Напишите свой пост" id='body'>{{post.text}}</textarea>
 </div>
+
+<div class="di">
+    <textarea placeholder="Првеью. Этот текст будет отображаться в ленте постов. Вы можете править его" id='preview'>
+        {{post.preview}}
+    </textarea>
+</div>
+
 <div class="di t-center">
     <a class="btn" id='sendButton'>Post it!</a> <a class="mLeft10" id='previewButton'>Preview</a>
 </div>

@@ -14,14 +14,15 @@ define [
     templateName: 'author_postsQueue'
 
     addSortable: ->
+      @$el.find('.posts').sortable(
+        cursor: 'move'
+        update: =>
+          #@refreshOrder()
+      )
       if @authorized
-        @$el.find('.posts').sortable(
-          cursor: 'move'
-          update: =>
-            #@refreshOrder()
-        )
-      else
         @$el.find('.posts').sortable('enable')
+      else
+        @$el.find('.posts').sortable('disable')
 
 
     render: ->

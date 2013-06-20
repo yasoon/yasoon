@@ -14,20 +14,12 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_info'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
-function program1(depth0,data) {
-  
-  
-  return "\n    <i></i>\n    ";
-  }
 
   buffer += "<div class=\"open-area\"></div>\n\n<img src=\"./_temp/a1.jpg\" alt=\"\">\n<h4 class=\"usr-name editable\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n    ";
-  stack2 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n</h4>\n<p class=\"u-description\">"
+    + "\n    <i class='pencil' data-permission=\"authorized\" id='editButton'></i>\n</h4>\n<p class=\"u-description\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.description)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</p>\n<div class=\"hr\"></div>\n<div class=\"pub\">\n    <h4 class=\"p-label\">published on</h4>\n    "
     + escapeExpression(((stack1 = ((stack1 = depth0.author),stack1 == null || stack1 === false ? stack1 : stack1.publicationDate)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -55,7 +47,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
   buffer += "<div class='auth-area'>\n    <div class=\"di\"><input type=\"text\" placeholder=\"Заголовок интервью\" id=\"caption\" value='"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'></div>\n    <div class=\"di\">\n        <select>\n            <option>Computers</option>\n            <option>Economy</option>\n            <option>Art</option>\n            <option>Science</option>\n            <option>Manufactory</option>\n            <option>Museums</option>\n            <option>Airplanes</option>\n            <option>Hand made with love</option>\n            <option>Hobbies</option>\n            <option>House riding</option>\n            <option>Racing sports</option>\n            <option>Olympic sports</option>\n        </select>\n    </div>\n</div>\n\n<div id=\"list\"></div>\n\n<div class='auth-area'>\n    <div id = 'new'></div>\n</div>\n";
+    + "'></div>\n    <div class=\"di\">\n        <select>\n            <option>Computers</option>\n            <option>Economy</option>\n            <option>Art</option>\n            <option>Science</option>\n            <option>Manufactory</option>\n            <option>Museums</option>\n            <option>Airplanes</option>\n            <option>Hand made with love</option>\n            <option>Hobbies</option>\n            <option>House riding</option>\n            <option>Racing sports</option>\n            <option>Olympic sports</option>\n        </select>\n    </div>\n</div>\n\n<div id=\"list\"></div>\n\n<div class='auth-area' data-permission=\"author\">\n    <div id = 'new'></div>\n</div>\n";
   return buffer;
   });
 
@@ -147,11 +139,11 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
   buffer += "<div class=\"di\"><input type=\"text\" placeholder=\"Header of the story\" id=\"caption\" value='"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'></div>\n<div class=\"di\">\n    <select>\n        <option>Computers</option>\n        <option>Economy</option>\n        <option>Art</option>\n        <option>Science</option>\n        <option>Manufactory</option>\n        <option>Museums</option>\n        <option>Airplanes</option>\n        <option>Hand made with love</option>\n        <option>Hobbies</option>\n        <option>House riding</option>\n        <option>Racing sports</option>\n        <option>Olympic sports</option>\n    </select>\n</div>\n\n<div class=\"di\">\n    <textarea placeholder=\"Description. Questions that help user to write a story\" id='preview'>"
-    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</textarea>\n</div>\n\n<div class=\"di\">\n    <div class=\"post-edit-tools\">\n        <div class=\"item\"><b>b</b></div>\n        <div class=\"item\"><b><i>It</i></b></div>\n        <div class=\"item\"><b>Quote</b></div>\n        <div class=\"item\">Upload a picture</div>\n        <div class=\"clearfix\"></div>\n    </div>\n    <textarea class=\"big\" placeholder=\"Description. Questions that help user to write a story\" id='body'>"
+    + "'></div>\n<div class=\"di\">\n    <select>\n        <option>Computers</option>\n        <option>Economy</option>\n        <option>Art</option>\n        <option>Science</option>\n        <option>Manufactory</option>\n        <option>Museums</option>\n        <option>Airplanes</option>\n        <option>Hand made with love</option>\n        <option>Hobbies</option>\n        <option>House riding</option>\n        <option>Racing sports</option>\n        <option>Olympic sports</option>\n    </select>\n</div>\n\n<div class=\"di\">\n    <div class=\"post-edit-tools\">\n        <div class=\"item\"><b>b</b></div>\n        <div class=\"item\"><b><i>It</i></b></div>\n        <div class=\"item\"><b>Quote</b></div>\n        <div class=\"item\">Upload a picture</div>\n        <div class=\"clearfix\"></div>\n    </div>\n    <textarea class=\"big\" placeholder=\"Напишите свой пост\" id='body'>"
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</textarea>\n</div>\n<div class=\"di t-center\">\n    <a class=\"btn\" id='sendButton'>Post it!</a> <a class=\"mLeft10\" id='previewButton'>Preview</a>\n</div>";
+    + "</textarea>\n</div>\n\n<div class=\"di\">\n    <textarea placeholder=\"Првеью. Этот текст будет отображаться в ленте постов. Вы можете править его\" id='preview'>\n        "
+    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n    </textarea>\n</div>\n\n<div class=\"di t-center\">\n    <a class=\"btn\" id='sendButton'>Post it!</a> <a class=\"mLeft10\" id='previewButton'>Preview</a>\n</div>";
   return buffer;
   });
 
@@ -160,18 +152,9 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_post_viewPassive'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, stack2, self=this, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
-  var buffer = "", stack1, stack2;
-  buffer += "\n    <div class=\"di t-center\">\n            <a class=\"btn\" id='editButton'>Edit</a>\n        ";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.id), {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n    </div>\n";
-  return buffer;
-  }
-function program2(depth0,data) {
   
   
   return "\n            <a class=\"btn btn-danger\"  id='deleteButton'>Delete</a>\n        ";
@@ -183,9 +166,28 @@ function program2(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</span></h1>\n    </div>\n    <div class=\"content\">\n        "
     + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n    </div>\n</article>\n";
-  stack2 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+    + "\n    </div>\n</article>\n    <div class=\"di t-center\" data-permission=\"author\">\n            <a class=\"btn\" id='editButton'>Edit</a>\n        ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.id), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n    </div>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['author_post_viewPreview'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<article>\n    <div class=\"like-title\">\n        <span class=\"like-this\"></span>\n        <h1>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + " <span class=\"media-pub\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</span></h1>\n    </div>\n    <div class=\"content\">\n        "
+    + escapeExpression(((stack1 = ((stack1 = depth0.post),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n    </div>\n</article>\n    <div class=\"di t-center\" data-permission=\"author\">\n            <a class=\"btn\" id='sendButton'>Опубликовать!</a>\n            <a class=\"btn\" id='editButton'>Вернуться к редактированию</a>\n    </div>";
   return buffer;
   });
 
@@ -208,12 +210,6 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
-  
-  return "\n<article class=\"cat-title\">\n    <div class=\"content\"><p><a href=\"#posts/new\" class=\"btn\">Write a new post</a></p></div>\n    <div class=\"hr\"></div>\n</article>\n";
-  }
-
-function program3(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n    <article>\n        <div class=\"like-title\">\n            <span class=\"like-this\"><i></i> 0 <span>likes</span></span>\n            <h2><a href=\"#author/";
@@ -240,10 +236,8 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  stack1 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n<div class ='posts'>\n    ";
-  stack1 = helpers.each.call(depth0, depth0.posts, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  buffer += "<article class=\"cat-title\" data-permission=\"author\">\n    <div class=\"content\"><p><a href=\"#posts/new\" class=\"btn\">Write a new post</a></p></div>\n    <div class=\"hr\"></div>\n</article>\n\n<div class ='posts'>\n    ";
+  stack1 = helpers.each.call(depth0, depth0.posts, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n";
   return buffer;
@@ -272,12 +266,21 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_question_viewPassive'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
+function program1(depth0,data) {
+  
+  
+  return "\n        <div id='editButton' class='btn'>редактировать</div>\n        <div id='declineButton' class='btn-danger'>удалить</div>\n    ";
+  }
 
   buffer += "<h3>\n    <a>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n    <span class='post-date'>"
+    + "</a>\n\n            <i data-permission=\"authororized\" id='editButton' class='pencil'></i>\n    ";
+  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
+  stack2 = ((stack1 = helpers.ifnot),stack1 ? stack1.call(depth0, ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options) : helperMissing.call(depth0, "ifnot", ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n    <span class='post-date'>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</span>\n</h3>\n<div class=\"content\">\n    <p>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -304,7 +307,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div id = 'new'></div>\n\n<div id=\"list\"></div>";
+  return "<div id = 'new' data-permission='not-authorized'></div>\n\n<div id=\"list\"></div>";
   });
 
 var Handlebars = require('handlebars');
@@ -411,25 +414,10 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['header_author_newPost'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, self=this;
+  
 
-function program1(depth0,data) {
-  
-  
-  return "\n            <a id='logoutButton'>Log out</a>\n        ";
-  }
 
-function program3(depth0,data) {
-  
-  
-  return "\n            <a id='loginButton'>Log in</a>\n        ";
-  }
-
-  buffer += "<a class=\"logo\" href=\"#\">yasoon</a>\n<div class=\"org-nav\">\n    <nav>\n        <a>stories</a>\n        <a>people</a>\n    </nav>\n</div>\n<div class=\"my-nav\">\n    <a> <img src=\"./_temp/a1.jpg\" alt=\"\"> <span>0</span></a>\n    <nav>\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </nav>\n</div>";
-  return buffer;
+  return "<a class=\"logo\" href=\"#\">yasoon</a>\n<div class=\"org-nav\">\n    <nav>\n        <a>stories</a>\n        <a>people</a>\n    </nav>\n</div>\n<div class=\"my-nav\">\n    <a> <img src=\"./_temp/a1.jpg\" alt=\"\"> <span>0</span></a>\n    <nav>\n            <a id='logoutButton' data-permission=\"authorized\">Log out</a>\n            <a id='loginButton' data-permission=\"not-authorized\">Log in</a>\n    </nav>\n</div>";
   });
 
 var Handlebars = require('handlebars');
@@ -437,25 +425,10 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['header_author_posts'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, self=this;
+  
 
-function program1(depth0,data) {
-  
-  
-  return "\n            <a id='logoutButton'>Log out</a>\n        ";
-  }
 
-function program3(depth0,data) {
-  
-  
-  return "\n            <a id='loginButton'>Log in</a>\n        ";
-  }
-
-  buffer += "<a class=\"logo\" href=\"#\">yasoon</a>\n<div class=\"org-nav\">\n    <nav>\n        <a>stories</a>\n        <a>people</a>\n    </nav>\n</div>\n<div class=\"my-nav\">\n    <a> <img src=\"./_temp/a1.jpg\" alt=\"\"> <span>0</span></a>\n    <nav>\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </nav>\n</div>";
-  return buffer;
+  return "<a class=\"logo\" href=\"#\">yasoon</a>\n<div class=\"org-nav\">\n    <nav>\n        <a>stories</a>\n        <a>people</a>\n    </nav>\n</div>\n<div class=\"my-nav\">\n    <a> <img src=\"./_temp/a1.jpg\" alt=\"\"> <span>0</span></a>\n    <nav>\n            <a id='logoutButton' data-permission=\"authorized\">Log out</a>\n            <a id='loginButton' data-permission=\"not-authorized\">Log in</a>\n    </nav>\n</div>";
   });
 
 var Handlebars = require('handlebars');

@@ -380,7 +380,7 @@ section,
   *display: inline;
   zoom: 1;
 }
-.editable i {
+.pencil {
   background: url(../img/spr.png) -94px -32px no-repeat;
   width: 16px;
   height: 16px;

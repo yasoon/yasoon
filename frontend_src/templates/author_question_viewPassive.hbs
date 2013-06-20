@@ -1,5 +1,11 @@
 <h3>
     <a>{{question.caption}}</a>
+
+            <i data-permission="authororized" id='editButton' class='pencil'></i>
+    {{#ifnot question.answer}}
+        <div id='editButton' class='btn'>редактировать</div>
+        <div id='declineButton' class='btn-danger'>удалить</div>
+    {{/ifnot}}
     <span class='post-date'>{{question.date}}</span>
 </h3>
 <div class="content">

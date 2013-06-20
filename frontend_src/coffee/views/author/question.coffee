@@ -2,7 +2,8 @@ define [
          'views/base/editable'
          'JST'
          'tinyEditor'
-], (EditableView, JST, TinyEditor) ->
+          'handlebars'
+], (EditableView, JST, TinyEditor, Handlebars) ->
   'use strict'
 
   class QuestionView extends EditableView
@@ -12,13 +13,22 @@ define [
     className: ''
     tagName: 'article'
 
+    Handlebars.registerHelper('ifnot', (condition, options) ->
+      console.log 'no'
+      if not condition
+        return options.fn(@)
+    )
+
     initialize: ->
       super
 
     events:
-      'click h3': ->
-        @setActiveMode() if @mode isnt 'active'
+#      'click h3': ->
+#        @setActiveMode() if @mode isnt 'active'
 
+      'click #editButton': (e) ->
+        console.log 'as'
+        @setActiveMode()
 
       #active events
       'keydown #body': (e) ->
@@ -31,9 +41,6 @@ define [
 
       'click #previewButton': (e) ->
         @setPassiveMode()
-
-      'click iframe': ->
-        console.log 'asd'
 
       'keyup #body': (e) ->
           @model.data.answer = $(e.target).val()
@@ -55,10 +62,6 @@ define [
     setActiveMode: ->
       super
       @$el.find('#body').focus()
-#      TinyEditor.editor.edit 'editor',
-#        id: 'body'
-#        controls: []
-#        cssfile: "css/forms.css"
 
     getTemplateData: =>
       {question: @model.data}
@@ -66,6 +69,8 @@ define [
     render: ->
       super
       @$el.attr('id', @model.data.id)
+      if not @model.data.answer
+        @$el.attr('data-permission', 'author')
 
 
 

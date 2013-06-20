@@ -27,13 +27,14 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     AuthorPostsQueue.prototype.addSortable = function() {
       var _this = this;
+      this.$el.find('.posts').sortable({
+        cursor: 'move',
+        update: function() {}
+      });
       if (this.authorized) {
-        return this.$el.find('.posts').sortable({
-          cursor: 'move',
-          update: function() {}
-        });
-      } else {
         return this.$el.find('.posts').sortable('enable');
+      } else {
+        return this.$el.find('.posts').sortable('disable');
       }
     };
 

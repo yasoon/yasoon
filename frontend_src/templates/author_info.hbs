@@ -2,9 +2,7 @@
 
 <img src="./_temp/a1.jpg" alt="">
 <h4 class="usr-name editable">{{author.name}}
-    {{#if authorized}}
-    <i></i>
-    {{/if}}
+    <i class='pencil' data-permission="authorized" id='editButton'></i>
 </h4>
 <p class="u-description">{{author.description}}</p>
 <div class="hr"></div>

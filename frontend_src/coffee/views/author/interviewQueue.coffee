@@ -56,7 +56,6 @@ define [
         view.softRender()
 
       @manageAuthAreas()
-
       @addSortable()
 
 

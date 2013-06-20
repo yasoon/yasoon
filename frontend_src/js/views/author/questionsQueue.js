@@ -54,7 +54,8 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
     AuthorQuestionsQueue.prototype.getTemplateData = function() {
       return {
         questions: this.model.questions,
-        authorized: this.authorized
+        authorized: this.authorized,
+        isNotAuthorsPage: !this.authorized
       };
     };
 
@@ -78,6 +79,7 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
         view = _ref[_i];
         view.softRender();
       }
+      this.manageAuthAreas();
       return this.addSortable();
     };
 
@@ -97,6 +99,7 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
           model: question
         })).setRegion('list').setPassiveMode());
       }
+      this.manageAuthAreas();
       return this.addSortable();
     };
 

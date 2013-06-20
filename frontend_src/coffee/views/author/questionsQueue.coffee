@@ -37,7 +37,7 @@ define [
 
 
     getTemplateData: ->
-      {questions: @model.questions, authorized: @authorized}
+      {questions: @model.questions, authorized: @authorized, isNotAuthorsPage: not @authorized}
 
     addSortable: ->
       if @authorized
@@ -54,6 +54,7 @@ define [
     softRender: ->
       for view in @views
         view.softRender()
+      @manageAuthAreas()
       @addSortable()
 
     render: ->
@@ -64,6 +65,7 @@ define [
       for question in @model.questions
         @views.push (new QuestionView(model: question)).setRegion('list').setPassiveMode()
 
+      @manageAuthAreas()
       @addSortable()
 
 

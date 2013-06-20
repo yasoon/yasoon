@@ -19,19 +19,52 @@ define(['chaplin'], function(Chaplin) {
     };
 
     View.prototype.softRender = function() {
-      return this.$el.html(JST[this.templateName](this.getTemplateData()));
+      this.$el.html(JST[this.templateName](this.getTemplateData()));
+      return this.manageAuthAreas();
+    };
+
+    View.prototype.render = function() {
+      View.__super__.render.apply(this, arguments);
+      return this.manageAuthAreas();
     };
 
     View.prototype.manageAuthAreas = function() {
-      var el, _i, _len, _ref, _results;
-      _ref = this.$el.find('.auth-area');
-      _results = [];
+      var el, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3, _results;
+      _ref = this.$el.find("[data-permission='authorized']");
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         el = _ref[_i];
         if (this.authorized) {
-          _results.push($(el).show());
+          $(el).show();
         } else {
+          $(el).hide();
+        }
+      }
+      _ref1 = this.$el.find("[data-permission='not-authorized']");
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        el = _ref1[_j];
+        if (this.authorized) {
+          $(el).hide();
+        } else {
+          $(el).show();
+        }
+      }
+      _ref2 = this.$el.find("[data-permission='author']");
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        el = _ref2[_k];
+        if (this.authorized) {
+          $(el).show();
+        } else {
+          $(el).hide();
+        }
+      }
+      _ref3 = this.$el.find("[data-permission='not-author']");
+      _results = [];
+      for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+        el = _ref3[_l];
+        if (this.authorized) {
           _results.push($(el).hide());
+        } else {
+          _results.push($(el).show());
         }
       }
       return _results;

@@ -8,10 +8,7 @@
 <div class="my-nav">
     <a> <img src="./_temp/a1.jpg" alt=""> <span>0</span></a>
     <nav>
-        {{#if authorized}}
-            <a id='logoutButton'>Log out</a>
-        {{else}}
-            <a id='loginButton'>Log in</a>
-        {{/if}}
+            <a id='logoutButton' data-permission="authorized">Log out</a>
+            <a id='loginButton' data-permission="not-authorized">Log in</a>
     </nav>
 </div>

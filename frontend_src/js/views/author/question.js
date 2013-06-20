@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST, TinyEditor) {
+define(['views/base/editable', 'JST', 'tinyEditor', 'handlebars'], function(EditableView, JST, TinyEditor, Handlebars) {
   'use strict';
   var QuestionView,
     _this = this;
@@ -26,15 +26,21 @@ define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST,
 
     QuestionView.prototype.tagName = 'article';
 
+    Handlebars.registerHelper('ifnot', function(condition, options) {
+      console.log('no');
+      if (!condition) {
+        return options.fn(this);
+      }
+    });
+
     QuestionView.prototype.initialize = function() {
       return QuestionView.__super__.initialize.apply(this, arguments);
     };
 
     QuestionView.prototype.events = {
-      'click h3': function() {
-        if (this.mode !== 'active') {
-          return this.setActiveMode();
-        }
+      'click #editButton': function(e) {
+        console.log('as');
+        return this.setActiveMode();
       },
       'keydown #body': function(e) {
         if (e.keyCode === 27) {
@@ -48,9 +54,6 @@ define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST,
       },
       'click #previewButton': function(e) {
         return this.setPassiveMode();
-      },
-      'click iframe': function() {
-        return console.log('asd');
       },
       'keyup #body': function(e) {
         return this.model.data.answer = $(e.target).val();
@@ -87,7 +90,10 @@ define(['views/base/editable', 'JST', 'tinyEditor'], function(EditableView, JST,
 
     QuestionView.prototype.render = function() {
       QuestionView.__super__.render.apply(this, arguments);
-      return this.$el.attr('id', this.model.data.id);
+      this.$el.attr('id', this.model.data.id);
+      if (!this.model.data.answer) {
+        return this.$el.attr('data-permission', 'author');
+      }
     };
 
     return QuestionView;
