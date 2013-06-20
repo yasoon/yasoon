@@ -19,8 +19,8 @@ define [
 
     initialize: ->
       super
-      @subscribeEvent 'questionAdded',   @addQuestion
-      @subscribeEvent 'questionDeleted', @deleteQuestion
+#      @subscribeEvent 'questionAdded',   @addQuestion
+#      @subscribeEvent 'questionDeleted', @deleteQuestion
 
     addQuestion: (question) ->
       console.log 'qwe'

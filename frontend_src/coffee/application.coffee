@@ -2,7 +2,7 @@ define [
   'chaplin'
   'routes'
   'controllers/redirect-controller'
-], (Chaplin, routes, RedirectController) ->
+], (Chaplin, routes, RedirectController, Handlebars) ->
   'use strict'
 
   class Application extends Chaplin.Application
@@ -24,6 +24,8 @@ define [
       @initMediator()
 
       @startRouting()
+
+
 
       Object.freeze? this
 

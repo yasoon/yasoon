@@ -27,9 +27,7 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
     AuthorQuestionsQueue.prototype.templateName = 'author_questionsQueue';
 
     AuthorQuestionsQueue.prototype.initialize = function() {
-      AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
-      this.subscribeEvent('questionAdded', this.addQuestion);
-      return this.subscribeEvent('questionDeleted', this.deleteQuestion);
+      return AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
     };
 
     AuthorQuestionsQueue.prototype.addQuestion = function(question) {

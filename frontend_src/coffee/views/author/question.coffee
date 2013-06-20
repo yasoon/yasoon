@@ -14,13 +14,14 @@ define [
     tagName: 'article'
 
     Handlebars.registerHelper('ifnot', (condition, options) ->
-      console.log 'no'
       if not condition
         return options.fn(@)
     )
 
     initialize: ->
       super
+
+
 
     events:
 #      'click h3': ->

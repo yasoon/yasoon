@@ -12,6 +12,14 @@ define [
     tagName: 'article'
     region: 'newQuestion'
 
+    setDoneMode: (callback) ->
+      @currentTemplateName = "#{@templateName}Done"
+      @softRender()
+      @modesHistory.push(@mode) if @mode?
+      @mode = 'done'
+      callback?()
+      @
+
     initialize:  ->
       super
       @setButtonMode()
@@ -36,7 +44,7 @@ define [
       'click #sendButton': (e) ->
         @$el.find('#buttons').hide()
         @model.add =>
-           @setButtonMode()
+           @setDoneMode()
 
     setActiveMode: ->
       super

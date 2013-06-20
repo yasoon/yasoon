@@ -131,6 +131,17 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
 var Handlebars = require('handlebars');
 var template = Handlebars.template, templates = JST = JST || {};
+templates['author_newQuestion_viewDone'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div class=\"content\">\n    Ваш вопрос добавлен\n    <a class=\"btn\" id='askQuestionButton'>ok</a>\n</div>\n<div class=\"hr\"></div>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
 templates['author_post_viewActive'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
@@ -271,13 +282,22 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
+  return "\n            <i data-permission=\"authororized\" id='editButton' class='pencil'></i>\n        ";
+  }
+
+function program3(depth0,data) {
+  
+  
   return "\n        <div id='editButton' class='btn'>редактировать</div>\n        <div id='declineButton' class='btn-danger'>удалить</div>\n    ";
   }
 
   buffer += "<h3>\n    <a>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a>\n\n            <i data-permission=\"authororized\" id='editButton' class='pencil'></i>\n    ";
-  options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data};
+    + "</a>\n        ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n    ";
+  options = {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data};
   stack2 = ((stack1 = helpers.ifnot),stack1 ? stack1.call(depth0, ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options) : helperMissing.call(depth0, "ifnot", ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n    <span class='post-date'>"

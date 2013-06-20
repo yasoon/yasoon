@@ -28,6 +28,19 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     NewQuestionView.prototype.region = 'newQuestion';
 
+    NewQuestionView.prototype.setDoneMode = function(callback) {
+      this.currentTemplateName = "" + this.templateName + "Done";
+      this.softRender();
+      if (this.mode != null) {
+        this.modesHistory.push(this.mode);
+      }
+      this.mode = 'done';
+      if (typeof callback === "function") {
+        callback();
+      }
+      return this;
+    };
+
     NewQuestionView.prototype.initialize = function() {
       NewQuestionView.__super__.initialize.apply(this, arguments);
       return this.setButtonMode();
@@ -54,7 +67,7 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
         var _this = this;
         this.$el.find('#buttons').hide();
         return this.model.add(function() {
-          return _this.setButtonMode();
+          return _this.setDoneMode();
         });
       }
     };

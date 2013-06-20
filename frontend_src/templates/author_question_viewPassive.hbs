@@ -1,7 +1,8 @@
 <h3>
     <a>{{question.caption}}</a>
-
+        {{#if question.answer}}
             <i data-permission="authororized" id='editButton' class='pencil'></i>
+        {{/if}}
     {{#ifnot question.answer}}
         <div id='editButton' class='btn'>редактировать</div>
         <div id='declineButton' class='btn-danger'>удалить</div>

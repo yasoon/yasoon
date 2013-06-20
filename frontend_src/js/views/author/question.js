@@ -27,7 +27,6 @@ define(['views/base/editable', 'JST', 'tinyEditor', 'handlebars'], function(Edit
     QuestionView.prototype.tagName = 'article';
 
     Handlebars.registerHelper('ifnot', function(condition, options) {
-      console.log('no');
       if (!condition) {
         return options.fn(this);
       }
