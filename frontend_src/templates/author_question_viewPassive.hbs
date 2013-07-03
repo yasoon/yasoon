@@ -3,11 +3,13 @@
         {{#if question.answer}}
             <i data-permission="authororized" id='editButton' class='pencil'></i>
         {{/if}}
-    {{#ifnot question.answer}}
-        <div id='editButton' class='btn'>редактировать</div>
-        <div id='declineButton' class='btn-danger'>удалить</div>
-    {{/ifnot}}
     <span class='post-date'>{{question.date}}</span>
+    {{#ifnot question.answer}}
+    <div id='buttons'>
+        <div id='editButton' class='btn'>ответить</div>
+        <div id='declineButton' class='btn-danger'>удалить</div>
+    </div>
+    {{/ifnot}}
 </h3>
 <div class="content">
     <p>{{question.answer}}</p>

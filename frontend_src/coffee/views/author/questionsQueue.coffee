@@ -19,11 +19,10 @@ define [
 
     initialize: ->
       super
-#      @subscribeEvent 'questionAdded',   @addQuestion
-#      @subscribeEvent 'questionDeleted', @deleteQuestion
+      @subscribeEvent 'questionAdded',   @addQuestion
+      @subscribeEvent 'questionDeleted', @deleteQuestion
 
     addQuestion: (question) ->
-      console.log 'qwe'
       @model.questions.splice(0, 0, question)
       @render()
 
@@ -40,14 +39,14 @@ define [
       {questions: @model.questions, authorized: @authorized, isNotAuthorsPage: not @authorized}
 
     addSortable: ->
-      if @authorized
-        @$el.find('#list').sortable(
-          cursor: 'move'
-          update: =>
-            #@refreshOrder()
-        )
-        @$el.find('#list').sortable('enable')
+      @$el.find('#list').sortable(
+        cursor: 'move'
+        update: =>
+          #@refreshOrder()
+      )
 
+      if @authorized
+        @$el.find('#list').sortable('enable')
       else
         @$el.find('#list').sortable('disable')
 

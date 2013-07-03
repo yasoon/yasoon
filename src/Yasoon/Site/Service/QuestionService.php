@@ -25,7 +25,8 @@ class QuestionService extends AbstractApiService {
         $entity = (new QuestionEntity())
             ->setCaption($model['caption'])
             ->setDate(new \DateTime())
-            ->setIsInBlank(false);
+            ->setIsInBlank(false)
+            ->setAuthorId($model['authorId']);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
 
@@ -53,7 +54,8 @@ class QuestionService extends AbstractApiService {
             ->setCaption($model['caption'])
             ->setAnswer(isset($model['answer'])? $model['answer'] : '')
             ->setDate(new \DateTime())
-            ->setIsInBlank(true);
+            ->setIsInBlank(true)
+            ->setAuthorId($model['authorId']);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $this->clientId));
 

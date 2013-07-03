@@ -44,6 +44,7 @@ define [
         addedQuestion.data = id: @data.id, caption: @data.caption, date: @data.date, answer: @data.answer
         @publishEvent 'questionAdded', addedQuestion
         @data.id = undefined
+        @data.caption = ''
         @data.text = ''
         callback?()
 
@@ -65,6 +66,7 @@ define [
         addedQuestion.data = id: @data.id, caption: @data.caption, date: @data.date
         @publishEvent 'questionAdded', addedQuestion
         @data.id = undefined
+        @data.caption = ''
         @data.text = ''
         callback()
 

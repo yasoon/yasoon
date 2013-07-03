@@ -12,8 +12,6 @@ define [
       super
       @authorId = obj.authorId
 
-
-
     fetch: (callback) ->
 
       fetchCallback = =>

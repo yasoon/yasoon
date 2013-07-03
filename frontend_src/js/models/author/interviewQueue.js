@@ -24,7 +24,6 @@ define(['chaplin', 'models/base/model', 'models/author/question'], function(Chap
     InterviewQueue.prototype.fetch = function(callback) {
       var fetchCallback,
         _this = this;
-      console.log('aaa');
       fetchCallback = function() {
         var question, questionData, _i, _len, _ref;
         _ref = _this.data;

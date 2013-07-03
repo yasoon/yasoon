@@ -27,11 +27,12 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
     AuthorQuestionsQueue.prototype.templateName = 'author_questionsQueue';
 
     AuthorQuestionsQueue.prototype.initialize = function() {
-      return AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
+      AuthorQuestionsQueue.__super__.initialize.apply(this, arguments);
+      this.subscribeEvent('questionAdded', this.addQuestion);
+      return this.subscribeEvent('questionDeleted', this.deleteQuestion);
     };
 
     AuthorQuestionsQueue.prototype.addQuestion = function(question) {
-      console.log('qwe');
       this.model.questions.splice(0, 0, question);
       return this.render();
     };
@@ -59,11 +60,11 @@ define(['views/base/view', 'JST', 'views/author/question', 'views/author/newQues
 
     AuthorQuestionsQueue.prototype.addSortable = function() {
       var _this = this;
+      this.$el.find('#list').sortable({
+        cursor: 'move',
+        update: function() {}
+      });
       if (this.authorized) {
-        this.$el.find('#list').sortable({
-          cursor: 'move',
-          update: function() {}
-        });
         return this.$el.find('#list').sortable('enable');
       } else {
         return this.$el.find('#list').sortable('disable');

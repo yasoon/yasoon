@@ -137,7 +137,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"content\">\n    Ваш вопрос добавлен\n    <a class=\"btn\" id='askQuestionButton'>ok</a>\n</div>\n<div class=\"hr\"></div>";
+  return "<div class=\"content\">\n    Ваш вопрос добавлен<br>\n    <a class=\"btn\" id='askQuestionButton'>ok</a>\n</div>\n<div class=\"hr\"></div>";
   });
 
 var Handlebars = require('handlebars');
@@ -288,7 +288,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
-  return "\n        <div id='editButton' class='btn'>редактировать</div>\n        <div id='declineButton' class='btn-danger'>удалить</div>\n    ";
+  return "\n    <div id='buttons'>\n        <div id='editButton' class='btn'>ответить</div>\n        <div id='declineButton' class='btn-danger'>удалить</div>\n    </div>\n    ";
   }
 
   buffer += "<h3>\n    <a>"
@@ -296,13 +296,13 @@ function program3(depth0,data) {
     + "</a>\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n    ";
+  buffer += "\n    <span class='post-date'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</span>\n    ";
   options = {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data};
   stack2 = ((stack1 = helpers.ifnot),stack1 ? stack1.call(depth0, ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options) : helperMissing.call(depth0, "ifnot", ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer), options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n    <span class='post-date'>"
-    + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</span>\n</h3>\n<div class=\"content\">\n    <p>"
+  buffer += "\n</h3>\n<div class=\"content\">\n    <p>"
     + escapeExpression(((stack1 = ((stack1 = depth0.question),stack1 == null || stack1 === false ? stack1 : stack1.answer)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</p>\n</div>\n<div class=\"hr\"></div>";
   return buffer;

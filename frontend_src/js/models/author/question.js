@@ -73,6 +73,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         };
         _this.publishEvent('questionAdded', addedQuestion);
         _this.data.id = void 0;
+        _this.data.caption = '';
         _this.data.text = '';
         return typeof callback === "function" ? callback() : void 0;
       };
@@ -103,6 +104,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         };
         _this.publishEvent('questionAdded', addedQuestion);
         _this.data.id = void 0;
+        _this.data.caption = '';
         _this.data.text = '';
         return callback();
       };
