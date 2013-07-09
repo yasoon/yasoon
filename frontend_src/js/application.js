@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'routes', 'controllers/redirect-controller'], function(Chaplin, routes, RedirectController, Handlebars) {
+define(['chaplin', 'routes', 'controllers/redirect-controller'], function(Chaplin, routes, RedirectController) {
   'use strict';
   var Application;
   return Application = (function(_super) {

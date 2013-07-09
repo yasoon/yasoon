@@ -13,6 +13,12 @@ define(['chaplin'], function(Chaplin) {
       return View.__super__.constructor.apply(this, arguments);
     }
 
+    View.prototype.checkTemplate = function() {
+      if (JST[this.templateName] == null) {
+        throw "no template with name " + this.templateName + " found";
+      }
+    };
+
     View.prototype.getTemplateFunction = function() {
       var templateFunc;
       return templateFunc = JST[this.templateName];
@@ -71,6 +77,7 @@ define(['chaplin'], function(Chaplin) {
     };
 
     View.prototype.initialize = function() {
+      this.checkTemplate();
       this.authorized = true;
       this.subscribeEvent('logout', function() {
         this.authorized = false;

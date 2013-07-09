@@ -12,9 +12,6 @@ define(['controllers/base/controller', 'chaplin'], function(Controller, Chaplin)
 
     function RedirectController() {
       var _this = this;
-      this.redirectAction = function(params) {
-        return RedirectController.prototype.redirectAction.apply(_this, arguments);
-      };
       this.redirect = function(url) {
         return RedirectController.prototype.redirect.apply(_this, arguments);
       };
@@ -28,10 +25,6 @@ define(['controllers/base/controller', 'chaplin'], function(Controller, Chaplin)
 
     RedirectController.prototype.redirect = function(url) {
       return document.location = url;
-    };
-
-    RedirectController.prototype.redirectAction = function(params) {
-      return this.redirect(params.url);
     };
 
     return RedirectController;

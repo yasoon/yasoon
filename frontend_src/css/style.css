@@ -163,6 +163,11 @@ footer nav {
 }
 #bg-main nav a,
 .org-nav nav a,
+.media-main-nav a {
+  line-height: 14px;
+}
+#bg-main nav a,
+.org-nav nav a,
 .media-main-nav a,
 footer nav {
   font-family: 'MuseoSansCyrl-100', Arial;
@@ -296,6 +301,9 @@ section,
 }
 #page-layout .post-edit .navigate.fixed {
   max-width: 620px;
+  margin-left: -310px;
+  left: 50%;
+  padding: 0 !important;
 }
 #main-layout .navigate.fixed {
   max-width: 845px;
@@ -319,7 +327,6 @@ section,
   border-width: 0 0 1px 1px;
   padding-left: 20px;
   background: #fff;
-  border-left: 0;
 }
 .navigate.fixed,
 .left-side.fixed,
@@ -335,9 +342,6 @@ section,
 }
 #main-layout article {
   padding-left: 0;
-}
-.interviewQueue article {
-  border-left: 0;
 }
 .postinfo .btn {
   color: #238C00;
@@ -380,8 +384,10 @@ section,
   *display: inline;
   zoom: 1;
 }
-.pencil {
-  background: url(../img/spr.png) -94px -32px no-repeat;
+.editable i {
+  background: url(../img/spr.png);
+  background-position: -98px -32px;
+  background-repeat: no-repeat;
   width: 16px;
   height: 16px;
   display: inline-block;
@@ -448,7 +454,9 @@ section,
 }
 .like-this i,
 .q-post i {
-  background: url(../img/spr.png) 0 0 no-repeat;
+  background-image: url(../img/spr.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
   width: 48px;
   height: 48px;
   display: block;
@@ -456,9 +464,6 @@ section,
   left: 0;
   top: 50%;
   margin-top: -24px;
-}
-.q-post i {
-  width: 46px;
 }
 .like-this span,
 .q-post span {
@@ -484,20 +489,36 @@ section,
   float: left;
   background: #fff;
 }
+.social-links a {
+  display: block;
+  float: left;
+  width: 15px;
+  height: 15px;
+  background-image: url(../img/spr.png);
+  background-position: 0 -48px;
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+.social-links a.wf {
+  background-position: -18px -48px;
+}
+.social-links a.wb {
+  background-position: -36px -48px;
+}
 article .hr {
   margin-left: -20px;
+}
+#page-layout {
+  padding-bottom: 45px;
 }
 #page-layout .postinfo {
   padding-right: 0;
 }
-.left-side ~ article,
-article {
+article.lim {
   border-left: 1px solid #ddd;
   padding-left: 20px;
 }
-.postinfo ~ #queue,
-.left-side ~ article,
-.left-side + .right-side {
+.lim {
   margin-left: 195px;
 }
 article .btn {
@@ -529,8 +550,7 @@ article h1 {
   font-family: 'MuseoSansCyrl-100Italic', Arial;
   margin-bottom: 1em;
 }
-#page-layout .left-side ~ article .q-box,
-#page-layout .postinfo ~ article .q-box {
+.lim .q-box {
   padding-left: 20px;
   margin-left: -20px;
 }
@@ -644,7 +664,7 @@ article.cat-title {
 .bottom-toolbar {
   padding: 30px 0;
 }
-article .usr-ic ~ .content {
+.lic {
   margin-left: 145px;
 }
 article .usr-ic {
@@ -664,10 +684,7 @@ footer .inside {
   line-height: 22px;
 }
 footer {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  position: fixed;
   z-index: 11;
   border-top: 1px solid #ddd;
   background-color: #f5f5f5;
@@ -675,4 +692,6 @@ footer {
   font-family: 'MuseoSansCyrl-100', Arial;
   text-transform: uppercase;
   color: #777;
+  width: 100%;
+  bottom: 0;
 }

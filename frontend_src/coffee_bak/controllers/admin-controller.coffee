@@ -1,7 +1,7 @@
 define [
         'controllers/base/controller'
 
-        'views/admin/blank/page'
+        'views/page/admin/blank'
 
 #        'models/blankQuestion/queue'
 #        'views/blankQuestion/queue'

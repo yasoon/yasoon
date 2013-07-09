@@ -42,30 +42,25 @@ input[type="button"]:focus {
 [type="password"]:focus {
   color: #000;
 }
-textarea,
-.textarea {
+textarea {
   min-height: 150px;
 }
-textarea.big,
-.textarea .big {
+textarea.big {
   min-height: 450px;
 }
 [type="search"]:focus,
 [type="text"]:focus,
 [type="password"]:focus,
-textarea:focus,
-.textarea:focus {
+textarea:focus {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 [type="search"].error + div,
 [type="text"].error + div,
 [type="password"].error + div,
 textarea + div,
-.textarea + div,
 [type="date"].error + div,
 select.error + div,
-textarea.error + div,
-.textarea.error + div {
+textarea.error + div {
   color: red;
 }
 [type="search"].error,
@@ -81,7 +76,6 @@ textarea.error {
 [type="text"],
 [type="password"],
 textarea,
-.textarea,
 [type="date"],
 select {
   border: none;
@@ -128,14 +122,14 @@ a,
   user-select: none;
 }
 .login-btn:hover,
-.btn:hover,
-.btn-danger:hover {
+.btn:hover {
   opacity: .5;
   filter: alpha(opacity=50);
 }
 .login-btn {
   font-family: 'MuseoSansCyrl-100', Arial;
   font-size: 12px;
+  line-height: 12px;
   text-transform: uppercase;
   padding: 10px 20px;
   background: #999999;
@@ -156,6 +150,7 @@ a,
 .regbtn {
   font-family: 'MuseoSansCyrl-700', Arial;
   font-size: 14px;
+  line-height: 14px;
   text-transform: uppercase;
   color: #238C00;
   border: 2px solid #238C00!important;
@@ -164,9 +159,9 @@ a,
   background: #fff;
 }
 .btn {
-  cursor: pointer;
   font-family: 'MuseoSansCyrl-700', Arial;
   font-size: 14px;
+  line-height: 14px;
   text-transform: uppercase;
   border: 2px solid;
   color: #238C00;
@@ -178,29 +173,6 @@ a,
   display: inline-block;
   *display: inline;
   zoom: 1;
-}
-.btn-danger {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-  font-family: 'MuseoSansCyrl-700', Arial;
-  font-size: 14px;
-  text-transform: uppercase;
-  border: 2px solid;
-  color: #238C00;
-  border-radius: 30px;
-  padding: 10px 30px;
-  -webkit-transition: opacity .2s ease;
-  -moz-transition: opacity .2s ease;
-  transition: opacity .2s ease;
-  display: inline-block;
-  *display: inline;
-  zoom: 1;
-  color: red !important;
 }
 .hr {
   border-top: 1px solid #e2e2e2;
@@ -291,9 +263,6 @@ a,
   *width: 620px;
   padding-bottom: 50px;
 }
-.post-edit article {
-  border: 0;
-}
 .post-edit-tools {
   background: #f3f3f3;
 }
@@ -307,22 +276,7 @@ a,
 .post-edit-tools .item:active {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
 }
-#wysihtml5-toolbar {
-  max-width: 620px;
-  margin: 0 auto;
-  *width: 620px;
-  position: relative;
-  top: 0;
-}
-#wysihtml5-toolbar a {
-  float: left;
-  border-right: 1px solid #E2E2E2;
-  padding: 0 10px;
-  line-height: 30px;
-  cursor: pointer;
-}
 .a-quertion {
-  cursor: pointer;
   padding: 20px 0;
   border: solid #E2E2E2;
   border-width: 1px 0;

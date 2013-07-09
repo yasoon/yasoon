@@ -1,9 +1,49 @@
 define [
          'views/base/view'
-], (View) ->
+         'JST'
+], (View, JST) ->
   'use strict'
 
   class EditableView extends View
+    autoRender: false
+
+    events:
+      'click': (e) ->
+        target = $(e.target)
+
+        if target.attr('data-to-mode')? then @setMode target.attr('data-to-mode')
+
+        if target.attr('data-send-button')? then @send()
+
+        if target.attr('data-delete-button')? then @del()
+
+    send: ->
+      if @model.id?
+        @update()
+      else
+        @add()
+
+    add: ->
+      @setMode('button')
+
+    update: ->
+      @setMode('passive')
+
+
+    del: ->
+      console.log 'delete'
+
+    checkTemplate: ->
+      for mode in @modes
+        tempName = @formatTemplateName(mode)
+        if not JST[tempName]?
+          throw "no template with name #{tempName} found"
+
+    initialize: ->
+      super
+      @regionSet = false
+      @rendered  = false
+      @modesHistory = []
 
 
     getTemplateFunction: ->
@@ -11,50 +51,32 @@ define [
 
     setRegion: (region) ->
       @region = region
+      @regionSet = true
       @
 
-    initialize: ->
-      super
-      @modesHistory =  []
-
-    rendered: false
-
-    softRender: ->
+    render: ->
       if @rendered
         @$el.html JST[@currentTemplateName](@getTemplateData())
       else
-        @render()
+        tnBuffer = @templateName
+        @templateName = @currentTemplateName
+        super
+        @templateName = tnBuffer
         @rendered = true
+      if $('#q').get(0)?
+        $('#q').focus()
 
-    setButtonMode:(callback) ->
-       @currentTemplateName = "#{@templateName}Button"
-       @softRender()
-       @modesHistory.push(@mode) if @mode?
-       @mode = 'button'
-       callback?()
-       @
-
-    setActiveMode: (callback) ->
-      @currentTemplateName = "#{@templateName}Active"
-      @softRender()
-      @modesHistory.push(@mode) if @mode?
-      @mode = 'active'
+    setMode: (mode, callback) ->
+      @currentTemplateName = @formatTemplateName(mode)
+      @render()
+      @modesHistory.push(@mode) if @mode ?
+      @mode = mode
       callback?()
       @
 
-    setPassiveMode: (callback) ->
-       @currentTemplateName = "#{@templateName}Passive"
-       @softRender()
-       @modesHistory.push(@mode) if @mode?
-       @mode = 'passive'
-       callback?()
-       @
+    formatTemplateName: (mode) ->
+      return "#{@templateName+'_'+mode}"
 
     setPreviousMode: ->
-      if @modesHistory[@modesHistory.length-1] is 'button'
-        @setButtonMode()
-      else if @modesHistory[@modesHistory.length-1] is 'active'
-        @setActiveMode()
-      else if @modesHistory[@modesHistory.length-1] is 'passive'
-        @setPassiveMode()
+     @setMode(@modesHistory[@modesHistory.length-1])
 

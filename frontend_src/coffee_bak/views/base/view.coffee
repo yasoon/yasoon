@@ -4,11 +4,6 @@ define [
   'use strict'
 
   class View extends Chaplin.View
-
-    checkTemplate: ->
-      if not JST[@templateName]?
-        throw "no template with name #{@templateName} found"
-
     getTemplateFunction: ->
       templateFunc = JST[@templateName]
 
@@ -31,8 +26,6 @@ define [
         if @authorized then $(el).hide() else $(el).show()
 
     initialize: ->
-      @checkTemplate()
-
       @authorized = true
       @subscribeEvent 'logout', ->
         @authorized = false

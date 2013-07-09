@@ -1,4 +1,6 @@
 define [
+    redirectAction: (params) =>
+      @redirect params.url
   'controllers/base/controller'
   'chaplin'
 ], (Controller, Chaplin) ->
@@ -11,4 +13,9 @@ define [
       Chaplin.mediator.subscribe 'redirect', @redirect
 
     redirect: (url) =>
+#      @publishEvent 'dispose'
       document.location = url
+
+    redirectAction: (params) =>
+      @redirect params.url
+
