@@ -27,6 +27,7 @@ define [
       @setMode('button')
 
     update: ->
+      @model.update()
       @setMode('passive')
 
 
@@ -63,8 +64,6 @@ define [
         super
         @templateName = tnBuffer
         @rendered = true
-      if $('#q').get(0)?
-        $('#q').focus()
 
     setMode: (mode, callback) ->
       @currentTemplateName = @formatTemplateName(mode)

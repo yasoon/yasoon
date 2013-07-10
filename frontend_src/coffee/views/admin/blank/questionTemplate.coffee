@@ -11,3 +11,7 @@ define [
 
     modes: ['button', 'passive', 'active']
 
+    events:
+      'keyup #caption': (e) ->
+        @model.caption = $(e.target).html()
+        console.log @model.caption

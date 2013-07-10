@@ -13,6 +13,13 @@ define(['chaplin'], function(Chaplin) {
       return View.__super__.constructor.apply(this, arguments);
     }
 
+    View.prototype.initialize = function() {
+      this.checkTemplate();
+      if (!this.autoRender) {
+        return this.rendered = false;
+      }
+    };
+
     View.prototype.checkTemplate = function() {
       if (JST[this.templateName] == null) {
         throw "no template with name " + this.templateName + " found";
@@ -30,8 +37,18 @@ define(['chaplin'], function(Chaplin) {
     };
 
     View.prototype.render = function() {
-      View.__super__.render.apply(this, arguments);
+      if (this.rendered) {
+        this.$el.html(JST[this.templateName](this.getTemplateData()));
+      } else {
+        View.__super__.render.apply(this, arguments);
+        this.rendered = true;
+      }
       return this.manageAuthAreas();
+    };
+
+    View.prototype.setRegion = function(region) {
+      this.region = region;
+      return this;
     };
 
     View.prototype.manageAuthAreas = function() {
@@ -74,19 +91,6 @@ define(['chaplin'], function(Chaplin) {
         }
       }
       return _results;
-    };
-
-    View.prototype.initialize = function() {
-      this.checkTemplate();
-      this.authorized = true;
-      this.subscribeEvent('logout', function() {
-        this.authorized = false;
-        return this.softRender();
-      });
-      return this.subscribeEvent('login', function() {
-        this.authorized = true;
-        return this.softRender();
-      });
     };
 
     return View;

@@ -44,6 +44,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     };
 
     EditableView.prototype.update = function() {
+      this.model.update();
       return this.setMode('passive');
     };
 
@@ -88,16 +89,13 @@ define(['views/base/view', 'JST'], function(View, JST) {
     EditableView.prototype.render = function() {
       var tnBuffer;
       if (this.rendered) {
-        this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
+        return this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
       } else {
         tnBuffer = this.templateName;
         this.templateName = this.currentTemplateName;
         EditableView.__super__.render.apply(this, arguments);
         this.templateName = tnBuffer;
-        this.rendered = true;
-      }
-      if ($('#q').get(0) != null) {
-        return $('#q').focus();
+        return this.rendered = true;
       }
     };
 

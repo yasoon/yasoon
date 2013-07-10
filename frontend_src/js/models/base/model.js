@@ -14,27 +14,22 @@ define(['chaplin'], function(Chaplin) {
 
     Model.prototype.data = {};
 
-    Model.prototype.fetchParams = {
-      method: 'GET',
-      data: {}
-    };
+    Model.prototype.url = '';
+
+    Model.prototype.method = '';
+
+    Model.prototype.requestData = '';
 
     Model.prototype.formatUrl = function(url) {
       return 'http://' + document.domain + ("/" + url);
     };
 
     Model.prototype.request = function(callback) {
-      var request,
-        _this = this;
-      request = {
-        url: this.formatUrl(this.url()),
-        method: this.fetchParams.method,
-        requestData: this.fetchParams.data
-      };
+      var _this = this;
       return $.ajax({
-        url: request.url,
-        method: request.method,
-        data: request.requestData,
+        url: this.formatUrl(this.url()),
+        method: this.method,
+        data: this.requestData,
         success: function(data) {
           _this.data = data;
           return typeof callback === "function" ? callback(data) : void 0;

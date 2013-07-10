@@ -25,10 +25,15 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['admin_blank_question_template_active'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "<div class=\"di t-center\">\n\n    <div class = 'a-quertion'>\n        <div style='float:left'>1)</div><div id='q' contenteditable=\"true\" data-field='caption'></div>\n    </div>\n\n    <div class=\"btn\" data-send-button>Отправить!</div>\n</div>";
+  buffer += "<div class=\"di t-center\">\n\n    <div class = 'a-quertion'>\n        <div style='float:left'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.place)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</div>\n        <div contenteditable=\"true\" id='text'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</div>\n    </div>\n\n    <div class=\"btn\" data-send-button>Отправить!</div>\n</div>";
+  return buffer;
   });
 
 var Handlebars = require('handlebars');
@@ -47,10 +52,15 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['admin_blank_question_template_passive'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  return "admin_blank_question_template_passive";
+  buffer += "<div class=\"di t-center\">\n\n    <div class = 'a-quertion'>\n        <div style='float:left'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.place)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</div>\n        <div contenteditable=\"false\" id='text'>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</div>\n    </div>\n\n    <div class=\"btn\" data-send-button>Отправить!</div>\n</div>";
+  return buffer;
   });
 
 var Handlebars = require('handlebars');

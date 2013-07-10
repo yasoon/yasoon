@@ -5,7 +5,19 @@ define [
          'views/admin/blank/header'
 
          'views/admin/blank/questionTemplate'
-], (PageView, JST, FooterView, HeaderView, QuestionTemplate) ->
+         'models/admin/blank/questionTemplate'
+
+         'views/admin/blank/questionTemplateQueue'
+         'models/admin/blank/questionTemplateQueue'
+], (PageView,
+    JST,
+    FooterView,
+    HeaderView,
+    QuestionTemplateView,
+    QuestionTemplateModel,
+    QuestionTemplateQueueView,
+    QuestionTemplateQueueModel
+) ->
   'use strict'
 
   class AdminBlankPageView extends PageView
@@ -24,5 +36,8 @@ define [
       hv = new HeaderView()
       fv = new FooterView()
 
-      q = new QuestionTemplate()
-      q.setRegion('new').setMode('button')
+      qtv = new QuestionTemplateView(model: new QuestionTemplateModel())
+      qtv.setRegion('new').setMode('button')
+
+      qtq = new QuestionTemplateQueueView(model: new QuestionTemplateQueueModel() )
+      qtq.setRegion('queue').render()
