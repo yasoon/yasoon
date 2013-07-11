@@ -13,6 +13,8 @@ define(['chaplin'], function(Chaplin) {
       return View.__super__.constructor.apply(this, arguments);
     }
 
+    View.prototype.autoRender = false;
+
     View.prototype.initialize = function() {
       this.checkTemplate();
       if (!this.autoRender) {
@@ -91,6 +93,14 @@ define(['chaplin'], function(Chaplin) {
         }
       }
       return _results;
+    };
+
+    View.prototype.getTemplateData = function() {
+      if (this.model != null) {
+        return {
+          model: this.model.data
+        };
+      }
     };
 
     return View;

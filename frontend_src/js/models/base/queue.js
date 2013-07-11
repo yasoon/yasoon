@@ -12,17 +12,24 @@ define(['models/base/model'], function(Model) {
       return Queue.__super__.constructor.apply(this, arguments);
     }
 
-    Queue.prototype.data = {};
+    Queue.prototype.data = [];
 
     Queue.prototype.elements = [];
 
     Queue.prototype.load = function(callback) {
-      this.url = function() {
-        return 'api/blank_question/get_blank';
+      var loadCallback,
+        _this = this;
+      loadCallback = function() {
+        var elData, _i, _len, _ref;
+        _ref = _this.data;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          elData = _ref[_i];
+          _this.elements.push(_this.createElementModel(elData));
+        }
+        return typeof callback === "function" ? callback() : void 0;
       };
-      this.method = 'GET';
-      this.request(callback);
-      return this.elements = this.data.sort(this.compare);
+      this.request(loadCallback);
+      return this;
     };
 
     Queue.prototype.compare = function(a, b) {
@@ -33,10 +40,44 @@ define(['models/base/model'], function(Model) {
       }
     };
 
-    Queue.prototype.update = function() {
-      return this.url = function() {
-        return "api/blank_question/update_places";
+    Queue.prototype.updatePlaces = function(callback) {
+      var updateCallback,
+        _this = this;
+      this.requestData = {
+        'map': this.buildPlacesMap()
       };
+      updateCallback = function() {
+        _this.elements.sort(_this.compare);
+        return typeof callback === "function" ? callback() : void 0;
+      };
+      return this.request(updateCallback);
+    };
+
+    Queue.prototype.getElementById = function(id) {
+      var element, _i, _len, _ref;
+      _ref = this.elements;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        element = _ref[_i];
+        if (parseInt(element.data.id) === parseInt(id)) {
+          return element;
+        }
+      }
+      throw "no element with id " + id + " found";
+    };
+
+    Queue.prototype.createElementModel = function(elData) {
+      throw 'abstract method createElemenModel must be redefined';
+    };
+
+    Queue.prototype.buildPlacesMap = function() {
+      var element, placesMap, _i, _len, _ref;
+      placesMap = {};
+      _ref = this.elements;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        element = _ref[_i];
+        placesMap[element.data.place] = element.data.id;
+      }
+      return placesMap;
     };
 
     return Queue;

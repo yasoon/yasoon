@@ -1,9 +1,12 @@
-<div class="di t-center">
-
+<div class="di t-center element" id='{{model.id}}'>
     <div class = 'a-quertion'>
-        <div style='float:left'>{{model.place}}</div>
+        <div style='float:left'>{{model.place}})</div>
         <div contenteditable="false" id='text'>{{model.text}}</div>
+        <div class="content">
+            <p>
+                <div class="btn" data-to-mode='active'>Редактировать</div>
+                <div class="btn close-question mLeft10" >Удалить</div>
+            </p>
+        </div>
     </div>
-
-    <div class="btn" data-send-button>Отправить!</div>
 </div>

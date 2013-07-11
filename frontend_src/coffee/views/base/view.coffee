@@ -4,6 +4,8 @@ define [
   'use strict'
 
   class View extends Chaplin.View
+    autoRender: false
+
     #
     initialize: ->
       @checkTemplate()
@@ -56,7 +58,8 @@ define [
         if @authorized then $(el).hide() else $(el).show()
 
 
-
+    getTemplateData: ->
+      if @model? then {model: @model.data}
 
 
 

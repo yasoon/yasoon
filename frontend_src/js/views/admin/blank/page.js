@@ -25,7 +25,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/blank/head
     AdminBlankPageView.prototype.templateName = 'admin_blank_page';
 
     AdminBlankPageView.prototype.render = function() {
-      var fv, hv, qtq, qtv;
+      var fv, hv, qtqModel, qtv,
+        _this = this;
       AdminBlankPageView.__super__.render.apply(this, arguments);
       hv = new HeaderView();
       fv = new FooterView();
@@ -33,10 +34,13 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/blank/head
         model: new QuestionTemplateModel()
       });
       qtv.setRegion('new').setMode('button');
-      qtq = new QuestionTemplateQueueView({
-        model: new QuestionTemplateQueueModel()
+      return qtqModel = (new QuestionTemplateQueueModel()).load(function() {
+        var qtqView;
+        qtqView = new QuestionTemplateQueueView({
+          model: qtqModel
+        });
+        return qtqView.setRegion('queue').render();
       });
-      return qtq.setRegion('queue').render();
     };
 
     return AdminBlankPageView;

@@ -103,7 +103,7 @@ class BlankQuestionService extends AbstractApiService {
     public function updatePlaces(array $map) {
         $values = [];
         foreach ($map as $place => $id) {
-            $place = (int)$place + 1;
+            $place = (int)$place;
             $id =    (int)$id;
             $values[] = "('$id', '$place')";
         }

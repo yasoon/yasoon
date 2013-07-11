@@ -2,7 +2,8 @@ define [
          'views/base/queue'
          'JST'
          'views/admin/blank/questionTemplate'
-], (QueueView, JST, QuestionTemplateView) ->
+         'models/admin/blank/questionTemplate'
+], (QueueView, JST, QuestionTemplateView, QuestionTemplateModel) ->
   'use strict'
 
   class AdminBlankQuestionTemplateQueueView extends QueueView
