@@ -14,4 +14,5 @@ define [
     events:
       'keyup #caption': (e) ->
         @model.caption = $(e.target).html()
-        console.log @model.caption
+
+

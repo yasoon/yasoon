@@ -3,18 +3,40 @@ define [
 ], (Model) ->
 
   class Queue extends Model
-    data: {}
+    data: []
 
     elements: []
 
     load: (callback)->
-      @url    = -> 'api/blank_question/get_blank'
-      @method = 'GET'
-      @request(callback)
-      @elements = @data.sort(@compare)
+      loadCallback = =>
+        for elData in @data
+          @elements.push(@createElementModel(elData))
+        callback?()
+      @request(loadCallback)
+      @
 
     compare: (a, b) ->
       if a.data.place < b.data.place then -1 else 1
 
-    update: ->
-      @url = -> "api/blank_question/update_places"
+    updatePlaces: (callback) ->
+      @requestData = {'map': @buildPlacesMap()} 
+
+      updateCallback = =>
+        @elements.sort(@compare)
+        callback?()
+
+      @request(updateCallback)
+
+    getElementById: (id) ->
+      for element in @elements
+        if parseInt(element.data.id) is parseInt(id) then return element
+      throw "no element with id #{id} found"
+
+    createElementModel: (elData) ->
+      throw 'abstract method createElemenModel must be redefined'
+
+    buildPlacesMap: ->
+      placesMap = {}
+      for element in @elements
+        placesMap[element.data.place] = element.data.id
+      return placesMap

@@ -36,8 +36,10 @@ define [
       hv = new HeaderView()
       fv = new FooterView()
 
+
       qtv = new QuestionTemplateView(model: new QuestionTemplateModel())
       qtv.setRegion('new').setMode('button')
 
-      qtq = new QuestionTemplateQueueView(model: new QuestionTemplateQueueModel() )
-      qtq.setRegion('queue').render()
+      qtqModel = (new QuestionTemplateQueueModel()).load =>
+        qtqView = new QuestionTemplateQueueView(model:  qtqModel)
+        qtqView.setRegion('queue').render()

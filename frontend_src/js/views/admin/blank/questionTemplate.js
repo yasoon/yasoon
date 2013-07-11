@@ -21,8 +21,7 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     AdminBlankQuestionTemplateView.prototype.events = {
       'keyup #caption': function(e) {
-        this.model.caption = $(e.target).html();
-        return console.log(this.model.caption);
+        return this.model.caption = $(e.target).html();
       }
     };
 

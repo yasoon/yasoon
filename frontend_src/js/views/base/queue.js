@@ -26,7 +26,7 @@ define(['views/base/view', 'JST', 'jqueryui'], function(View, JST, jqueryui) {
       _ref = this.model.elements;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
-        this.createElementView(element).setRegion('elements').render();
+        this.createElementView(element).setRegion('elements').setMode('passive');
       }
       if (this.sortable) {
         return this.$el.find('.sortable').sortable({
@@ -39,7 +39,19 @@ define(['views/base/view', 'JST', 'jqueryui'], function(View, JST, jqueryui) {
     };
 
     QueueView.prototype.updateOrder = function() {
-      return console.log('order updated');
+      var element, id, model, place, _i, _len, _ref,
+        _this = this;
+      place = 0;
+      _ref = this.$el.find('.element');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        element = _ref[_i];
+        id = $(element).attr('id');
+        model = this.model.getElementById(id);
+        model.data.place = ++place;
+      }
+      return this.model.updatePlaces(function() {
+        return _this.render();
+      });
     };
 
     QueueView.prototype.getTemplateData = function() {
