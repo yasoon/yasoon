@@ -15,4 +15,7 @@ define [
       'keyup #text': (e) ->
         @model.data.text = $(e.target).val()
 
+      'keyup #caption': (e) ->
+        @model.caption = $(e.target).html()
+
 
