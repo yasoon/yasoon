@@ -1,12 +1,13 @@
 <div class="di t-center element" id='{{model.id}}'>
     <div class = 'a-quertion'>
-        <div style='float:left'>{{model.place}})</div>
-        <div contenteditable="false" id='text'>{{model.text}}</div>
-        <div class="content">
-            <p>
-                <div class="btn" data-to-mode='active'>Редактировать</div>
-                <div class="btn close-question mLeft10" >Удалить</div>
-            </p>
+        {{#if model.place}}
+            <div style='float:left'>{{model.place}})</div>
+        {{/if}}
+
+        <div contenteditable="false" id='text'>
+            {{model.text}}
+            <a class='editable'><i  data-to-mode='active'></i></a>
         </div>
+
     </div>
 </div>

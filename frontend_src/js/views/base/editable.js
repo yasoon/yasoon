@@ -17,22 +17,22 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     EditableView.prototype.events = {
       'click': function(e) {
-        var target;
-        target = $(e.target);
-        if (target.attr('data-to-mode') != null) {
-          this.setMode(target.attr('data-to-mode'));
+        var $target;
+        $target = $(e.target);
+        if ($target.attr('data-to-mode') != null) {
+          this.setMode($target.attr('data-to-mode'));
         }
-        if (target.attr('data-send-button') != null) {
+        if ($target.attr('data-send-button') != null) {
           this.send();
         }
-        if (target.attr('data-delete-button') != null) {
+        if ($target.attr('data-delete-button') != null) {
           return this.del();
         }
       }
     };
 
     EditableView.prototype.send = function() {
-      if (this.model.id != null) {
+      if (this.model.data.id != null) {
         return this.update();
       } else {
         return this.add();
@@ -40,16 +40,22 @@ define(['views/base/view', 'JST'], function(View, JST) {
     };
 
     EditableView.prototype.add = function() {
-      return this.setMode('button');
+      var _this = this;
+      return this.model.add(function() {
+        return _this.setMode('button');
+      });
     };
 
     EditableView.prototype.update = function() {
-      this.model.update();
-      return this.setMode('passive');
+      var _this = this;
+      return this.model.update(function() {
+        return _this.setMode('passive');
+      });
     };
 
     EditableView.prototype.del = function() {
-      return console.log('delete');
+      this.model["delete"]();
+      return this.dispose();
     };
 
     EditableView.prototype.checkTemplate = function() {
@@ -76,8 +82,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     };
 
     EditableView.prototype.getTemplateFunction = function() {
-      var templateFunc;
-      return templateFunc = JST[this.currentTemplateName];
+      return JST[this.currentTemplateName];
     };
 
     EditableView.prototype.setRegion = function(region) {
@@ -86,14 +91,14 @@ define(['views/base/view', 'JST'], function(View, JST) {
       return this;
     };
 
-    EditableView.prototype.render = function() {
+    EditableView.prototype.softRender = function() {
       var tnBuffer;
       if (this.rendered) {
         return this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
       } else {
         tnBuffer = this.templateName;
         this.templateName = this.currentTemplateName;
-        EditableView.__super__.render.apply(this, arguments);
+        this.render();
         this.templateName = tnBuffer;
         return this.rendered = true;
       }
@@ -102,7 +107,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     EditableView.prototype.setMode = function(mode, callback) {
       var _ref;
       this.currentTemplateName = this.formatTemplateName(mode);
-      this.render();
+      this.softRender();
       if ((_ref = this.mode) != null ? _ref : this.mode = mode) {
         this.modesHistory.push(this.mode);
       }

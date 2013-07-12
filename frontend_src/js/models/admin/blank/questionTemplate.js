@@ -13,9 +13,20 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return AdminBlankQuestionTemplateModel.__super__.constructor.apply(this, arguments);
     }
 
+    AdminBlankQuestionTemplateModel.prototype.validate = function() {
+      if ((this.data.text == null) || this.data.text === '') {
+        this.publishEvent('publicError', 'Текст вопроса не может быть пустым');
+        return false;
+      }
+      return true;
+    };
+
     AdminBlankQuestionTemplateModel.prototype.update = function(callback) {
       var updateCallback,
         _this = this;
+      if (!this.validate()) {
+        return;
+      }
       this.method = 'POST';
       this.url = function() {
         return 'api/blank_question/update';
@@ -36,9 +47,12 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     AdminBlankQuestionTemplateModel.prototype.add = function(callback) {
       var addCallback,
         _this = this;
+      if (!this.validate()) {
+        return;
+      }
       this.method = 'POST';
       this.url = function() {
-        return 'api/blank_question_add';
+        return 'api/blank_question/add';
       };
       this.requestData = {
         model: {

@@ -34,15 +34,10 @@ define(['chaplin'], function(Chaplin) {
     };
 
     View.prototype.softRender = function() {
-      this.$el.html(JST[this.templateName](this.getTemplateData()));
-      return this.manageAuthAreas();
-    };
-
-    View.prototype.render = function() {
       if (this.rendered) {
         this.$el.html(JST[this.templateName](this.getTemplateData()));
       } else {
-        View.__super__.render.apply(this, arguments);
+        this.render();
         this.rendered = true;
       }
       return this.manageAuthAreas();

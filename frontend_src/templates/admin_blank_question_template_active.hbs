@@ -1,9 +1,17 @@
 <div class="di t-center">
 
     <div class = 'a-quertion'>
-        <div style='float:left'>{{model.place}}</div>
-        <div contenteditable="true" id='text'>{{model.text}}</div>
+        {{#if model.place}}
+            <div style='float:left'>
+                {{model.place}})
+            </div>
+        {{/if}}
+        <input type='text' value='{{model.text}}' autofocus="true" id ='text'></input>
     </div>
 
-    <div class="btn" data-send-button>Отправить!</div>
+    <a class="btn" data-send-button>Отправить!</a>
+    {{#if model.id}}
+        <a class="btn  close-question mLeft10" data-delete-button>Удалить!</a>
+    {{/if}}
+    <a class="mLeft10" data-to-mode='passive'>Preview</a>
 </div>

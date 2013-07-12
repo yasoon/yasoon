@@ -6,7 +6,15 @@ define [
 
   class AdminBlankQuestionTemplateModel extends Model
 
+    validate: ->
+      if not @data.text? or @data.text is ''
+        @publishEvent 'publicError', 'Текст вопроса не может быть пустым'
+        return false
+      return true
+
     update: (callback) ->
+      if not @validate() then return
+
       @method = 'POST'
       @url    = -> 'api/blank_question/update'
       @requestData =
@@ -21,8 +29,10 @@ define [
       @request(updateCallback)
 
     add: (callback) ->
+      if not @validate() then return
+
       @method = 'POST'
-      @url    = -> 'api/blank_question_add'
+      @url    = -> 'api/blank_question/add'
       @requestData =
         model:
           text:  @data.text

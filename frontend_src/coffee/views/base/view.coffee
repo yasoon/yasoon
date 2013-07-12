@@ -10,12 +10,6 @@ define [
     initialize: ->
       @checkTemplate()
       if not @autoRender then @rendered = false
-#      @subscribeEvent 'logout', ->
-#        @authorized = false
-#        @softRender()
-#      @subscribeEvent 'login', ->
-#        @authorized = true
-#        @softRender()
 
     #
     checkTemplate: ->
@@ -28,15 +22,10 @@ define [
 
     #
     softRender: ->
-      @$el.html JST[@templateName](@getTemplateData())
-      @manageAuthAreas()
-
-    #
-    render: ->
       if @rendered
         @$el.html JST[@templateName](@getTemplateData())
       else
-        super
+        @render()
         @rendered = true
 
       @manageAuthAreas()
@@ -57,7 +46,7 @@ define [
       for el in @$el.find("[data-permission='not-author']")
         if @authorized then $(el).hide() else $(el).show()
 
-
+    #
     getTemplateData: ->
       if @model? then {model: @model.data}
 

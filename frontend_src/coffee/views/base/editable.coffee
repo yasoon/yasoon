@@ -7,75 +7,88 @@ define [
   class EditableView extends View
     autoRender: false
 
+    #
     events:
       'click': (e) ->
-        target = $(e.target)
+        $target = $(e.target)
 
-        if target.attr('data-to-mode')? then @setMode target.attr('data-to-mode')
+        if $target.attr('data-to-mode')? then @setMode $target.attr('data-to-mode')
 
-        if target.attr('data-send-button')? then @send()
+        if $target.attr('data-send-button')? then @send()
 
-        if target.attr('data-delete-button')? then @del()
+        if $target.attr('data-delete-button')? then @del()
 
+    #
     send: ->
-      if @model.id?
+      if @model.data.id?
         @update()
       else
         @add()
 
+    #
     add: ->
-      @setMode('button')
+      @model.add =>
+        @setMode('button')
 
+    #
     update: ->
-      @model.update()
-      @setMode('passive')
+      @model.update =>
+        @setMode('passive')
 
-
+    #
     del: ->
-      console.log 'delete'
+      @model.delete()
+      @dispose()
 
+    #
     checkTemplate: ->
       for mode in @modes
         tempName = @formatTemplateName(mode)
         if not JST[tempName]?
           throw "no template with name #{tempName} found"
 
+    #
     initialize: ->
       super
       @regionSet = false
       @rendered  = false
       @modesHistory = []
 
-
+    #
     getTemplateFunction: ->
-       templateFunc = JST[@currentTemplateName]
+       JST[@currentTemplateName]
 
+    #
     setRegion: (region) ->
       @region = region
       @regionSet = true
       @
 
-    render: ->
+    #
+    softRender: ->
       if @rendered
         @$el.html JST[@currentTemplateName](@getTemplateData())
       else
         tnBuffer = @templateName
         @templateName = @currentTemplateName
-        super
+        @render()
         @templateName = tnBuffer
         @rendered = true
 
+    #
     setMode: (mode, callback) ->
       @currentTemplateName = @formatTemplateName(mode)
-      @render()
+      @softRender()
       @modesHistory.push(@mode) if @mode ?
       @mode = mode
       callback?()
       @
 
+    #
     formatTemplateName: (mode) ->
       return "#{@templateName+'_'+mode}"
 
+    #
     setPreviousMode: ->
      @setMode(@modesHistory[@modesHistory.length-1])
 

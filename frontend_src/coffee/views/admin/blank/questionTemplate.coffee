@@ -12,7 +12,7 @@ define [
     modes: ['button', 'passive', 'active']
 
     events:
-      'keyup #caption': (e) ->
-        @model.caption = $(e.target).html()
+      'keyup #text': (e) ->
+        @model.data.text = $(e.target).val()
 
 
