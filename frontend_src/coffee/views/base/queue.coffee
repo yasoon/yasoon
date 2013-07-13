@@ -1,15 +1,28 @@
 define [
          'views/base/view'
          'JST'
-         'jqueryui'
-], (View, JST, jqueryui) ->
+         'jqueryui',
+          'chaplin'
+], (View, JST, jqueryui, Chaplin) ->
   'use strict'
 
   class QueueView extends View
     autoRender: false
 
+    #
+    initialize: ->
+      super
+      Chaplin.mediator.subscribe 'modelAdded', @add
+
     regions:
       '#elements': 'elements'
+
+    #
+    add: (model) =>
+      console.log model.name, @model.elementName
+      if  model.name is @model.elementName
+        @model.pushElement(model)
+        @render()
 
     #
     render: ->

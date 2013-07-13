@@ -6,6 +6,7 @@
 
 namespace Yasoon\Site\Service;
 
+use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;
 
 use Doctrine\Tests\Common\Annotations\Ticket\Doctrine\ORM\Entity;
@@ -14,6 +15,8 @@ abstract class AbstractApiService {
 
     /**
      * @DI\Inject("doctrine.orm.entity_manager")
+     *
+     * @var EntityManager
      */
     public $em;
 

@@ -5,6 +5,7 @@ define [
   'use strict'
 
   class AdminBlankQuestionTemplateModel extends Model
+    name: 'AdminBlankQuestionTemplate'
 
     validate: ->
       if not @data.text? or @data.text is ''

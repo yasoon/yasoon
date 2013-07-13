@@ -13,6 +13,10 @@ define(['chaplin', 'models/base/queue', 'models/admin/blank/questionTemplate'], 
       return AdminBlankQuestionTemplateQueueModel.__super__.constructor.apply(this, arguments);
     }
 
+    AdminBlankQuestionTemplateQueueModel.prototype.name = 'AdminBlankQuestionTemplateQueue';
+
+    AdminBlankQuestionTemplateQueueModel.prototype.elementName = 'AdminBlankQuestionTemplate';
+
     AdminBlankQuestionTemplateQueueModel.prototype.load = function(callback) {
       this.url = function() {
         return 'api/blank_question/get_blank';

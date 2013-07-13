@@ -16,6 +16,18 @@ define(['models/base/model'], function(Model) {
 
     Queue.prototype.elements = [];
 
+    Queue.prototype.initialize = function() {
+      Queue.__super__.initialize.apply(this, arguments);
+      if (this.elementName == null) {
+        throw 'ElementName must be defined';
+      }
+    };
+
+    Queue.prototype.pushElement = function(model) {
+      this.elements.push(model);
+      return this.elements.sort(this.compare);
+    };
+
     Queue.prototype.load = function(callback) {
       var loadCallback,
         _this = this;

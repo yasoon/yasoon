@@ -20,13 +20,11 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
     AdminBlankQuestionTemplateView.prototype.modes = ['button', 'passive', 'active'];
 
     AdminBlankQuestionTemplateView.prototype.events = {
-<<<<<<< HEAD
       'keyup #text': function(e) {
         return this.model.data.text = $(e.target).val();
-=======
+      },
       'keyup #caption': function(e) {
         return this.model.caption = $(e.target).html();
->>>>>>> 79dc0fa5f12153c19de2a2aa4b092604265518b7
       }
     };
 

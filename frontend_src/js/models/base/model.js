@@ -20,6 +20,13 @@ define(['chaplin'], function(Chaplin) {
 
     Model.prototype.requestData = '';
 
+    Model.prototype.initialize = function() {
+      Model.__super__.initialize.apply(this, arguments);
+      if (this.name == null) {
+        throw 'Model name must be defined';
+      }
+    };
+
     Model.prototype.formatUrl = function(url) {
       return 'http://' + document.domain + ("/" + url);
     };

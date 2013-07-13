@@ -7,6 +7,19 @@ define [
 
     elements: []
 
+    #
+    initialize: ->
+      super
+      if not @elementName? then throw 'ElementName must be defined'
+
+
+    #
+    pushElement: (model) ->
+      @elements.push(model)
+      @elements.sort(@compare)
+
+
+    #
     load: (callback)->
       loadCallback = =>
         for elData in @data
@@ -15,9 +28,13 @@ define [
       @request(loadCallback)
       @
 
+
+    #
     compare: (a, b) ->
       if a.data.place < b.data.place then -1 else 1
 
+
+    #
     updatePlaces: (callback) ->
       @requestData = {'map': @buildPlacesMap()}
 
@@ -27,14 +44,19 @@ define [
 
       @request(updateCallback)
 
+
+    #
     getElementById: (id) ->
       for element in @elements
         if parseInt(element.data.id) is parseInt(id) then return element
       throw "no element with id #{id} found"
 
+    #
     createElementModel: (elData) ->
       throw 'abstract method createElemenModel must be redefined'
 
+
+    #
     buildPlacesMap: ->
       placesMap = {}
       for element in @elements

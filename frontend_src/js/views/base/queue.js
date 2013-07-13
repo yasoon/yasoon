@@ -2,21 +2,39 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'jqueryui'], function(View, JST, jqueryui) {
+define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jqueryui, Chaplin) {
   'use strict';
-  var QueueView;
+  var QueueView,
+    _this = this;
   return QueueView = (function(_super) {
 
     __extends(QueueView, _super);
 
     function QueueView() {
+      var _this = this;
+      this.add = function(model) {
+        return QueueView.prototype.add.apply(_this, arguments);
+      };
       return QueueView.__super__.constructor.apply(this, arguments);
     }
 
     QueueView.prototype.autoRender = false;
 
+    QueueView.prototype.initialize = function() {
+      QueueView.__super__.initialize.apply(this, arguments);
+      return Chaplin.mediator.subscribe('modelAdded', this.add);
+    };
+
     QueueView.prototype.regions = {
       '#elements': 'elements'
+    };
+
+    QueueView.prototype.add = function(model) {
+      console.log(model.name, this.model.elementName);
+      if (model.name === this.model.elementName) {
+        this.model.pushElement(model);
+        return this.render();
+      }
     };
 
     QueueView.prototype.render = function() {

@@ -72,7 +72,6 @@ templates['admin_blank_question_template_passive'] = template(function (Handleba
 helpers = helpers || Handlebars.helpers; data = data || {};
   var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
-<<<<<<< HEAD
 function program1(depth0,data) {
   
   var buffer = "", stack1;
@@ -89,16 +88,7 @@ function program1(depth0,data) {
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        <div contenteditable=\"false\" id='text'>\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n            <a class='editable'><i  data-to-mode='active'></i></a>\n        </div>\n\n    </div>\n</div>";
-=======
-  buffer += "<div class=\"di t-center element\" id='"
-    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "'>\n    <div class = 'a-quertion'>\n        <div style='float:left'>"
-    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.place)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + ")</div>\n        <div contenteditable=\"false\" id='text'>"
-    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>\n    </div>\n</div>";
->>>>>>> 79dc0fa5f12153c19de2a2aa4b092604265518b7
+    + "\n            <a class='editable'><i  data-to-mode='active'></i></a>\n        </div>\n    </div>\n</div>";
   return buffer;
   });
 

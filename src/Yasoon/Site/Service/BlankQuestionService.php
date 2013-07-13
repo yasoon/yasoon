@@ -43,8 +43,11 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function add(array $model) {
+        $place =$this->em->getConnection()->executeQuery('select max(place) as place from blank_question ')
+            ->fetch()['place'];
+
         /** @var BlankQuestionEntity $question  */
-        $question = (new BlankQuestionEntity())->setText($model['text'])->setPlace($model['place']);
+        $question = (new BlankQuestionEntity())->setText($model['text'])->setPlace(++$place);
 
         $this->em->persist($question);
         $this->em->flush();

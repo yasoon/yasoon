@@ -9,8 +9,13 @@ define [
     method: ''
     requestData: ''
 
+    initialize: ->
+      super
+      if not @name? then throw 'Model name must be defined'
+
     formatUrl: (url) ->
       'http://'+document.domain+"/#{url}"
+
 
     request: (callback) ->
       $.ajax(

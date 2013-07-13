@@ -13,6 +13,8 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       return AdminBlankQuestionTemplateModel.__super__.constructor.apply(this, arguments);
     }
 
+    AdminBlankQuestionTemplateModel.prototype.name = 'AdminBlankQuestionTemplate';
+
     AdminBlankQuestionTemplateModel.prototype.validate = function() {
       if ((this.data.text == null) || this.data.text === '') {
         this.publishEvent('publicError', 'Текст вопроса не может быть пустым');

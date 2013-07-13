@@ -6,6 +6,10 @@ define [
   'use strict'
 
   class AdminBlankQuestionTemplateQueueModel extends Queue
+    name: 'AdminBlankQuestionTemplateQueue'
+    elementName: 'AdminBlankQuestionTemplate'
+
+
     load: (callback)->
       @url    = -> 'api/blank_question/get_blank'
       @method = 'GET'
