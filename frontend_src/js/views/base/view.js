@@ -15,6 +15,16 @@ define(['chaplin'], function(Chaplin) {
 
     View.prototype.autoRender = false;
 
+    View.prototype.events = {
+      'click': function(e) {
+        var $target;
+        $target = $(e.target);
+        if ($target.attr('data-link') != null) {
+          return this.publishEvent('redirect', $target.attr('data-link'));
+        }
+      }
+    };
+
     View.prototype.initialize = function() {
       this.checkTemplate();
       if (!this.autoRender) {

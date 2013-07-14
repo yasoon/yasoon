@@ -2,11 +2,10 @@
 
 define(function() {
   'use strict';  return function(match) {
-    match('author/:authorId/posts/:id', 'post#postAction');
-    match('author/:id/posts', 'author#postsAction');
-    match('author/:id/questions', 'author#questionsAction');
-    match('posts/new', 'author#newPostAction');
-    match('posts/new_interview', 'author#newPostInterviewAction');
+    match('author/:authorId/posts/new', 'author#newPostAction');
+    match('author/:authorId/posts/:postId', 'author#readPostAction');
+    match('author/:authorId/posts', 'author#postsAction');
+    match('author/:authorId/questions', 'author#questionsAction');
     return match('admin/blank', 'admin#blankAction');
   };
 });

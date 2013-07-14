@@ -28,6 +28,13 @@ define(['views/base/view', 'JST'], function(View, JST) {
         if ($target.attr('data-delete-button') != null) {
           return this.del();
         }
+      },
+      'keyup': function(e) {
+        var $target;
+        $target = $(e.target);
+        if ($target.attr('data-field') != null) {
+          return this.model.data[$target.attr('data-field')] = $target.val();
+        }
       }
     };
 
@@ -42,7 +49,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     EditableView.prototype.add = function() {
       var _this = this;
       return this.model.add(function() {
-        return _this.setMode('button');
+        return _this.addCallback();
       });
     };
 
@@ -106,6 +113,9 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     EditableView.prototype.setMode = function(mode, callback) {
       var _ref;
+      if (this.modes.indexOf(mode) === -1) {
+        throw "no mode '" + mode + "' available";
+      }
       this.currentTemplateName = this.formatTemplateName(mode);
       this.softRender();
       if ((_ref = this.mode) != null ? _ref : this.mode = mode) {

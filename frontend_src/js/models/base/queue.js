@@ -31,6 +31,7 @@ define(['models/base/model'], function(Model) {
     Queue.prototype.load = function(callback) {
       var loadCallback,
         _this = this;
+      this.elements = [];
       loadCallback = function() {
         var elData, _i, _len, _ref;
         _ref = _this.data;
@@ -79,6 +80,23 @@ define(['models/base/model'], function(Model) {
 
     Queue.prototype.createElementModel = function(elData) {
       throw 'abstract method createElemenModel must be redefined';
+    };
+
+    Queue.prototype.removeDeleted = function(id) {
+      var element, key, _i, _len, _ref, _results;
+      _ref = this.elements;
+      _results = [];
+      for (key = _i = 0, _len = _ref.length; _i < _len; key = ++_i) {
+        element = _ref[key];
+        console.log(element, key);
+        if (element.data.id == null) {
+          this.elements.splice(key, 1);
+          _results.push(console.log('spliced'));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
     };
 
     Queue.prototype.buildPlacesMap = function() {

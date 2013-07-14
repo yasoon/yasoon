@@ -17,6 +17,13 @@ define [
       'http://'+document.domain+"/#{url}"
 
 
+    validateNotNull: (fields...) ->
+      for field in fields
+        if not @data[field]? or @data[field] is ''
+          return false
+      return true
+
+
     request: (callback) ->
       $.ajax(
         url:    @formatUrl(@url())

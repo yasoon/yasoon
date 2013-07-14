@@ -22,11 +22,19 @@ class QuestionService extends AbstractApiService {
      * @return array
      */
     public function add(array $model) {
+
+        $authorId = $model['authorId'];
+
+        $place =$this->em->getConnection()
+            ->executeQuery("select max(place) as place from question where author_id = $authorId")
+            ->fetch()['place'];
+
         $entity = (new QuestionEntity())
             ->setCaption($model['caption'])
             ->setDate(new \DateTime())
             ->setIsInBlank(false)
-            ->setAuthorId($model['authorId']);
+            ->setAuthorId($model['authorId'])
+            ->setPlace(++$place);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
 
@@ -36,7 +44,7 @@ class QuestionService extends AbstractApiService {
         $result = [
             'id'       => $entity->getId(),
             'caption'  => $entity->getCaption(),
-            'date'     => $entity->getDate()->format('Y-m-d'),
+            'date'     => $entity->getDate()->format('d/m/Y'),
             'authorId' => $entity->getAuthorId(),
             'answer'   => ''
         ];
@@ -65,7 +73,7 @@ class QuestionService extends AbstractApiService {
         $result = [
             'id'       => $entity->getId(),
             'caption'  => $entity->getCaption(),
-            'date'     => $entity->getDate()->format('Y-m-d'),
+            'date'     => $entity->getDate()->format('d/m/Y'),
             'authorId' => $entity->getAuthorId(),
             'answer'   => $entity->getAnswer()
         ];
@@ -94,7 +102,7 @@ class QuestionService extends AbstractApiService {
             'caption'  => $entity->getCaption(),
             'answer'   => $entity->getAnswer(),
             'authorId' => $entity->getAuthorId(),
-            'date'     => $entity->getDate()->format('Y-m-d')
+            'date'     => $entity->getDate()->format('d/m/Y'),
         ];
 
         return $result;
@@ -125,7 +133,7 @@ class QuestionService extends AbstractApiService {
             'authorId'=> $post->getAuthorId(),
             'preview' => $post->getPreview(),
             'text'    => $post->getText(),
-            'date'    => $post->getDate()->format('Y-m-d')
+            'date'    => $post->getDate()->format('d/m/Y'),
         ];
 
         return $result;

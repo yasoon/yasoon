@@ -65,6 +65,14 @@ class QuestionEntity
     protected $answer;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="place", type="integer", nullable=false)
+     *
+     */
+    protected $place;
+
+    /**
      * @param $author
      * @return $this
      */
@@ -226,6 +234,23 @@ class QuestionEntity
         return $this->answer;
     }
 
+    /**
+     * @param int $place
+     *
+     * @return $this
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+        return $this;
+    }
 
+    /**
+     * @return int
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
 
 }

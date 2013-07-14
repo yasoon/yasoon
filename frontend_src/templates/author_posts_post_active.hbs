@@ -1,0 +1,45 @@
+<div class="post-edit">
+    <div class="di">
+        <select>
+            <option>Государственная служба</option>
+            <option>Добыча полезных ископаемых</option>
+            <option>Интернет</option>
+            <option>Искусство</option>
+            <option>Медиа</option>
+            <option>Медицина</option>
+            <option>Менеджмент</option>
+            <option>Наука</option>
+            <option>Образование</option>
+            <option>Производство</option>
+            <option>Равзлечения</option>
+            <option>Сельское хозяйство</option>
+            <option>Спорт</option>
+            <option>Строительство</option>
+            <option>Технологии</option>
+            <option>Транспорт и связь</option>
+            <option>Услуги</option>
+            <option>Финаны</option>
+            <option>Юриспруденция</option>
+        </select>
+    </div>
+    <div class="di"><input type="text" placeholder="Заголовок" data-field="caption"></div>
+    <div class="di"><textarea placeholder="Превью - то, что будет видно в ленте" data-field='preview'></textarea></div>
+
+    <div class="di">
+        <div class="post-edit-tools">
+            <div class="item"><b>b</b></div>
+            <div class="item"><b><i>It</i></b></div>
+            <div class="item"><b>Quote</b></div>
+            <div class="item">Загрузить картинку</div>
+            <div class="clearfix"></div>
+        </div>
+        <textarea class="big" placeholder="Тело поста" data-field="text"></textarea>
+    </div>
+    <div class="di t-center">
+        <a class="btn" data-send-button>Опубликовать</a>
+        {{#if model.id}}
+        <a class="btn" data-delete-button>Удалить</a>
+        {{/if}}
+        <a class="mLeft10" data-to-mode="preview">Превью</a>
+    </div>
+</div>

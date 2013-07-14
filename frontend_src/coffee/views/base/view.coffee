@@ -7,6 +7,13 @@ define [
     autoRender: false
 
     #
+    events:
+      'click': (e) ->
+        $target = $(e.target)
+
+        if $target.attr('data-link')? then @publishEvent 'redirect', $target.attr('data-link')
+
+    #
     initialize: ->
       @checkTemplate()
       if not @autoRender then @rendered = false

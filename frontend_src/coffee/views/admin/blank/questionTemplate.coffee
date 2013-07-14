@@ -11,11 +11,5 @@ define [
 
     modes: ['button', 'passive', 'active']
 
-    events:
-      'keyup #text': (e) ->
-        @model.data.text = $(e.target).val()
-
-      'keyup #caption': (e) ->
-        @model.caption = $(e.target).html()
-
-
+    addCallback: ->
+      @setMode('button')

@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'views/page/author/posts', 'models/author/info', 'views/author/info', 'models/author/postsQueue', 'views/author/postsQueue', 'views/page/author/questions', 'models/author/questionsQueue', 'views/author/questionsQueue', 'views/page/author/newPost', 'views/page/author/newPostInterview', 'models/author/interviewQueue', 'views/author/interviewQueue'], function(Controller, PostsPageView, AuthorInfo, AuthorInfoView, AuthorPostsQueue, AuthorPostsQueueView, QuestionsPageView, AuthorQuestionsQueue, AuthorQuestionsQueueView, NewPostPageView, NewPostInterviewPageView, InterviewQueue, InterviewQueueView) {
+define(['controllers/base/controller', 'views/author/questions/page', 'views/author/posts/page', 'views/author/posts/new/page', 'views/author/posts/read/page'], function(Controller, AuthorQuestionsPageView, AuthorPostsPageView, AuthorPostsNewPageView, AuthorPostsReadPageView) {
   'use strict';
   var AuthorController;
   return AuthorController = (function(_super) {
@@ -13,75 +13,29 @@ define(['controllers/base/controller', 'views/page/author/posts', 'models/author
       return AuthorController.__super__.constructor.apply(this, arguments);
     }
 
-    AuthorController.prototype.postsAction = function(params) {
-      var _this = this;
-      this.pageView = new PostsPageView({
-        authorId: params.id
-      });
-      this.info = new AuthorInfo({
-        id: params.id
-      });
-      this.info.fetch(function() {
-        return _this.infoView = new AuthorInfoView({
-          model: _this.info
-        });
-      });
-      this.authorPosts = new AuthorPostsQueue({
-        id: params.id
-      });
-      return this.authorPosts.fetch(function() {
-        return new AuthorPostsQueueView({
-          model: _this.authorPosts
-        });
+    AuthorController.prototype.questionsAction = function(params) {
+      return this.questionsView = new AuthorQuestionsPageView({
+        authorId: params.authorId
       });
     };
 
-    AuthorController.prototype.questionsAction = function(params) {
-      var _this = this;
-      this.pageView = new QuestionsPageView({
-        authorId: params.id
-      });
-      this.info = new AuthorInfo({
-        id: params.id
-      });
-      this.info.fetch(function() {
-        return _this.infoView = new AuthorInfoView({
-          model: _this.info
-        });
-      });
-      this.authorsQuestions = new AuthorQuestionsQueue({
-        authorId: params.id
-      });
-      return this.authorsQuestions.fetch(function() {
-        return new AuthorQuestionsQueueView({
-          model: _this.authorsQuestions
-        });
+    AuthorController.prototype.postsAction = function(params) {
+      return this.postsView = new AuthorPostsPageView({
+        authorId: params.authorId
       });
     };
 
     AuthorController.prototype.newPostAction = function(params) {
-      return this.pageView = new NewPostPageView;
-    };
-
-    AuthorController.prototype.newPostInterviewAction = function(params) {
-      var _this = this;
-      this.pageView = new NewPostInterviewPageView;
-      this.interview = new InterviewQueue();
-      return this.interview.fetch(function() {
-        return new InterviewQueueView({
-          model: _this.interview
-        });
+      return this.postView = new AuthorPostsNewPageView({
+        authorId: params.authorId
       });
     };
 
-    AuthorController.prototype.initialize = function() {
-      AuthorController.__super__.initialize.apply(this, arguments);
-      return this.subscribeEvent('dispose', this.disposeHandler);
-    };
-
-    AuthorController.prototype.disposeHandler = function() {
-      console.log('dispose');
-      return this.dispose;
+    AuthorController.prototype.readPostAction = function(params) {
+      return this.postView = new AuthorPostsReadPageView({
+        authorId: params.authorId,
+        postId: params.postId
+      });
     };
 
     return AuthorController;

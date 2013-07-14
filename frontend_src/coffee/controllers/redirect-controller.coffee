@@ -11,4 +11,4 @@ define [
       Chaplin.mediator.subscribe 'redirect', @redirect
 
     redirect: (url) =>
-      document.location = url
+      document.location = '#'+url

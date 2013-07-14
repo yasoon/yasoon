@@ -13,16 +13,22 @@ define [
     initialize: ->
       super
       Chaplin.mediator.subscribe 'modelAdded', @add
+      Chaplin.mediator.subscribe 'modelDeleted', @del
+
+
 
     regions:
       '#elements': 'elements'
 
     #
     add: (model) =>
-      console.log model.name, @model.elementName
       if  model.name is @model.elementName
         @model.pushElement(model)
         @render()
+
+    #
+    del: (id) =>
+      @model.removeDeleted()
 
     #
     render: ->

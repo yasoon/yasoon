@@ -21,6 +21,7 @@ define [
 
     #
     load: (callback)->
+      @elements = []
       loadCallback = =>
         for elData in @data
           @elements.push(@createElementModel(elData))
@@ -54,6 +55,13 @@ define [
     #
     createElementModel: (elData) ->
       throw 'abstract method createElemenModel must be redefined'
+
+    removeDeleted: (id) ->
+      for element, key in @elements
+        console.log element, key
+        if not element.data.id?
+          @elements.splice(key, 1)
+          console.log 'spliced'
 
 
     #

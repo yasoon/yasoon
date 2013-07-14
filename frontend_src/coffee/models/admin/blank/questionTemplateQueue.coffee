@@ -1,8 +1,7 @@
 define [
-  'chaplin',
   'models/base/queue'
   'models/admin/blank/questionTemplate'
-], (Chaplin, Queue, QuestionTemplateModel) ->
+], (Queue, QuestionTemplateModel) ->
   'use strict'
 
   class AdminBlankQuestionTemplateQueueModel extends Queue

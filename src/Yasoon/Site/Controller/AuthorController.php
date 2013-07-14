@@ -106,6 +106,35 @@ class AuthorController {
         return $result;
     }
 
+    /**
+     * @Route("/update_questions_places/{authorId}", requirements={"authorId" = "\d+"})
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function updateQuestionsPlaces(Request $request)
+    {
+        $map = $request->request->get('map');
+
+        return $this->service->updateQuestionsPlaces($map);
+    }
+
+    /**
+     * @Route("/update_posts_places/{authorId}", requirements={"authorId" = "\d+"})
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function updatePostsPlaces(Request $request)
+    {
+        $map = $request->request->get('map');
+
+        return $this->service->updatePostsPlaces($map);
+    }
+
+
 
     /**
      * @Route("/get_blank/{authorId}", requirements={"authorId" = "\d+"})

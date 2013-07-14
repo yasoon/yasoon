@@ -100,7 +100,7 @@ class AuthorService extends AbstractApiService {
         $posts = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')
             ->findBy(
                 ['authorId' => $authorId],
-                ['date' => 'DESC']
+                ['place' => 'ASC']
             );
 
         foreach ($posts as $post) {
@@ -109,7 +109,8 @@ class AuthorService extends AbstractApiService {
                 'caption' => $post->getCaption(),
                 'preview' => $post->getPreview(),
                 'date'    => $post->getDate()->format('d/m/Y'),
-                'authorId'=> $post->getAuthorId()
+                'authorId'=> $post->getAuthorId(),
+                'likes'   => 0 //@TODO add likes
             ];
         }
 
@@ -127,7 +128,8 @@ class AuthorService extends AbstractApiService {
               'caption' => 'Интервью',
               'preview' => 'Пост, составленный из ответов на вопросы интервью',
               'date'    => $interviewQuestions[0]->getDate()->format('d/m/Y'),
-              'authorId'=> $post->getAuthorId()
+              'authorId'=> $post->getAuthorId(),
+              'likes'   => 0 //@TODO add likes
             ]);
         }
 
@@ -142,12 +144,13 @@ class AuthorService extends AbstractApiService {
 
         $result = [];
 
+        /** @var QuestionEntity[] $questions  */
         $questions = $this->em->createQueryBuilder()
             ->select('question')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
             ->where("question.authorId = $authorId")
             ->andWhere('question.isInBlank = 0')
-            ->orderBy('question.id', 'DESC')
+            ->orderBy('question.place', 'ASC')
             ->getQuery()->getResult();
 
         foreach ($questions as $question) {
@@ -155,7 +158,8 @@ class AuthorService extends AbstractApiService {
               'id'  => $question->getId(),
               'caption' => $question->getCaption(),
               'date'    => $question->getDate()->format('d/m/Y'),
-              'answer' => $question->getAnswer()
+              'answer' => $question->getAnswer(),
+              'place' => $question->getPlace()
             ];
         }
 
@@ -188,6 +192,46 @@ class AuthorService extends AbstractApiService {
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $map
+     * @return array
+     */
+    public function updateQuestionsPlaces(array $map)
+    {
+        $values = [];
+        foreach ($map as $place => $id) {
+            $place = (int)$place;
+            $id =    (int)$id;
+            $values[] = "('$id', '$place')";
+        }
+        $sql = 'INSERT INTO question (id, place) VALUES  '.implode(',', $values).
+            'ON DUPLICATE KEY UPDATE place=VALUES(place)';
+
+        $this->em->getConnection()->executeQuery($sql);
+
+        return $map;
+    }
+
+    /**
+     * @param array $map
+     * @return array
+     */
+    public function updatePostsPlaces(array $map)
+    {
+        $values = [];
+        foreach ($map as $place => $id) {
+            $place = (int)$place;
+            $id =    (int)$id;
+            $values[] = "('$id', '$place')";
+        }
+        $sql = 'INSERT INTO post (id, place) VALUES  '.implode(',', $values).
+            'ON DUPLICATE KEY UPDATE place=VALUES(place)';
+
+        $this->em->getConnection()->executeQuery($sql);
+
+        return $map;
     }
 
 

@@ -12,6 +12,9 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jq
 
     function QueueView() {
       var _this = this;
+      this.del = function(id) {
+        return QueueView.prototype.del.apply(_this, arguments);
+      };
       this.add = function(model) {
         return QueueView.prototype.add.apply(_this, arguments);
       };
@@ -22,7 +25,8 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jq
 
     QueueView.prototype.initialize = function() {
       QueueView.__super__.initialize.apply(this, arguments);
-      return Chaplin.mediator.subscribe('modelAdded', this.add);
+      Chaplin.mediator.subscribe('modelAdded', this.add);
+      return Chaplin.mediator.subscribe('modelDeleted', this.del);
     };
 
     QueueView.prototype.regions = {
@@ -30,11 +34,14 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jq
     };
 
     QueueView.prototype.add = function(model) {
-      console.log(model.name, this.model.elementName);
       if (model.name === this.model.elementName) {
         this.model.pushElement(model);
         return this.render();
       }
+    };
+
+    QueueView.prototype.del = function(id) {
+      return this.model.removeDeleted();
     };
 
     QueueView.prototype.render = function() {

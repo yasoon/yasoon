@@ -18,6 +18,11 @@ define [
 
         if $target.attr('data-delete-button')? then @del()
 
+      'keyup': (e) ->
+        $target = $(e.target)
+        if $target.attr('data-field')?
+#          if e.target.tagName is 'INPUT'
+          @model.data[$target.attr('data-field')] = $target.val()
     #
     send: ->
       if @model.data.id?
@@ -28,7 +33,7 @@ define [
     #
     add: ->
       @model.add =>
-        @setMode('button')
+        @addCallback()
 
     #
     update: ->
@@ -77,6 +82,7 @@ define [
 
     #
     setMode: (mode, callback) ->
+      if @modes.indexOf(mode) is -1 then throw "no mode '#{mode}' available"
       @currentTemplateName = @formatTemplateName(mode)
       @softRender()
       @modesHistory.push(@mode) if @mode ?

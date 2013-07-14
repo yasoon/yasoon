@@ -63,6 +63,15 @@ class PostEntity
      * @ORM\Column(name="caption", type="string", nullable=false)
      */
     protected $caption;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="place", type="integer", nullable=false)
+     *
+     */
+    protected $place;
+
     /**
      * @param $author
      * @return $this
@@ -187,6 +196,24 @@ class PostEntity
     public function getCaption()
     {
         return $this->caption;
+    }
+
+    /**
+     * @param int $place
+     * @return $this
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlace()
+    {
+        return $this->place;
     }
 
 

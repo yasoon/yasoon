@@ -24,7 +24,7 @@ define(['controllers/base/controller', 'chaplin'], function(Controller, Chaplin)
     };
 
     RedirectController.prototype.redirect = function(url) {
-      return document.location = url;
+      return document.location = '#' + url;
     };
 
     return RedirectController;
