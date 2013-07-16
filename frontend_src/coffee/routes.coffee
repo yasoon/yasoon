@@ -5,6 +5,8 @@ define ->
 
     #match 'author/:authorId/posts/:id', 'post#postAction'
 
+    match 'people', 'people#listAction'
+
     match 'author/:authorId/posts/new', 'author#newPostAction'
     match 'author/:authorId/posts/:postId', 'author#readPostAction'
 

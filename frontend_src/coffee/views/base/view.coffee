@@ -1,6 +1,7 @@
 define [
-         'chaplin'
-], (Chaplin) ->
+         'chaplin',
+         'handlebars'
+], (Chaplin, Handlebars) ->
   'use strict'
 
   class View extends Chaplin.View
@@ -15,8 +16,17 @@ define [
 
     #
     initialize: ->
+      @initHandlebarsHelpers()
       @checkTemplate()
       if not @autoRender then @rendered = false
+
+    #
+    initHandlebarsHelpers: ->
+      Handlebars.registerHelper 'ifEquals', (a, b, block) ->
+        console.log a is b
+        if parseInt(a) is parseInt(b)
+          return block.fn(this)
+
 
     #
     checkTemplate: ->

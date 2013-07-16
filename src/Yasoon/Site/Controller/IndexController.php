@@ -50,13 +50,18 @@ JST = {}
       handlebars: 'lib/handlebars-runtime-1.0.0.rc.4',
       chaplin: 'lib/chaplin-0.9.0',
       JST: 'templates_compiled/combined',
-      tinyEditor: 'lib/tiny.editor'
+      tinyEditor: 'lib/tiny.editor',
+      categories: 'categories'
+
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
     shim: {
       underscore: {
         exports: '_'
+      },
+      categories: {
+        exports: 'categories'
       },
       backbone: {
         deps: ['underscore', 'jquery'],
