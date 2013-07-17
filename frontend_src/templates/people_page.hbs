@@ -2,14 +2,12 @@
 <header class="log-in"></header>
 <section id="page-layout">
 
-
     <div class="left-side">
         <div class="di"><input type="text" class="search" placeholder="Search"></div>
         <div class="p-label di"><b>Отрасль</b></div>
-        <nav class="nav-cat">
-
+        <nav class="nav-cat" id='categories'>
             {{#each categories}}
-                <a id='{{@key}}' class='category {{#ifEquals @key activeCatId}}active{{/ifEquals}}'>
+                <a id='{{@key}}' class='category active'>
                     {{this}}
                 </a>
             {{/each}}

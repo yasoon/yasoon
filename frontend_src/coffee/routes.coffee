@@ -13,9 +13,11 @@ define ->
     match 'author/:authorId/posts', 'author#postsAction'
     match  'author/:authorId/questions', 'author#questionsAction'
 
-
     #match 'posts/new', 'author#newPostAction'
     #match 'posts/new_interview', 'author#newPostInterviewAction'
 
     #admin
     match 'admin/blank', 'admin#blankAction'
+    match 'admin/stories', 'admin#storiesAction'
+
+    match '', 'index#indexAction'

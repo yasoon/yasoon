@@ -7,6 +7,8 @@ define(function() {
     match('author/:authorId/posts/:postId', 'author#readPostAction');
     match('author/:authorId/posts', 'author#postsAction');
     match('author/:authorId/questions', 'author#questionsAction');
-    return match('admin/blank', 'admin#blankAction');
+    match('admin/blank', 'admin#blankAction');
+    match('admin/stories', 'admin#storiesAction');
+    return match('', 'index#indexAction');
   };
 });

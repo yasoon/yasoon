@@ -2,19 +2,14 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'categories'], function(PageView, JST, FooterView, HeaderView, categories) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'categories', 'views/people/authorQueue', 'models/people/authorQueue'], function(PageView, JST, FooterView, HeaderView, categories, AuthorQueueView, AuthorQueueModel) {
   'use strict';
-  var PeoplePageView,
-    _this = this;
+  var PeoplePageView;
   return PeoplePageView = (function(_super) {
 
     __extends(PeoplePageView, _super);
 
     function PeoplePageView() {
-      var _this = this;
-      this.setActiveCategory = function(id) {
-        return PeoplePageView.prototype.setActiveCategory.apply(_this, arguments);
-      };
       return PeoplePageView.__super__.constructor.apply(this, arguments);
     }
 
@@ -29,13 +24,13 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     PeoplePageView.prototype.templateName = 'people_page';
 
     PeoplePageView.prototype.setActiveCategory = function(id) {
-      this.activeCategoryId = id;
+      this.activeCategoryId = parseInt(id);
       return this.activeCategory = categories[this.activeCategoryId];
     };
 
     PeoplePageView.prototype.initialize = function() {
       PeoplePageView.__super__.initialize.apply(this, arguments);
-      return this.setActiveCategory(1);
+      return this.setActiveCategory(0);
     };
 
     PeoplePageView.prototype.events = {
@@ -52,14 +47,32 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     };
 
     PeoplePageView.prototype.render = function() {
-      var fv, hv;
+      var activeCategoryId, aq,
+        _this = this;
       PeoplePageView.__super__.render.apply(this, arguments);
-      hv = new HeaderView();
-      return fv = new FooterView();
+      new HeaderView();
+      new FooterView();
+      aq = new AuthorQueueModel({
+        categoryId: this.activeCategoryId
+      });
+      aq.load(function() {
+        var aqView;
+        aqView = new AuthorQueueView({
+          model: aq
+        });
+        return aqView.setRegion('queue').render();
+      });
+      activeCategoryId = this.activeCategoryId;
+      return this.$el.find('.category').each(function() {
+        if (parseInt($(this).attr('id')) === activeCategoryId) {
+          return $(this).addClass('active');
+        } else {
+          return $(this).removeClass('active');
+        }
+      });
     };
 
     PeoplePageView.prototype.getTemplateData = function() {
-      console.log(this.activeCategoryId);
       return {
         categories: categories,
         activeCategory: this.activeCategory,

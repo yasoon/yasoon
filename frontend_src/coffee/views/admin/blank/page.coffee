@@ -2,7 +2,7 @@ define [
          'views/base/page'
          'JST'
          'views/common/footer'
-         'views/admin/blank/header'
+         'views/admin/header'
 
          'views/admin/blank/questionTemplate'
          'models/admin/blank/questionTemplate'

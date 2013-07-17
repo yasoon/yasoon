@@ -2,8 +2,9 @@ define [
          'views/base/view'
          'JST'
          'jqueryui',
-          'chaplin'
-], (View, JST, jqueryui, Chaplin) ->
+         'chaplin'
+         'views/base/editable'
+], (View, JST, jqueryui, Chaplin, EditableView) ->
   'use strict'
 
   class QueueView extends View
@@ -14,8 +15,6 @@ define [
       super
       Chaplin.mediator.subscribe 'modelAdded', @add
       Chaplin.mediator.subscribe 'modelDeleted', @del
-
-
 
     regions:
       '#elements': 'elements'
@@ -34,7 +33,8 @@ define [
     render: ->
       super
       for element in @model.elements
-        @createElementView(element).setRegion('elements').setMode('passive')
+        el = @createElementView(element).setRegion('elements')
+        if el instanceof EditableView then el.setMode('passive') else el.render()
 
       if @sortable
         @$el.find('.sortable').sortable(

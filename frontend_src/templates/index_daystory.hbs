@@ -1,0 +1,37 @@
+<section id="main-layout">
+    <nav class="navigate">
+        <a href="#" class="active">История дня</a>
+        <a href="#stories">Лучшие истории</a>
+    </nav>
+
+    <div class="postinfo">
+        <img src="./_temp/a1.jpg" alt="">
+        <h4 class="usr-name">{{model.authorName}}</h4>
+        <p class="u-description">{{model.authorDescription}}</p>
+        <div class="hr"></div>
+        <div class="pub">
+            <h4 class="p-label">зарегистрирован</h4>
+            {{model.authorDate}}
+            <div class="hr"></div>
+        </div>
+    </div>
+
+    <article class="lim">
+        <div class="like-title">
+            <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
+            <h1>{{model.caption}} <span class="media-pub">{{model.data}}</span></h1>
+        </div>
+        <div class="content">
+            <p>{{model.text}}</p>
+
+        </div>
+        <div class="q-box">
+            <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
+        </div>
+        <div class="hdi">
+            <img src="./_temp/social.png" alt="">
+        </div>
+    </article>
+
+
+</section>

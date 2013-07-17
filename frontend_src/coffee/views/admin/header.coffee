@@ -4,11 +4,11 @@ define [
 ], (View, JST) ->
   'use strict'
 
-  class AdminBlankHeaderView extends View
+  class AdminHeaderView extends View
     autoRender: true
     className: 'inside'
     region: 'header'
 
-    templateName: 'admin_blank_header'
+    templateName: 'admin_header'
 
 

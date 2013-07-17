@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/blank/header', 'views/admin/blank/questionTemplate', 'models/admin/blank/questionTemplate', 'views/admin/blank/questionTemplateQueue', 'models/admin/blank/questionTemplateQueue'], function(PageView, JST, FooterView, HeaderView, QuestionTemplateView, QuestionTemplateModel, QuestionTemplateQueueView, QuestionTemplateQueueModel) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/header', 'views/admin/blank/questionTemplate', 'models/admin/blank/questionTemplate', 'views/admin/blank/questionTemplateQueue', 'models/admin/blank/questionTemplateQueue'], function(PageView, JST, FooterView, HeaderView, QuestionTemplateView, QuestionTemplateModel, QuestionTemplateQueueView, QuestionTemplateQueueModel) {
   'use strict';
   var AdminBlankPageView;
   return AdminBlankPageView = (function(_super) {

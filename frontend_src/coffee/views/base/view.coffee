@@ -22,10 +22,12 @@ define [
 
     #
     initHandlebarsHelpers: ->
-      Handlebars.registerHelper 'ifEquals', (a, b, block) ->
-        console.log a is b
+      Handlebars.registerHelper 'equals', (a, b, block) ->
+        console.log a, b
         if parseInt(a) is parseInt(b)
           return block.fn(this)
+        else
+          return block.inverse(this)
 
 
     #

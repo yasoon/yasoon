@@ -44,14 +44,19 @@ define(['chaplin'], function(Chaplin) {
       return true;
     };
 
-    Model.prototype.request = function(callback) {
+    Model.prototype.request = function(callback, dontUpdateData) {
       var _this = this;
+      if (dontUpdateData == null) {
+        dontUpdateData = false;
+      }
       return $.ajax({
         url: this.formatUrl(this.url()),
         method: this.method,
         data: this.requestData,
         success: function(data) {
-          _this.data = data;
+          if (!dontUpdateData) {
+            _this.data = data;
+          }
           return typeof callback === "function" ? callback(data) : void 0;
         }
       });

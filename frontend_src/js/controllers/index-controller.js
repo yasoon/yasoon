@@ -2,22 +2,22 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'views/index-view'], function(Controller, HelloWorldView) {
+define(['controllers/base/controller', 'views/index/page'], function(Controller, IndexView) {
   'use strict';
-  var HelloController;
-  return HelloController = (function(_super) {
+  var IndexController;
+  return IndexController = (function(_super) {
 
-    __extends(HelloController, _super);
+    __extends(IndexController, _super);
 
-    function HelloController() {
-      return HelloController.__super__.constructor.apply(this, arguments);
+    function IndexController() {
+      return IndexController.__super__.constructor.apply(this, arguments);
     }
 
-    HelloController.prototype.indexAction = function(params) {
-      return this.view = new IndexView;
+    IndexController.prototype.indexAction = function() {
+      return this.view = new IndexView();
     };
 
-    return HelloController;
+    return IndexController;
 
   })(Controller);
 });

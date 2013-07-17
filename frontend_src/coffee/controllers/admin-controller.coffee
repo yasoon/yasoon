@@ -2,10 +2,12 @@ define [
         'controllers/base/controller'
 
         'views/admin/blank/page'
+        'views/admin/stories/page'
 
 ], (
   Controller,
   AdminBlankPageView,
+  AdminStoriesPageView,
 ) ->
   'use strict'
 
@@ -14,5 +16,8 @@ define [
     #Work with questions in blank
     blankAction: ->
       @blankQuestionsView = new AdminBlankPageView()
+
+    storiesAction: ->
+      @storiesView = new AdminStoriesPageView()
 
 

@@ -4,17 +4,16 @@ define [
          'views/common/footer'
          'views/author/posts/header'
          'categories'
-#         'views/author/posts/postQueue'
-#         'models/author/posts/postQueue'
+         'views/people/authorQueue'
+         'models/people/authorQueue'
 ], (PageView,
     JST,
     FooterView,
     HeaderView,
 
     categories
-#    PostQueueView,
-#    PostQueueModel
-
+    AuthorQueueView
+    AuthorQueueModel
 ) ->
   'use strict'
 
@@ -28,13 +27,13 @@ define [
 
     templateName: 'people_page'
 
-    setActiveCategory: (id) =>
-      @activeCategoryId = id
+    setActiveCategory: (id) ->
+      @activeCategoryId =  parseInt(id)
       @activeCategory = categories[@activeCategoryId]
 
     initialize: ->
       super
-      @setActiveCategory(1)
+      @setActiveCategory(0)
 
     events:
       'click .category': (e) ->
@@ -46,13 +45,22 @@ define [
 
     render: ->
       super
-      hv = new HeaderView()
-      fv = new FooterView()
+      new HeaderView()
+      new FooterView()
 
-#      qqModel = (new PostQueueModel(authorId: @authorId)).load =>
-#        qqView = new PostQueueView(model:  qqModel)
-#        qqView.setRegion('queue').render()
+
+      aq = new AuthorQueueModel(categoryId: @activeCategoryId)
+      aq.load =>
+        aqView = new AuthorQueueView(model: aq)
+        aqView.setRegion('queue').render()
+
+      activeCategoryId = @activeCategoryId
+      @$el.find('.category').each(->
+        if  parseInt($(@).attr('id')) is activeCategoryId
+          $(@).addClass('active')
+        else
+          $(@).removeClass('active')
+      )
 
     getTemplateData: ->
-      console.log @activeCategoryId
       {categories: categories, activeCategory: @activeCategory, activeCatId: @activeCategoryId}

@@ -24,13 +24,14 @@ define [
       return true
 
 
-    request: (callback) ->
+    request: (callback, dontUpdateData=false) ->
       $.ajax(
         url:    @formatUrl(@url())
         method: @method
         data:   @requestData
 
         success: (data) =>
-          @data = data
+          if not dontUpdateData
+            @data = data
           callback?(data)
       )

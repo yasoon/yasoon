@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jqueryui, Chaplin) {
+define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'], function(View, JST, jqueryui, Chaplin, EditableView) {
   'use strict';
   var QueueView,
     _this = this;
@@ -45,13 +45,18 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin'], function(View, JST, jq
     };
 
     QueueView.prototype.render = function() {
-      var element, _i, _len, _ref,
+      var el, element, _i, _len, _ref,
         _this = this;
       QueueView.__super__.render.apply(this, arguments);
       _ref = this.model.elements;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         element = _ref[_i];
-        this.createElementView(element).setRegion('elements').setMode('passive');
+        el = this.createElementView(element).setRegion('elements');
+        if (el instanceof EditableView) {
+          el.setMode('passive');
+        } else {
+          el.render();
+        }
       }
       if (this.sortable) {
         return this.$el.find('.sortable').sortable({
