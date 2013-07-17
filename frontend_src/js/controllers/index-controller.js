@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'views/index/page'], function(Controller, IndexView) {
+define(['controllers/base/controller', 'views/index/page', 'views/index/stories/page'], function(Controller, IndexView, StoriesView) {
   'use strict';
   var IndexController;
   return IndexController = (function(_super) {
@@ -15,6 +15,10 @@ define(['controllers/base/controller', 'views/index/page'], function(Controller,
 
     IndexController.prototype.indexAction = function() {
       return this.view = new IndexView();
+    };
+
+    IndexController.prototype.storiesAction = function() {
+      return this.view = new StoriesView();
     };
 
     return IndexController;

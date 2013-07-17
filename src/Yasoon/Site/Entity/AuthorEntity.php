@@ -147,6 +147,150 @@ class AuthorEntity
         return $this->posts;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $dream
+     * @return $this
+     */
+    public function setDream($dream)
+    {
+        $this->dream = $dream;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDream()
+    {
+        return $this->dream;
+    }
+
+    /**
+     * @param string $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $interest
+     * @return $this
+     */
+    public function setInterest($interest)
+    {
+        $this->interest = $interest;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterest()
+    {
+        return $this->interest;
+    }
+
+    /**
+     * @param string $job
+     * @return $this
+     */
+    public function setJob($job)
+    {
+        $this->job = $job;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+
+    /**
+     * @param \DateTime $publicationDate
+     * @return $this
+     */
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+
+    /**
+     * @param \Yasoon\Site\Entity\QuestionEntity[] $questions
+     * @return $this
+     */
+    public function setQuestions($questions)
+    {
+        $this->questions = $questions;
+        return $this;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\QuestionEntity[]
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
+    /**
+     * @param boolean $subscribed
+     * @return $this
+     */
+    public function setSubscribed($subscribed)
+    {
+        $this->subscribed = $subscribed;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getSubscribed()
+    {
+        return $this->subscribed;
+    }
+
 
 
 

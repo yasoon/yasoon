@@ -73,6 +73,30 @@ class PostEntity
     protected $place;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="category_id", type="integer", nullable=false)
+     *
+     */
+    protected $categoryId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=false)
+     *
+     */
+    protected $likes;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="visits", type="integer", nullable=false)
+     *
+     */
+    protected $visits;
+
+    /**
      * @param $author
      * @return $this
      */
@@ -215,6 +239,61 @@ class PostEntity
     {
         return $this->place;
     }
+
+    /**
+     * @param int $categoryId
+     * @return $this
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param int $likes
+     * @return $this
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * @param int $visits
+     * @return $this
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = $visits;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
 
 
 

@@ -9,6 +9,7 @@ namespace Yasoon\Site\Service;
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
+use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 
 /**
@@ -53,6 +54,7 @@ class PostService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @return array
      */
     public function update(array $model) {
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($model['id']);
@@ -107,6 +109,10 @@ class PostService extends AbstractApiService {
         return $result;
     }
 
+    /**
+     * @param $postId
+     * @return array
+     */
     public function getQuestions($postId) {
 
         $result = [];
@@ -131,5 +137,138 @@ class PostService extends AbstractApiService {
         return $result;
     }
 
+
+    /**
+     * @param $offset
+     * @param $limit
+     *
+     * @return array
+     */
+    public function getBestPosts($offset, $limit) {
+        $result = [];
+
+        /** @var PostEntity[] $posts */
+        $posts  = $this->em->createQueryBuilder()
+            ->select('post, author')
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')
+            ->join('post.author', 'author')
+            ->where('post.likes > 0')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('post.likes', 'DESC')
+            ->getQuery()->getResult();
+
+        foreach ($posts as $post) {
+            $result[] = [
+                'authorName' => $post->getAuthor()->getName(),
+                'caption'    => $post->getCaption(),
+                'preview'    => $post->getPreview()
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoryOfTheDay()
+    {
+        /** @var PostOfTheDayEntity $story */
+        $story = $this->em->createQueryBuilder()
+            ->select('story, post, author')
+            ->from('Yasoon\Site\Entity\PostOfTheDayEntity', 'story')
+            ->join('story.post', 'post')
+            ->join('post.author', 'author')
+            ->orderBy('story.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()->getSingleResult();
+
+        $result = [
+          'authorName' => $story->getPost()->getAuthor()->getName(),
+          'authorDescription' => $story->getPost()->getAuthor()->getDescription(),
+          'authorDate' => $story->getPost()->getAuthor()->getPublicationDate()->format('d/m/Y'),
+          'caption' => $story->getPost()->getCaption(),
+          'text'    => $story->getPost()->getText(),
+          'likes'   => $story->getPost()->getLikes()
+        ];
+
+        return $result;
+    }
+
+    /**
+     * @param $postId
+     * @return array
+     */
+    public function setStoryOfTheDay($postId)
+    {
+//        $dateTime = (new \DateTime())->format('Y-m-d');
+
+        $story = (new PostOfTheDayEntity())
+            ->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId))
+            ->setAssignedDatetime(new \DateTime());
+
+        $this->em->persist($story);
+        $this->em->flush();
+
+        return ['ok' => 'ok'];
+    }
+
+    /**
+     * @param $postId
+     * @return array
+     */
+    public function like($postId)
+    {
+        return $this->addLikes($postId, 1);
+    }
+
+    /**
+     * @param $postId
+     * @param $likes
+     * @return array
+     */
+    public function addLikes($postId, $likes)
+    {
+        /** @var PostEntity $post */
+        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($postId);
+        $post->setLikes($post->getLikes() + $likes);
+
+        $this->em->persist($post);
+        $this->em->flush();
+
+       return ['ok' => 'ok'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllLastWeek()
+    {
+        $dateTime = new \DateTime();
+        $dateTime->modify('-7 day');
+
+        /** @var PostEntity[] $posts */
+        $posts = $this->em->createQueryBuilder()
+            ->select('post')
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')
+            ->where('post.date > '.$dateTime->format('Y-m-d'))
+            ->getQuery()->getResult();
+
+        $result = [];
+        foreach ($posts as $post) {
+            $result[] = [
+                'id' => $post->getId(),
+                'likes' => $post->getLikes(),
+                'caption' => $post->getCaption(),
+                'preview' => $post->getPreview(),
+                'authorName' => $post->getAuthor()->getName(),
+                'date' => $post->getDate()->format('d/m/Y')
+            ];
+        }
+
+        return $result;
+
+    }
 
 }

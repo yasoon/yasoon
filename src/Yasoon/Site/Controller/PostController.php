@@ -93,6 +93,73 @@ class PostController {
         return $result;
     }
 
+    /**
+     * @Route("/get_daystory", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getStoryOfTheDay()
+    {
+        $result = $this->service->getStoryOfTheDay();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/set_daystory/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function setStoryOfTheDay($postId)
+    {
+        $result = $this->service->setStoryOfTheDay($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/like/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function like($postId)
+    {
+        $result = $this->service->like($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/add_likes/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"POST"})
+     */
+    public function addLikes(Request $request)
+    {
+        $postId = $request->attributes->get('postId');
+        $likes = $request->request->get('likes');
+
+        $result = $this->service->addLikes($postId, $likes);
+
+        return $result;
+    }
+    /**
+     * @Route("/get_all_last_week")
+     * @Method({"GET"})
+     */
+    public function getLastWeekPosts()
+    {
+        $result = $this->service->getAllLastWeek();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_best_posts")
+     * @Method({"GET"})
+     */
+    public function getBestPosts()
+    {
+        $result = $this->service->getBestPosts(0, 20);
+
+        return $result;
+    }
 
 
 }

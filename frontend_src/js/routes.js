@@ -9,6 +9,7 @@ define(function() {
     match('author/:authorId/questions', 'author#questionsAction');
     match('admin/blank', 'admin#blankAction');
     match('admin/stories', 'admin#storiesAction');
+    match('stories', 'index#storiesAction');
     return match('', 'index#indexAction');
   };
 });

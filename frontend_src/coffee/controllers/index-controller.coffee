@@ -1,9 +1,11 @@
 define [
         'controllers/base/controller'
         'views/index/page'
+        'views/index/stories/page'
 ], (
   Controller,
   IndexView,
+  StoriesView
 ) ->
   'use strict'
 
@@ -13,4 +15,5 @@ define [
     indexAction: ->
       @view = new IndexView()
 
-
+    storiesAction: ->
+      @view = new StoriesView()

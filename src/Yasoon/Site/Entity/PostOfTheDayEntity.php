@@ -24,15 +24,15 @@ class PostOfTheDayEntity
     /**
      * @var int $storyId
      *
-     * @ORM\Column(name="story_id", type="integer", nullable=false)
+     * @ORM\Column(name="post_id", type="integer", nullable=false)
      */
     protected $postId;
 
     /**
-     * @var AuthorEntity
+     * @var PostEntity
      *
      * @ORM\OneToOne(targetEntity="PostEntity")
-     * @ORM\JoinColumn(name="story_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     protected $post;
 
@@ -80,7 +80,7 @@ class PostOfTheDayEntity
     }
 
     /**
-     * @param \Yasoon\Site\Entity\AuthorEntity $post
+     * @param \Yasoon\Site\Entity\PostEntity $post
      * @return $this
      */
     public function setPost($post)
@@ -90,7 +90,7 @@ class PostOfTheDayEntity
     }
 
     /**
-     * @return \Yasoon\Site\Entity\AuthorEntity
+     * @return \Yasoon\Site\Entity\PostEntity
      */
     public function getPost()
     {

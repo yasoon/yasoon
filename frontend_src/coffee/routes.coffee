@@ -20,4 +20,5 @@ define ->
     match 'admin/blank', 'admin#blankAction'
     match 'admin/stories', 'admin#storiesAction'
 
+    match 'stories', 'index#storiesAction'
     match '', 'index#indexAction'

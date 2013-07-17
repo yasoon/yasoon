@@ -50,6 +50,10 @@ class AuthorService extends AbstractApiService {
         $this->deleteEntity($entity);
     }
 
+    /**
+     * @param int $authorId
+     * @return array
+     */
     public function getShortInfo($authorId)
     {
 
@@ -110,7 +114,7 @@ class AuthorService extends AbstractApiService {
                 'preview' => $post->getPreview(),
                 'date'    => $post->getDate()->format('d/m/Y'),
                 'authorId'=> $post->getAuthorId(),
-                'likes'   => 0 //@TODO add likes
+                'likes'   => $post->getLikes()
             ];
         }
 
@@ -129,7 +133,7 @@ class AuthorService extends AbstractApiService {
               'preview' => 'Пост, составленный из ответов на вопросы интервью',
               'date'    => $interviewQuestions[0]->getDate()->format('d/m/Y'),
               'authorId'=> $post->getAuthorId(),
-              'likes'   => 0 //@TODO add likes
+              'likes'   => 0
             ]);
         }
 
