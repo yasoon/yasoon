@@ -35,7 +35,7 @@ REST-like API, принимает GET и POST запросы, возвращае
 
 5)      coffee -w -b -o js coffee/
 
-### Настройка nginx 
+### Настройка nginx под php-fpm
 
 Мои настройки
 
