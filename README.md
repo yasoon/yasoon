@@ -17,6 +17,8 @@ REST-like API, принимает GET и POST запросы, возвращае
 **Язык:** Coffeescript, компилирующийся в оптимизированный JavaScript при билде
 **Платформа:** Chaplinjs, MVC-фреймворк, настройка над Backbonejs. Шаблонизатор - Handlebars.
 
+Верстка дизайна сайта на yasoon.p.ht
+
 ## Развёртывание:
 Все вендорские библиотеки подключаются через composer (backend) и npm (fronend)
 
