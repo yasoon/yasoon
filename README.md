@@ -24,18 +24,22 @@ REST-like API, принимает GET и POST запросы, возвращае
 
 1) установить composer.phar
 
-1)      composer install
+1) composer install
 
-3)      npm install less // если нету 
+3) npm install less // если нету 
 
 3.1) Открыть пыхшторм и открыть любой файл ./frontend_src/less/...*less, 
      далее справа сверху будет светится желтым "добавить вотчера", откроется окошко, 
      и там указать куда компилить "output paths" ../css/$FileNameWithoutExtension$.css
      Не забыть указать сам less в поле Program примерно /usr/local/bin/lessc
 
-4)      grunt watch
+4) grunt watch
 
-5)      coffee -w -b -o js coffee/
+5) coffee -w -b -o js coffee/
+
+6) **Настройка БД:** Структура БД формируется на основании Entity, для этого требуется создать бд **yasoon** 
+   прописать все данные в parametrs.yml и попробовать перезапустить **composer:update** или же через нативную команду доктрины
+   **php app/console doctrine:schema:update --force** . В будующем планируется накатить миграцию
 
 ### Настройка nginx под php-fpm
 
