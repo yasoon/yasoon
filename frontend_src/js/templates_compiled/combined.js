@@ -153,7 +153,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"inside\">\n    <a class=\"logo\" href=\"/\">yasoon</a>\n</div>";
+  return "<a class=\"logo\" href=\"#\">yasoon</a>\n\n<div class=\"org-nav\">\n    <nav>\n        <a href=\"#explore\">Истории</a>\n        <a href=\"#people\">Люди</a>\n    </nav>\n</div>";
   });
 
 var Handlebars = require('handlebars');
@@ -298,7 +298,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"inside\">\n    <a class=\"logo\" href=\"/\">yasoon</a>\n</div>";
+  return "<a class=\"logo\" href=\"#\">yasoon</a>\n\n<div class=\"org-nav\">\n    <nav>\n        <a href=\"#explore\">Истории</a>\n        <a href=\"#people\">Люди</a>\n    </nav>\n</div>";
   });
 
 var Handlebars = require('handlebars');
@@ -405,7 +405,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"left aus\">© 2013 yasoon</div>\n<nav>\n    <a href=\"\">About us</a>\n    <a href=\"\">Contact us</a>\n</nav>\n<div class=\"right\">\n</div>\n<div class=\"clearfix\"></div>";
+  return "<div class=\"left aus\">© 2013 yasoon</div>\n<nav>\n    <a href=\"\">что это</a>\n    <a href=\"\">пользовательское соглашение</a>\n    <a href=\"\">блог</a>\n</nav>\n<div class=\"right\">\n</div>\n<div class=\"clearfix\"></div>";
   });
 
 var Handlebars = require('handlebars');
@@ -464,7 +464,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<header>\n    <nav class=\"media-main-nav\">\n        <a href=\"#stories\">Истории</a>\n        <a href=\"#people\">Люди</a>\n        <a href=\"\" class=\"active\">начать</a>\n    </nav>\n    <div id=\"bg-main\">\n        <div class=\"bg\">\n            <table cellpadding=\"0\" cellspacing=\"0\">\n                <tbody><tr><td><img alt=\"\" src=\"./_temp/i3.jpg\"></td></tr>\n                </tbody></table>\n        </div>\n        <div class=\"inside\">\n            <a class=\"logo\" href=\"/\">yasoon</a>\n            <a class=\"sign-in\" href=\"/\">Войти</a>\n            <div class=\"main-w\">\n                <p>У каждого своя история <span>Секреты и философия разных профессий</span></p>\n                <a href=\"\" class=\"btn\">Узнать больше</a>\n            </div>\n            <nav>\n                <a href=\"#stories\">Истории</a>\n                <a href=\"#people\">Люди</a>\n            </nav>\n        </div>\n    </div>\n</header>";
+  return "<header>\n    <nav class=\"media-main-nav\">\n        <a href=\"#stories\">Истории</a>\n        <a href=\"#people\">Люди</a>\n        <a href=\"\" class=\"active\">начать</a>\n    </nav>\n    <div id=\"bg-main\">\n        <div class=\"bg\">\n            <table cellpadding=\"0\" cellspacing=\"0\">\n                <tbody><tr><td><img alt=\"\" src=\"./_temp/i3.jpg\"></td></tr>\n                </tbody></table>\n        </div>\n        <div class=\"inside\">\n            <a class=\"logo\" href=\"/\">yasoon</a>\n            <a class=\"sign-in\" href=\"/\">Войти</a>\n            <div class=\"main-w\">\n                <p>У каждого своя история <span>Секреты и философия разных профессий</span></p>\n                <a href=\"\" class=\"btn\">Узнать больше</a>\n            </div>\n            <nav>\n                <a href=\"#explore\">Истории</a>\n                <a href=\"#people\">Люди</a>\n            </nav>\n        </div>\n    </div>\n</header>";
   });
 
 var Handlebars = require('handlebars');
@@ -553,6 +553,109 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
 var Handlebars = require('handlebars');
 var template = Handlebars.template, templates = JST = JST || {};
+templates['people_author_queue_placeholder'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<article class=\"lim\">\n    <img src=\"./_temp/a1.jpg\" class=\"usr-ic\" alt=\"\">\n    <h2><a>пусто</a></h2>\n    <div class=\"content lic\">\n        <p>К сожалению, на эту тему ещё нет историй</p>\n        <p><a href='#register' class='btn'>Напишите свою</a></p>\n    </div>\n    <div class=\"hr\"></div>\n</article>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['people_explore_page'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n                <a id='"
+    + escapeExpression(((stack1 = data.key),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "' class='category active' href='"
+    + escapeExpression(((stack1 = data.key),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "'>\n                    "
+    + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
+    + "\n                </a>\n            ";
+  return buffer;
+  }
+
+  buffer += "<header class=\"log-in\"></header>\n<section id=\"page-layout\">\n\n    <div class=\"left-side\">\n        <div class=\"di\"><input type=\"text\" class=\"search\" placeholder=\"Поиск\"></div>\n        <div class=\"p-label di\"><b>Отрасль</b></div>\n\n        <nav class=\"nav-cat\" id='categories'>\n            ";
+  stack1 = helpers.each.call(depth0, depth0.categories, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n        </nav>\n\n    </div>\n    <article class=\"lim cat-title\">\n        <h3 id='activeCategory'>";
+  if (stack1 = helpers.activeCategory) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.activeCategory; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</h3>\n        <p>Истории людей, которые любят то, что делают</p>\n        <div class=\"hr\"></div>\n    </article>\n    <nav class=\"navigate\">\n        <a href='#explore/date/";
+  if (stack1 = helpers.activeCatId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.activeCatId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "' id='dateButton'>По дате</a>\n        <a href='#explore/rating/";
+  if (stack1 = helpers.activeCatId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.activeCatId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "' id='ratingButton'>По рейтингу</a>\n    </nav>\n\n    <div id='queue'>\n    </div>\n\n\n\n</section>\n\n<footer></footer>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['people_explore_post'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<article class=\"lim\">\n    <div class=\"p-label\"><a href=\"user.html\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a></div>\n    <h2><a href=\"\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a></h2>\n    <div class=\"content\">\n        <p>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</p>\n    </div>\n    <div class=\"hr\"></div>\n</article>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['people_explore_post_queue'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div id ='elements'>\n</div>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['people_header'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<a class=\"logo\" href=\"#\">yasoon</a>\n\n<div class=\"org-nav\">\n    <nav>\n        <a href=\"#explore/";
+  if (stack1 = helpers.mode) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.mode; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "/";
+  if (stack1 = helpers.catId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.catId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">Истории</a>\n        <a href=\"#people/";
+  if (stack1 = helpers.catId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.catId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">Люди</a>\n    </nav>\n</div>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
 templates['people_page'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
@@ -563,19 +666,32 @@ function program1(depth0,data) {
   var buffer = "", stack1;
   buffer += "\n                <a id='"
     + escapeExpression(((stack1 = data.key),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "' class='category active'>\n                    "
+    + "' class='category active' href='#people/"
+    + escapeExpression(((stack1 = data.key),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "'>\n                    "
     + escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0))
     + "\n                </a>\n            ";
   return buffer;
   }
 
-  buffer += "\n<header class=\"log-in\"></header>\n<section id=\"page-layout\">\n\n    <div class=\"left-side\">\n        <div class=\"di\"><input type=\"text\" class=\"search\" placeholder=\"Search\"></div>\n        <div class=\"p-label di\"><b>Отрасль</b></div>\n        <nav class=\"nav-cat\" id='categories'>\n            ";
+  buffer += "\n<header class=\"log-in\"></header>\n<section id=\"page-layout\">\n\n    <div class=\"left-side\">\n        <div class=\"di\"><input type=\"text\" class=\"search\" placeholder=\"Поиск\"></div>\n        <div class=\"p-label di\"><b>Отрасль</b></div>\n        <nav class=\"nav-cat\" id='categories'>\n            ";
   stack1 = helpers.each.call(depth0, depth0.categories, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </nav>\n\n    </div>\n    <article class=\"lim cat-title\">\n        <h3 id='activeCategory'>";
   if (stack1 = helpers.activeCategory) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.activeCategory; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</h3>\n        <div class=\"hr\"></div>\n    </article>\n\n    <div id='queue'>\n    </div>\n\n\n\n</section>\n\n<footer></footer>";
+    + "</h3>\n        <p>Истории людей, которые любят то, что делают</p>\n        <div class=\"hr\"></div>\n    </article>\n\n    <div id='queue'>\n    </div>\n\n\n\n</section>\n\n<footer></footer>";
   return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['register_page'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<header class=\"log-in\"></header>\n<section id=\"page-layout\" class=\"m-page\">\n\n    <div class=\"register-form\">\n        <article class=\"cat-title\">\n            <h3>Регистрация</h3>\n            <p class=\"fs c-grey\">Создайте свой профиль и напишите истории</p>\n            <div class=\"hr\"></div>\n        </article>\n        <div class=\"di\"><input type=\"text\" placeholder=\"First name\"></div>\n        <div class=\"di\"><input type=\"text\" class=\"error\" placeholder=\"Last name\"><div class=\"hhdi\">you have misstake</div></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Email\"><div class=\"hhdi\"><label> <input type=\"checkbox\" checked=\"\"> subscribe to our newsletter</label></div></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Password\"></div>\n        <div class=\"di\"><textarea placeholder=\"Write a short story about you\"></textarea></div>\n        <div class=\"hr di\"></div>\n        <article class=\"cat-title\">\n            <p class=\"c-grey\">Here you can choise your profesion, interests or dreams of future work</p>\n        </article>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Your job\"></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Interests\"></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Dreams\"></div>\n        <input type=\"submit\" class=\"regbtn di\" value=\"Finith the registration\">\n    </div>\n\n</section>\n\n<footer></footer>";
   });

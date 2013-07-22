@@ -48,23 +48,29 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'],
       var el, element, _i, _len, _ref,
         _this = this;
       QueueView.__super__.render.apply(this, arguments);
-      _ref = this.model.elements;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        element = _ref[_i];
-        el = this.createElementView(element).setRegion('elements');
-        if (el instanceof EditableView) {
-          el.setMode('passive');
-        } else {
-          el.render();
+      if (this.model.elements.length === 0) {
+        if (this.placeholder != null) {
+          return this.$el.html(JST[this.placeholder](this.getTemplateData()));
         }
-      }
-      if (this.sortable) {
-        return this.$el.find('.sortable').sortable({
-          cursor: 'move',
-          update: function() {
-            return _this.updateOrder();
+      } else {
+        _ref = this.model.elements;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          element = _ref[_i];
+          el = this.createElementView(element).setRegion('elements');
+          if (el instanceof EditableView) {
+            el.setMode('passive');
+          } else {
+            el.render();
           }
-        });
+        }
+        if (this.sortable) {
+          return this.$el.find('.sortable').sortable({
+            cursor: 'move',
+            update: function() {
+              return _this.updateOrder();
+            }
+          });
+        }
       }
     };
 

@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'categories', 'views/people/authorQueue', 'models/people/authorQueue'], function(PageView, JST, FooterView, HeaderView, categories, AuthorQueueView, AuthorQueueModel) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 'categories', 'views/people/authorQueue', 'models/people/authorQueue'], function(PageView, JST, FooterView, HeaderView, categories, AuthorQueueView, AuthorQueueModel) {
   'use strict';
   var PeoplePageView;
   return PeoplePageView = (function(_super) {
@@ -23,34 +23,19 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
 
     PeoplePageView.prototype.templateName = 'people_page';
 
-    PeoplePageView.prototype.setActiveCategory = function(id) {
-      this.activeCategoryId = parseInt(id);
-      return this.activeCategory = categories[this.activeCategoryId];
-    };
-
-    PeoplePageView.prototype.initialize = function() {
+    PeoplePageView.prototype.initialize = function(params) {
       PeoplePageView.__super__.initialize.apply(this, arguments);
-      return this.setActiveCategory(0);
-    };
-
-    PeoplePageView.prototype.events = {
-      'click .category': function(e) {
-        var target;
-        target = $(e.target);
-        target.parent().find('.category').each(function() {
-          return $(this).removeClass('active');
-        });
-        target.addClass('active');
-        this.setActiveCategory(target.attr('id'));
-        return this.render();
-      }
+      this.activeCategoryId = parseInt(params.catId);
+      return this.activeCategory = categories[this.activeCategoryId];
     };
 
     PeoplePageView.prototype.render = function() {
       var activeCategoryId, aq,
         _this = this;
       PeoplePageView.__super__.render.apply(this, arguments);
-      new HeaderView();
+      new HeaderView({
+        catId: this.activeCategoryId
+      });
       new FooterView();
       aq = new AuthorQueueModel({
         categoryId: this.activeCategoryId

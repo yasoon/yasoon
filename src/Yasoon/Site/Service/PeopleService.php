@@ -63,6 +63,70 @@ class PeopleService extends AbstractApiService {
         return $result;
     }
 
+    /**
+     * @param int $categoryId
+     * @return array
+     */
+    public function getPostsByDate($categoryId = 0) {
+
+        $qb = $this->em->createQueryBuilder()
+            ->select('post.preview, author.name, author.id as authorId, post.likes, post.id as postId, post.caption')
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')
+            ->join('post.author', 'author')
+            ->orderBy('post.date', 'DESC');
+
+        if ($categoryId) {
+            $qb->where("post.categoryId = $categoryId");
+        }
+
+        $rows = $qb->getQuery()->getResult();
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'authorName' => $row['name'],
+                'authorId'   => $row['authorId'],
+                'preview'    => $row['preview'],
+                'id'         => $row['postId'],
+                'caption'    => $row['caption']
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $categoryId
+     * @return array
+     */
+    public function getPostsByRating($categoryId = 0) {
+
+        $qb = $this->em->createQueryBuilder()
+            ->select('post.preview, author.name, author.id as authorId, post.likes, post.id as postId, post.caption')
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')
+            ->join('post.author', 'author')
+            ->orderBy('post.likes', 'DESC');
+
+        if ($categoryId) {
+            $qb->where("post.categoryId = $categoryId");
+        }
+
+        $rows = $qb->getQuery()->getResult();
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = [
+                'authorName' => $row['name'],
+                'authorId'   => $row['authorId'],
+                'preview'    => $row['preview'],
+                'id'         => $row['postId'],
+                'caption'    => $row['caption']
+            ];
+        }
+
+        return $result;
+    }
+
 
 
 }

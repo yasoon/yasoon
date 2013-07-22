@@ -10,6 +10,8 @@ define [
 
     templateName: 'people_author_queue'
 
+    placeholder: 'people_author_queue_placeholder'
+
     sortable: true
 
     createElementView: (model) ->

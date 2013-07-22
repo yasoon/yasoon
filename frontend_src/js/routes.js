@@ -2,7 +2,11 @@
 
 define(function() {
   'use strict';  return function(match) {
-    match('people', 'people#listAction');
+    match('register', 'register#indexAction');
+    match('people', 'people#peopleAction');
+    match('people/:catId', 'people#peopleAction');
+    match('explore/:mode', 'people#exploreAction');
+    match('explore/:mode/:catId', 'people#exploreAction');
     match('author/:authorId/posts/new', 'author#newPostAction');
     match('author/:authorId/posts/:postId', 'author#readPostAction');
     match('author/:authorId/posts', 'author#postsAction');

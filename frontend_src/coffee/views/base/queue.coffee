@@ -32,16 +32,20 @@ define [
     #
     render: ->
       super
-      for element in @model.elements
-        el = @createElementView(element).setRegion('elements')
-        if el instanceof EditableView then el.setMode('passive') else el.render()
+      if @model.elements.length is 0
+        if @placeholder?
+          @$el.html JST[@placeholder](@getTemplateData())
+      else
+        for element in @model.elements
+          el = @createElementView(element).setRegion('elements')
+          if el instanceof EditableView then el.setMode('passive') else el.render()
 
-      if @sortable
-        @$el.find('.sortable').sortable(
-          cursor: 'move'
-          update: =>
-            @updateOrder()
-        )
+        if @sortable
+          @$el.find('.sortable').sortable(
+            cursor: 'move'
+            update: =>
+              @updateOrder()
+          )
 
     #
     updateOrder: ->

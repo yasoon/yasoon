@@ -40,4 +40,27 @@ class PeopleController {
         return $result;
     }
 
+    /**
+     * @Route("/get_posts_date/{categoryId}", requirements={"categoryId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getPostsByDateAction($categoryId)
+    {
+        $result = $this->service->getPostsByDate($categoryId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_posts_rating/{categoryId}", requirements={"categoryId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getPostsByRatingAction($categoryId)
+    {
+        $result = $this->service->getPostsByRating($categoryId);
+
+        return $result;
+    }
+
+
 }

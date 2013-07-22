@@ -17,6 +17,8 @@ define(['views/base/queue', 'JST', 'views/people/author'], function(QueueView, J
 
     PeopleAuthorQueueView.prototype.templateName = 'people_author_queue';
 
+    PeopleAuthorQueueView.prototype.placeholder = 'people_author_queue_placeholder';
+
     PeopleAuthorQueueView.prototype.sortable = true;
 
     PeopleAuthorQueueView.prototype.createElementView = function(model) {

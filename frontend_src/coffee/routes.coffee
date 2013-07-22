@@ -3,9 +3,15 @@ define ->
 
   (match) ->
 
+    match 'register', 'register#indexAction'
+
     #match 'author/:authorId/posts/:id', 'post#postAction'
 
-    match 'people', 'people#listAction'
+    match 'people', 'people#peopleAction'
+    match 'people/:catId', 'people#peopleAction'
+
+    match 'explore/:mode', 'people#exploreAction'
+    match 'explore/:mode/:catId', 'people#exploreAction'
 
     match 'author/:authorId/posts/new', 'author#newPostAction'
     match 'author/:authorId/posts/:postId', 'author#readPostAction'
@@ -22,3 +28,4 @@ define ->
 
     match 'stories', 'index#storiesAction'
     match '', 'index#indexAction'
+

@@ -2,7 +2,7 @@ define [
          'views/base/page'
          'JST'
          'views/common/footer'
-         'views/author/posts/header'
+         'views/people/header'
          'categories'
          'views/people/authorQueue'
          'models/people/authorQueue'
@@ -27,27 +27,15 @@ define [
 
     templateName: 'people_page'
 
-    setActiveCategory: (id) ->
-      @activeCategoryId =  parseInt(id)
-      @activeCategory = categories[@activeCategoryId]
-
-    initialize: ->
+    initialize: (params) ->
       super
-      @setActiveCategory(0)
-
-    events:
-      'click .category': (e) ->
-        target = $(e.target)
-        target.parent().find('.category').each(-> $(@).removeClass('active'))
-        target.addClass('active')
-        @setActiveCategory(target.attr('id'))
-        @render()
+      @activeCategoryId =  parseInt(params.catId)
+      @activeCategory = categories[@activeCategoryId]
 
     render: ->
       super
-      new HeaderView()
+      new HeaderView(catId: @activeCategoryId)
       new FooterView()
-
 
       aq = new AuthorQueueModel(categoryId: @activeCategoryId)
       aq.load =>

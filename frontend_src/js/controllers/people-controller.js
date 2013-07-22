@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'views/people/page'], function(Controller, PeoplePageView) {
+define(['controllers/base/controller', 'views/people/page', 'views/people/explore/page'], function(Controller, PeoplePageView, PeopleExplorePageView) {
   'use strict';
   var PeopleController;
   return PeopleController = (function(_super) {
@@ -13,8 +13,26 @@ define(['controllers/base/controller', 'views/people/page'], function(Controller
       return PeopleController.__super__.constructor.apply(this, arguments);
     }
 
-    PeopleController.prototype.listAction = function(params) {
-      return this.view = new PeoplePageView();
+    PeopleController.prototype.peopleAction = function(params) {
+      var catId;
+      if (params.catId != null) {
+        catId = params.catId;
+      } else {
+        catId = 0;
+      }
+      return this.view = new PeoplePageView({
+        catId: catId
+      });
+    };
+
+    PeopleController.prototype.exploreAction = function(params) {
+      if (params.catId == null) {
+        params.catId = 0;
+      }
+      return this.view = new PeopleExplorePageView({
+        mode: params.mode,
+        catId: params.catId
+      });
     };
 
     return PeopleController;
