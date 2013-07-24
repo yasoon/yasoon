@@ -16,8 +16,7 @@ class PostControllerTest extends TestCase {
 
     /** @test */
     public function addAction() {
-        $model = ['caption' => 'test', 'preview' => 'preview', 'text' => 'text', 'authorId' => 1];
 
-        $this->request('POST', $this->url('add'), ['model' => $model])->assertSuccess();
+        $this->request('GET', $this->url('get_daystory'), [])->assertSuccess();
     }
 }

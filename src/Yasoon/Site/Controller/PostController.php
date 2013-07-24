@@ -97,7 +97,7 @@ class PostController {
      * @Route("/get_daystory", requirements={"postId" = "\d+"})
      * @Method({"GET"})
      */
-    public function getStoryOfTheDay()
+    public function getStoryOfTheDayAction()
     {
         $result = $this->service->getStoryOfTheDay();
 
@@ -108,7 +108,7 @@ class PostController {
      * @Route("/set_daystory/{postId}", requirements={"postId" = "\d+"})
      * @Method({"GET"})
      */
-    public function setStoryOfTheDay($postId)
+    public function setStoryOfTheDayAction($postId)
     {
         $result = $this->service->setStoryOfTheDay($postId);
 

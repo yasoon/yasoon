@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Author: Fedor Avetisov <cousenavi@gmail.com>
+ * Date: 5/22/13
+ */
 namespace Yasoon\Site\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -79,6 +82,13 @@ class AuthorEntity
     protected $interest;
 
     /**
+     * @var string $img
+     *
+     * @ORM\Column(name="img", type="string", nullable=true)
+     */
+    protected $img;
+
+    /**
      * @var PostEntity[]
      *
      * @ORM\OneToMany(targetEntity="PostEntity", mappedBy="author")
@@ -92,6 +102,17 @@ class AuthorEntity
      * @ORM\OneToMany(targetEntity="QuestionEntity", mappedBy="author")
      */
     protected $questions;
+
+
+    /**
+     * @var AuthorEntity[]
+     *
+     * @ORM\ManyToMany(targetEntity="AuthorEntity")
+     * @ORM\JoinTable(name="friends",
+     *      joinColumns={@ORM\JoinColumn(name="reader_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="writer_id", referencedColumnName="id", unique=true)})
+     */
+    protected $friends;
 
     /**
      * @param $id

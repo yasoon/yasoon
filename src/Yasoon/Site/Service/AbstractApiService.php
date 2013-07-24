@@ -26,19 +26,4 @@ abstract class AbstractApiService {
     public function __construct() {
         $this->clientId = 1; //@TODO получать из security context
     }
-
-    protected  function addEntity($entity) {
-        $this->em->persist($entity);
-        $this->em->flush();
-    }
-
-    protected function updateEntity(Entity $entity) {
-        $this->em->merge($entity);
-        $this->em->flush();
-    }
-
-    protected function deleteEntity(Entity $entity) {
-        $this->em->remove($entity);
-        $this->em->flush();
-    }
 }

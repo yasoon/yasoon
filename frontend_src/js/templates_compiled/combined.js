@@ -450,9 +450,13 @@ helpers = helpers || Handlebars.helpers; data = data || {};
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.data)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</span></h1>\n        </div>\n        <div class=\"content\">\n            <p>"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</p>\n\n        </div>\n        <div class=\"q-box\">\n            <span class=\"like-this\">какой-то текст<a href=\"\"><i></i></a> "
+    + "</p>\n\n        </div>\n        <div class=\"q-box\">\n            <span class=\"like-this\"><a href=\"\"><i></i></a> "
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.likes)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " <span>лайков</span></span>\n        </div>\n        <div class=\"hdi\">\n            <img src=\"./_temp/social.png\" alt=\"\">\n        </div>\n    </article>";
+    + " <span>лайков</span></span>\n            <span class=\"q-post\"><a href=\"#author/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "/questions\"><i></i></a> Вопросов автору: "
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + ". Задайте свой</span>\n        </div>\n        <div class=\"hdi\">\n            <img src=\"./_temp/social.png\" alt=\"\">\n        </div>\n    </article>";
   return buffer;
   });
 

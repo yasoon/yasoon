@@ -174,23 +174,31 @@ class PostService extends AbstractApiService {
      */
     public function getStoryOfTheDay()
     {
+//        , author.name as authorName, author.description as authorDescription
+//                author.date as authorDate, post.caption  as postCaption, post.text as postText, post.likes as post,
+//                count(questions.id)
+
         /** @var PostOfTheDayEntity $story */
         $story = $this->em->createQueryBuilder()
-            ->select('story, post, author')
+            ->select('story, author, post, questions')
             ->from('Yasoon\Site\Entity\PostOfTheDayEntity', 'story')
             ->join('story.post', 'post')
             ->join('post.author', 'author')
+            ->leftJoin('author.questions', 'questions')
             ->orderBy('story.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();
 
         $result = [
+          'authorId'   => $story->getPost()->getAuthor()->getId(),
           'authorName' => $story->getPost()->getAuthor()->getName(),
           'authorDescription' => $story->getPost()->getAuthor()->getDescription(),
           'authorDate' => $story->getPost()->getAuthor()->getPublicationDate()->format('d/m/Y'),
           'caption' => $story->getPost()->getCaption(),
           'text'    => $story->getPost()->getText(),
-          'likes'   => $story->getPost()->getLikes()
+          'likes'   => $story->getPost()->getLikes(),
+          'questions' => count($story->getPost()->getAuthor()->getQuestions())
+
         ];
 
         return $result;
@@ -202,7 +210,6 @@ class PostService extends AbstractApiService {
      */
     public function setStoryOfTheDay($postId)
     {
-//        $dateTime = (new \DateTime())->format('Y-m-d');
 
         $story = (new PostOfTheDayEntity())
             ->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId))
