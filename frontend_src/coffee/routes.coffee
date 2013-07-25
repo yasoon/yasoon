@@ -29,3 +29,4 @@ define ->
     match 'stories', 'index#storiesAction'
     match '', 'index#indexAction'
 
+    match 'timeline', 'timeline#indexAction'

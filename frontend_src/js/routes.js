@@ -14,6 +14,7 @@ define(function() {
     match('admin/blank', 'admin#blankAction');
     match('admin/stories', 'admin#storiesAction');
     match('stories', 'index#storiesAction');
-    return match('', 'index#indexAction');
+    match('', 'index#indexAction');
+    return match('timeline', 'timeline#indexAction');
   };
 });

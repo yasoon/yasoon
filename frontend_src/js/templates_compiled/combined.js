@@ -699,3 +699,56 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
   return "<header class=\"log-in\"></header>\n<section id=\"page-layout\" class=\"m-page\">\n\n    <div class=\"register-form\">\n        <article class=\"cat-title\">\n            <h3>Регистрация</h3>\n            <p class=\"fs c-grey\">Создайте свой профиль и напишите истории</p>\n            <div class=\"hr\"></div>\n        </article>\n        <div class=\"di\"><input type=\"text\" placeholder=\"First name\"></div>\n        <div class=\"di\"><input type=\"text\" class=\"error\" placeholder=\"Last name\"><div class=\"hhdi\">you have misstake</div></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Email\"><div class=\"hhdi\"><label> <input type=\"checkbox\" checked=\"\"> subscribe to our newsletter</label></div></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Password\"></div>\n        <div class=\"di\"><textarea placeholder=\"Write a short story about you\"></textarea></div>\n        <div class=\"hr di\"></div>\n        <article class=\"cat-title\">\n            <p class=\"c-grey\">Here you can choise your profesion, interests or dreams of future work</p>\n        </article>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Your job\"></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Interests\"></div>\n        <div class=\"di\"><input type=\"text\" placeholder=\"Dreams\"></div>\n        <input type=\"submit\" class=\"regbtn di\" value=\"Finith the registration\">\n    </div>\n\n</section>\n\n<footer></footer>";
   });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['timeline_page'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<header class=\"log-in\"></header>\n\n<section id=\"page-layout\" class=\"m-page\">\n\n    <article class=\"cat-title\">\n        <h4>обновления</h4>\n        <div class=\"hr\"></div>\n    </article>\n\n    <div id='queue'></div>\n\n</section>\n\n\n<footer></footer>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['timeline_post'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<article>\n    <img src=\"./_temp/a1.jpg\" class=\"usr-ic\" alt=\"\">\n    <h4><a href=\"user.html\" class=\"p-label\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a></h4>\n    <h2><a href=\"\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</a> <span class=\"post-date\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.date)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</span></h2>\n    <div class=\"content lic\">\n        <p>"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</p>\n    </div>\n    <div class=\"hr\"></div>\n</article>";
+  return buffer;
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['timeline_post_queue'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div id ='elements'>\n</div>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
+templates['timeline_queue_post_placeholder'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<article>\n    <img src=\"./_temp/a1.jpg\" class=\"usr-ic\" alt=\"\">\n    <h2><a href=\"\">Пусто</a></h2>\n    <div class=\"content lic\">\n        <p>Ваша лента пуста</p>\n        <p><a href='#people' class='btn'>Добавьте интересных людей</a></p>\n    </div>\n    <div class=\"hr\"></div>\n</article>";
+  });

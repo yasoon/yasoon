@@ -21,6 +21,16 @@ define(['models/base/model'], function(Model) {
       if (this.elementName == null) {
         throw 'ElementName must be defined';
       }
+      if (this.paging) {
+        this.offset = 0;
+        return this.loadNext = function(offsetStep) {
+          if (offsetStep == null) {
+            offsetStep = 10;
+          }
+          this.offset += offsetStep;
+          return this.load;
+        };
+      }
     };
 
     Queue.prototype.pushElement = function(model) {

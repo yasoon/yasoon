@@ -72,6 +72,7 @@ class FriendsService extends AbstractApiService {
             ->join('author.friends', 'friends')
             ->join('friends.posts', 'post')
             ->orderBy('post.date', 'DESC')
+            ->andWhere("author.id = $this->clientId")
             ->setFirstResult($offet)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
@@ -83,17 +84,19 @@ class FriendsService extends AbstractApiService {
             ->join('friends.questions', 'question')
             ->where('question.isInBlank = 0')
             ->andWhere('question.answer IS NOT NULL')
+            ->andWhere("author.id = $this->clientId")
             ->orderBy('question.date', 'DESC')
             ->setFirstResult($offet)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
 
         $blank = $this->em->createQueryBuilder()
-            ->select("'blank' as blank, question.answer, question.date, author.id as authorId, author.name as authorName, author.img as authorImg")
+            ->select("'blank' as type, question.answer, question.date, author.id as authorId, author.name as authorName, author.img as authorImg")
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->join('author.friends', 'friends')
             ->join('friends.questions', 'question')
             ->where('question.isInBlank = 1')
+            ->andWhere("author.id = $this->clientId")
             ->orderBy('question.date', 'DESC')
             ->setFirstResult($offet)
             ->setMaxResults(1)
@@ -101,7 +104,7 @@ class FriendsService extends AbstractApiService {
 
         $timeline = array_merge($posts, $questions, $blank);
         usort($timeline, function($a, $b) {
-            return $a['date'] > $b['date'] ? 1 : 0;
+            return $a['date'] > $b['date'] ? 0 : 1;
         });
 
         $timelineSize = count($timeline);
@@ -114,7 +117,9 @@ class FriendsService extends AbstractApiService {
                 'text'       => isset($line['preview'])    ? $line['preview']     : $line['answer'],
                 'authorName' => $line['authorName'],
                 'authorId'   => $line['authorId'],
-                'authorImg'  => $line['authorImg']
+                'authorImg'  => $line['authorImg'],
+                'type'       => $line['type'],
+                'date'       => $line['date']->format('d/m/Y')
             ];
         }
 

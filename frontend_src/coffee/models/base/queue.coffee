@@ -11,7 +11,11 @@ define [
     initialize: ->
       super
       if not @elementName? then throw 'ElementName must be defined'
-
+      if @paging
+        @offset = 0
+        @loadNext = (offsetStep=10) ->
+          @offset += offsetStep
+          @load
 
     #
     pushElement: (model) ->
@@ -70,3 +74,4 @@ define [
       for element in @elements
         placesMap[element.data.place] = element.data.id
       return placesMap
+
