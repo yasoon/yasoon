@@ -35,6 +35,13 @@ define(['views/base/view', 'JST'], function(View, JST) {
         if ($target.attr('data-field') != null) {
           return this.model.data[$target.attr('data-field')] = $target.val();
         }
+      },
+      'change': function(e) {
+        var $target;
+        $target = $(e.target);
+        if ($target.is("select") && ($target.attr('data-field') != null)) {
+          return this.model.data[$target.attr('data-field')] = $target.find('option:selected').attr('id');
+        }
       }
     };
 
@@ -56,7 +63,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     EditableView.prototype.update = function() {
       var _this = this;
       return this.model.update(function() {
-        return _this.setMode('passive');
+        return _this.updateCallback();
       });
     };
 

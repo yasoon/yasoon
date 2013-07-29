@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/editable', 'JST'], function(EditableView, JST) {
+define(['views/base/editable', 'JST', 'categories'], function(EditableView, JST, categories) {
   'use strict';
   var AuthorPostsPostView;
   return AuthorPostsPostView = (function(_super) {
@@ -21,6 +21,24 @@ define(['views/base/editable', 'JST'], function(EditableView, JST) {
 
     AuthorPostsPostView.prototype.addCallback = function() {
       return this.publishEvent('redirect', "author/" + this.model.authorId + "/posts");
+    };
+
+    AuthorPostsPostView.prototype.updateCallback = function() {
+      return this.publishEvent('redirect', "author/" + this.model.authorId + "/posts");
+    };
+
+    AuthorPostsPostView.prototype.getTemplateData = function() {
+      var cat, cats, data, key;
+      cats = {};
+      for (key in categories) {
+        cat = categories[key];
+        if (key > 0) {
+          cats[key] = cat;
+        }
+      }
+      data = AuthorPostsPostView.__super__.getTemplateData.apply(this, arguments);
+      data.categories = cats;
+      return data;
     };
 
     return AuthorPostsPostView;

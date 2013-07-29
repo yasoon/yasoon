@@ -35,6 +35,7 @@ define [
           text:  @data.text
           preview:  @data.preview
           authorId: @authorId
+          categoryId: @data.categoryId
 
       updateCallback = =>
         @publishEvent 'modelUpdated', @
@@ -57,6 +58,7 @@ define [
           authorId: @authorId
           text:  @data.text
           preview:  @data.preview
+          categoryId: @data.categoryId
 
       addCallback = =>
         addedModel = new AuthorPostsPostModel(@authorId)

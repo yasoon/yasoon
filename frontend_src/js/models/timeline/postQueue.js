@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['models/base/queue', 'models/timeline/post'], function(Queue, PostModel) {
+define(['models/base/pagingQueue', 'models/timeline/post'], function(PagingQueue, PostModel) {
   'use strict';
   var TimelinePostQueueModel;
   return TimelinePostQueueModel = (function(_super) {
@@ -19,12 +19,12 @@ define(['models/base/queue', 'models/timeline/post'], function(Queue, PostModel)
 
     TimelinePostQueueModel.prototype.paging = true;
 
-    TimelinePostQueueModel.prototype.load = function(callback) {
-      this.url = function() {
-        return 'api/friends/timeline/' + this.offset;
-      };
-      this.method = 'GET';
-      return TimelinePostQueueModel.__super__.load.call(this, callback);
+    TimelinePostQueueModel.prototype.stackUrl = function() {
+      return 'api/friends/timeline_stack';
+    };
+
+    TimelinePostQueueModel.prototype.loadUrl = function() {
+      return 'api/friends/timeline';
     };
 
     TimelinePostQueueModel.prototype.createElementModel = function(elData) {
@@ -36,5 +36,5 @@ define(['models/base/queue', 'models/timeline/post'], function(Queue, PostModel)
 
     return TimelinePostQueueModel;
 
-  })(Queue);
+  })(PagingQueue);
 });

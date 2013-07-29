@@ -19,6 +19,7 @@ define [
 
 
     request: (callback) ->
+      @data = []
       request =
         url: @formatUrl(@url())
         method: @fetchParams.method

@@ -21,8 +21,13 @@ define [
       'keyup': (e) ->
         $target = $(e.target)
         if $target.attr('data-field')?
-#          if e.target.tagName is 'INPUT'
+          #          if e.target.tagName is 'INPUT'
           @model.data[$target.attr('data-field')] = $target.val()
+
+      'change': (e) ->
+        $target = $(e.target)
+        if $target.is("select") and $target.attr('data-field')?
+          @model.data[$target.attr('data-field')] = $target.find('option:selected').attr('id')
     #
     send: ->
       if @model.data.id?
@@ -38,7 +43,7 @@ define [
     #
     update: ->
       @model.update =>
-        @setMode('passive')
+        @updateCallback()
 
     #
     del: ->

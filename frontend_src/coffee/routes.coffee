@@ -13,6 +13,7 @@ define ->
     match 'explore/:mode', 'people#exploreAction'
     match 'explore/:mode/:catId', 'people#exploreAction'
 
+    match 'author/:authorId/posts/new/blank', 'author#newBlankPostAction'
     match 'author/:authorId/posts/new', 'author#newPostAction'
     match 'author/:authorId/posts/:postId', 'author#readPostAction'
 

@@ -11,11 +11,6 @@ define [
     initialize: ->
       super
       if not @elementName? then throw 'ElementName must be defined'
-      if @paging
-        @offset = 0
-        @loadNext = (offsetStep=10) ->
-          @offset += offsetStep
-          @load
 
     #
     pushElement: (model) ->
@@ -62,10 +57,8 @@ define [
 
     removeDeleted: (id) ->
       for element, key in @elements
-        console.log element, key
         if not element.data.id?
           @elements.splice(key, 1)
-          console.log 'spliced'
 
 
     #

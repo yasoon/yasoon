@@ -23,7 +23,6 @@ define [
     #
     initHandlebarsHelpers: ->
       Handlebars.registerHelper 'equals', (a, b, block) ->
-        console.log a, b
         if parseInt(a) is parseInt(b)
           return block.fn(this)
         else

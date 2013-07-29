@@ -185,13 +185,15 @@ class AuthorService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
             ->where('question.isInBlank = true')
             ->andWhere("question.authorId = $authorId")
+            ->orderBy('question.place', 'ASC')
             ->getQuery()->getResult();
 
         foreach ($questions as $question) {
             $result[] = [
                 'id'     => $question->getId(),
                 'caption'   => $question->getCaption(),
-                'answer' => $question->getAnswer()
+                'answer' => $question->getAnswer(),
+                'place' => $question->getPlace()
             ];
         }
 
@@ -237,6 +239,5 @@ class AuthorService extends AbstractApiService {
 
         return $map;
     }
-
 
 }

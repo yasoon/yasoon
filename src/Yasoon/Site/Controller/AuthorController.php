@@ -134,8 +134,6 @@ class AuthorController {
         return $this->service->updatePostsPlaces($map);
     }
 
-
-
     /**
      * @Route("/get_blank/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
@@ -146,6 +144,5 @@ class AuthorController {
 
         return $result;
     }
-
 
 }

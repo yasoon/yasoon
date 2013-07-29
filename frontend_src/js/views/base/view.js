@@ -35,7 +35,6 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
 
     View.prototype.initHandlebarsHelpers = function() {
       return Handlebars.registerHelper('equals', function(a, b, block) {
-        console.log(a, b);
         if (parseInt(a) === parseInt(b)) {
           return block.fn(this);
         } else {

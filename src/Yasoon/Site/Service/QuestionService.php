@@ -26,7 +26,7 @@ class QuestionService extends AbstractApiService {
         $authorId = $model['authorId'];
 
         $place =$this->em->getConnection()
-            ->executeQuery("select max(place) as place from question where author_id = $authorId")
+            ->executeQuery("select max(place) as place from question where author_id = $authorId and is_in_blank=0")
             ->fetch()['place'];
 
         $entity = (new QuestionEntity())
@@ -58,12 +58,19 @@ class QuestionService extends AbstractApiService {
      * @return array
      */
     public function addInterview(array $model) {
+
+
+        $place =$this->em->getConnection()
+            ->executeQuery("select max(place) as place from question where author_id = $this->clientId and is_in_blank=1")
+            ->fetch()['place'];
+
         $entity = (new QuestionEntity())
             ->setCaption($model['caption'])
             ->setAnswer(isset($model['answer'])? $model['answer'] : '')
             ->setDate(new \DateTime())
             ->setIsInBlank(true)
-            ->setAuthorId($model['authorId']);
+            ->setAuthorId($this->clientId)
+            ->setPlace($place);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $this->clientId));
 
@@ -75,7 +82,8 @@ class QuestionService extends AbstractApiService {
             'caption'  => $entity->getCaption(),
             'date'     => $entity->getDate()->format('d/m/Y'),
             'authorId' => $entity->getAuthorId(),
-            'answer'   => $entity->getAnswer()
+            'answer'   => $entity->getAnswer(),
+            'place'    => $entity->getPlace()
         ];
 
         return $result;

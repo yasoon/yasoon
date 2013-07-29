@@ -145,7 +145,7 @@ body,
   margin: 0 auto;
   display: block;
   /*max-width: 100%;
-	max-height: 50%;*/
+  max-height: 50%;*/
 
 }
 #bg-main nav,
@@ -238,6 +238,24 @@ footer nav {
   color: #fff;
   text-align: center;
 }
+.bg-panoram {
+  background-color: #F75E5E;
+  background-origin: border-box;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  text-indent: - 9999px;
+}
+#bg-main:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 55px;
+}
 .media-main-nav,
 .media-cat {
   display: none;
@@ -252,8 +270,6 @@ footer nav {
 }
 header.log-in .logo {
   padding-right: 25px;
-  /*background: url(../img/login.png) 100% 65% no-repeat;*/
-
 }
 header.log-in .inside {
   position: relative;
@@ -279,10 +295,13 @@ header #bg-main {
 section,
 .inside {
   max-width: 1040px;
-  min-width: 360px;
+  min-width: 320px;
   *width: 1040px;
   margin: 0 auto;
   padding: 0 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .navigate a.active {
   color: #238c00;
@@ -320,8 +339,8 @@ section,
   height: 45px;
   line-height: 45px;
   /*-webkit-transition: margin 0.5s ease;
-	-moz-transition: margin 0.5s ease;
-	transition: margin 0.5s ease;*/
+  -moz-transition: margin 0.5s ease;
+  transition: margin 0.5s ease;*/
 
   border: solid #e2e2e2;
   border-width: 0 0 1px 1px;
@@ -386,7 +405,7 @@ section,
 }
 .editable i {
   background: url(../img/spr.png);
-  background-position: -93px -32px;
+  background-position: -98px -32px;
   background-repeat: no-repeat;
   width: 16px;
   height: 16px;
@@ -507,9 +526,6 @@ section,
 }
 article .hr {
   margin-left: -20px;
-}
-#page-layout {
-  padding-bottom: 45px;
 }
 #page-layout .postinfo {
   padding-right: 0;
@@ -674,6 +690,8 @@ article .usr-ic {
 footer nav {
   top: 0;
   padding: 0;
+  border: 0;
+  font-size: 12px;
 }
 footer nav a {
   margin-left: 15px;
@@ -684,7 +702,7 @@ footer .inside {
   line-height: 22px;
 }
 footer {
-  position: fixed;
+  position: relative;
   z-index: 11;
   border-top: 1px solid #ddd;
   background-color: #f5f5f5;
@@ -694,4 +712,7 @@ footer {
   color: #777;
   width: 100%;
   bottom: 0;
+}
+.preview .lim {
+  margin-left: 0;
 }

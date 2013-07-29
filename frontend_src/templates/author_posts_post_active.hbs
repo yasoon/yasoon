@@ -1,29 +1,18 @@
 <div class="post-edit">
     <div class="di">
-        <select>
-            <option>Государственная служба</option>
-            <option>Добыча полезных ископаемых</option>
-            <option>Интернет</option>
-            <option>Искусство</option>
-            <option>Медиа</option>
-            <option>Медицина</option>
-            <option>Менеджмент</option>
-            <option>Наука</option>
-            <option>Образование</option>
-            <option>Производство</option>
-            <option>Равзлечения</option>
-            <option>Сельское хозяйство</option>
-            <option>Спорт</option>
-            <option>Строительство</option>
-            <option>Технологии</option>
-            <option>Транспорт и связь</option>
-            <option>Услуги</option>
-            <option>Финаны</option>
-            <option>Юриспруденция</option>
+        <select data-field="categoryId">
+            {{#each categories}}
+                <option id='{{@key}}'
+                        {{#equals @key ../model.categoryId}}
+                            selected="selected"
+                        {{/equals}}
+                        >{{this}}</option>
+
+            {{/each}}
         </select>
     </div>
-    <div class="di"><input type="text" placeholder="Заголовок" data-field="caption"></div>
-    <div class="di"><textarea placeholder="Превью - то, что будет видно в ленте" data-field='preview'></textarea></div>
+    <div class="di"><input type="text" placeholder="Заголовок" data-field="caption" value='{{model.caption}}'></div>
+    <div class="di"><textarea placeholder="Превью - то, что будет видно в ленте" data-field='preview'>{{model.preview}}</textarea></div>
 
     <div class="di">
         <div class="post-edit-tools">
@@ -33,7 +22,7 @@
             <div class="item">Загрузить картинку</div>
             <div class="clearfix"></div>
         </div>
-        <textarea class="big" placeholder="Тело поста" data-field="text"></textarea>
+        <textarea class="big" placeholder="Тело поста" data-field="text">{{model.text}}</textarea>
     </div>
     <div class="di t-center">
         <a class="btn" data-send-button>Опубликовать</a>

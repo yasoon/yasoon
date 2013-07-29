@@ -47,7 +47,8 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           caption: this.data.caption,
           text: this.data.text,
           preview: this.data.preview,
-          authorId: this.authorId
+          authorId: this.authorId,
+          categoryId: this.data.categoryId
         }
       };
       updateCallback = function() {
@@ -73,7 +74,8 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           caption: this.data.caption,
           authorId: this.authorId,
           text: this.data.text,
-          preview: this.data.preview
+          preview: this.data.preview,
+          categoryId: this.data.categoryId
         }
       };
       addCallback = function() {

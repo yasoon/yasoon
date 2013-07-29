@@ -25,14 +25,20 @@ class PostService extends AbstractApiService {
 
         $authorId = 1; //@TODO получать из сесии
 
+        $place = $this->em->createQueryBuilder()->select('max(post.place) as place')
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')->where("post.authorId = $authorId")->getQuery()->getSingleResult()['place'];
 
         /** @var $postEntity PostEntity */
         $postEntity = (new PostEntity())
             ->setCaption($model['caption'])
             ->setPreview($model['preview'])
             ->setText($model['text'])
+            ->setPlace($place)
             ->setAuthorId($authorId)
-            ->setDate(new \DateTime());
+            ->setCategoryId($model['categoryId'])
+            ->setDate(new \DateTime())
+            ->setLikes(0)
+            ->setVisits(0);
 
         $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
 
@@ -61,18 +67,20 @@ class PostService extends AbstractApiService {
 
         $post->setCaption($model['caption'])
             ->setPreview($model['preview'])
+            ->setCategoryId($model['categoryId'])
             ->setText($model['text']);
 
         $this->em->merge($post);
         $this->em->flush();
 
         $result = [
-            'id'       => $post->getId(),
-            'caption'  => $post->getCaption(),
-            'preview'  => $post->getPreview(),
-            'text'     => $post->getText(),
-            'authorId' => $post->getAuthorId(),
-            'date'     => $post->getDate()->format('Y-m-d H:i')
+            'id'         => $post->getId(),
+            'caption'    => $post->getCaption(),
+            'preview'    => $post->getPreview(),
+            'text'       => $post->getText(),
+            'authorId'   => $post->getAuthorId(),
+            'date'       => $post->getDate()->format('Y-m-d H:i'),
+            'categoryId' => $post->getCategoryId()
         ];
 
         return $result;
@@ -98,12 +106,13 @@ class PostService extends AbstractApiService {
         /** @var PostEntity $post */
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($postId);
         $result = [
-            'id'      => $post->getId(),
-            'caption' => $post->getCaption(),
-            'authorId'=> $post->getAuthorId(),
-            'preview' => $post->getPreview(),
-            'text'    => $post->getText(),
-            'date'    => $post->getDate()->format('Y-m-d')
+            'id'         => $post->getId(),
+            'caption'    => $post->getCaption(),
+            'authorId'   => $post->getAuthorId(),
+            'preview'    => $post->getPreview(),
+            'text'       => $post->getText(),
+            'date'       => $post->getDate()->format('Y-m-d'),
+            'categoryId' => $post->getCategoryId()
         ];
 
         return $result;

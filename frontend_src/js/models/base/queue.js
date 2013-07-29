@@ -21,16 +21,6 @@ define(['models/base/model'], function(Model) {
       if (this.elementName == null) {
         throw 'ElementName must be defined';
       }
-      if (this.paging) {
-        this.offset = 0;
-        return this.loadNext = function(offsetStep) {
-          if (offsetStep == null) {
-            offsetStep = 10;
-          }
-          this.offset += offsetStep;
-          return this.load;
-        };
-      }
     };
 
     Queue.prototype.pushElement = function(model) {
@@ -98,10 +88,8 @@ define(['models/base/model'], function(Model) {
       _results = [];
       for (key = _i = 0, _len = _ref.length; _i < _len; key = ++_i) {
         element = _ref[key];
-        console.log(element, key);
         if (element.data.id == null) {
-          this.elements.splice(key, 1);
-          _results.push(console.log('spliced'));
+          _results.push(this.elements.splice(key, 1));
         } else {
           _results.push(void 0);
         }

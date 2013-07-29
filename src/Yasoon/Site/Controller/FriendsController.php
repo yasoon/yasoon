@@ -5,6 +5,7 @@
  */
 
 namespace Yasoon\Site\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Yasoon\Site\Service\FriendsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,8 +15,6 @@ use JMS\DiExtraBundle\Annotation as DI;
  * @Route("/api/friends")
  */
 class FriendsController {
-
-    const TIMELINE_LIMIT = 10;
 
     /**
      * @var FriendsService
@@ -48,13 +47,29 @@ class FriendsController {
     }
 
     /**
-     * @Route("/timeline/{offset}", requirements={"offset" = "\d+"})
+     * @Route("/timeline_stack")
      *
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
-    public function getTimelineAction($offset) {
+    public function getTimelineStackAction(Request $request) {
+        $offset = $request->request->get('offset');
 
-        $result = $this->service->getTimeLine($offset, self::TIMELINE_LIMIT);
+        $result = $this->service->getTimelineStack($offset);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/timeline")
+     *
+     * @Method({"POST"})
+     */
+    public function getTimelineAction(Request $request) {
+
+
+        $map = $request->request->get('map');
+
+        $result = $this->service->getTimeLine($map);
 
         return $result;
     }

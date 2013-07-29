@@ -95,11 +95,8 @@ JST = {}
   });
   </script>
 </head>
-<body>
-
-</body>
 </html>
-
+<body></body>
 
 HTML;
         return new Response($html);

@@ -129,9 +129,9 @@ a,
 .login-btn {
   font-family: 'MuseoSansCyrl-100', Arial;
   font-size: 12px;
-  line-height: 12px;
+  line-height: 38px;
   text-transform: uppercase;
-  padding: 10px 20px;
+  padding: 0 20px;
   background: #999999;
   width: 100%;
   *width: 100%;
@@ -140,6 +140,7 @@ a,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   color: #fff!important;
+  height: 38px;
 }
 .login-btn.twt {
   background: #28b9dd;
@@ -283,7 +284,6 @@ a,
   margin-top: -1px;
   background: #fff;
   color: #777;
-  text-transform: uppercase;
   font-family: 'MuseoSansCyrl-700', Arial;
   display: block;
 }

@@ -3,13 +3,17 @@ define [
         'views/author/questions/page'
         'views/author/posts/page'
         'views/author/posts/new/page'
+        'views/author/posts/new/blank/page'
         'views/author/posts/read/page'
+        'views/author/posts/blank/page'
 ], (
   Controller,
   AuthorQuestionsPageView,
   AuthorPostsPageView,
   AuthorPostsNewPageView,
+  AuthorPostsNewBlankPageView,
   AuthorPostsReadPageView
+  AuthorPostsBlankPageView
 ) ->
   'use strict'
 
@@ -25,5 +29,11 @@ define [
     newPostAction: (params) ->
       @postView = new AuthorPostsNewPageView(authorId: params.authorId)
 
+    newBlankPostAction: (params) ->
+      @postView = new AuthorPostsNewBlankPageView(authorId: params.authorId)
+
     readPostAction: (params) ->
-      @postView = new AuthorPostsReadPageView(authorId: params.authorId, postId: params.postId)
+      if params.postId is 'blank'
+        @postView = new AuthorPostsBlankPageView(authorId: params.authorId)
+      else
+        @postView = new AuthorPostsReadPageView(authorId: params.authorId, postId: params.postId)
