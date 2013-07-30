@@ -17,7 +17,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     CommonFooterView.prototype.className = 'inside';
 
-    CommonFooterView.prototype.region = 'footer';
+    CommonFooterView.prototype.container = 'footer';
 
     CommonFooterView.prototype.templateName = 'common_footer';
 

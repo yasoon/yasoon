@@ -564,7 +564,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<!--<div class=\"left aus\">© 2013 yasoon</div>-->\n<!--<nav>-->\n    <!--<a href=\"\">что это</a>-->\n    <!--<a href=\"\">пользовательское соглашение</a>-->\n    <!--<a href=\"\">блог</a>-->\n<!--</nav>-->\n<!--<div class=\"right\">-->\n<!--</div>-->\n<!--<div class=\"clearfix\"></div>-->";
+  return "<div class=\"left aus\">© 2013 yasoon</div>\n<nav>\n    <a href=\"#about\">Что это</a>\n    <a href=\"#blog\">Блог</a>\n</nav>\n<div class=\"clearfix\"></div>\n";
   });
 
 var Handlebars = require('handlebars');
@@ -615,7 +615,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/questions\"><i></i></a> Вопросов автору: "
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + ". Задайте свой</span>\n        </div>\n        <article class=\"bottom-toolbar t-center\">\n            <a href=\"#stories\" class=\"btn\">Больше историй</a>\n        </article>\n    </article>";
+    + "</span>\n        </div>\n        <article class=\"bottom-toolbar t-center\">\n            <a href=\"#stories\" class=\"btn\">Больше историй</a>\n        </article>\n    </article>";
   return buffer;
   });
 
@@ -627,7 +627,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<header>\n    <nav class=\"media-main-nav\">\n        <a href=\"\">Истории</a>\n        <a href=\"\">Люди</a>\n        <a href=\"\" class=\"active\">начать</a>\n    </nav>\n    <div id=\"bg-main\">\n        <div class=\"bg bg-panoram\" style=\"background-image: url(_temp/i6.jpg);\">bg</div>\n        <div class=\"inside\">\n            <a class=\"logo\" href=\"/\">yasoon</a>\n            <a class=\"sign-in\" href=\"/\">Войти</a>\n            <div class=\"main-w\">\n                <p>Лучшее место,  <br>Чтобы читать и рассказывать истории <br>И делиться вдохновением</p>\n                <a class=\"btn\">Узнать больше</a>\n            </div>\n            <nav>\n                <a href=\"\">Истории</a>\n                <a href=\"\">Люди</a>\n            </nav>\n        </div>\n    </div>\n</header>";
+  return "\n<!--<div id=\"bg-main\">-->\n    <!--<div class=\"bg bg-panoram\" style=\"background-image: url(_temp/i6.jpg);\">bg</div>-->\n    <!--<div class=\"inside\">-->\n        <!--<a class=\"logo\" href=\"/\">yasoon</a>-->\n        <!--<a class=\"sign-in\" href=\"/\">Войти</a>-->\n        <!--<div class=\"main-w\">-->\n            <!--<p>Лучшее место,  <br>Чтобы читать и рассказывать истории <br>И делиться вдохновением</p>-->\n            <!--<a class=\"btn\">Узнать больше</a>-->\n        <!--</div>-->\n        <!--<nav>-->\n            <!--<a href=\"\">Истории</a>-->\n            <!--<a href=\"\">Люди</a>-->\n        <!--</nav>-->\n    <!--</div>-->\n<!--</div>-->\n\n    <div id=\"bg-main\">\n        <div class=\"bg bg-panoram\" style=\"background-image: url(_temp/i6.jpg);\">bg</div>\n        <div class=\"inside\">\n            <a class=\"logo\" href=\"/\">yasoon</a>\n            <a class=\"sign-in\" href=\"/\">login</a>\n            <div class=\"main-w\">\n                <p>Лучшее место,  <br>Чтобы читать и рассказывать истории <br>И делиться вдохновением</p>\n                <a href=\"#explore\" class=\"btn\">Больше историй</a>\n            </div>\n            <nav>\n                <a href=\"#explore\">профессии</a>\n                <a href=\"#people\">люди</a>\n            </nav>\n        </div>\n    </div>\n";
   });
 
 var Handlebars = require('handlebars');
@@ -638,7 +638,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<header class=\"log-in\"></header>\n\n<section id=\"main-layout\">\n    <nav class=\"navigate\">\n        <a href=\"#\" class=\"active\">История дня</a>\n        <a href=\"#stories\">Лучшие истории</a>\n    </nav>\n\n    <div id='daystory'>\n    </div>\n</section>\n\n<footer></footer>";
+  return "<section id=\"main-layout\">\n    <nav class=\"navigate\">\n        <a href=\"#\" class=\"active\">История дня</a>\n        <a href=\"#stories\">Лучшие истории</a>\n    </nav>\n\n    <div id='daystory'>\n    </div>\n</section>";
   });
 
 var Handlebars = require('handlebars');

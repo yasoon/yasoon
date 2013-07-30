@@ -15,9 +15,9 @@ define(['views/base/view', 'JST'], function(View, JST) {
 
     IndexHeaderView.prototype.autoRender = true;
 
-    IndexHeaderView.prototype.className = 'inside';
+    IndexHeaderView.prototype.className = '';
 
-    IndexHeaderView.prototype.region = 'header';
+    IndexHeaderView.prototype.container = 'header';
 
     IndexHeaderView.prototype.templateName = 'index_header';
 

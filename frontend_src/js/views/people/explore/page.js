@@ -16,9 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
     PeopleExplorePageView.prototype.className = 'peopleExplorePage';
 
     PeopleExplorePageView.prototype.regions = {
-      '#queue': 'queue',
-      'footer': 'footer',
-      'header': 'header'
+      '#queue': 'queue'
     };
 
     PeopleExplorePageView.prototype.templateName = 'people_explore_page';

@@ -8,7 +8,7 @@ define [
     # Automatically render after initialize.
     autoRender: true
     className: 'inside'
-    region: 'footer'
+    container: 'footer'
 
     templateName: 'common_footer'
 

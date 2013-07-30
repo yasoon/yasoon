@@ -145,7 +145,7 @@ body,
   margin: 0 auto;
   display: block;
   /*max-width: 100%;
-  max-height: 50%;*/
+max-height: 50%;*/
 
 }
 #bg-main nav,
@@ -154,8 +154,8 @@ footer nav {
   position: absolute;
   top: 20px;
   left: 50%;
-  margin-left: -14em;
-  width: 30em;
+  margin-left: -7em;
+  width: 15em;
   text-align: center;
 }
 .close-question {
@@ -245,7 +245,7 @@ footer nav {
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  text-indent: - 9999px;
+  text-indent: -9999px;
 }
 #bg-main:after {
   content: '';
@@ -270,6 +270,8 @@ footer nav {
 }
 header.log-in .logo {
   padding-right: 25px;
+  /*background: url(../img/login.png) 100% 65% no-repeat;*/
+
 }
 header.log-in .inside {
   position: relative;
@@ -295,7 +297,7 @@ header #bg-main {
 section,
 .inside {
   max-width: 1040px;
-  min-width: 320px;
+  min-width: 300px;
   *width: 1040px;
   margin: 0 auto;
   padding: 0 10px;
@@ -339,8 +341,8 @@ section,
   height: 45px;
   line-height: 45px;
   /*-webkit-transition: margin 0.5s ease;
-  -moz-transition: margin 0.5s ease;
-  transition: margin 0.5s ease;*/
+-moz-transition: margin 0.5s ease;
+transition: margin 0.5s ease;*/
 
   border: solid #e2e2e2;
   border-width: 0 0 1px 1px;
@@ -360,6 +362,10 @@ section,
   padding-left: 0;
 }
 #main-layout article {
+  padding-left: 0;
+}
+#main-layout .lim .q-box {
+  margin-left: 0;
   padding-left: 0;
 }
 .postinfo .btn {
@@ -473,10 +479,11 @@ section,
 }
 .like-this i,
 .q-post i {
-  background-image: url(../img/spr.png);
+  background-image: url(../img/spr_x2.png);
   background-repeat: no-repeat;
   background-position: 0 0;
-  width: 48px;
+  background-size: 115px auto;
+  width: 49px;
   height: 48px;
   display: block;
   position: absolute;
@@ -501,7 +508,7 @@ section,
   font-size: 16px;
 }
 .q-post i {
-  background-position: -48px 0;
+  background-position: -49px 0;
 }
 .left-side {
   width: 195px;
@@ -691,7 +698,7 @@ footer nav {
   top: 0;
   padding: 0;
   border: 0;
-  font-size: 12px;
+  font-size: 100%;
 }
 footer nav a {
   margin-left: 15px;
@@ -702,17 +709,14 @@ footer .inside {
   line-height: 22px;
 }
 footer {
-  position: relative;
-  z-index: 11;
-  border-top: 1px solid #ddd;
-  background-color: #f5f5f5;
-  padding: 10px 0;
-  font-family: 'MuseoSansCyrl-100', Arial;
-  text-transform: uppercase;
-  color: #777;
-  width: 100%;
-  bottom: 0;
-}
-.preview .lim {
-  margin-left: 0;
+    position: fixed;
+    z-index: 11;
+    border-top: 1px solid #ddd;
+    background-color: #f5f5f5;
+    padding: 10px 0;
+    font-family: 'MuseoSansCyrl-100', Arial;
+    text-transform: uppercase;
+    color: #777;
+    width: 100%;
+    bottom: 0;
 }

@@ -142,8 +142,8 @@
     right: 10px;
   }
   footer nav {
-    left: 100%;
-    margin-left: -31em;
+    left: auto;
+    right: 10px;
     text-align: right;
   }
   footer .aus {
@@ -187,7 +187,7 @@
   }
   #bg-main .main-w {
     font-size: 1.5em;
-    padding-top: 2.8em;
+    padding-top: 4.8em;
     padding-bottom: 1.5em;
   }
   #bg-main .main-w p {
@@ -201,6 +201,19 @@
   }
   .fs {
     font-size: 16px!important;
+  }
+  .org-nav nav a {
+    font-size: 80%;
+  }
+  .q-post {
+    height: 40px;
+    padding-top: 5px;
+    font-size: 16px;
+    max-width: 125px;
+  }
+  #bg-main .bg.bg-panoram {
+    background-size: auto 100%;
+    background-attachment: initial;
   }
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {

@@ -32,8 +32,15 @@ class IndexController {
 <link rel="stylesheet" href="css/forms.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="css/media.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/fix.css" type="text/css" media="screen" />
 
 <script src='js/lib/requirejs-2.1.6.js'></script>
+
+<script src='js/lib/jquery-2.0.1.min.js'></script>
+<script src='js/lib/respond.min.js'></script>
+<script src='js/site/functions.js'></script>
+
+
   <script>
 
 JST = {}
@@ -96,7 +103,8 @@ JST = {}
   </script>
 </head>
 </html>
-<body></body>
+<body>
+</body>
 
 HTML;
         return new Response($html);

@@ -284,6 +284,7 @@ a,
   margin-top: -1px;
   background: #fff;
   color: #777;
+  text-transform: uppercase;
   font-family: 'MuseoSansCyrl-700', Arial;
   display: block;
 }
