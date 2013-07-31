@@ -5,43 +5,41 @@ define [
   class PagingQueue extends Queue
 
     stack:  []
-    offset: 0
-    limit:  10
+    count:  0
 
-    fullyLoaded: false
+    limit: 10
+
 
     loadStack: (callback) ->
-      console.log 'stack'
       @method = 'POST'
       @url = @stackUrl
-      @requestData = {offset: @offset}
+      @requestData = {offset: @elements.length}
       loadCallback = =>
-        @stack = @stack.concat @data
+        @stack = @stack.concat @data.stack
+        @count = @data.count
         callback?()
       @request(loadCallback)
 
-    makeLoad: (loadCallback)->
-      callback =  ->
-        @offset += @limit
-        loadCallback?()
+    makeLoad: (callback)->
       @data = []
       @url = @loadUrl
       @method = 'POST'
-      @requestData = {map: @stack[@offset..@limit]}
+      @requestData = {map: @stack[@elements.length..@elements.length+@limit]}
       @request(callback)
 
 #    #
     load: (callback)->
       loadCallback = =>
-        console.log @data
         for key, elData  of @data
-          console.log @elData
           @elements.push(@createElementModel(elData))
         callback?()
 
-      if @stack.length < @offset + @limit
+      if @elements.length is @stack.length and @stack.length < @count
         @loadStack =>
           @makeLoad(loadCallback)
 
       else
         @makeLoad(loadCallback)
+
+
+

@@ -709,14 +709,14 @@ footer .inside {
   line-height: 22px;
 }
 footer {
-    position: fixed;
-    z-index: 11;
-    border-top: 1px solid #ddd;
-    background-color: #f5f5f5;
-    padding: 10px 0;
-    font-family: 'MuseoSansCyrl-100', Arial;
-    text-transform: uppercase;
-    color: #777;
-    width: 100%;
-    bottom: 0;
+  position: relative;
+  z-index: 11;
+  border-top: 1px solid #ddd;
+  background-color: #f5f5f5;
+  padding: 10px 0;
+  font-family: 'MuseoSansCyrl-100', Arial;
+  text-transform: uppercase;
+  color: #777;
+  width: 100%;
+  bottom: 0;
 }

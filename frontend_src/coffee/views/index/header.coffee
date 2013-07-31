@@ -7,7 +7,7 @@ define [
   class IndexHeaderView extends View
     autoRender: true
     className: ''
-    container: 'header'
+    region: 'header'
 
     templateName: 'index_header'
 

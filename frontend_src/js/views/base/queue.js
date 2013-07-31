@@ -23,6 +23,16 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'],
 
     QueueView.prototype.autoRender = false;
 
+    QueueView.prototype.events = {
+      'click': function(e) {
+        var $target;
+        $target = $(e.target);
+        if ($target.attr('data-more-button') != null) {
+          return this.model.load();
+        }
+      }
+    };
+
     QueueView.prototype.initialize = function() {
       QueueView.__super__.initialize.apply(this, arguments);
       Chaplin.mediator.subscribe('modelAdded', this.add);

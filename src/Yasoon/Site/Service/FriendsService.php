@@ -120,6 +120,10 @@ class FriendsService extends AbstractApiService {
             $result[] = $line['type'].$line['id'];
         }
 
+        $this->em->createQueryBuilder()
+            ->select("count('p')")
+
+
         return $result;
     }
 

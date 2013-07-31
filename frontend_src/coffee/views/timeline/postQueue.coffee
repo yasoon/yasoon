@@ -1,11 +1,11 @@
 define [
-         'views/base/queue'
+         'views/base/pagingQueue'
          'JST'
          'views/timeline/post'
-], (QueueView, JST, PostView) ->
+], (PagingQueueView, JST, PostView) ->
   'use strict'
 
-  class TimelinePostQueueView extends QueueView
+  class TimelinePostQueueView extends PagingQueueView
     className: 'TimelinePostQueue'
 
     templateName: 'timeline_post_queue'

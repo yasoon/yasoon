@@ -14,39 +14,32 @@ define(['models/base/queue'], function(Queue) {
 
     PagingQueue.prototype.stack = [];
 
-    PagingQueue.prototype.offset = 0;
+    PagingQueue.prototype.count = 0;
 
     PagingQueue.prototype.limit = 10;
-
-    PagingQueue.prototype.fullyLoaded = false;
 
     PagingQueue.prototype.loadStack = function(callback) {
       var loadCallback,
         _this = this;
-      console.log('stack');
       this.method = 'POST';
       this.url = this.stackUrl;
       this.requestData = {
-        offset: this.offset
+        offset: this.elements.length
       };
       loadCallback = function() {
-        _this.stack = _this.stack.concat(_this.data);
+        _this.stack = _this.stack.concat(_this.data.stack);
+        _this.count = _this.data.count;
         return typeof callback === "function" ? callback() : void 0;
       };
       return this.request(loadCallback);
     };
 
-    PagingQueue.prototype.makeLoad = function(loadCallback) {
-      var callback;
-      callback = function() {
-        this.offset += this.limit;
-        return typeof loadCallback === "function" ? loadCallback() : void 0;
-      };
+    PagingQueue.prototype.makeLoad = function(callback) {
       this.data = [];
       this.url = this.loadUrl;
       this.method = 'POST';
       this.requestData = {
-        map: this.stack.slice(this.offset, +this.limit + 1 || 9e9)
+        map: this.stack.slice(this.elements.length, +(this.elements.length + this.limit) + 1 || 9e9)
       };
       return this.request(callback);
     };
@@ -56,16 +49,14 @@ define(['models/base/queue'], function(Queue) {
         _this = this;
       loadCallback = function() {
         var elData, key, _ref;
-        console.log(_this.data);
         _ref = _this.data;
         for (key in _ref) {
           elData = _ref[key];
-          console.log(_this.elData);
           _this.elements.push(_this.createElementModel(elData));
         }
         return typeof callback === "function" ? callback() : void 0;
       };
-      if (this.stack.length < this.offset + this.limit) {
+      if (this.elements.length === this.stack.length && this.stack.length < this.count) {
         return this.loadStack(function() {
           return _this.makeLoad(loadCallback);
         });
