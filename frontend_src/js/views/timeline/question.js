@@ -4,20 +4,20 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['views/base/view', 'JST'], function(View, JST) {
   'use strict';
-  var TimelinePostView;
-  return TimelinePostView = (function(_super) {
+  var TimelineQuestionView;
+  return TimelineQuestionView = (function(_super) {
 
-    __extends(TimelinePostView, _super);
+    __extends(TimelineQuestionView, _super);
 
-    function TimelinePostView() {
-      return TimelinePostView.__super__.constructor.apply(this, arguments);
+    function TimelineQuestionView() {
+      return TimelineQuestionView.__super__.constructor.apply(this, arguments);
     }
 
-    TimelinePostView.prototype.className = 'element';
+    TimelineQuestionView.prototype.className = 'element';
 
-    TimelinePostView.prototype.templateName = 'timeline_post';
+    TimelineQuestionView.prototype.templateName = 'timeline_question';
 
-    return TimelinePostView;
+    return TimelineQuestionView;
 
   })(View);
 });

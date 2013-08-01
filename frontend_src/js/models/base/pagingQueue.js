@@ -3,65 +3,92 @@ var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 define(['models/base/queue'], function(Queue) {
-  var PagingQueue;
+  var PagingQueue,
+    _this = this;
   return PagingQueue = (function(_super) {
 
     __extends(PagingQueue, _super);
 
     function PagingQueue() {
+      var _this = this;
+      this.load = function(callback) {
+        return PagingQueue.prototype.load.apply(_this, arguments);
+      };
       return PagingQueue.__super__.constructor.apply(this, arguments);
     }
 
     PagingQueue.prototype.stack = [];
 
-    PagingQueue.prototype.count = 0;
-
     PagingQueue.prototype.limit = 10;
+
+    PagingQueue.prototype.firstLoad = true;
+
+    PagingQueue.prototype.full = false;
+
+    PagingQueue.prototype.initialize = function() {
+      return this.elements = [];
+    };
 
     PagingQueue.prototype.loadStack = function(callback) {
       var loadCallback,
         _this = this;
+      this.firstLoad = false;
+      this.data = [];
       this.method = 'POST';
       this.url = this.stackUrl;
       this.requestData = {
-        offset: this.elements.length
+        offset: this.stack.length
       };
       loadCallback = function() {
-        _this.stack = _this.stack.concat(_this.data.stack);
-        _this.count = _this.data.count;
+        if (_this.data.length === 0) {
+          _this.full = true;
+        }
+        _this.stack = _this.stack.concat(_this.data);
         return typeof callback === "function" ? callback() : void 0;
       };
       return this.request(loadCallback);
     };
 
     PagingQueue.prototype.makeLoad = function(callback) {
-      this.data = [];
-      this.url = this.loadUrl;
-      this.method = 'POST';
-      this.requestData = {
-        map: this.stack.slice(this.elements.length, +(this.elements.length + this.limit) + 1 || 9e9)
-      };
-      return this.request(callback);
-    };
-
-    PagingQueue.prototype.load = function(callback) {
       var loadCallback,
         _this = this;
       loadCallback = function() {
-        var elData, key, _ref;
+        var count, elData, key, _ref;
+        count = 0;
         _ref = _this.data;
         for (key in _ref) {
           elData = _ref[key];
           _this.elements.push(_this.createElementModel(elData));
+          count++;
+        }
+        if (count < _this.limit) {
+          _this.full = true;
         }
         return typeof callback === "function" ? callback() : void 0;
       };
-      if (this.elements.length === this.stack.length && this.stack.length < this.count) {
-        return this.loadStack(function() {
-          return _this.makeLoad(loadCallback);
-        });
-      } else {
-        return this.makeLoad(loadCallback);
+      this.data = [];
+      this.url = this.loadUrl;
+      this.method = 'POST';
+      this.requestData = {
+        map: this.stack.slice(this.elements.length, +(this.elements.length + this.limit - 1) + 1 || 9e9)
+      };
+      return this.request(loadCallback);
+    };
+
+    PagingQueue.prototype.load = function(callback) {
+      var _this = this;
+      if (!this.full) {
+        if (this.firstLoad || this.elements.length === this.stack.length) {
+          return this.loadStack(function() {
+            if (!_this.full) {
+              return _this.makeLoad(callback);
+            } else {
+              return typeof callback === "function" ? callback() : void 0;
+            }
+          });
+        } else {
+          return this.makeLoad(callback);
+        }
       }
     };
 

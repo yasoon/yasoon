@@ -8,9 +8,9 @@ define [
       'click': (e) ->
         $target = $(e.target)
 
-        if $target.attr('data-more-button')? then @model.load()
+        if $target.attr('data-more-button')? then @model.load(@render)
 
     render: ->
       super
-      if @model.stack.length is @model.count
+      if @model.full
         @$el.find("[data-more-button]").hide()

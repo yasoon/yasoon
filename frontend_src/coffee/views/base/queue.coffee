@@ -10,12 +10,6 @@ define [
   class QueueView extends View
     autoRender: false
 
-    events:
-      'click': (e) ->
-        $target = $(e.target)
-
-        if $target.attr('data-more-button')? then @model.load()
-
     #
     initialize: ->
       super

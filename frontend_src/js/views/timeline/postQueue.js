@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/pagingQueue', 'JST', 'views/timeline/post'], function(PagingQueueView, JST, PostView) {
+define(['views/base/pagingQueue', 'JST', 'views/timeline/post', 'views/timeline/question', 'views/timeline/blank'], function(PagingQueueView, JST, PostView, QuestionView, BlankView) {
   'use strict';
   var TimelinePostQueueView;
   return TimelinePostQueueView = (function(_super) {
@@ -17,14 +17,24 @@ define(['views/base/pagingQueue', 'JST', 'views/timeline/post'], function(Paging
 
     TimelinePostQueueView.prototype.templateName = 'timeline_post_queue';
 
-    TimelinePostQueueView.prototype.placeholder = 'timeline_queue_post_placeholder';
+    TimelinePostQueueView.prototype.placeholder = 'timeline_placeholder';
 
     TimelinePostQueueView.prototype.sortable = true;
 
     TimelinePostQueueView.prototype.createElementView = function(model) {
-      return new PostView({
-        model: model
-      });
+      if (model.data.type === 'p') {
+        return new PostView({
+          model: model
+        });
+      } else if (model.data.type === 'q') {
+        return new QuestionView({
+          model: model
+        });
+      } else if (model.data.type === 'b') {
+        return new BlankView({
+          model: model
+        });
+      }
     };
 
     return TimelinePostQueueView;

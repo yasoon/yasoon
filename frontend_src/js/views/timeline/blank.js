@@ -4,20 +4,20 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['views/base/view', 'JST'], function(View, JST) {
   'use strict';
-  var TimelinePostView;
-  return TimelinePostView = (function(_super) {
+  var TimelineBlankView;
+  return TimelineBlankView = (function(_super) {
 
-    __extends(TimelinePostView, _super);
+    __extends(TimelineBlankView, _super);
 
-    function TimelinePostView() {
-      return TimelinePostView.__super__.constructor.apply(this, arguments);
+    function TimelineBlankView() {
+      return TimelineBlankView.__super__.constructor.apply(this, arguments);
     }
 
-    TimelinePostView.prototype.className = 'element';
+    TimelineBlankView.prototype.className = 'element';
 
-    TimelinePostView.prototype.templateName = 'timeline_post';
+    TimelineBlankView.prototype.templateName = 'timeline_blank';
 
-    return TimelinePostView;
+    return TimelineBlankView;
 
   })(View);
 });

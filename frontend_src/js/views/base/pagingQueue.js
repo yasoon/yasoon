@@ -18,14 +18,14 @@ define(['views/base/queue'], function(QueueView) {
         var $target;
         $target = $(e.target);
         if ($target.attr('data-more-button') != null) {
-          return this.model.load();
+          return this.model.load(this.render);
         }
       }
     };
 
     PagingQueueView.prototype.render = function() {
       PagingQueueView.__super__.render.apply(this, arguments);
-      if (this.model.stack.length === this.model.count) {
+      if (this.model.full) {
         return this.$el.find("[data-more-button]").hide();
       }
     };

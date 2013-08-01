@@ -2,7 +2,9 @@ define [
          'views/base/pagingQueue'
          'JST'
          'views/timeline/post'
-], (PagingQueueView, JST, PostView) ->
+         'views/timeline/question'
+         'views/timeline/blank'
+], (PagingQueueView, JST, PostView, QuestionView, BlankView) ->
   'use strict'
 
   class TimelinePostQueueView extends PagingQueueView
@@ -10,9 +12,14 @@ define [
 
     templateName: 'timeline_post_queue'
 
-    placeholder: 'timeline_queue_post_placeholder'
+    placeholder: 'timeline_placeholder'
 
     sortable: true
 
     createElementView: (model) ->
-      new PostView(model: model)
+      if model.data.type is 'p'
+        new PostView(model: model)
+      else if model.data.type is 'q'
+        new QuestionView(model: model)
+      else if model.data.type is 'b'
+        new BlankView(model: model)

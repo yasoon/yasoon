@@ -4,7 +4,7 @@ define [
 ], (View, JST) ->
   'use strict'
 
-  class TimelinePostView extends View
+  class TimelineBlankView extends View
     className: 'element'
 
-    templateName: 'timeline_post'
+    templateName: 'timeline_blank'
