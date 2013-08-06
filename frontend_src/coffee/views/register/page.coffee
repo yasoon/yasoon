@@ -3,10 +3,12 @@ define [
          'JST'
          'views/common/footer'
          'views/author/posts/header'
+         'lib/validate'
 ], (PageView,
     JST,
     FooterView,
-    HeaderView
+    HeaderView,
+    Validate
 ) ->
   'use strict'
 
@@ -18,3 +20,13 @@ define [
       'header': 'header'
 
     templateName: 'register_page'
+
+    events:
+      'click .regbtn': ->
+          validator = new FormValidator('register-form', [{
+              name: 'req'
+              display: 'required'
+              rules: 'required'
+          }], (errors, event) ->
+             log errors
+          )

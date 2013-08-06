@@ -121,7 +121,7 @@ class FriendsService extends AbstractApiService {
         }
 
         $this->em->createQueryBuilder()
-            ->select("count('p')")
+            ->select("count('p')");
 
 
         return $result;

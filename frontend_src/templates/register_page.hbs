@@ -2,24 +2,26 @@
 <section id="page-layout" class="m-page">
 
     <div class="register-form">
-        <article class="cat-title">
-            <h3>Регистрация</h3>
-            <p class="fs c-grey">Создайте свой профиль и напишите истории</p>
-            <div class="hr"></div>
-        </article>
-        <div class="di"><input type="text" placeholder="First name"></div>
-        <div class="di"><input type="text" class="error" placeholder="Last name"><div class="hhdi">you have misstake</div></div>
-        <div class="di"><input type="text" placeholder="Email"><div class="hhdi"><label> <input type="checkbox" checked=""> subscribe to our newsletter</label></div></div>
-        <div class="di"><input type="text" placeholder="Password"></div>
-        <div class="di"><textarea placeholder="Write a short story about you"></textarea></div>
-        <div class="hr di"></div>
-        <article class="cat-title">
-            <p class="c-grey">Here you can choise your profesion, interests or dreams of future work</p>
-        </article>
-        <div class="di"><input type="text" placeholder="Your job"></div>
-        <div class="di"><input type="text" placeholder="Interests"></div>
-        <div class="di"><input type="text" placeholder="Dreams"></div>
-        <input type="submit" class="regbtn di" value="Finith the registration">
+        <form name="register-form">
+            <article class="cat-title">
+                <h3>Регистрация</h3>
+                <p class="fs c-grey">Создайте свой профиль и напишите истории</p>
+                <div class="hr"></div>
+            </article>
+            <div class="di"><input name="req" id="req" type="text" placeholder="First name"></div>
+            <div class="di"><input type="text" class="error" placeholder="Last name"><div class="hhdi">you have misstake</div></div>
+            <div class="di"><input type="text" placeholder="Email"><div class="hhdi"><label> <input type="checkbox" checked=""> subscribe to our newsletter</label></div></div>
+            <div class="di"><input type="text" placeholder="Password"></div>
+            <div class="di"><textarea placeholder="Write a short story about you"></textarea></div>
+            <div class="hr di"></div>
+            <article class="cat-title">
+                <p class="c-grey">Here you can choise your profesion, interests or dreams of future work</p>
+            </article>
+            <div class="di"><input type="text" placeholder="Your job"></div>
+            <div class="di"><input type="text" placeholder="Interests"></div>
+            <div class="di"><input type="text" placeholder="Dreams"></div>
+            <input type="button" class="regbtn di" value="Finith the registration">
+        </form>
     </div>
 
 </section>
