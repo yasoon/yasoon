@@ -850,13 +850,24 @@ function program1(depth0,data) {
 
 var Handlebars = require('handlebars');
 var template = Handlebars.template, templates = JST = JST || {};
+templates['register_active'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [3,'>= 1.0.0-rc.4'];
+helpers = helpers || Handlebars.helpers; data = data || {};
+  
+
+
+  return "<div class=\"register-form\">\n        <form name=\"register-form\">\n            <article class=\"cat-title\">\n                <h3>Регистрация</h3>\n                <p class=\"fs c-grey\">Создайте свой профиль и напишите истории</p>\n                <div class=\"hr\"></div>\n            </article>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Имя\" data-field='name'>\n                <div class=\"hhdi hide-warning data_name\">Обязательно для заполнения</div>\n            </div>\n            <div class=\"di\"><input type=\"text\" class=\"error\" placeholder=\"Фамилия\"  data-field='lastName'>\n                <div class=\"hhdi hide-warning data_lastName\">Обязательно для заполнения</div>\n            </div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Email\"  data-field='email'>\n                <div class=\"hhdi\"><label> <input type=\"checkbox\" checked=\"\">Подписаться на обновления</label></div>\n                <div class=\"hhdi hide-warning data_email\">Обязательно для заполнения</div>\n            </div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Пароль\" data-field=\"password\">\n                <div class=\"hhdi hide-warning data_password\">Обязательно для заполнения</div>\n            </div>\n            <div class=\"di\"><textarea placeholder=\"Напишите краткую историю о себе\" data-field=\"shortHistory\"></textarea></div>\n            <div class=\"hr di\"></div>\n            <article class=\"cat-title\">\n                <p class=\"c-grey\">Здесь вы можете описать выбор вашей професии, интересы или мечты будущей работы</p>\n            </article>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Ваша работа\" data-field=\"job\"></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Интересы\" data-field=\"interests\"></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Мечты\" data-field=\"dreams\"></div>\n            <div data-send-button class=\"regbtn di\">Завершить регистрацию</div>\n        </form>\n    </div>";
+  });
+
+var Handlebars = require('handlebars');
+var template = Handlebars.template, templates = JST = JST || {};
 templates['register_page'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<header class=\"log-in\"></header>\n<section id=\"page-layout\" class=\"m-page\">\n\n    <div class=\"register-form\">\n        <form name=\"register-form\">\n            <article class=\"cat-title\">\n                <h3>Регистрация</h3>\n                <p class=\"fs c-grey\">Создайте свой профиль и напишите истории</p>\n                <div class=\"hr\"></div>\n            </article>\n            <div class=\"di\"><input name=\"req\" id=\"req\" type=\"text\" placeholder=\"First name\"></div>\n            <div class=\"di\"><input type=\"text\" class=\"error\" placeholder=\"Last name\"><div class=\"hhdi\">you have misstake</div></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Email\"><div class=\"hhdi\"><label> <input type=\"checkbox\" checked=\"\"> subscribe to our newsletter</label></div></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Password\"></div>\n            <div class=\"di\"><textarea placeholder=\"Write a short story about you\"></textarea></div>\n            <div class=\"hr di\"></div>\n            <article class=\"cat-title\">\n                <p class=\"c-grey\">Here you can choise your profesion, interests or dreams of future work</p>\n            </article>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Your job\"></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Interests\"></div>\n            <div class=\"di\"><input type=\"text\" placeholder=\"Dreams\"></div>\n            <input type=\"button\" class=\"regbtn di\" value=\"Finith the registration\">\n        </form>\n    </div>\n\n</section>\n\n<footer></footer>";
+  return "<header class=\"log-in\"></header>\n<section id=\"page-layout\" class=\"m-page\">\n\n\n\n</section>\n\n<footer></footer>";
   });
 
 var Handlebars = require('handlebars');

@@ -3,30 +3,34 @@ define [
          'JST'
          'views/common/footer'
          'views/author/posts/header'
-         'lib/validate'
+         'models/register/register'
+         'views/register/register'
 ], (PageView,
     JST,
     FooterView,
-    HeaderView,
-    Validate
+    HeaderView
+    RegisterModel
+    RegisterView
 ) ->
   'use strict'
 
-  class PeoplePageView extends PageView
+  class RegisterPageView extends PageView
     className: 'registerPage'
 
     regions:
       'footer': 'footer'
       'header': 'header'
+      '#page-layout' : 'register'
 
     templateName: 'register_page'
 
-    events:
-      'click .regbtn': ->
-          validator = new FormValidator('register-form', [{
-              name: 'req'
-              display: 'required'
-              rules: 'required'
-          }], (errors, event) ->
-             log errors
-          )
+    render: ->
+      super
+      new HeaderView()
+      new FooterView()
+
+      registerModel = new RegisterModel()
+      registerView = new RegisterView(model:registerModel)
+      registerView.setRegion('register').setMode('active')
+
+

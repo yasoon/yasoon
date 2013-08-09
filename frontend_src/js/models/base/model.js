@@ -44,6 +44,12 @@ define(['chaplin'], function(Chaplin) {
       return true;
     };
 
+    Model.prototype.validateEmail = function(email) {
+      var regExp;
+      regExp = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+      return regExp.test(email);
+    };
+
     Model.prototype.request = function(callback, dontUpdateData) {
       var _this = this;
       if (dontUpdateData == null) {

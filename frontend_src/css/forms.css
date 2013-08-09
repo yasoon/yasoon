@@ -156,8 +156,9 @@ a,
   color: #238C00;
   border: 2px solid #238C00!important;
   padding: 10px 30px;
-  width: 100%;
+  width: 87%;
   background: #fff;
+  text-align: center;
 }
 .btn {
   font-family: 'MuseoSansCyrl-700', Arial;
@@ -287,4 +288,8 @@ a,
   text-transform: uppercase;
   font-family: 'MuseoSansCyrl-700', Arial;
   display: block;
+}
+
+.hide-warning {
+    display: none;
 }

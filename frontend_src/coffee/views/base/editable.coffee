@@ -23,11 +23,13 @@ define [
         if $target.attr('data-field')?
           #          if e.target.tagName is 'INPUT'
           @model.data[$target.attr('data-field')] = $target.val()
+          #@model.dataField[$target.attr('data-field')] = $target
 
       'change': (e) ->
         $target = $(e.target)
         if $target.is("select") and $target.attr('data-field')?
           @model.data[$target.attr('data-field')] = $target.find('option:selected').attr('id')
+          #@model.dataField[$target.attr('data-field')] = $target
     #
     send: ->
       if @model.data.id?

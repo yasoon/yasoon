@@ -4,6 +4,8 @@ define [
 
   class Model extends Chaplin.Model
     data: {}
+    # При заполнении модели из data-field в этот объект сохраняются ссылки на эти объекты в DOM
+    #dataField: {}
 
     url: ''
     method: ''
@@ -22,6 +24,10 @@ define [
         if not @data[field]? or @data[field] is ''
           return false
       return true
+
+    validateEmail: (email) ->
+      regExp =  new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+      return regExp.test(email)
 
 
     request: (callback, dontUpdateData=false) ->

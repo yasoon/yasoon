@@ -2,42 +2,40 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'lib/validate'], function(PageView, JST, FooterView, HeaderView, Validate) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'models/register/register', 'views/register/register'], function(PageView, JST, FooterView, HeaderView, RegisterModel, RegisterView) {
   'use strict';
-  var PeoplePageView, _ref;
-  return PeoplePageView = (function(_super) {
-    __extends(PeoplePageView, _super);
+  var RegisterPageView, _ref;
+  return RegisterPageView = (function(_super) {
+    __extends(RegisterPageView, _super);
 
-    function PeoplePageView() {
-      _ref = PeoplePageView.__super__.constructor.apply(this, arguments);
+    function RegisterPageView() {
+      _ref = RegisterPageView.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    PeoplePageView.prototype.className = 'registerPage';
+    RegisterPageView.prototype.className = 'registerPage';
 
-    PeoplePageView.prototype.regions = {
+    RegisterPageView.prototype.regions = {
       'footer': 'footer',
-      'header': 'header'
+      'header': 'header',
+      '#page-layout': 'register'
     };
 
-    PeoplePageView.prototype.templateName = 'register_page';
+    RegisterPageView.prototype.templateName = 'register_page';
 
-    PeoplePageView.prototype.events = {
-      'click .regbtn': function() {
-        var validator;
-        return validator = new FormValidator('register-form', [
-          {
-            name: 'req',
-            display: 'required',
-            rules: 'required'
-          }
-        ], function(errors, event) {
-          return log(errors);
-        });
-      }
+    RegisterPageView.prototype.render = function() {
+      var registerModel, registerView;
+      RegisterPageView.__super__.render.apply(this, arguments);
+      new HeaderView();
+      new FooterView();
+      registerModel = new RegisterModel();
+      registerView = new RegisterView({
+        model: registerModel
+      });
+      return registerView.setRegion('register').setMode('active');
     };
 
-    return PeoplePageView;
+    return RegisterPageView;
 
   })(PageView);
 });

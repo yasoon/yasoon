@@ -1,11 +1,9 @@
 define [
         'controllers/base/controller'
         'views/register/page'
-        'lib/validate'
 ], (
   Controller,
-  RegisterPageView,
-  Validate
+  RegisterPageView
 ) ->
   'use strict'
 
@@ -14,8 +12,5 @@ define [
     #Work with questions in blank
     indexAction: ->
       @view = new RegisterPageView()
-
-    submtAction: ->
-      alert "aaa"
 
 
