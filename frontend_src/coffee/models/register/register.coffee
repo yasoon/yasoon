@@ -9,7 +9,9 @@ define [
 
 
     add: (callback) ->
-      if not @validateRegFields()
+      @publishEvent 'goLogin'
+
+      if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
         return
 
       @method = 'POST'
@@ -29,40 +31,21 @@ define [
         @publishEvent 'modelUpdated', @
         callback?()
 
+      console.log @data
+      return
       @request(updateCallback)
 
 
 
 
-    validateRegFields : () ->
+    validateRegFields : (fieldName) ->
       registerForm = $(".register-form")
       statusValidate = false
-      if not @validateNotNull('name')
-        registerForm.find(".data_name").show()
+      if not @validateNotNull(fieldName)
+        registerForm.find(".data_" + fieldName).show()
         statusValidate = false
       else
-        registerForm.find(".data_name").hide()
-        statusValidate = true
-
-      if not @validateNotNull('lastName')
-        registerForm.find(".data_lastName").show()
-        statusValidate = false
-      else
-        registerForm.find(".data_lastName").hide()
-        statusValidate = true
-
-      if not @validateNotNull('password')
-        registerForm.find(".data_password").show()
-        statusValidate = false
-      else
-        registerForm.find(".data_password").hide()
-        statusValidate = true
-
-      if not @validateEmail(@data['email'])
-        registerForm.find(".data_email").show()
-        statusValidate = false
-      else
-        registerForm.find(".data_email").hide()
+        registerForm.find(".data_" + fieldName).hide()
         statusValidate = true
 
       return statusValidate

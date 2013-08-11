@@ -18,7 +18,8 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     RegisterRegisterModel.prototype.add = function(callback) {
       var updateCallback,
         _this = this;
-      if (!this.validateRegFields()) {
+      this.publishEvent('goLogin');
+      if (!this.validateRegFields('name') || !this.validateRegFields('lastName') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
         return;
       }
       this.method = 'POST';
@@ -41,39 +42,20 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         _this.publishEvent('modelUpdated', _this);
         return typeof callback === "function" ? callback() : void 0;
       };
+      console.log(this.data);
+      return;
       return this.request(updateCallback);
     };
 
-    RegisterRegisterModel.prototype.validateRegFields = function() {
+    RegisterRegisterModel.prototype.validateRegFields = function(fieldName) {
       var registerForm, statusValidate;
       registerForm = $(".register-form");
       statusValidate = false;
-      if (!this.validateNotNull('name')) {
-        registerForm.find(".data_name").show();
+      if (!this.validateNotNull(fieldName)) {
+        registerForm.find(".data_" + fieldName).show();
         statusValidate = false;
       } else {
-        registerForm.find(".data_name").hide();
-        statusValidate = true;
-      }
-      if (!this.validateNotNull('lastName')) {
-        registerForm.find(".data_lastName").show();
-        statusValidate = false;
-      } else {
-        registerForm.find(".data_lastName").hide();
-        statusValidate = true;
-      }
-      if (!this.validateNotNull('password')) {
-        registerForm.find(".data_password").show();
-        statusValidate = false;
-      } else {
-        registerForm.find(".data_password").hide();
-        statusValidate = true;
-      }
-      if (!this.validateEmail(this.data['email'])) {
-        registerForm.find(".data_email").show();
-        statusValidate = false;
-      } else {
-        registerForm.find(".data_email").hide();
+        registerForm.find(".data_" + fieldName).hide();
         statusValidate = true;
       }
       return statusValidate;

@@ -293,3 +293,12 @@ a,
 .hide-warning {
     display: none;
 }
+
+.auth_login {
+    width: 200px;
+    height: 100px;
+    position: fixed;
+    top: 45%;
+    left: 45%;
+    background-color:#00fF11;
+}
