@@ -1,10 +1,8 @@
 define [
   'views/base/page'
   'JST'
-  'models/auth/login'
 ], (PageView,
-    JST,
-    LoginModel
+    JST
 ) ->
   'use strict'
 
@@ -13,11 +11,5 @@ define [
     className: 'auth_login'
 
     templateName: 'auth_login'
-
-    render: ->
-      super
-
-      loginModel = new LoginModel()
-      loginView = new LoginView(model:loginModel)
 
 

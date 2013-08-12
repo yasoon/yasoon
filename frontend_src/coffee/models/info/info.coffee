@@ -4,19 +4,17 @@ define [
 ], (Chaplin, Model) ->
   'use strict'
 
-  class RegisterRegisterModel extends Model
-    name: 'RegisterRegister'
+  class InfoInfoModel extends Model
+    name: 'InfoInfo'
 
 
     add: (callback) ->
-#      @publishEvent 'goLogin'
-
-      if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
-        $('html,body').animate({ scrollTop: 150 }, 'slow');
+      if !@validateInfoFields('name') || !@validateInfoFields('lastName')  || !@validateInfoFields('password') || !@validateEmail(@data['email'])
+        $('html,body').animate({ scrollTop: 200 }, 'slow');
         return
 
       @method = 'POST'
-      @url    = -> 'api/register'
+      @url    = -> 'api/user/info/edit'
       @requestData =
         model:
           name: @data.name
@@ -39,26 +37,26 @@ define [
 
 
 
-    validateRegFields : (fieldName) ->
-      registerForm = $(".register-form")
+    validateInfoFields : (fieldName) ->
+      infoForm = $(".info-form")
       statusValidate = false
       if not @validateNotNull(fieldName)
-        registerForm.find(".data_" + fieldName).show()
+        infoForm.find(".data_" + fieldName).show()
         statusValidate = false
       else
-        registerForm.find(".data_" + fieldName).hide()
+        infoForm.find(".data_" + fieldName).hide()
         statusValidate = true
 
       return statusValidate
 
     validateEmail : (email) =>
-      registerForm = $(".register-form")
+      infoForm = $(".info-form")
       statusValidate = false
       if not super(email)
-        registerForm.find(".data_email").show()
+        infoForm.find(".data_email").show()
         statusValidate = false
       else
-        registerForm.find(".data_email").hide()
+        infoForm.find(".data_email").hide()
         statusValidate = true
 
       return statusValidate

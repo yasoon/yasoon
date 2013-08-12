@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['controllers/base/controller', 'chaplin', 'views/auth/login'], function(Controller, Chaplin, LoginView) {
+define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/auth/login'], function(Controller, Chaplin, LoginView, LoginModel) {
   'use strict';
   var LoginController, _ref;
   return LoginController = (function(_super) {
@@ -15,13 +15,12 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login'], function(
 
     LoginController.prototype.initialize = function() {
       LoginController.__super__.initialize.apply(this, arguments);
-      return Chaplin.mediator.subscribe('goLogin', alert('sf'));
+      return Chaplin.mediator.subscribe('goLogin', this.goLogin());
     };
 
     LoginController.prototype.goLogin = function() {
-      var loginView;
-      alert('login');
-      return loginView = new LoginView();
+      var loginModel;
+      return loginModel = new LoginModel();
     };
 
     return LoginController;

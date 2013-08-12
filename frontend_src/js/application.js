@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'routes', 'controllers/redirect-controller', 'controllers/message-controller'], function(Chaplin, routes, RedirectController, MessageController) {
+define(['chaplin', 'routes', 'controllers/redirect-controller', 'controllers/message-controller', 'controllers/login-controller'], function(Chaplin, routes, RedirectController, MessageController, LoginController) {
   'use strict';
   var Application, _ref;
   return Application = (function(_super) {
@@ -37,7 +37,8 @@ define(['chaplin', 'routes', 'controllers/redirect-controller', 'controllers/mes
 
     Application.prototype.initControllers = function() {
       new RedirectController();
-      return new MessageController();
+      new MessageController();
+      return new LoginController();
     };
 
     return Application;

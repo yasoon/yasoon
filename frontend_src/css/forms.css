@@ -253,7 +253,7 @@ a,
   margin-bottom: 25px;
   line-height: 25px;
 }
-.register-form {
+.register-form, .info-form {
   max-width: 475px;
   margin: 0 auto;
   *width: 475px;
@@ -292,6 +292,7 @@ a,
 
 .hide-warning {
     display: none;
+    color: red;
 }
 
 .auth_login {
