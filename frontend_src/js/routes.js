@@ -3,6 +3,7 @@ define(function() {
   'use strict';
   return function(match) {
     match('register', 'register#indexAction');
+    match('user/info/edit', 'user/info/edit#indexAction');
     match('people', 'people#peopleAction');
     match('people/:catId', 'people#peopleAction');
     match('explore/:mode', 'people#exploreAction');

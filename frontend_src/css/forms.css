@@ -149,15 +149,16 @@ a,
   background: #0f66aa;
 }
 .regbtn {
-  font-family: 'MuseoSansCyrl-700', Arial;
-  font-size: 14px;
-  line-height: 14px;
-  text-transform: uppercase;
-  color: #238C00;
-  border: 2px solid #238C00!important;
-  padding: 10px 30px;
-  width: 100%;
-  background: #fff;
+    text-align: center;
+    font-family: 'MuseoSansCyrl-700', Arial;
+    font-size: 17px;
+    line-height: 14px;
+    text-transform: uppercase;
+    color: #238C00;
+    border: 2px solid #238C00!important;
+    padding: 10px 30px;
+    width: 87%;
+    background: #fff;
 }
 .btn {
   font-family: 'MuseoSansCyrl-700', Arial;
@@ -252,7 +253,7 @@ a,
   margin-bottom: 25px;
   line-height: 25px;
 }
-.register-form {
+.register-form, .info-form {
   max-width: 475px;
   margin: 0 auto;
   *width: 475px;
@@ -295,5 +296,15 @@ a,
   margin: 0 !important;
 }
 .hide-warning {
-  display: none;
+    display: none;
+    color: red;
+}
+
+.auth_login {
+    width: 200px;
+    height: 100px;
+    position: fixed;
+    top: 45%;
+    left: 45%;
+    background-color:#00fF11;
 }

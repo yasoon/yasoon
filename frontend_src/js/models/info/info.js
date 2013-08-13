@@ -5,30 +5,30 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
   'use strict';
-  var RegisterRegisterModel, _ref;
-  return RegisterRegisterModel = (function(_super) {
-    __extends(RegisterRegisterModel, _super);
+  var InfoInfoModel, _ref;
+  return InfoInfoModel = (function(_super) {
+    __extends(InfoInfoModel, _super);
 
-    function RegisterRegisterModel() {
+    function InfoInfoModel() {
       this.validateEmail = __bind(this.validateEmail, this);
-      _ref = RegisterRegisterModel.__super__.constructor.apply(this, arguments);
+      _ref = InfoInfoModel.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    RegisterRegisterModel.prototype.name = 'RegisterRegister';
+    InfoInfoModel.prototype.name = 'InfoInfo';
 
-    RegisterRegisterModel.prototype.add = function(callback) {
+    InfoInfoModel.prototype.add = function(callback) {
       var updateCallback,
         _this = this;
-      if (!this.validateRegFields('name') || !this.validateRegFields('lastName') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
+      if (!this.validateInfoFields('name') || !this.validateInfoFields('lastName') || !this.validateInfoFields('password') || !this.validateEmail(this.data['email'])) {
         $('html,body').animate({
-          scrollTop: 150
+          scrollTop: 200
         }, 'slow');
         return;
       }
       this.method = 'POST';
       this.url = function() {
-        return 'api/register';
+        return 'api/user/info/edit';
       };
       this.requestData = {
         model: {
@@ -46,41 +46,40 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         _this.publishEvent('modelUpdated', _this);
         return typeof callback === "function" ? callback() : void 0;
       };
-      this.publishEvent('goLogin');
       console.log(this.data);
       return;
       return this.request(updateCallback);
     };
 
-    RegisterRegisterModel.prototype.validateRegFields = function(fieldName) {
-      var registerForm, statusValidate;
-      registerForm = $(".register-form");
+    InfoInfoModel.prototype.validateInfoFields = function(fieldName) {
+      var infoForm, statusValidate;
+      infoForm = $(".info-form");
       statusValidate = false;
       if (!this.validateNotNull(fieldName)) {
-        registerForm.find(".data_" + fieldName).show();
+        infoForm.find(".data_" + fieldName).show();
         statusValidate = false;
       } else {
-        registerForm.find(".data_" + fieldName).hide();
+        infoForm.find(".data_" + fieldName).hide();
         statusValidate = true;
       }
       return statusValidate;
     };
 
-    RegisterRegisterModel.prototype.validateEmail = function(email) {
-      var registerForm, statusValidate;
-      registerForm = $(".register-form");
+    InfoInfoModel.prototype.validateEmail = function(email) {
+      var infoForm, statusValidate;
+      infoForm = $(".info-form");
       statusValidate = false;
-      if (!RegisterRegisterModel.__super__.validateEmail.call(this, email)) {
-        registerForm.find(".data_email").show();
+      if (!InfoInfoModel.__super__.validateEmail.call(this, email)) {
+        infoForm.find(".data_email").show();
         statusValidate = false;
       } else {
-        registerForm.find(".data_email").hide();
+        infoForm.find(".data_email").hide();
         statusValidate = true;
       }
       return statusValidate;
     };
 
-    return RegisterRegisterModel;
+    return InfoInfoModel;
 
   })(Model);
 });

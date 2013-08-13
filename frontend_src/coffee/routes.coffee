@@ -4,6 +4,7 @@ define ->
   (match) ->
 
     match 'register', 'register#indexAction'
+    match 'user/info/edit', 'user/info/edit#indexAction'
 
     #match 'author/:authorId/posts/:id', 'post#postAction'
 
