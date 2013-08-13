@@ -2,18 +2,21 @@ define [
   'controllers/base/controller'
   'chaplin',
   'views/auth/login'
+  'models/auth/login'
 ], (
   Controller,
   Chaplin
   LoginView
+  LoginModel
 ) ->
   'use strict'
 
   class LoginController extends Controller
     initialize: ->
       super
-      Chaplin.mediator.subscribe 'goLogin', alert 'sf'
+      Chaplin.mediator.subscribe 'goLogin', @goLogin
 
-    goLogin: ->
-      alert 'login'
-      loginView = new LoginView();
+    goLogin: =>
+      loginModel = new LoginModel()
+      loginView = new LoginView(model:loginModel)
+      loginView.setMode('active')

@@ -18,7 +18,6 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     RegisterRegisterModel.prototype.add = function(callback) {
       var updateCallback,
         _this = this;
-      this.publishEvent('goLogin');
       if (!this.validateRegFields('name') || !this.validateRegFields('lastName') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
         return;
       }

@@ -9,14 +9,15 @@ define [
 
 
     add: (callback) ->
-      if !@validateRegFields('login') || !@validateRegFields('password')
+      if !@validateEmail(@data.email) || !@validateNotNull('password')
+        @publishEvent 'publicError', 'Неправильно введен email или пароль'
         return
 
       @method = 'POST'
       @url    = -> 'api/auth/login'
       @requestData =
         model:
-          login: @data.login
+          email: @data.email
           password: @data.password
 
       updateCallback = =>
@@ -26,18 +27,3 @@ define [
       console.log @data
       return
       @request(updateCallback)
-
-
-
-
-    validateAuthFields : (fieldName) ->
-      loginForm = $(".login-form")
-      statusValidate = false
-      if not @validateNotNull(fieldName)
-        loginForm.find(".data_" + fieldName).show()
-        statusValidate = false
-      else
-        loginForm.find(".data_" + fieldName).hide()
-        statusValidate = true
-
-      return statusValidate

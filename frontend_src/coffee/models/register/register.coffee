@@ -9,7 +9,7 @@ define [
 
 
     add: (callback) ->
-      @publishEvent 'goLogin'
+#      @publishEvent 'goLogin'
 
       if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
         return

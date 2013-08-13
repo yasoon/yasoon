@@ -1,23 +1,20 @@
 define [
-  'views/base/page'
+  'views/base/editable'
   'JST'
   'models/auth/login'
-], (PageView,
+], (EditableView,
     JST,
     LoginModel
 ) ->
   'use strict'
 
-  class LoginView extends PageView
+  class LoginView extends EditableView
     autoRender: true
-    className: 'auth_login'
+    className: 'barrier'
+    container: 'body'
+
+    modes: ['active']
 
     templateName: 'auth_login'
-
-    render: ->
-      super
-
-      loginModel = new LoginModel()
-      loginView = new LoginView(model:loginModel)
 
 

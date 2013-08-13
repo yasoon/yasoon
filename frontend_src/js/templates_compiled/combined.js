@@ -147,13 +147,13 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 
 var Handlebars = require('handlebars');
 var template = Handlebars.template, templates = JST = JST || {};
-templates['auth_login'] = template(function (Handlebars,depth0,helpers,partials,data) {
+templates['auth_login_active'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [3,'>= 1.0.0-rc.4'];
 helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"auth_login\">\n    <input data-field=\"login\">\n    <input data-field=\"password\">\n</div>";
+  return "<div class=\"p-box login auth_login\">\n    <h3>Войти используя аккаунт</h3>\n\n    <div class=\"connect\">\n        <ul>\n            <li><a href=\"\" class=\"login-btn twt\">Войти из твиттера</a></li>\n            <li><a href=\"\" class=\"login-btn fb\">Войти из фейсбука</a></li>\n            <li class=\"last\">Нет аккаунта? <a href=\"\"><b>Зарегистрироваться</b></a></li>\n        </ul>\n    </div>\n    <div class=\"connect login-form\">\n        <ul>\n            <li><input type=\"text\" placeholder=\"Введите свой email\" data-field=\"email\"></li>\n            <div class=\"hhdi hide-warning data_email login-warning\">Поле обязательно для заполнения</div>\n            <li ><input type=\"password\" placeholder=\"Пароль\" data-field=\"password\"></li>\n            <div class=\"hhdi hide-warning data_password login-warning\">Поле обязательно для заполнения</div>\n            <li><a href=\"\">Забыли пароль?</a> <a class=\"btn\" data-send-button>Войти</a></li>\n        </ul>\n    </div>\n</div>";
   });
 
 var Handlebars = require('handlebars');

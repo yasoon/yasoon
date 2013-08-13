@@ -3,7 +3,8 @@ define [
   'routes'
   'controllers/redirect-controller'
   'controllers/message-controller'
-], (Chaplin, routes, RedirectController, MessageController) ->
+  'controllers/login-controller'
+], (Chaplin, routes, RedirectController, MessageController, LoginController) ->
   'use strict'
 
   class Application extends Chaplin.Application
@@ -34,3 +35,4 @@ define [
     initControllers: ->
       new RedirectController()
       new MessageController()
+      new LoginController()
