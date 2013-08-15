@@ -102,9 +102,11 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       statusValidate = false;
       if (!this.validateNotNull(fieldName)) {
         registerForm.find(".data_" + fieldName).show();
+        registerForm.find("input[data-field='" + fieldName + "']").addClass('error');
         statusValidate = false;
       } else {
         registerForm.find(".data_" + fieldName).hide();
+        registerForm.find("input[data-field='" + fieldName + "']").removeClass('error');
         statusValidate = true;
       }
       return statusValidate;
@@ -116,9 +118,11 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       statusValidate = false;
       if (!RegisterRegisterModel.__super__.validateEmail.call(this, email)) {
         registerForm.find(".data_email").show();
+        registerForm.find("input[data-field='email']").addClass('error');
         statusValidate = false;
       } else {
         registerForm.find(".data_email").hide();
+        registerForm.find("input[data-field='email']").removeClass('error');
         statusValidate = true;
       }
       return statusValidate;

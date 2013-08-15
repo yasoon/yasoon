@@ -74,9 +74,11 @@ define [
       statusValidate = false
       if not @validateNotNull(fieldName)
         registerForm.find(".data_" + fieldName).show()
+        registerForm.find("input[data-field='" + fieldName + "']").addClass('error')
         statusValidate = false
       else
         registerForm.find(".data_" + fieldName).hide()
+        registerForm.find("input[data-field='" + fieldName + "']").removeClass('error')
         statusValidate = true
 
       return statusValidate
@@ -87,9 +89,11 @@ define [
       statusValidate = false
       if not super(email)
         registerForm.find(".data_email").show()
+        registerForm.find("input[data-field='email']").addClass('error')
         statusValidate = false
       else
         registerForm.find(".data_email").hide()
+        registerForm.find("input[data-field='email']").removeClass('error')
         statusValidate = true
 
       return statusValidate
