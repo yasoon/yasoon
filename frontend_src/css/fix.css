@@ -1,0 +1,13 @@
+.regbtn {
+  width: 87% !important;
+  text-align: center;
+  font-size: 16px !important;
+  cursor: pointer;
+}
+.data_email {
+  color: red;
+}
+
+.disable {
+    color: #646464;
+}

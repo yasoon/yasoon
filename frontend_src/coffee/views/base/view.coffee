@@ -63,7 +63,8 @@ define [
     manageEditableContent: ->
       for el in @$el.find("[data-managed-content]")
         id = $(el).attr('data-managed-content')
-        $(el).html managedContent[id].text
+#        console.log managedContent
+#        $(el).html managedContent[id].text
 
     #
     manageAuthAreas: ->

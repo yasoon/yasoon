@@ -13,4 +13,7 @@ define [
 
     templateName: 'index_header'
 
+    events:
+      'click .sign-in': ->
+        @publishEvent 'goLogin'
 

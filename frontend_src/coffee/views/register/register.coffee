@@ -10,3 +10,7 @@ define [
     templateName: 'register'
 
     modes: ['active']
+
+    add: ->
+#      $(@$el).find('.regbtn').attr('disable','')
+      @model.add()

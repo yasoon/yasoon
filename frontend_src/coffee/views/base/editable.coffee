@@ -14,7 +14,7 @@ define [
 
         if $target.attr('data-to-mode')? then @setMode $target.attr('data-to-mode')
 
-        if $target.attr('data-send-button')? then @send()
+        if $target.attr('data-send-button')? then if not $target.attr('disable')? then @send()
 
         if $target.attr('data-delete-button')? then @del()
 
