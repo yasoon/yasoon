@@ -1,0 +1,38 @@
+<div class="open-area"></div>
+
+<img src="./_temp/a1.jpg" alt="">
+<h4 class="usr-name editable">{{model.name}}<i></i></h4>
+<p class="u-description">{{model.description}}</p>
+<div class="hr"></div>
+<div class="pub">
+    <h4 class="p-label">зарегистрирован</h4>
+    8/7/2013
+    <div class="hr"></div>
+</div>
+
+<div class="media-hidden">
+    <div class="inner">
+        <div class="b-indent">Работаю:<br>
+            <a href="" class="t-under c-black">{{model.job}}</a>
+        </div>
+        <div class="b-indent">Интересно:<br>
+            <a href="" class="t-under c-black">{{model.interest}}</a>
+        </div>
+        <div class="b-indent">Мечта:<br>
+            <a href="" class="t-under c-black">{{model.dream}}</a>
+        </div>
+        <div class="hr"></div>
+        <div class="d-box">
+            <div><p class="p-label">постов</p> <a href="">{{model.posts}}</a></div>
+            <div><p class="p-label">ответов</p> <a href="">{{model.questions}}</a></div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="social">
+            <div class="hr"></div>
+                <a class="btn" id='follow'>Подписаться</a>
+                <a class="btn close-question mLeft10" id='unfollow' style='display:none'>Отписаться</a>
+        </div>
+        <div class="hr"></div>
+    </div>
+</div>

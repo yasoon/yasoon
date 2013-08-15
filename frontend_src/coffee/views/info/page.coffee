@@ -3,7 +3,7 @@ define [
          'JST'
          'views/common/footer'
          'views/author/posts/header'
-         'models/info/info'
+         'models/register/register'
          'views/info/info'
 ], (PageView,
     JST,
@@ -15,7 +15,7 @@ define [
   'use strict'
 
   class InfoPageView extends PageView
-    className: 'info-page'
+    className: 'infoPage'
 
     regions:
       'footer': 'footer'
@@ -30,7 +30,8 @@ define [
       new FooterView()
 
       infoModel = new InfoModel()
-      infoView = new InfoView(model:infoModel)
-      infoView.setRegion('info').setMode('edit')
+      infoModel.load =>
+        infoView = new InfoView(model:infoModel)
+        infoView.setRegion('info').setMode('edit')
 
 

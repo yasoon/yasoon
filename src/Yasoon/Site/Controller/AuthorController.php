@@ -96,12 +96,28 @@ class AuthorController {
     }
 
     /**
-     * @Route("/get_questions/{authorId}", requirements={"authorId" = "\d+"})
-     * @Method({"GET"})
+     * @Route("/get_questions")
+     * @Method({"POST"})
      */
-    public function getQuestionsAction($authorId)
+    public function getQuestionsAction(Request $request)
     {
-        $result = $this->service->getQuestions($authorId);
+        $map = $request->request->get('map');
+
+        $result = $this->service->getQuestions($map);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_questions_stack/{authorId}", requirements={"authorId" = "\d+"})
+     * @Method({"POST"})
+     */
+    public function getQuestionsStackAction(Request $request)
+    {
+        $authorId = $request->attributes->get('authorId');
+        $offset = $request->request->get('offset');
+
+        $result = $this->service->getQuestionsStack($authorId, $offset);
 
         return $result;
     }

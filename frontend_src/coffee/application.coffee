@@ -11,6 +11,7 @@ define [
     title: 'Yasoon site'
 
     initialize: ->
+
       super
 
       @initRouter routes, pushState: false

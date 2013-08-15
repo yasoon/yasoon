@@ -8,6 +8,8 @@ define [
          'models/author/posts/new/blank/question'
          'views/author/posts/new/blank/questionQueue'
          'models/author/posts/new/blank/questionQueue'
+
+         'views/author/posts/new/blank/caption'
 ], (PageView,
     JST,
     FooterView,
@@ -16,14 +18,18 @@ define [
     QuestionView,
     QuestionModel,
     QuestionQueueView,
-    QuestionQueueModel
-) ->
+    QuestionQueueModel,
+
+    CaptionView
+ ) ->
   'use strict'
 
   class AuthorPostsNewBlankPageView extends PageView
     className: 'postPage'
 
     regions:
+      '#caption': 'caption'
+      '#category': 'category'
       '#new':   'new'
       '#queue': 'queue'
       'footer': 'footer'
@@ -41,6 +47,9 @@ define [
       super
       hv = new HeaderView()
       fv = new FooterView()
+
+      cv = new CaptionView()
+      cv.setRegion('caption').setMode('passive')
 
       qtv = new QuestionView(model: new QuestionModel(authorId: @authorId))
       qtv.setRegion('new').setMode('button')

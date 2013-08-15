@@ -1,20 +1,27 @@
 <div class="post-edit">
     <div class="di">
-        <select data-field="categoryId">
-            {{#each categories}}
-                <option id='{{@key}}'
-                        {{#equals @key ../model.categoryId}}
-                            selected="selected"
-                        {{/equals}}
-                        >{{this}}</option>
 
-            {{/each}}
-        </select>
+        <div class="di">
+            <h3>заголовок:</h3>
+            <input type="text" placeholder="Название истории" data-field="caption" value='{{model.caption}}'>
+        </div>
+
+        <div class="di">
+            <h3>отрасль:</h3>
+            <select data-field="categoryId">
+                {{#each categories}}
+                    <option id='{{@key}}'
+                            {{#equals @key ../model.categoryId}}
+                                selected="selected"
+                            {{/equals}}
+                            >{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
     </div>
-    <div class="di"><input type="text" placeholder="Заголовок" data-field="caption" value='{{model.caption}}'></div>
-    <div class="di"><textarea placeholder="Превью - то, что будет видно в ленте" data-field='preview'>{{model.preview}}</textarea></div>
 
     <div class="di">
+        <h3>текст:</h3>
         <div class="post-edit-tools">
             <div class="item"><b>b</b></div>
             <div class="item"><b><i>It</i></b></div>
@@ -24,7 +31,15 @@
         </div>
         <textarea class="big" placeholder="Тело поста" data-field="text">{{model.text}}</textarea>
     </div>
+
+    <div class="di">
+        <h3>аннотация:</h3>
+        <textarea placeholder="Краткая аннотация к Вашей истории, которую будут видеть другие пользователи" data-field='preview'>{{model.preview}}</textarea>
+    </div>
+
+
     <div class="di t-center">
+
         <a class="btn" data-send-button>Опубликовать</a>
         {{#if model.id}}
         <a class="btn" data-delete-button>Удалить</a>

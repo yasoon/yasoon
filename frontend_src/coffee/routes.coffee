@@ -3,8 +3,12 @@ define ->
 
   (match) ->
 
+    match 'about', 'blog#aboutAction'
+    match 'blog',  'blog#blogAction'
+    match 'blog/questions',  'blog#questionsAction'
+
     match 'register', 'register#indexAction'
-    match 'user/info/edit', 'user/info/edit#indexAction'
+    match 'editinfo', 'register#editInfoAction'
 
     #match 'author/:authorId/posts/:id', 'post#postAction'
 
@@ -27,6 +31,8 @@ define ->
     #admin
     match 'admin/blank', 'admin#blankAction'
     match 'admin/stories', 'admin#storiesAction'
+    match 'admin/timeline', 'admin#timelineAction'
+    match 'admin/content', 'admin#contentAction'
 
     match 'stories', 'index#storiesAction'
     match '', 'index#indexAction'

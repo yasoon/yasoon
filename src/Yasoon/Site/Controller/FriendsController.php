@@ -60,6 +60,19 @@ class FriendsController {
     }
 
     /**
+     * @Route("/admin_timeline_stack")
+     *
+     * @Method({"POST"})
+     */
+    public function getAdminTimelineStackAction(Request $request) {
+        $offset = $request->request->get('offset');
+
+        $result = $this->service->getAdminTimelineStack($offset);
+
+        return $result;
+    }
+
+    /**
      * @Route("/timeline")
      *
      * @Method({"POST"})

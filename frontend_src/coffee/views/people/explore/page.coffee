@@ -22,6 +22,8 @@ define [
 
     regions:
       '#queue': 'queue'
+      'footer': 'footer'
+      'header': 'header'
     templateName: 'people_explore_page'
 
     initialize: (params) ->

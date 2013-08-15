@@ -5,14 +5,19 @@ define [
          'views/author/posts/header'
 
          'views/author/posts/postQueue'
-         'models/author/posts/postQueue'
+         'models/author/posts/postQueue',
+         'models/author/posts/info'
+         'views/author/posts/info'
 ], (PageView,
     JST,
     FooterView,
     HeaderView,
 
     PostQueueView,
-    PostQueueModel
+    PostQueueModel,
+
+    AuthorInfoModel,
+    AuthorInfoView
 ) ->
   'use strict'
 
@@ -21,6 +26,7 @@ define [
 
     regions:
       '#queue': 'queue'
+      '#author': 'author'
       'footer': 'footer'
       'header': 'header'
 
@@ -30,8 +36,14 @@ define [
       super(params)
       @authorId = params.authorId
 
-    render: ->
+
+    render: =>
       super
+      am= new AuthorInfoModel(authorId: @authorId)
+      am.load =>
+        av = new AuthorInfoView(model: am)
+        av.setRegion('author').render()
+
       hv = new HeaderView()
       fv = new FooterView()
 

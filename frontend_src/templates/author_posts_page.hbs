@@ -4,59 +4,17 @@
 
     <nav class="navigate">
         <a class="active">Посты</a>
-        <a data-link='author/{{authorId}}/questions'>Вопросы</a>
+        <a data-link='author/{{author.authorId}}/questions'>Вопросы</a>
     </nav>
-    <div class="postinfo">
-        <div class="open-area"></div>
 
-        <img src="./_temp/a1.jpg" alt="">
-        <h4 class="usr-name editable">Тестовый чувак<i></i></h4>
-        <p class="u-description">Я дизайнер собачих причёсок</p>
-        <div class="hr"></div>
-        <div class="pub">
-            <h4 class="p-label">зарегистрирован</h4>
-            8/7/2013
-            <div class="hr"></div>
-        </div>
-
-        <div class="media-hidden">
-            <div class="inner">
-                <div class="b-indent">Работаю:<br>
-                    <a href="" class="t-under c-black">Дизайнер</a>
-                </div>
-                <div class="b-indent">Интересно:<br>
-                    <a href="" class="t-under c-black">Учитель</a>
-                </div>
-                <div class="b-indent">Мечта:<br>
-                    <a href="" class="t-under c-black">Фермер</a>
-                </div>
-                <div class="hr"></div>
-                <div class="d-box">
-                    <div><p class="p-label">постов</p> <a href="">3</a></div>
-                    <div><p class="p-label">ответов</p> <a href="">4</a></div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="social">
-                    <div class="hr"></div>
-                    <div class="social-links">
-                        <a href="" class="ws"></a>
-                        <a href="" class="wf"></a>
-                        <a href="" class="wb"></a>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="hr"></div>
-            </div>
-        </div>
-    </div>
+    <div class="postinfo" id ='author'></div>
 
     <article class="lim cat-title">
         <div class="content"><p><a class="btn" data-link='author/{{authorId}}/posts/new'>Написать новый пост</a></p></div>
         <div class="hr"></div>
     </article>
 
-    <div id='queue'>
-    </div>
+    <div id='queue'></div>
 
 </section>
 <footer></footer>

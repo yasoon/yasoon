@@ -5,10 +5,9 @@ define [
   class Queue extends Model
     data: []
 
-    elements: []
-
     #
     initialize: ->
+      @elements = []
       super
       if not @elementName? then throw 'ElementName must be defined'
 

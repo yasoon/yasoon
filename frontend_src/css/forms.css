@@ -81,7 +81,6 @@ select {
   border: none;
   font-family: 'MuseoSansCyrl-100', Arial;
   font-size: 15px;
-  padding: 3px 7px;
   color: #999;
   resize: none;
   margin: 0;
@@ -129,7 +128,7 @@ a,
 .login-btn {
   font-family: 'MuseoSansCyrl-100', Arial;
   font-size: 12px;
-  line-height: 38px;
+  line-height: 46px;
   text-transform: uppercase;
   padding: 0 20px;
   background: #999999;
@@ -140,7 +139,7 @@ a,
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   color: #fff!important;
-  height: 38px;
+  height: 46px;
 }
 .login-btn.twt {
   background: #28b9dd;
@@ -149,16 +148,15 @@ a,
   background: #0f66aa;
 }
 .regbtn {
-    text-align: center;
-    font-family: 'MuseoSansCyrl-700', Arial;
-    font-size: 17px;
-    line-height: 14px;
-    text-transform: uppercase;
-    color: #238C00;
-    border: 2px solid #238C00!important;
-    padding: 10px 30px;
-    width: 87%;
-    background: #fff;
+  font-family: 'MuseoSansCyrl-700', Arial;
+  font-size: 14px;
+  line-height: 14px;
+  text-transform: uppercase;
+  color: #238C00;
+  border: 2px solid #238C00!important;
+  padding: 10px 30px;
+  width: 100%;
+  background: #fff;
 }
 .btn {
   font-family: 'MuseoSansCyrl-700', Arial;
@@ -246,14 +244,14 @@ a,
   margin-left: 10px;
 }
 .p-box.login .connect li.last {
-  margin-top: 40px;
+  margin-top: 32px;
 }
 .p-box.login .connect li {
   display: block;
   margin-bottom: 25px;
   line-height: 25px;
 }
-.register-form, .info-form {
+.register-form {
   max-width: 475px;
   margin: 0 auto;
   *width: 475px;
@@ -296,15 +294,5 @@ a,
   margin: 0 !important;
 }
 .hide-warning {
-    display: none;
-    color: red;
-}
-
-.auth_login {
-    width: 200px;
-    height: 100px;
-    position: fixed;
-    top: 45%;
-    left: 45%;
-    background-color:#00fF11;
+  display: none;
 }

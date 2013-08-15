@@ -52,6 +52,17 @@ class QuestionController {
     }
 
     /**
+     * @Route("/set_interview_caption")
+     *
+     * @Method({"POST"})
+     */
+    public function setInterviewCaption(Request $request) {
+        $model = $request->request->get('model');
+
+        return $this->service->setInterviewCaption($model);
+    }
+
+    /**
      * @Route("/update")
      * @Method({"POST"})
      *

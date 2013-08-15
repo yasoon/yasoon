@@ -1,10 +1,10 @@
 define [
-         'models/base/queue'
+         'models/base/pagingQueue'
          'models/author/questions/question'
-], (Queue, QuestionModel) ->
+], (PagingQueue, QuestionModel) ->
   'use strict'
 
-  class AuthorQuestionsQuestionQueueModel extends Queue
+  class AuthorQuestionsQuestionQueueModel extends PagingQueue
     name: 'AuthorQuestionsQuestionQueue'
     elementName: 'AuthorQuestionsQuestion'
 
@@ -12,10 +12,9 @@ define [
       super
       @authorId = params.authorId
 
-    load: (callback) ->
-      @url    = -> 'api/author/get_questions/'+@authorId
-      @method = 'GET'
-      super(callback)
+    loadUrl: -> 'api/author/get_questions'
+    stackUrl: -> 'api/author/get_questions_stack/'+@authorId
+
 
     updatePlaces: (callback) ->
       @url = -> 'api/author/update_questions_places/'+@authorId

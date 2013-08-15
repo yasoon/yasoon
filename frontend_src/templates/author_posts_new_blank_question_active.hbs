@@ -1,7 +1,9 @@
 <div class='element' id='{{model.id}}'>
+
     <article>
         <h3 ><input type='text' value='{{model.caption}}' data-field='caption' placeholder='Заголовок'/></h3>
     </article>
+
     <div class="di">
         <div class="post-edit-tools">
             <div class="item"><b>b</b></div>
@@ -12,6 +14,7 @@
         </div>
         <textarea class="big" placeholder="Ваш ответ" data-field='answer' >{{model.answer}}</textarea>
     </div>
+
     <div class="di t-center">
         <a  class="btn" data-send-button>Опубликовать!</a>
         {{#if model.id}}
@@ -19,4 +22,5 @@
         {{/if}}
         <a  class="mLeft10" data-to-mode="passive">Отмена</a>
     </div>
+
 </div>

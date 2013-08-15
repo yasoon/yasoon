@@ -27,39 +27,37 @@ $(function(){
         return {top: top, left: left}
     }
 
-
-    $(window).scroll(function () {
-        x = $(this).width(), st = false;
-        if(jm.length){
-            var jTop = getOffsetSum(_m);
-        } else if(jw.length){
-            var jTop = getOffsetSum(_w);
-        } if (n.length){
-            st = true;
-        }
-
-
-        var posY = jTop.top;
-
-        if ($(this).scrollTop() > posY && (navigator.userAgent.indexOf('iPhone') == -1 && navigator.userAgent.indexOf('Blackberry') == -1 && navigator.userAgent.indexOf('Android') == -1) ) {
-            if(st == true){
-                $('.left-side,.postinfo').addClass("fixed st");
-            } else {
-                $('.left-side,.postinfo').addClass("fixed");
-            }
-        } else {
-            if(st == true){
-                $('.left-side,.postinfo').removeClass("fixed st");
-            } else {
-                $('.left-side,.postinfo').removeClass("fixed");
-            }
-        }
-
-        if ($(this).scrollTop() > posY && st == true && (navigator.userAgent.indexOf('iPhone') == -1 && navigator.userAgent.indexOf('Blackberry') == -1 && navigator.userAgent.indexOf('Android') == -1) ) {
-            $('.navigate').addClass("fixed");
-        } else {
-            $('.navigate').removeClass("fixed");
-        }
-    });
-
+//    $(window).scroll(function () {
+//        x = $(this).width(), st = false;
+//        if(jm.length){
+//            var jTop = getOffsetSum(_m);
+//        } else if(jw.length){
+//            var jTop = getOffsetSum(_w);
+//        } if (n.length){
+//            st = true;
+//        }
+//
+//
+//        var posY = jTop.top;
+//
+//        if ($(this).scrollTop() > posY && (navigator.userAgent.indexOf('iPhone') == -1 && navigator.userAgent.indexOf('Blackberry') == -1 && navigator.userAgent.indexOf('Android') == -1) ) {
+//            if(st == true){
+//                $('.left-side,.postinfo').addClass("fixed st");
+//            } else {
+//                $('.left-side,.postinfo').addClass("fixed");
+//            }
+//        } else {
+//            if(st == true){
+//                $('.left-side,.postinfo').removeClass("fixed st");
+//            } else {
+//                $('.left-side,.postinfo').removeClass("fixed");
+//            }
+//        }
+//
+//        if ($(this).scrollTop() > posY && st == true && (navigator.userAgent.indexOf('iPhone') == -1 && navigator.userAgent.indexOf('Blackberry') == -1 && navigator.userAgent.indexOf('Android') == -1) ) {
+//            $('.navigate').addClass("fixed");
+//        } else {
+//            $('.navigate').removeClass("fixed");
+//        }
+//    });
 })

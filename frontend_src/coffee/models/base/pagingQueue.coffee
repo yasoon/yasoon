@@ -5,7 +5,7 @@ define [
   class PagingQueue extends Queue
 
     stack:  []
-    limit: 10
+    limit: 5
 
     firstLoad: true
     full: false

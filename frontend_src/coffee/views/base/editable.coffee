@@ -70,11 +70,6 @@ define [
     getTemplateFunction: ->
        JST[@currentTemplateName]
 
-    #
-    setRegion: (region) ->
-      @region = region
-      @regionSet = true
-      @
 
     #
     softRender: ->

@@ -4,6 +4,7 @@ define [
   'use strict'
 
   class PagingQueueView extends QueueView
+
     events:
       'click': (e) ->
         $target = $(e.target)

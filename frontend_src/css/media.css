@@ -9,17 +9,12 @@
     padding-top: 3em;
     padding-bottom: 2em;
   }
-  .m-page .navigate.fixed {
-    left: 0;
-    margin-left: 0;
-    max-width: 845px;
-    padding-left: 10px!important;
-  }
 }
 @media screen and (max-width: 700px) {
-  .left-side.fixed.st,
-  .postinfo.fixed.st {
-    top: 46px;
+  #main-layout .left-side.fixed,
+  #main-layout .postinfo.fixed {
+    top: 0px;
+    padding-top: 15px;
   }
   .postinfo .social,
   .left-side .social {

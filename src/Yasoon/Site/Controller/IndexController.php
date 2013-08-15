@@ -9,8 +9,18 @@ namespace Yasoon\Site\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\DiExtraBundle\Annotation as DI;
+use Yasoon\Site\Service\ContentService;
 
 class IndexController {
+
+
+    /**
+     * @var ContentService
+     *
+     * @DI\Inject("yasoon.service.content")
+     */
+    private $service;
 
     /**
      * @Route("/")
@@ -18,6 +28,9 @@ class IndexController {
      * @return Response
      */
     public function indexAction() {
+
+        $content = json_encode($this->service->getAllContent());
+
 
         $html = <<<HTML
 
@@ -38,7 +51,6 @@ class IndexController {
 
 <script src='js/lib/jquery-2.0.1.min.js'></script>
 <script src='js/lib/respond.min.js'></script>
-<script src='js/site/functions.js'></script>
 
 
   <script>
@@ -58,8 +70,8 @@ JST = {}
       chaplin: 'lib/chaplin-0.9.0',
       JST: 'templates_compiled/combined',
       tinyEditor: 'lib/tiny.editor',
-      categories: 'categories'
-
+      categories: 'categories',
+      sitefunctions: 'site/functions'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
@@ -100,6 +112,8 @@ JST = {}
   require(['application'], function(Application) {
     (new Application).initialize();
   });
+
+  var managedContent = JSON.parse('$content');
   </script>
 </head>
 </html>

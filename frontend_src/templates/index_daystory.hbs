@@ -1,31 +1,29 @@
-
-
-    <div class="postinfo">
-        <img src="./_temp/a1.jpg" alt="">
-        <h4 class="usr-name">{{model.authorName}}</h4>
-        <p class="u-description">{{model.authorDescription}}</p>
+<div class="postinfo">
+    <img src="./_temp/a1.jpg" alt="">
+    <h4 class="usr-name">{{model.authorName}}</h4>
+    <p class="u-description">{{model.authorDescription}}</p>
+    <div class="hr"></div>
+    <div class="pub">
+        <h4 class="p-label">зарегистрирован</h4>
+        {{model.authorDate}}
         <div class="hr"></div>
-        <div class="pub">
-            <h4 class="p-label">зарегистрирован</h4>
-            {{model.authorDate}}
-            <div class="hr"></div>
-        </div>
     </div>
+</div>
 
-    <article class="lim">
-        <div class="like-title">
-            <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
-            <h1>{{model.caption}} <span class="media-pub">{{model.data}}</span></h1>
-        </div>
-        <div class="content">
-            <p>{{model.text}}</p>
+<article class="lim">
+    <div class="like-title">
+        <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
+        <h1>{{model.caption}} <span class="media-pub">{{model.data}}</span></h1>
+    </div>
+    <div class="content">
+        <p>{{model.text}}</p>
 
-        </div>
-        <div class="q-box">
-            <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
-            <span class="q-post"><a href="#author/{{model.authorId}}/questions"><i></i></a> Вопросов автору: {{model.questions}}</span>
-        </div>
-        <article class="bottom-toolbar t-center">
-            <a href="#explore" class="btn">Больше историй</a>
-        </article>
+    </div>
+    <div class="q-box">
+        <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
+        <span class="q-post"><a href="#author/{{model.authorId}}/questions"><i></i></a> Вопросов автору: {{model.questions}}</span>
+    </div>
+    <article class="bottom-toolbar t-center">
+        <a href="#explore" class="btn">Больше историй</a>
     </article>
+</article>

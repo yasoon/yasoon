@@ -4,19 +4,27 @@ define [
 ], (Chaplin, Model) ->
   'use strict'
 
+  # @TODO ОБЪЕДИНИТЬ С AUTHOR/INFO???
   class RegisterRegisterModel extends Model
     name: 'RegisterRegister'
 
+    load: (callback) ->
+      @method = 'GET'
+      @url = -> 'api/author/get_private_info'
+      @requestData = {}
+      @request(callback)
 
+
+    #
     add: (callback) ->
       if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
         $('html,body').animate({ scrollTop: 150 }, 'slow');
         return
 
       @method = 'POST'
-      @url    = -> 'api/register'
+      @url    = -> 'api/author/register'
       @requestData =
-        model:
+        author:
           name: @data.name
           lastName: @data.lastName
           email: @data.email
@@ -26,19 +34,41 @@ define [
           interests: @data.interests
           dreams: @data.dreams
 
-      updateCallback = =>
-        @publishEvent 'modelUpdated', @
-        callback?()
+      addCallback = (data) =>
+        if data.error?
+          @publishEvent 'publicError', 'Пользователь с этим email уже зарегистрирован'
+        else
+          authorId = data.id
+          @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
 
-      @publishEvent 'goLogin'
-      console.log @data
-      return
+      @request(addCallback, true)
 
-      @request(updateCallback)
+    #
+    update: (callback) ->
+      if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
+        $('html,body').animate({ scrollTop: 150 }, 'slow');
+        return
 
+      @method = 'POST'
+      @url    = -> 'api/author/editinfo'
+      @requestData =
+        author:
+          name: @data.name
+          lastName: @data.lastName
+          email: @data.email
+          password: @data.password
+          shortHistory: @data.shortHistory
+          job: @data.job
+          interests: @data.interests
+          dreams: @data.dreams
 
+      updateCallback = (data) =>
+        authorId = data.id
+        @publishEvent 'redirect', "author/#{authorId}/posts"
 
+      @request(addCallback, true)
 
+    #
     validateRegFields : (fieldName) ->
       registerForm = $(".register-form")
       statusValidate = false
@@ -51,6 +81,7 @@ define [
 
       return statusValidate
 
+    #
     validateEmail : (email) =>
       registerForm = $(".register-form")
       statusValidate = false

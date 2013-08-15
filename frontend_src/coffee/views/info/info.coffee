@@ -7,6 +7,6 @@ define [
   class InfoInfoView extends EditableView
     className: 'info'
 
-    templateName: 'info'
+    templateName: 'info_info'
 
     modes: ['edit']

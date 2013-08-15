@@ -124,6 +124,7 @@ body,
   width: 100%;
   top: 0;
   left: 0;
+  display: none;
 }
 #bg-main .bg-panoram > img {
   position: absolute;
@@ -145,7 +146,7 @@ body,
   margin: 0 auto;
   display: block;
   /*max-width: 100%;
-max-height: 50%;*/
+	max-height: 50%;*/
 
 }
 #bg-main nav,
@@ -154,8 +155,8 @@ footer nav {
   position: absolute;
   top: 20px;
   left: 50%;
-  margin-left: -7em;
-  width: 15em;
+  margin-left: -23%;
+  width: 50%;
   text-align: center;
 }
 .close-question {
@@ -239,7 +240,6 @@ footer nav {
   text-align: center;
 }
 .bg-panoram {
-  background-color: #F75E5E;
   background-origin: border-box;
   background-size: cover;
   background-position: center center;
@@ -279,10 +279,13 @@ header.log-in .inside {
 header.log-in {
   background: #F5F5F5;
   border-bottom: 1px solid #ddd;
-}
-header.log-in {
   padding: 12px 0;
   line-height: 28px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
 }
 header #bg-main {
   position: relative;
@@ -293,6 +296,7 @@ header #bg-main {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   max-height: 580px;
+  background-color: #F75E5E;
 }
 section,
 .inside {
@@ -332,6 +336,11 @@ section,
 #page-layout .navigate.fixed {
   max-width: 830px;
 }
+#page-layout {
+  padding-top: 57px;
+  padding-bottom: 43px;
+  min-height: 100%;
+}
 .navigate.fixed {
   width: 100%;
   box-shadow: 0 6px 5px -4px rgba(0, 0, 0, 0.1);
@@ -341,20 +350,23 @@ section,
   height: 45px;
   line-height: 45px;
   /*-webkit-transition: margin 0.5s ease;
--moz-transition: margin 0.5s ease;
-transition: margin 0.5s ease;*/
+	-moz-transition: margin 0.5s ease;
+	transition: margin 0.5s ease;*/
 
   border: solid #e2e2e2;
   border-width: 0 0 1px 1px;
   padding-left: 20px;
   background: #fff;
 }
-.navigate.fixed,
 .left-side.fixed,
 .postinfo.fixed {
   position: fixed;
   top: 0;
+  padding-top: 15px;
   z-index: 10;
+  -webkit-transition: padding-top 0.5s ease;
+  -moz-transition: padding-top 0.5s ease;
+  transition: padding-top 0.5s ease;
 }
 #main-layout .navigate,
 .m-page .navigate {
@@ -514,6 +526,8 @@ transition: margin 0.5s ease;*/
   width: 195px;
   float: left;
   background: #fff;
+  padding-top: 15px;
+  margin-top: -15px;
 }
 .social-links a {
   display: block;
@@ -533,6 +547,10 @@ transition: margin 0.5s ease;*/
 }
 article .hr {
   margin-left: -20px;
+}
+#page-layout .postinfo.fixed,
+#page-layout .left-side.fixed {
+  top: 57px;
 }
 #page-layout .postinfo {
   padding-right: 0;
@@ -718,5 +736,11 @@ footer {
   text-transform: uppercase;
   color: #777;
   width: 100%;
-  bottom: 0;
+  height: 43px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#page-layout + footer {
+  margin-top: -43px;
 }

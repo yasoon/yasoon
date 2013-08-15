@@ -38,8 +38,14 @@ define [
     getTemplateFunction: ->
       templateFunc = JST[@templateName]
 
+    render: ->
+      super
+      @manageAuthAreas()
+      @manageEditableContent()
+
     #
     softRender: ->
+      console.log 'softRender'
       if @rendered
         @$el.html JST[@templateName](@getTemplateData())
       else
@@ -47,11 +53,17 @@ define [
         @rendered = true
 
       @manageAuthAreas()
+      @manageEditableContent()
 
     #
     setRegion: (region) ->
       @region = region
       @
+
+    manageEditableContent: ->
+      for el in @$el.find("[data-managed-content]")
+        id = $(el).attr('data-managed-content')
+        $(el).html managedContent[id].text
 
     #
     manageAuthAreas: ->

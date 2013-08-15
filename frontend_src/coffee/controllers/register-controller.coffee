@@ -1,16 +1,22 @@
 define [
         'controllers/base/controller'
         'views/register/page'
+        'views/info/page'
 ], (
   Controller,
-  RegisterPageView
+  RegisterPageView,
+  InfoPageView
 ) ->
   'use strict'
 
   class RegisterController extends Controller
 
-    #Work with questions in blank
+    #
     indexAction: ->
       @view = new RegisterPageView()
+
+    #
+    editInfoAction: ->
+      @view = new InfoPageView()
 
 

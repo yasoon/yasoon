@@ -1,10 +1,12 @@
 define [
   'views/base/view'
   'JST'
-], (View, JST) ->
+'sitefunctions'
+], (View, JST, SiteFunctions) ->
   'use strict'
 
   class IndexHeaderView extends View
+
     autoRender: true
     className: ''
     region: 'header'

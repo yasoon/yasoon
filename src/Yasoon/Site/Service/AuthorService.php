@@ -107,6 +107,7 @@ class AuthorService extends AbstractApiService {
                 ['place' => 'ASC']
             );
 
+
         foreach ($posts as $post) {
             $result[] = [
                 'id'      => $post->getId(),
@@ -118,13 +119,17 @@ class AuthorService extends AbstractApiService {
             ];
         }
 
+
+
         $interviewQuestions= $this->em->createQueryBuilder()
             ->select('question')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
             ->where('question.isInBlank = 1')
             ->andWhere('question.answer IS NOT NULL')
+            ->andWhere("question.authorId = $authorId")
             ->orderBy('question.date', 'desc')
             ->getQuery()->getResult();
+
 
         if (isset($interviewQuestions[0])) {
             array_unshift($result, [
@@ -137,24 +142,46 @@ class AuthorService extends AbstractApiService {
             ]);
         }
 
+
         return $result;
     }
 
-    /**
-     * @param $authorId
-     * @return array
-     */
-    public function getQuestions($authorId) {
+    public function getQuestionsStack($authorId, $offset) {
+        $limit = 50;
 
         $result = [];
 
+        $qb = $this->em->createQueryBuilder();
+        $questions = $qb->select('question.id')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+            ->andWhere("question.authorId = $authorId")
+            ->andWhere('question.isInBlank = false')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()->getResult();
+
+        foreach ($questions as $question) {
+            $result[] = $question['id'];
+        }
+
+        return $result;
+
+    }
+
+    /**
+     * @param array $map
+     * @return array
+     */
+    public function getQuestions(array $map) {
+
+        $result = [];
+
+        $qb = $this->em->createQueryBuilder();
         /** @var QuestionEntity[] $questions  */
-        $questions = $this->em->createQueryBuilder()
+        $questions = $qb
             ->select('question')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
-            ->where("question.authorId = $authorId")
-            ->andWhere('question.isInBlank = 0')
-            ->orderBy('question.place', 'ASC')
+            ->andWhere($qb->expr()->in('question.id', $map))
             ->getQuery()->getResult();
 
         foreach ($questions as $question) {

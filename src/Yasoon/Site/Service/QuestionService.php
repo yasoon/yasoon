@@ -54,6 +54,26 @@ class QuestionService extends AbstractApiService {
     }
 
     /**
+     * @param $model
+     * @return array
+     */
+    public function setInterviewCaption($model)
+    {
+        /** @var AuthorEntity  $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($model['authorId']);
+
+        $entity->setInterviewCaption($model['interviewCaption']);
+
+        $this->em->merge($entity);
+        $this->em->flush();
+
+        return [
+          'authorId' => $entity->getId(),
+          'interviewCaption' => $entity->getInterviewCaption()
+        ];
+    }
+
+    /**
      * @param array $model
      * @return array
      */

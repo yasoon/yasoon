@@ -64,7 +64,8 @@ class FriendsService extends AbstractApiService {
      */
     public function getTimelineStack($offset = 0) {
 
-        $limit = 10;
+        $limit = 200;
+        $returnLimit = 50;
 
         $posts = $this->em->createQueryBuilder()
             ->select("'p' as type, post.id, post.date")
@@ -73,7 +74,6 @@ class FriendsService extends AbstractApiService {
             ->join('friends.posts', 'post')
             ->orderBy('post.date', 'DESC')
             ->andWhere("author.id = $this->clientId")
-            ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
 
@@ -86,7 +86,6 @@ class FriendsService extends AbstractApiService {
             ->andWhere('question.answer IS NOT NULL')
             ->andWhere("author.id = $this->clientId")
             ->orderBy('question.date', 'DESC')
-            ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
 
@@ -98,7 +97,6 @@ class FriendsService extends AbstractApiService {
             ->where('question.isInBlank = 1')
             ->andWhere("author.id = $this->clientId")
             ->orderBy('question.date', 'DESC')
-            ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()->getResult();
 
@@ -116,14 +114,11 @@ class FriendsService extends AbstractApiService {
         });
 
         $result = [];
-        foreach ($timeline as $line) {
-            $result[] = $line['type'].$line['id'];
+        for ($i = $offset; $i < $offset + $returnLimit; $i++) {
+            if (isset($timeline[$i])) {
+                $result[] = $timeline[$i]['type'].$timeline[$i]['id'];
+            }
         }
-
-        $this->em->createQueryBuilder()
-            ->select("count('p')");
-
-
         return $result;
     }
 
@@ -131,6 +126,7 @@ class FriendsService extends AbstractApiService {
      * @return array
      */
     public function getTimeline($map=array()) {
+
         $result = [];
 
         $postsMap = [];
@@ -147,36 +143,44 @@ class FriendsService extends AbstractApiService {
             }
         }
 
+        $posts = [];
+        $questions = [];
+        $blanks = [];
 
-        $qb  = $this->em->createQueryBuilder();
-        $posts = $qb->select("'p' as type, post.id, post.caption, post.preview as text, post.date, author.id as authorId, author.name as authorName, author.img as authorImg")
-            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
-            ->join('author.friends', 'friends')
-            ->join('friends.posts', 'post')
-            ->orderBy('post.date', 'DESC')
-            ->where($qb->expr()->in('post.id', $postsMap))
-            ->getQuery()->getResult();
 
-        $qb  = $this->em->createQueryBuilder();
-         $questions = $qb->select("'q' as type, question.id, question.caption, question.answer as text, question.date, author.id as authorId, author.name as authorName, author.img as authorImg")
-            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
-            ->join('author.friends', 'friends')
-            ->join('friends.questions', 'question')
-            ->where($qb->expr()->in('question.id', $questionsMap))
-            ->orderBy('question.date', 'DESC')
-            ->getQuery()->getResult();
+        if (!empty($postsMap)) {
+            $qb  = $this->em->createQueryBuilder();
+            $posts = $qb->select("'p' as type, post.id, post.caption, post.preview as text, post.date,
+                author.id as authorId, author.name as authorName, author.img as authorImg")
+                ->from('Yasoon\Site\Entity\PostEntity', 'post')
+                ->join('post.author', 'author')
+                ->where($qb->expr()->in('post.id', $postsMap))
+                ->getQuery()->getResult();
+        }
 
-        $qb = $this->em->createQueryBuilder();
-        $blanks = $qb->select("'b' as type, 'Интервью' as caption, author.id  as id, author.id as authorId,
-        author.name as authorName, author.img as authorImg, 'Вопросы, составленные по интервью' as text, question.date " )
-            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
-            ->join('author.friends', 'friends')
-            ->join('friends.questions', 'question')
-            ->where('question.isInBlank = true')
-            ->andWhere($qb->expr()->in('author.id', $blanksMap))
-            ->orderBy('question.date', 'DESC')
-            ->getQuery()->getResult();
+        if (!empty($questionsMap)) {
+            $qb  = $this->em->createQueryBuilder();
+            $questions = $qb->select("'q' as type, question.id, question.caption, question.answer as text, question.date,
+                author.id as authorId, author.name as authorName, author.img as authorImg")
+                ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+                ->join('question.author', 'author')
+                ->where($qb->expr()->in('question.id', $questionsMap))
+                ->getQuery()->getResult();
+        }
 
+        if (!empty($blanksMap)) {
+            $qb = $this->em->createQueryBuilder();
+            $blanks = $qb->select("'b' as type, author.id as authorId,author.id as id, author.interviewCaption as caption,
+            'Вопросы, составленные по интервью' as text, author.name as authorName, author.img as authorImg, max(questions.date) as date")
+                ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
+                ->join('author.questions', 'questions')
+                ->andWhere($qb->expr()->in('author.id', $blanksMap))
+                ->andWhere('questions.isInBlank = 1')
+                ->getQuery()->getResult();
+            foreach ($blanks as $key => $blank) {
+                $blanks[$key]['date'] = new \DateTime($blank['date']);
+            }
+        }
 
         $entries = array_merge($posts, $questions, $blanks);
         if (!$entries) {
@@ -194,10 +198,65 @@ class FriendsService extends AbstractApiService {
                 'date'       => $entry['date']->format('d/m/Y')
             ];
         }
-
         return $result;
     }
 
+    public function getAdminTimelineStack($offset = 0) {
+        $limit = 200;
+        $returnLimit = 50;
+
+        $qb  = $this->em->createQueryBuilder();
+        $posts = $qb->select("'p' as type, post.id, post.caption, post.preview as text, post.date,
+                author.id as authorId, author.name as authorName, author.img as authorImg")
+            ->from('Yasoon\Site\Entity\PostEntity', 'post')
+            ->join('post.author', 'author')
+            ->orderBy('post.date', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()->getResult();
+
+        $qb  = $this->em->createQueryBuilder();
+        $questions = $qb->select("'q' as type, question.id, question.caption, question.answer as text, question.date,
+                author.id as authorId, author.name as authorName, author.img as authorImg")
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+            ->join('question.author', 'author')
+            ->orderBy('question.date', 'DESC')
+            ->setMaxResults($limit)
+            ->andWhere('question.isInBlank = 0')
+            ->getQuery()->getResult();
+
+        $qb  = $this->em->createQueryBuilder();
+        $blanks = $qb->select("'q' as type, question.id, question.caption, question.answer as text, question.date,
+                author.id as authorId, author.name as authorName, author.img as authorImg")
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
+            ->join('question.author', 'author')
+            ->orderBy('question.date', 'DESC')
+            ->setMaxResults($limit)
+            ->andWhere('question.isInBlank = 1')
+            ->getQuery()->getResult();
+
+
+        foreach ($blanks as $key => $question) {
+            if (in_array($question['id'], $blanks)) {
+                unset($blanks[$key]);
+            }
+            $blanks[] = $question['id'];
+        }
+
+        $timeline = array_merge($posts, $questions, $blanks);
+        usort($timeline, function($a, $b) {
+            return $a['date'] > $b['date'] ? 0 : 1;
+        });
+
+        $result = [];
+        for ($i = $offset; $i < $offset + $returnLimit; $i++) {
+            if (isset($timeline[$i])) {
+                $result[] = $timeline[$i]['type'].$timeline[$i]['id'];
+            }
+        }
+
+        return $result;
+
+    }
 
 
 }

@@ -115,6 +115,13 @@ class AuthorEntity
     protected $friends;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="interview_caption", type="string", nullable=true)
+     */
+    protected $interviewCaption;
+
+    /**
      * @param $id
      * @return $this
      */
@@ -311,6 +318,25 @@ class AuthorEntity
     {
         return $this->subscribed;
     }
+
+    /**
+     * @param string $interviewCaption
+     * @return $this
+     */
+    public function setInterviewCaption($interviewCaption)
+    {
+        $this->interviewCaption = $interviewCaption;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterviewCaption()
+    {
+        return $this->interviewCaption;
+    }
+
 
 
 

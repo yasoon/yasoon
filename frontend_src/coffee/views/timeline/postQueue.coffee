@@ -14,7 +14,7 @@ define [
 
     placeholder: 'timeline_placeholder'
 
-    sortable: true
+    sortable: false
 
     createElementView: (model) ->
       if model.data.type is 'p'
