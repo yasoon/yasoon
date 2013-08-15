@@ -82,6 +82,18 @@ class AuthorController {
     }
 
     /**
+     * @Route("/get_private_info")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function getPrivateInfoAction() {
+        $result = $this->service->getPrivateInfo();
+
+        return $result;
+    }
+
+    /**
      * @Route("/get_posts/{authorId}", requirements={"authorId" = "\d+"})
      * @Method({"GET"})
      *
@@ -159,6 +171,28 @@ class AuthorController {
         $result = $this->service->getBlank($authorId);
 
         return $result;
+    }
+
+    /**
+     * @Route("/register")
+     * @Method({"POST"})
+     */
+    public function register(Request $request)
+    {
+        $author = $request->request->get('author');
+
+        return $this->service->register($author);
+    }
+
+    /**
+     * @Route("/notify")
+     * @Method({"POST"})
+     */
+    public function notify(Request $request)
+    {
+        $email = $request->request->get('email');
+
+        return $this->service->notify($email);
     }
 
 }

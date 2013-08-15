@@ -8,13 +8,22 @@ namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Entity\AuthorEntity;
+use Yasoon\Site\Entity\BlankQuestionEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
+use Yasoon\Site\Mail\Sender;
 
 /**
  * @DI\Service("yasoon.service.author")
  */
 class AuthorService extends AbstractApiService {
+
+    /**
+     * @var Sender
+     *
+     * @DI\Inject("yasoon.mail.sender")
+     */
+    public $mailer;
 
     /**
      * @param array $model
@@ -63,6 +72,7 @@ class AuthorService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.posts', 'posts')
             ->leftJoin('author.questions', 'questions', 'WITH', 'questions.answer IS NOT NULL')
+            ->where("author.id = $authorId")
             ->getQuery()->getResult();
 
 
@@ -91,6 +101,38 @@ class AuthorService extends AbstractApiService {
 
         return $result;
     }
+
+    /**
+     * @return array
+     */
+    public function getPrivateInfo()
+    {
+        $authorId = 1; //@TODO получать из сессии
+
+        $data = $this->em->createQueryBuilder()
+            ->select('author.id, author.name, author.description, author.publicationDate,
+            author.job, author.interest, author.dream, author.email, author.password')
+            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
+            ->where("author.id = $authorId")
+            ->getQuery()->getSingleResult();
+
+
+        $result = [
+            'name'    => $data['name'],
+            'email'   => $data['email'],
+            'password' => $data['password'],
+            'description' => $data['description'],
+            'publicationDate' => $data['publicationDate']->format('d/m/Y'),
+            'job' => $data['job'],
+            'interest' => $data['interest'],
+            'dream' => $data['dream']
+        ];
+
+        return $result;
+    }
+
+
+
 
     /**
      * @param $authorId
@@ -266,5 +308,108 @@ class AuthorService extends AbstractApiService {
 
         return $map;
     }
+
+    /**
+     * @param array $author
+     * @return array
+     * @throws \Exception
+     */
+    public function register(array $author)
+    {
+        try {
+            $registredAuthors = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findByEmail($author['email']);
+
+            if (count($registredAuthors)) {
+                return ['error' => 'EMAIL_REGISTRED'];
+            }
+
+
+            #$this->em->beginTransaction();
+
+            $entity = (new AuthorEntity())
+                ->setName($author['name'].$author['lastName'])
+                ->setEmail($author['email'])
+                ->setPassword(md5($author['password']));
+
+            isset($author['description']) && $entity->setDescription($author['description']);
+            isset($author['job']) && $entity->setJob($author['job']);
+            isset($author['interest']) && $entity->setInterest($author['interest']);
+            isset($author['dream']) && $entity->setDream($author['dream']);
+
+
+            $this->em->persist($entity);
+            $this->em->flush();
+
+            /** @var BlankQuestionEntity[] $blankQuestions */
+            $blankQuestions =  $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->findAll();
+
+            $questions = [];
+            $date = (new \DateTime())->format('Y-m-d');
+            foreach ($blankQuestions as $question) {
+                $questions[] = sprintf("(%d, '%s', '%s', %d, %d)",
+                    $entity->getId(), $question->getText(), $date, true, $question->getPlace());
+            }
+            $sql = 'INSERT INTO question (author_id, caption, date, is_in_blank, place) VALUES '.implode(',', $questions);
+            $this->em->getConnection()->executeQuery($sql);
+
+
+            $message = <<<MSG
+Здравствуйте, {$author['name']}!
+Вы зарегистрировались на сайте "Ясун".
+Ваш логин:  {$author['email']}
+Ваш пароль: {$author['password']}
+MSG;
+
+            $this->mailer->send($entity->getEmail(), $message);
+
+
+        } catch (\Exception $e) {
+            throw $e;
+            #$this->em->rollback();
+        }
+
+        #$this->em->commit();
+
+        return [
+            'id' => $entity->getId()
+        ];
+    }
+
+    /**
+     * @param $email
+     * @return array
+     */
+    public function notify($email)
+    {
+        return [];
+
+        $authors = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findByEmail($email)[0];
+
+        $newPass = '';
+        for ($i = 0; $i < 10; $i) {
+            $newPass .= mt_rand(0, mt_rand(5,9));
+        }
+
+        $author->setPassword(md5($newPass));
+
+        $this->em->merge($author);
+        $this->em->flush();
+
+        $message = <<<MSG
+Здравствуйте, {$author['name']}!
+Вы просили прислать вам пароль от сайта "Ясун".
+Пароли у нас хранятся настолько надёжно, что мы сами их не знаем.
+Так что мы придумали вам новый : $newPass
+Вы сможете поменять его на привычный в настройках аккаунта
+MSG;
+
+        $this->mailer->send($author->getEmail(), $message);
+
+        return [
+            'id' => $author->getId()
+        ];
+
+    }
+
 
 }

@@ -122,6 +122,13 @@ class AuthorEntity
     protected $interviewCaption;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", nullable=true)
+     */
+    protected $password;
+
+    /**
      * @param $id
      * @return $this
      */
@@ -337,8 +344,22 @@ class AuthorEntity
         return $this->interviewCaption;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
 
-
-
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
 }
