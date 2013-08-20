@@ -13,3 +13,6 @@
   *width: 475px;
   padding-bottom: 50px;
 }
+footer {
+  position: absolute !important;
+}

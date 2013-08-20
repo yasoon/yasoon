@@ -34,14 +34,36 @@ define [
           interests: @data.interests
           dreams: @data.dreams
 
+      callback()
+
       addCallback = (data) =>
         if data.error?
           @publishEvent 'publicError', 'Пользователь с этим email уже зарегистрирован'
         else
           authorId = data.id
-          @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
+#          @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
+          callback()
 
       @request(addCallback, true)
+
+      #
+    addStep2: (callback) ->
+        @method = 'POST'
+        @url = ->
+          'api/author/register_step2'
+        @requestData =
+          author:
+            shortHistory: @data.shortHistory
+            job: @data.job
+            interests: @data.interests
+            dreams: @data.dreams
+
+        addCallback = (data) =>
+          if !data.error?
+            authorId = data.id
+            @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
+
+        @request(addCallback, true)
 
     #
     update: (callback) ->
@@ -66,11 +88,11 @@ define [
         authorId = data.id
         @publishEvent 'redirect', "author/#{authorId}/posts"
 
-      @request(addCallback, true)
+      @request(updateCallback, true)
 
     #
     validateRegFields : (fieldName) ->
-      registerForm = $(".register-form")
+      registerForm = $(".register-form, .info-form")
       statusValidate = false
       if not @validateNotNull(fieldName)
         registerForm.find(".data_" + fieldName).show()
@@ -85,7 +107,7 @@ define [
 
     #
     validateEmail : (email) =>
-      registerForm = $(".register-form")
+      registerForm = $(".register-form, .info-form")
       statusValidate = false
       if not super(email)
         registerForm.find(".data_email").show()

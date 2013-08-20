@@ -57,7 +57,8 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
     View.prototype.render = function() {
       View.__super__.render.apply(this, arguments);
       this.manageAuthAreas();
-      return this.manageEditableContent();
+      this.manageEditableContent();
+      return $().pressFooter();
     };
 
     View.prototype.softRender = function() {

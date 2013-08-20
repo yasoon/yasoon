@@ -1,4 +1,4 @@
-define [
+define [getArchiveInvestmentAccountsByPamm
          'views/base/view'
          'JST'
 ], (View, JST) ->
