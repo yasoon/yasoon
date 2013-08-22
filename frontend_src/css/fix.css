@@ -14,5 +14,6 @@
   padding-bottom: 50px;
 }
 footer {
-  position: absolute !important;
+  position: fixed !important;
+  bottom: 0;
 }
