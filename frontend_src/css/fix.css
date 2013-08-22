@@ -17,3 +17,7 @@ footer {
   position: fixed !important;
   bottom: 0;
 }
+
+#bg-main .bg.bg-panoram {
+    display: block !important;
+}
