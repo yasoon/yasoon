@@ -1,5 +1,4 @@
-define [getArchiveInvestmentAccountsByPamm
-         'views/base/view'
+define ['views/base/view'
          'JST'
 ], (View, JST) ->
   'use strict'

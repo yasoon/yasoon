@@ -26,6 +26,13 @@ class AuthorService extends AbstractApiService {
     public $mailer;
 
     /**
+     * @var ContentService
+     *
+     * @DI\Inject("yasoon.service.content")
+     */
+    public $contentService;
+
+    /**
      * @param array $model
      * @return int
      */
@@ -354,12 +361,9 @@ class AuthorService extends AbstractApiService {
             $this->em->getConnection()->executeQuery($sql);
 
 
-            $message = <<<MSG
-Здравствуйте, {$author['name']}!
-Вы зарегистрировались на сайте "Ясун".
-Ваш логин:  {$author['email']}
-Ваш пароль: {$author['password']}
-MSG;
+            $message = $this->contentService->getAllContent()[6]['text'];
+
+            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
 
             $this->mailer->send($entity->getEmail(), $message);
 
@@ -396,13 +400,9 @@ MSG;
 
         $name = $author->getName();
 
-        $message = <<<MSG
-Здравствуйте, {$name}!
-Вы просили прислать вам пароль от сайта "Ясун".
-Пароли у нас хранятся настолько надёжно, что мы сами их не знаем.
-Так что мы придумали вам новый : $newPass
-Вы сможете поменять его на привычный в настройках аккаунта.
-MSG;
+        $message = $this->contentService->getAllContent()[7]['text'];
+
+        $message = str_replace()
 
         $this->mailer->send($author->getEmail(), $message);
 

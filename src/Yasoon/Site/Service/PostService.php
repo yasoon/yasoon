@@ -170,8 +170,10 @@ class PostService extends AbstractApiService {
         foreach ($posts as $post) {
             $result[] = [
                 'authorName' => $post->getAuthor()->getName(),
+                'authorId'   => $post->getAuthor()->getId(),
                 'caption'    => $post->getCaption(),
-                'preview'    => $post->getPreview()
+                'preview'    => $post->getPreview(),
+                'id'         => $post->getId()
             ];
         }
 
