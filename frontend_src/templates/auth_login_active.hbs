@@ -1,20 +1,22 @@
-<div class="p-box login auth_login">
-    <h3>Войти используя аккаунт</h3>
+<div class='barrier'>
+    <div class="p-box login auth_login">
+        <h3>Войти используя аккаунт</h3>
 
-    <div class="connect">
-        <ul>
-            <li><a href="" class="login-btn twt">Войти из твиттера</a></li>
-            <li><a href="" class="login-btn fb">Войти из фейсбука</a></li>
-            <li class="last">Нет аккаунта? <a href="#register"><b>Зарегистрироваться</b></a></li>
-        </ul>
-    </div>
-    <div class="connect login-form">
-        <ul>
-            <li><input type="text" placeholder="Введите свой email" data-field="email"></li>
-            <div class="hhdi hide-warning data_email login-warning">Поле обязательно для заполнения</div>
-            <li ><input type="password" placeholder="Пароль" data-field="password"></li>
-            <div class="hhdi hide-warning data_password login-warning">Поле обязательно для заполнения</div>
-            <li><a href="">Забыли пароль?</a> <a class="btn" data-send-button>Войти</a></li>
-        </ul>
+        <div class="connect">
+            <ul>
+                <li><a href="" class="login-btn twt">Войти из твиттера</a></li>
+                <li><a href="" class="login-btn fb">Войти из фейсбука</a></li>
+                <li class="last">Нет аккаунта? <a href="#register"><b>Зарегистрироваться</b></a></li>
+            </ul>
+        </div>
+        <div class="connect login-form">
+            <ul>
+                <li><input type="text" placeholder="Введите свой email" data-field="email" value='{{model.email}}'></li>
+                <div class="hhdi hide-warning data_email login-warning">Поле обязательно для заполнения</div>
+                <li ><input type="password" placeholder="Пароль" data-field="password"></li>
+                <div class="hhdi hide-warning data_password login-warning">Поле обязательно для заполнения</div>
+                <li><a data-to-mode="notify">Забыли пароль?</a> <a class="btn" data-send-button>Войти</a></li>
+            </ul>
+        </div>
     </div>
 </div>

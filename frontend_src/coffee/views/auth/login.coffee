@@ -10,11 +10,20 @@ define [
 
   class LoginView extends EditableView
     autoRender: true
-    className: 'barrier'
+    className: 'login'
     container: 'body'
 
-    modes: ['active']
+    modes: ['active', 'notify', 'sent']
 
     templateName: 'auth_login'
 
+    events:
+      'click': (e) ->
+        $target = $(e.target)
 
+        if $target.hasClass('barrier') or $target.attr('id') is 'closeButton'
+          @publishEvent 'hideLogin'
+
+        if $target.attr('id') is 'notify'
+          @model.notify =>
+            @setMode('sent')

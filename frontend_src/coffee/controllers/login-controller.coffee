@@ -12,11 +12,21 @@ define [
   'use strict'
 
   class LoginController extends Controller
-    initialize: ->
+    initialize: =>
       super
       Chaplin.mediator.subscribe 'goLogin', @goLogin
+      Chaplin.mediator.subscribe 'hideLogin', @hideLogin
+
+      @loginActive = false
 
     goLogin: =>
-      loginModel = new LoginModel()
-      loginView = new LoginView(model:loginModel)
-      loginView.setMode('active')
+      if not @loginActive
+        @loginActive = 1
+
+        loginModel = new LoginModel()
+        @loginView = new LoginView(model:loginModel)
+        @loginView.setMode('active')
+
+    hideLogin: =>
+      @loginActive = false
+      @loginView.dispose()

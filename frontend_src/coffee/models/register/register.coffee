@@ -40,6 +40,7 @@ define [
         else
           authorId = data.id
           @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
+          @publishEvent 'publicError', 'ghbdt'
 
       @request(addCallback, true)
 

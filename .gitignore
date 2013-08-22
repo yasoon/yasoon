@@ -4,6 +4,7 @@ vendor/
 #node modules
 node_modules/
 
+#all compiled js files
 frontend_src/js/
 
 #IDE files

@@ -381,12 +381,10 @@ MSG;
      */
     public function notify($email)
     {
-        return [];
-
-        $authors = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findByEmail($email)[0];
+        $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
 
         $newPass = '';
-        for ($i = 0; $i < 10; $i) {
+        for ($i = 0; $i < 10; $i++) {
             $newPass .= mt_rand(0, mt_rand(5,9));
         }
 
@@ -395,12 +393,14 @@ MSG;
         $this->em->merge($author);
         $this->em->flush();
 
+        $name = $author->getName();
+
         $message = <<<MSG
-Здравствуйте, {$author['name']}!
+Здравствуйте, {$name}!
 Вы просили прислать вам пароль от сайта "Ясун".
 Пароли у нас хранятся настолько надёжно, что мы сами их не знаем.
 Так что мы придумали вам новый : $newPass
-Вы сможете поменять его на привычный в настройках аккаунта
+Вы сможете поменять его на привычный в настройках аккаунта.
 MSG;
 
         $this->mailer->send($author->getEmail(), $message);
@@ -410,6 +410,4 @@ MSG;
         ];
 
     }
-
-
 }

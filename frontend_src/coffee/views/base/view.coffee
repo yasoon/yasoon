@@ -1,6 +1,6 @@
 define [
-         'chaplin',
-         'handlebars'
+  'chaplin',
+  'handlebars'
 ], (Chaplin, Handlebars) ->
   'use strict'
 
@@ -13,6 +13,7 @@ define [
         $target = $(e.target)
 
         if $target.attr('data-link')? then @publishEvent 'redirect', $target.attr('data-link')
+        if $target.attr('data-to-login')? then @publishEvent 'goLogin'
 
     #
     initialize: ->
@@ -63,8 +64,7 @@ define [
     manageEditableContent: ->
       for el in @$el.find("[data-managed-content]")
         id = $(el).attr('data-managed-content')
-#        console.log managedContent
-#        $(el).html managedContent[id].text
+        $(el).html managedContent[id].text
 
     #
     manageAuthAreas: ->
