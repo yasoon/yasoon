@@ -62,5 +62,16 @@ class PeopleController {
         return $result;
     }
 
+    /**
+     * @Route("/get_about_info")
+     * @Method({"GET"})
+     */
+    public function getAboutInfoAction()
+    {
+        $result = $this->service->getAboutInfo();
+
+        return $result;
+    }
+
 
 }

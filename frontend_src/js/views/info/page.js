@@ -35,7 +35,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
         infoView = new InfoView({
           model: infoModel
         });
-        return infoView.setRegion('info').setMode('edit');
+        infoView.setRegion('info').setMode('edit');
+        return console.log(infoModel);
       });
     };
 

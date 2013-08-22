@@ -15,7 +15,21 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
 
     AuthLoginModel.prototype.name = 'AuthLogin';
 
-    AuthLoginModel.prototype.notify = function(callback) {
+    AuthLoginModel.prototype.notify = function(callback) {};
+
+    AuthLoginModel.prototype.add = function(callback) {
+      if (!this.validateEmail(this.data.email)) {
+        $("input[data-field='email']").addClass('error');
+        return;
+      } else {
+        $("input[data-field='email']").removeClass('error');
+      }
+      if (!this.validateNotNull('password')) {
+        $("input[data-field='password']").addClass('error');
+        return;
+      } else {
+        $("input[data-field='password']").removeClass('error');
+      }
       this.method = 'POST';
       this.url = function() {
         return 'api/author/notify';
@@ -24,10 +38,6 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         email: this.data.email
       };
       return this.request(callback);
-    };
-
-    AuthLoginModel.prototype.add = function(callback) {
-      return typeof callback === "function" ? callback() : void 0;
     };
 
     return AuthLoginModel;

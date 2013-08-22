@@ -118,6 +118,7 @@ class AuthorService extends AbstractApiService {
 
 
         $result = [
+            'id'    => $data['id'],
             'name'    => $data['name'],
             'email'   => $data['email'],
             'password' => $data['password'],

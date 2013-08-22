@@ -18,6 +18,9 @@ define [
     templateName: 'auth_login'
 
     events:
+      'click .go_register': ->
+        @dispose()
+
       'click': (e) ->
         $target = $(e.target)
 

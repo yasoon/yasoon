@@ -4,12 +4,20 @@ var __hasProp = {}.hasOwnProperty,
 
 define(['views/base/editable'], function(EditableView) {
   'use strict';
-  var RegisterRegisterView;
+  var RegisterRegisterView,
+    _this = this;
   return RegisterRegisterView = (function(_super) {
 
     __extends(RegisterRegisterView, _super);
 
     function RegisterRegisterView() {
+      var _this = this;
+      this.continueRegistration = function() {
+        return RegisterRegisterView.prototype.continueRegistration.apply(_this, arguments);
+      };
+      this.add = function() {
+        return RegisterRegisterView.prototype.add.apply(_this, arguments);
+      };
       return RegisterRegisterView.__super__.constructor.apply(this, arguments);
     }
 
@@ -17,10 +25,20 @@ define(['views/base/editable'], function(EditableView) {
 
     RegisterRegisterView.prototype.templateName = 'register';
 
-    RegisterRegisterView.prototype.modes = ['active'];
+    RegisterRegisterView.prototype.modes = ['active', 'active_step2'];
+
+    RegisterRegisterView.prototype.events = {
+      'click .reg_srep2': function() {
+        return this.model.addStep2();
+      }
+    };
 
     RegisterRegisterView.prototype.add = function() {
-      return this.model.add();
+      return this.model.add(this.continueRegistration);
+    };
+
+    RegisterRegisterView.prototype.continueRegistration = function() {
+      return this.setMode('active_step2');
     };
 
     return RegisterRegisterView;

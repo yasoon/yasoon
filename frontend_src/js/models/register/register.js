@@ -54,14 +54,39 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           dreams: this.data.dreams
         }
       };
+      callback();
       addCallback = function(data) {
         var authorId;
         if (data.error != null) {
           return _this.publishEvent('publicError', 'Пользователь с этим email уже зарегистрирован');
         } else {
           authorId = data.id;
-          _this.publishEvent('redirect', "author/" + authorId + "/posts/new/blank");
-          return _this.publishEvent('publicError', 'ghbdt');
+          return callback();
+        }
+      };
+      return this.request(addCallback, true);
+    };
+
+    RegisterRegisterModel.prototype.addStep2 = function(callback) {
+      var addCallback,
+        _this = this;
+      this.method = 'POST';
+      this.url = function() {
+        return 'api/author/register_step2';
+      };
+      this.requestData = {
+        author: {
+          shortHistory: this.data.shortHistory,
+          job: this.data.job,
+          interests: this.data.interests,
+          dreams: this.data.dreams
+        }
+      };
+      addCallback = function(data) {
+        var authorId;
+        if (data.error == null) {
+          authorId = data.id;
+          return _this.publishEvent('redirect', "author/" + authorId + "/posts/new/blank");
         }
       };
       return this.request(addCallback, true);
@@ -97,12 +122,12 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
         authorId = data.id;
         return _this.publishEvent('redirect', "author/" + authorId + "/posts");
       };
-      return this.request(addCallback, true);
+      return this.request(updateCallback, true);
     };
 
     RegisterRegisterModel.prototype.validateRegFields = function(fieldName) {
       var registerForm, statusValidate;
-      registerForm = $(".register-form");
+      registerForm = $(".register-form, .info-form");
       statusValidate = false;
       if (!this.validateNotNull(fieldName)) {
         registerForm.find(".data_" + fieldName).show();
@@ -118,7 +143,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
 
     RegisterRegisterModel.prototype.validateEmail = function(email) {
       var registerForm, statusValidate;
-      registerForm = $(".register-form");
+      registerForm = $(".register-form, .info-form");
       statusValidate = false;
       if (!RegisterRegisterModel.__super__.validateEmail.call(this, email)) {
         registerForm.find(".data_email").show();

@@ -4,15 +4,13 @@ define [
          'views/common/footer'
          'views/author/posts/header'
 
-         'views/author/posts/post'
-         'models/author/posts/post'
+         'models/blog/about/page'
 ], (PageView,
     JST,
     FooterView,
     HeaderView,
 
-    PostView,
-    PostModel
+    AboutPageModel
 ) ->
   'use strict'
 
@@ -26,15 +24,11 @@ define [
 
     templateName: 'blog_about_page'
 
+    initialize: ->
+      @model = new AboutPageModel()
+
     render: ->
-      super
-      hv = new HeaderView()
-      fv = new FooterView()
-
-
-#      pModel = new PostModel(authorId: @authorId)
-#      pView  = new PostView(model: pModel).setRegion('post').setMode('active')
-
-    #
-#    getTemplateData: ->
-#      {authorId: @authorId}
+      @model.load =>
+        super
+        hv = new HeaderView()
+        fv = new FooterView()

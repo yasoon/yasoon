@@ -9,8 +9,14 @@ define [
 
     templateName: 'register'
 
-    modes: ['active']
+    modes: ['active', 'active_step2']
 
-    add: ->
-#      $(@$el).find('.regbtn').attr('disable','')
-      @model.add()
+    events:
+      'click .reg_srep2': ->
+        @model.addStep2()
+
+    add: =>
+      @model.add(@continueRegistration)
+
+    continueRegistration: =>
+      @setMode('active_step2')

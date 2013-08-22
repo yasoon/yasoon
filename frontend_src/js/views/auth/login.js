@@ -24,6 +24,9 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
     LoginView.prototype.templateName = 'auth_login';
 
     LoginView.prototype.events = {
+      'click .go_register': function() {
+        return this.dispose();
+      },
       'click': function(e) {
         var $target,
           _this = this;

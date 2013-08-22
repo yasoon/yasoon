@@ -127,6 +127,24 @@ class PeopleService extends AbstractApiService {
         return $result;
     }
 
+    public function getAboutInfo()
+    {
+        $sql = 'SELECT count(id) as cnt FROM author';
+
+        $authors = $this->em->getConnection()->executeQuery($sql)->fetch()['cnt'];
+
+        $sql = 'SELECT count(id) as cnt FROM post';
+
+        $posts = $this->em->getConnection()->executeQuery($sql)->fetch()['cnt'];
+
+        $result = [
+            'people' => $authors,
+            'posts'  => $posts
+        ];
+
+        return $result;
+    }
+
 
 
 }
