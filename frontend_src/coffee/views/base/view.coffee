@@ -42,6 +42,7 @@ define [
       super
       @manageAuthAreas()
       @manageEditableContent()
+      $().pressFooter()
 
     #
     softRender: ->

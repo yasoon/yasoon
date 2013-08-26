@@ -51,6 +51,7 @@ class IndexController {
 
 <script src='js/lib/jquery-2.0.1.min.js'></script>
 <script src='js/lib/respond.min.js'></script>
+<script src='js/lib/helpers.js'></script>
 
 
   <script>

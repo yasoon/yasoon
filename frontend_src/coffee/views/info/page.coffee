@@ -33,5 +33,6 @@ define [
       infoModel.load =>
         infoView = new InfoView(model:infoModel)
         infoView.setRegion('info').setMode('edit')
+        console.log infoModel
 
 

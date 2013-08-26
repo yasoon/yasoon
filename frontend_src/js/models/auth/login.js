@@ -18,9 +18,17 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     AuthLoginModel.prototype.add = function(callback) {
       var updateCallback,
         _this = this;
-      if (!this.validateEmail(this.data.email) || !this.validateNotNull('password')) {
-        this.publishEvent('publicError', 'Неправильно введен email или пароль');
+      if (!this.validateEmail(this.data.email)) {
+        $("input[data-field='email']").addClass('error');
         return;
+      } else {
+        $("input[data-field='email']").removeClass('error');
+      }
+      if (!this.validateNotNull('password')) {
+        $("input[data-field='password']").addClass('error');
+        return;
+      } else {
+        $("input[data-field='password']").removeClass('error');
       }
       this.method = 'POST';
       this.url = function() {
