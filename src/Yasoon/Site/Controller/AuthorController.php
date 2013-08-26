@@ -6,6 +6,7 @@
 
 namespace Yasoon\Site\Controller;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -195,4 +196,17 @@ class AuthorController {
         return $this->service->notify($email);
     }
 
+    /**
+     * @Route("/upload_user_image")
+     * @Method({"FILES|POST"})
+     */
+    public function uploadUserImage(Request $request)
+    {
+        /** @var UploadedFile[] $files */
+        $files = $request->files->get('files');
+        foreach ($files as $file) {
+             $fileSource = $file->move("/srv/yasoon/frontend_src/upload", $file->getClientOriginalName());
+        }
+
+    }
 }

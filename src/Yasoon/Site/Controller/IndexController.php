@@ -51,8 +51,6 @@ class IndexController {
 
 <script src='js/lib/jquery-2.0.1.min.js'></script>
 <script src='js/lib/respond.min.js'></script>
-<script src='js/lib/helpers.js'></script>
-
 
   <script>
 
@@ -65,6 +63,9 @@ JST = {}
     paths: {
       jquery: 'lib/jquery-2.0.1.min',
       jqueryui: 'lib/jquery-ui-1.10.3.custom.min',
+      'jquery.ui.widget': 'lib/jquery.ui.widget',
+      jqueryupload: 'lib/jquery.fileupload',
+      jqueryuploadiframetransport: 'lib/jquery.iframe-transport',
       underscore: 'lib/underscore-1.4.4.min',
       backbone: 'lib/backbone-1.0.0.min',
       handlebars: 'lib/handlebars-runtime-1.0.0.rc.4',

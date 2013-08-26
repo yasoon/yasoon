@@ -1,5 +1,9 @@
 define [
-         'views/base/editable'
+         'views/base/editable',
+         'jqueryui',
+         'jquery.ui.widget'
+         'jqueryupload',
+         'jqueryuploadiframetransport'
 ], (EditableView
 ) ->
   'use strict'
@@ -20,3 +24,10 @@ define [
 
     continueRegistration: =>
       @setMode('active_step2')
+      $('#fileupload').fileupload({
+            dataType: 'json',
+            done: (e, data) ->
+               $.each(data.result.files, (index, file) ->
+                   $('<p/>').text(file.name).appendTo(document.body);
+               )
+      })

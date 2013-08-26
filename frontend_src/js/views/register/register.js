@@ -3,7 +3,7 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/editable'], function(EditableView) {
+define(['views/base/editable', 'jqueryui', 'jquery.ui.widget', 'jqueryupload', 'jqueryuploadiframetransport'], function(EditableView) {
   'use strict';
   var RegisterRegisterView, _ref;
   return RegisterRegisterView = (function(_super) {
@@ -33,7 +33,15 @@ define(['views/base/editable'], function(EditableView) {
     };
 
     RegisterRegisterView.prototype.continueRegistration = function() {
-      return this.setMode('active_step2');
+      this.setMode('active_step2');
+      return $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function(e, data) {
+          return $.each(data.result.files, function(index, file) {
+            return $('<p/>').text(file.name).appendTo(document.body);
+          });
+        }
+      });
     };
 
     return RegisterRegisterView;
