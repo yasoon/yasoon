@@ -36,9 +36,12 @@ define(['views/base/editable', 'jqueryui', 'jquery.ui.widget', 'jqueryupload', '
       this.setMode('active_step2');
       return $('#fileupload').fileupload({
         dataType: 'json',
+        autoUpload: true,
         done: function(e, data) {
-          return $.each(data.result.files, function(index, file) {
-            return $('<p/>').text(file.name).appendTo(document.body);
+          return $.each(data.result, function(index, file) {
+            var fileName;
+            fileName = file.dir + file.file_name;
+            return $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>');
           });
         }
       });

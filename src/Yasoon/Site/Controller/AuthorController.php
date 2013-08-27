@@ -202,11 +202,14 @@ class AuthorController {
      */
     public function uploadUserImage(Request $request)
     {
+        $fileSource = array();
         /** @var UploadedFile[] $files */
         $files = $request->files->get('files');
-        foreach ($files as $file) {
-             $fileSource = $file->move("/srv/yasoon/frontend_src/upload", $file->getClientOriginalName());
+        foreach ($files as $key => $file) {
+             $fileInfo =  $file->move($request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload", $file->getClientOriginalName());
+             $fileSource[$key]['file_name'] = $fileInfo->getFilename();
+             $fileSource[$key]['dir']       = 'upload/';
         }
-
+        return $fileSource;
     }
 }

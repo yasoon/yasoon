@@ -26,8 +26,10 @@ define [
       @setMode('active_step2')
       $('#fileupload').fileupload({
             dataType: 'json',
+            autoUpload: true,
             done: (e, data) ->
-               $.each(data.result.files, (index, file) ->
-                   $('<p/>').text(file.name).appendTo(document.body);
-               )
+                $.each(data.result, (index, file) ->
+                      fileName = file.dir + file.file_name
+                      $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>')
+                )
       })
