@@ -27,6 +27,7 @@ define [
       $('#fileupload').fileupload({
             dataType: 'json',
             autoUpload: true,
+            number: 1,
             done: (e, data) ->
                 $.each(data.result, (index, file) ->
                       fileName = file.dir + file.file_name

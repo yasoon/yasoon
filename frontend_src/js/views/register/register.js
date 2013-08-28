@@ -37,6 +37,7 @@ define(['views/base/editable', 'jqueryui', 'jquery.ui.widget', 'jqueryupload', '
       return $('#fileupload').fileupload({
         dataType: 'json',
         autoUpload: true,
+        number: 1,
         done: function(e, data) {
           return $.each(data.result, function(index, file) {
             var fileName;
