@@ -56,7 +56,7 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
 
     View.prototype.render = function() {
       View.__super__.render.apply(this, arguments);
-      this.manageAuthAreas();
+      this.managerAuth();
       return this.manageEditableContent();
     };
 
@@ -68,7 +68,7 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
         this.render();
         this.rendered = true;
       }
-      this.manageAuthAreas();
+      this.managerAuth();
       return this.manageEditableContent();
     };
 
@@ -128,6 +128,17 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
         }
       }
       return _results;
+    };
+
+    View.prototype.managerAuth = function() {
+      return console.log(this.model);
+    };
+
+    View.prototype.permissions = {
+      'admin': ['create', 'update', 'read'],
+      'guest': ['read'],
+      'author': ['create', 'update', 'read'],
+      'user': ['read']
     };
 
     View.prototype.getTemplateData = function() {
