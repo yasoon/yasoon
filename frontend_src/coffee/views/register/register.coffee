@@ -11,12 +11,9 @@ define [
 
     modes: ['active', 'active_step2']
 
-    events:
-      'click .reg_srep2': ->
-        @model.addStep2()
-
-    add: =>
-      @model.add(@continueRegistration)
-
-    continueRegistration: =>
+    addCallback: =>
       @setMode('active_step2')
+
+    updateCallback: =>
+
+

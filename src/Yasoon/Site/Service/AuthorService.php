@@ -331,19 +331,13 @@ class AuthorService extends AbstractApiService {
                 return ['error' => 'EMAIL_REGISTRED'];
             }
 
-
             #$this->em->beginTransaction();
 
             $entity = (new AuthorEntity())
-                ->setName($author['name'].$author['lastName'])
+                ->setName($author['name'])
                 ->setEmail($author['email'])
-                ->setPassword(md5($author['password']));
-
-            isset($author['description']) && $entity->setDescription($author['description']);
-            isset($author['job']) && $entity->setJob($author['job']);
-            isset($author['interest']) && $entity->setInterest($author['interest']);
-            isset($author['dream']) && $entity->setDream($author['dream']);
-
+                ->setPassword(md5($author['password']))
+                ->setPublicationDate(new \DateTime());
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -376,7 +370,50 @@ class AuthorService extends AbstractApiService {
         #$this->em->commit();
 
         return [
-            'id' => $entity->getId()
+            'id'    => $entity->getId(),
+            'name'  => $entity->getName(),
+            'email' => $entity->getEmail()
+        ];
+    }
+
+
+    /**
+     * @param array $author
+     * @return array
+     */
+    public function editInfo(array $author)
+    {
+        /** @var AuthorEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
+            ->find($author['id']);
+
+
+        isset($author['name']) && $entity->setDescription($author['name']);
+        isset($author['email']) && $entity->setDescription($author['email']);
+        isset($author['description']) && $entity->setDescription($author['description']);
+        isset($author['job']) && $entity->setJob($author['job']);
+        isset($author['interest']) && $entity->setInterest($author['interest']);
+        isset($author['dream']) && $entity->setDream($author['dream']);
+
+        isset($author['homepage']) && $entity->setHomepage($author['homepage']);
+
+        if (isset($author['new_password'])) {
+            if (md5($author['old_password']) != $entity->getPassword()) {
+                $entity->setPassword(md5($author['new_password']));
+            }
+        }
+
+        $this->em->merge($entity);
+        $this->em->flush();
+
+        return [
+            'id'  => $entity->getId(),
+            'name' => $entity->getName(),
+            'description' => $entity->getDescription(),
+            'job' => $entity->getJob(),
+            'interest' => $entity->getInterest(),
+            'dream' => $entity->getDream(),
+            'homepage' => $entity->getHomepage(),
         ];
     }
 
@@ -401,8 +438,6 @@ class AuthorService extends AbstractApiService {
         $name = $author->getName();
 
         $message = $this->contentService->getAllContent()[7]['text'];
-
-        $message = str_replace()
 
         $this->mailer->send($author->getEmail(), $message);
 

@@ -75,6 +75,7 @@ define [
     softRender: ->
       if @rendered
         @$el.html JST[@currentTemplateName](@getTemplateData())
+        @manageEditableContent()
       else
         tnBuffer = @templateName
         @templateName = @currentTemplateName

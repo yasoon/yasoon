@@ -185,6 +185,17 @@ class AuthorController {
     }
 
     /**
+     * @Route("/editinfo")
+     * @Method({"POST"})
+     */
+    public function editInfo(Request $request)
+    {
+        $author = $request->request->get('author');
+
+        return $this->service->editinfo($author);
+    }
+
+    /**
      * @Route("/notify")
      * @Method({"POST"})
      */

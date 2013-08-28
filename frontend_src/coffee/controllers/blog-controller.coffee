@@ -5,11 +5,14 @@ define [
         'views/blog/about/page'
         'views/blog/blog/questions/page'
 
+        'views/blog/agreement/page'
 ], (
   Controller,
   BlogBlogPageView,
   BlogAboutPageView,
   BlogQuestionsPageView
+
+  AgreementPageView
 ) ->
   'use strict'
 
@@ -22,3 +25,6 @@ define [
 
     questionsAction: ->
       @aboutView = new BlogQuestionsPageView();
+
+    agreementAction: ->
+      @agreementView = new AgreementPageView();

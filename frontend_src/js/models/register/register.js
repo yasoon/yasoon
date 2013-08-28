@@ -32,7 +32,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     RegisterRegisterModel.prototype.add = function(callback) {
       var addCallback,
         _this = this;
-      if (!this.validateRegFields('name') || !this.validateRegFields('lastName') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
+      if (!this.validateRegFields('name') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
         $('html,body').animate({
           scrollTop: 150
         }, 'slow');
@@ -45,13 +45,13 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       this.requestData = {
         author: {
           name: this.data.name,
-          lastName: this.data.lastName,
           email: this.data.email,
           password: this.data.password,
           shortHistory: this.data.shortHistory,
           job: this.data.job,
           interests: this.data.interests,
-          dreams: this.data.dreams
+          dreams: this.data.dreams,
+          homepage: this.data.homepage
         }
       };
       callback();
@@ -64,7 +64,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           return callback();
         }
       };
-      return this.request(addCallback, true);
+      return this.request(addCallback);
     };
 
     RegisterRegisterModel.prototype.addStep2 = function(callback) {
@@ -95,11 +95,19 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
     RegisterRegisterModel.prototype.update = function(callback) {
       var updateCallback,
         _this = this;
-      if (!this.validateRegFields('name') || !this.validateRegFields('lastName') || !this.validateRegFields('password') || !this.validateEmail(this.data['email'])) {
+      if (!this.validateRegFields('name') || !this.validateEmail(this.data['email'])) {
         $('html,body').animate({
           scrollTop: 150
         }, 'slow');
         return;
+      }
+      if (this.data.new_password) {
+        if (!this.validateRegFields('old_password')) {
+          $('html,body').animate({
+            scrollTop: 150
+          }, 'slow');
+          return;
+        }
       }
       this.method = 'POST';
       this.url = function() {
@@ -107,14 +115,15 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       };
       this.requestData = {
         author: {
+          id: this.data.id,
           name: this.data.name,
-          lastName: this.data.lastName,
           email: this.data.email,
           password: this.data.password,
           shortHistory: this.data.shortHistory,
           job: this.data.job,
           interests: this.data.interests,
-          dreams: this.data.dreams
+          dreams: this.data.dreams,
+          homepage: this.data.homepage
         }
       };
       updateCallback = function(data) {

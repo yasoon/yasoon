@@ -7,6 +7,8 @@ define ->
     match 'blog',  'blog#blogAction'
     match 'blog/questions',  'blog#questionsAction'
 
+    match 'agreement', 'blog#agreementAction'
+
     match 'register', 'register#indexAction'
     match 'editinfo', 'register#editInfoAction'
 
@@ -38,3 +40,6 @@ define ->
     match '', 'index#indexAction'
 
     match 'timeline', 'timeline#indexAction'
+
+
+

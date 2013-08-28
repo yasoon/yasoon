@@ -8,6 +8,8 @@ define [
          'views/author/posts/postQueue'
          'models/author/posts/postQueue'
 
+         'models/blog/blog'
+
 ], (PageView,
     JST,
     FooterView,
@@ -15,6 +17,8 @@ define [
 
     PostQueueView,
     PostQueueModel
+
+    BlogModel
 ) ->
   'use strict'
 
@@ -27,6 +31,20 @@ define [
       'header': 'header'
 
     templateName: 'blog_blog_page'
+
+    initialize: ->
+      @model = new BlogModel()
+
+    events:
+      'click #follow': ->
+        @model.follow()
+        $('#follow').hide()
+        $('#unfollow').show()
+
+      'click #unfollow': ->
+        @model.unfollow()
+        $('#follow').show()
+        $('#unfollow').hide()
 
     render: ->
       super

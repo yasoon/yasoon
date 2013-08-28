@@ -88,6 +88,14 @@ class AuthorEntity
      */
     protected $img;
 
+
+    /**
+     * @var string $homepage
+     *
+     * @ORM\Column(name="homepage", type="string", nullable=true)
+     */
+    protected $homepage;
+
     /**
      * @var PostEntity[]
      *
@@ -102,6 +110,7 @@ class AuthorEntity
      * @ORM\OneToMany(targetEntity="QuestionEntity", mappedBy="author")
      */
     protected $questions;
+
 
 
     /**
@@ -361,5 +370,39 @@ class AuthorEntity
     {
         return $this->password;
     }
+
+    /**
+     * @param string $homepage
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = $homepage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * @param string $img
+     */
+    public function setImg($img)
+    {
+        $this->img = $img;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+
 
 }

@@ -10,3 +10,7 @@ define [
     templateName: 'info_info'
 
     modes: ['edit']
+
+    events:
+      'click #newpass': ->
+        @$el.find('#oldpass').show()

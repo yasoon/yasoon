@@ -104,7 +104,8 @@ define(['views/base/view', 'JST'], function(View, JST) {
     EditableView.prototype.softRender = function() {
       var tnBuffer;
       if (this.rendered) {
-        return this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
+        this.$el.html(JST[this.currentTemplateName](this.getTemplateData()));
+        return this.manageEditableContent();
       } else {
         tnBuffer = this.templateName;
         this.templateName = this.currentTemplateName;

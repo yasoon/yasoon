@@ -49,6 +49,7 @@ define [
         qqView = new QuestionQueueView(model:  qqModel)
 #        qqView.setRegion('queue').render()
 
+
     #
     getTemplateData: ->
       {authorId: @authorId}

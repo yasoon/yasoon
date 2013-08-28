@@ -38,7 +38,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
       hv = new HeaderView();
       fv = new FooterView();
       cv = new CaptionView();
-      cv.setRegion('caption').setMode('passive');
+      cv.setRegion('caption').setMode('active');
       qtv = new QuestionView({
         model: new QuestionModel({
           authorId: this.authorId

@@ -12,11 +12,11 @@ define(['views/base/editable'], function(EditableView) {
 
     function RegisterRegisterView() {
       var _this = this;
-      this.continueRegistration = function() {
-        return RegisterRegisterView.prototype.continueRegistration.apply(_this, arguments);
+      this.updateCallback = function() {
+        return RegisterRegisterView.prototype.updateCallback.apply(_this, arguments);
       };
-      this.add = function() {
-        return RegisterRegisterView.prototype.add.apply(_this, arguments);
+      this.addCallback = function() {
+        return RegisterRegisterView.prototype.addCallback.apply(_this, arguments);
       };
       return RegisterRegisterView.__super__.constructor.apply(this, arguments);
     }
@@ -27,19 +27,11 @@ define(['views/base/editable'], function(EditableView) {
 
     RegisterRegisterView.prototype.modes = ['active', 'active_step2'];
 
-    RegisterRegisterView.prototype.events = {
-      'click .reg_srep2': function() {
-        return this.model.addStep2();
-      }
-    };
-
-    RegisterRegisterView.prototype.add = function() {
-      return this.model.add(this.continueRegistration);
-    };
-
-    RegisterRegisterView.prototype.continueRegistration = function() {
+    RegisterRegisterView.prototype.addCallback = function() {
       return this.setMode('active_step2');
     };
+
+    RegisterRegisterView.prototype.updateCallback = function() {};
 
     return RegisterRegisterView;
 

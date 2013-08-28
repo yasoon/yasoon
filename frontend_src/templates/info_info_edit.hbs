@@ -8,24 +8,27 @@
         <div class="di"><input type="text" placeholder="Имя" data-field='name' value='{{model.name}}'>
             <div class="hhdi hide-warning data_name">Обязательно для заполнения</div>
         </div>
-        <div class="di"><input type="text" placeholder="Фамилия"  data-field='lastName' value='{{model.name}}'>
-            <div class="hhdi hide-warning data_lastName">Обязательно для заполнения</div>
-        </div>
+
         <div class="di"><input type="text" placeholder="Email"  data-field='email' value='{{model.email}}'>
             <div class="hhdi hide-warning data_email">Неправильный формат email</div>
-            <div class="hhdi"><label> <input type="checkbox" checked="">Подписаться на обновления</label></div>
+            <div class="hhdi"><label> <input type="checkbox">Подписаться на обновления</label></div>
         </div>
-        <div class="di"><input type="password" placeholder="Пароль" data-field="password" value='{{model.password}}'>
-            <div class="hhdi hide-warning data_password">Обязательно для заполнения</div>
+
+        <div class="di"><input type="password" id='newpass' placeholder="Новый пароль" data-field="new_password">
+            <div id='oldpass' style='display: none'>Введите текущий пароль:
+                <input type="password" placeholder="Старый пароль" data-field="old_password">
+            </div>
         </div>
-        <div class="di"><textarea placeholder="Напишите краткую историю о себе" data-field="shortHistory" value='{{model.description}}'></textarea></div>
-        <div class="hr di"></div>
-        <article class="cat-title">
-            <p class="c-grey">Здесь вы можете описать выбор вашей професии, интересы или мечты будущей работы</p>
-        </article>
-        <div class="di"><input type="text" placeholder="Ваша работа" data-field="job" value={{model.description}}></div>
-        <div class="di"><input type="text" placeholder="Интересы" data-field="interests" value={{model.description}}></div>
-        <div class="di"><input type="text" placeholder="Мечты" data-field="dreams" value={{model.description}}></div>
+
+
+        <div class="di"><input type="text" placeholder="Ваша профессия или деятельность" data-field="job" value='{{model.job}}'></div>
+        <div class="di"><input type="text" placeholder="Кем вы хотели стать в детстве" data-field="dreams" value='{{model.job}}'></div>
+        <div class="di"><input type="text" placeholder="Профессия, которая вас вдохновляет" data-field="interests" value='{{model.job}}'></div>
+
+        <div class="di"><textarea placeholder="Напишите краткую историю о себе" data-field="description" value='{{model.job}}'></textarea></div>
+
+        <div class="di"><input type="text" placeholder="Личная страница" data-field="homepage"></div>
+
         <div data-send-button class="regbtn di">Завершить правки</div>
     </form>
 </div>

@@ -19,6 +19,12 @@ define(['views/base/editable'], function(EditableView) {
 
     InfoInfoView.prototype.modes = ['edit'];
 
+    InfoInfoView.prototype.events = {
+      'click #newpass': function() {
+        return this.$el.find('#oldpass').show();
+      }
+    };
+
     return InfoInfoView;
 
   })(EditableView);

@@ -17,7 +17,7 @@ define [
 
     #
     add: (callback) ->
-      if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
+      if !@validateRegFields('name') ||  !@validateRegFields('password') || !@validateEmail(@data['email'])
         $('html,body').animate({ scrollTop: 150 }, 'slow');
         return
 
@@ -26,13 +26,14 @@ define [
       @requestData =
         author:
           name: @data.name
-          lastName: @data.lastName
           email: @data.email
           password: @data.password
           shortHistory: @data.shortHistory
           job: @data.job
           interests: @data.interests
           dreams: @data.dreams
+          homepage: @data.homepage
+
 
       callback()
 
@@ -43,7 +44,7 @@ define [
           authorId = data.id
           callback()
 
-      @request(addCallback, true)
+      @request(addCallback)
 
       #
     addStep2: (callback) ->
@@ -66,22 +67,31 @@ define [
 
     #
     update: (callback) ->
-      if !@validateRegFields('name') || !@validateRegFields('lastName')  || !@validateRegFields('password') || !@validateEmail(@data['email'])
+      if !@validateRegFields('name') || !@validateEmail(@data['email'])
         $('html,body').animate({ scrollTop: 150 }, 'slow');
         return
+
+      if @data.new_password
+        if !@validateRegFields('old_password')
+          $('html,body').animate({ scrollTop: 150 }, 'slow');
+          return
 
       @method = 'POST'
       @url    = -> 'api/author/editinfo'
       @requestData =
         author:
+          id: @data.id
+
           name: @data.name
-          lastName: @data.lastName
           email: @data.email
           password: @data.password
+
           shortHistory: @data.shortHistory
           job: @data.job
           interests: @data.interests
           dreams: @data.dreams
+
+          homepage: @data.homepage
 
       updateCallback = (data) =>
         authorId = data.id
