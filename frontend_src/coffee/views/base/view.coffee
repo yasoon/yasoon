@@ -40,7 +40,7 @@ define [
 
     render: ->
       super
-      @manageAuthAreas()
+      @managerAuth()
       @manageEditableContent()
 
     #
@@ -52,7 +52,7 @@ define [
         @render()
         @rendered = true
 
-      @manageAuthAreas()
+      @managerAuth()
       @manageEditableContent()
 
     #
@@ -76,6 +76,15 @@ define [
         if @authorized then $(el).show() else $(el).hide()
       for el in @$el.find("[data-permission='not-author']")
         if @authorized then $(el).hide() else $(el).show()
+
+    managerAuth: ->
+      console.log @.model
+
+    permissions:
+      'admin' : ['create', 'update', 'read']
+      'guest' : ['read']
+      'author': ['create', 'update', 'read']
+      'user'  : ['read']
 
     #
     getTemplateData: ->
