@@ -24,44 +24,44 @@
         <h3>текст:</h3>
         <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
             <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b
-                        class="caret"></b></a>
+                <div  class="item dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b
+                        class="caret"></b></div>
                 <ul class="dropdown-menu">
                 </ul>
             </div>
 
             <div class="btn-group">
-                <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
-                <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
-                <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
-                <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+                <div  class="item" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><b>B</b></div>
+                <div  class="item" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i>It</i></div>
+                <div  class="item" data-edit="strikethrough" title="Strikethrough"><s>S</s></div>
+                <div  class="item" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><u>U</u></div>
             </div>
 
             <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
+                <div  class="item dropdown-toggle" data-toggle="dropdown" title="Hyperlink">A</div>
 
                 <div class="dropdown-menu input-append">
                     <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-                    <button class="btn" type="button">Add</button>
+                    <div  class="item" type="button">Link</div>
                 </div>
 
-                <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
-                <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
-                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage"/>
+                <div  class="item" data-edit="unlink" title="Remove Hyperlink">Cut</div>
+                <div  class="item" title="Insert picture (or just drag & drop)" id="pictureBtn">Img</div>
+                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" class="pictureBtnInput" data-edit="insertImage"/>
             </div>
 
             <div class="btn-group">
-                <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
-                <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+                <div  class="item" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">Откатить</div>
+                <div  class="item" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">Вернуть</div>
             </div>
 
         </div>
-        <textarea class="big" id="editor" placeholder="Тело поста" data-field="text">{{model.text}}</textarea>
+        <div id="editor" data-field="text">{{model.text}}</div>
     </div>
 
     <div class="di">
         <h3>аннотация:</h3>
-        <textarea placeholder="Краткая аннотация к Вашей истории, которую будут видеть другие пользователи" id="cleartxt" data-field='preview'>{{model.preview}}</textarea>
+        <div id="cleartxt" data-field='preview'>{{model.preview}}</div>
     </div>
 
 

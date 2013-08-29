@@ -2,10 +2,10 @@ define [
          'views/base/editable'
          'JST'
          'categories'
-         'lib/jquery.hotkeys'
-         'lib/bootstrap.min'
-         'lib/bootstrap-wysiwyg'
-         'lib/helper'
+         'jquery_hotkeys'
+         'bootstrap'
+         'bootstrap_wysiwyg'
+         'helper'
 ], (EditableView, JST, categories, hotkeys, bootstrap, bootstrapWysiwyg, helper) ->
   'use strict'
 
@@ -25,7 +25,7 @@ define [
     getTemplateData: ->
       cats = {}
       for key, cat of categories
-        cats[key] = cat if key > 0
+        cats[key] = cat if key >  0
 
       data = super
       data.categories =  cats
@@ -33,36 +33,37 @@ define [
 
     render: ->
       super
-      `$( function () {
-        var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+      fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
                      'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                     'Times New Roman', 'Verdana'],
-                fontTarget = $( '[title=Font]' ).siblings( '.dropdown-menu' );
+                     'Times New Roman', 'Verdana']
 
-        $.each( fonts, function (idx, fontName) {
-            fontTarget.append( $( '<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>' ) );
-        } );
+      fontTarget = $( '[title=Font]' ).siblings( '.dropdown-menu' )
 
-        $( 'a[title]' ).tooltip( {container: 'body'} );
+      $.each( fonts,(idx, fontName) ->
+           fontTarget.append $( '<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>' )
+      )
 
-        $( '.dropdown-menu input' ).click( function () {
-            return false;
-        } )
-                .change( function () {
-                    $( this ).parent( '.dropdown-menu' ).siblings( '.dropdown-toggle' ).dropdown( 'toggle' );
-                } )
-                .keydown( 'esc', function () {
-                    this.value = '';
-                    $( this ).change();
-                } );
+      $( 'a[title]' ).tooltip( {container: 'body'} )
 
-        $( '[data-role=magic-overlay]' ).each( function () {
-            var overlay = $( this ), target = $( overlay.data( 'target' ) );
-            overlay.css( 'opacity', 0 ).css( 'position', 'absolute' ).offset( target.offset() ).width( target.outerWidth() ).height( target.outerHeight() );
-        } );
+      $( '.dropdown-menu input' ).click( ->
+          alert 'dsfsdf'
+          return false
+      ).change( ->
+          $( this ).parent( '.dropdown-menu' ).siblings( '.dropdown-toggle' ).dropdown( 'toggle' );
+      ).keydown( 'esc', ->
+          @.value = ''
+          $( @ ).change()
+      );
 
-        $( '#editor' ).wysiwyg().bind( 'DOMNodeInserted DOMNodeRemoved keyup', function () {
-            $( '#cleartxt' ).html( strip_tags($( '#editor' ).html()) );
-        } );
+      $( '[data-role=magic-overlay]' ).each( ->
+          overlay = $( @ )
+          target = $( overlay.data( 'target' ) )
+          overlay.css( 'opacity', 0 ).css( 'position', 'absolute' ).offset( target.offset() ).width( target.outerWidth() ).height( target.outerHeight() );
+      )
 
-    } );`
+      setTimeout(->
+        $( '#editor' ).wysiwyg().bind( 'DOMNodeInserted DOMNodeRemoved keyup', ->
+            $( '#cleartxt' ).html( strip_tags($( '#editor' ).html()) )
+        )
+      , 1000)
+

@@ -73,7 +73,11 @@ JST = {}
       JST: 'templates_compiled/combined',
       tinyEditor: 'lib/tiny.editor',
       categories: 'categories',
-      sitefunctions: 'site/functions'
+      sitefunctions: 'site/functions',
+      bootstrap_wysiwyg : 'lib/bootstrap-wysiwyg',
+      jquery_hotkeys : 'lib/jquery.hotkeys',
+      helper : 'lib/helper',
+      bootstrap : 'lib/bootstrap.min'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
