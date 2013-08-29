@@ -42,36 +42,12 @@ define(['views/base/editable', 'JST', 'categories', 'jquery_hotkeys', 'bootstrap
     };
 
     AuthorPostsPostView.prototype.render = function() {
-      var fontTarget, fonts;
       AuthorPostsPostView.__super__.render.apply(this, arguments);
-      fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times', 'Times New Roman', 'Verdana'];
-      fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-      $.each(fonts, function(idx, fontName) {
-        return fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-      });
-      $('a[title]').tooltip({
-        container: 'body'
-      });
-      $('.dropdown-menu input').click(function() {
-        alert('dsfsdf');
-        return false;
-      }).change(function() {
-        return $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-      }).keydown('esc', function() {
-        this.value = '';
-        return $(this).change();
-      });
-      $('[data-role=magic-overlay]').each(function() {
-        var overlay, target;
-        overlay = $(this);
-        target = $(overlay.data('target'));
-        return overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-      });
       return setTimeout(function() {
         return $('#editor').wysiwyg().bind('DOMNodeInserted DOMNodeRemoved keyup', function() {
           return $('#cleartxt').html(strip_tags($('#editor').html()));
         });
-      }, 1000);
+      }, 600);
     };
 
     return AuthorPostsPostView;
