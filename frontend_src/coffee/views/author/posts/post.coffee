@@ -6,7 +6,8 @@ define [
          'bootstrap'
          'bootstrap_wysiwyg'
          'helper'
-], (EditableView, JST, categories, hotkeys, bootstrap, bootstrapWysiwyg, helper) ->
+         'jqueryui'
+], (EditableView, JST, categories, hotkeys, bootstrap, bootstrapWysiwyg, helper, jqueryui) ->
   'use strict'
 
   class AuthorPostsPostView extends EditableView
@@ -34,8 +35,10 @@ define [
     render: ->
       super
       setTimeout(->
-        $( '#editor' ).wysiwyg().bind( 'DOMNodeInserted DOMNodeRemoved keyup', ->
-            $( '#cleartxt' ).html( strip_tags($( '#editor' ).html()) )
-        )
+          @activatedWysiwyg()
       , 600)
 
+    activatedWysiwyg: ->
+      $( '#editor' ).wysiwyg().bind( 'DOMNodeInserted DOMNodeRemoved keyup', ->
+            $( '#cleartxt' ).html( strip_tags($( '#editor' ).html()) )
+      )
