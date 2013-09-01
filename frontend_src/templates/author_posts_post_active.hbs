@@ -24,13 +24,6 @@
         <h3>текст:</h3>
         <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
             <div class="btn-group">
-                <div  class="item dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b
-                        class="caret"></b></div>
-                <ul class="dropdown-menu">
-                </ul>
-            </div>
-
-            <div class="btn-group">
                 <div  class="item" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><b>B</b></div>
                 <div  class="item" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i>It</i></div>
                 <div  class="item" data-edit="strikethrough" title="Strikethrough"><s>S</s></div>
@@ -38,21 +31,22 @@
             </div>
 
             <div class="btn-group">
-                <div  class="item dropdown-toggle" data-toggle="dropdown" title="Hyperlink">A</div>
-
-                <div class="dropdown-menu input-append">
-                    <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-                    <div  class="item" type="button">Link</div>
-                </div>
-
-                <div  class="item" data-edit="unlink" title="Remove Hyperlink">Cut</div>
                 <div  class="item" title="Insert picture (or just drag & drop)" id="pictureBtn">Img</div>
                 <input type="file" data-role="magic-overlay" data-target="#pictureBtn" class="pictureBtnInput" data-edit="insertImage"/>
             </div>
 
             <div class="btn-group">
-                <div  class="item" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">Откатить</div>
-                <div  class="item" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">Вернуть</div>
+                <div class="item" data-edit="insertunorderedlist" title="" data-original-title="Bullet list">Ul</div>
+                <div class="item" data-edit="insertorderedlist" title="" data-original-title="Number list">Ol</div>
+                <div class="item" data-edit="outdent" title="" data-original-title="Reduce indent (Shift+Tab)">Tl</div>
+                <div class="item" data-edit="indent" title="" data-original-title="Indent (Tab)">Tr</div>
+            </div>
+
+            <div class="btn-group">
+                <div class="item" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)">Al</div>
+                <div class="item" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)">Ac</div>
+                <div class="item" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)">Ar</div>
+                <div class="item" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)">Aj</div>
             </div>
 
         </div>

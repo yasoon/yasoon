@@ -32,10 +32,10 @@ define [
       data.categories =  cats
       data
 
-    render: ->
+    render: =>
       super
-      setTimeout(->
-          @activatedWysiwyg()
+      setTimeout(=>
+        @activatedWysiwyg()
       , 600)
 
     activatedWysiwyg: ->

@@ -96,7 +96,7 @@ footer {
 	border-right: 1px solid #E2E2E2;
 	padding: 0 10px;
 	line-height: 30px;
-	cursor: pointer;
+	cursor: move;
 }
 .btn-group .item:active{
 	box-shadow: inset 0 0 5px rgba(0,0,0,.3);
@@ -141,4 +141,20 @@ footer {
 
 .ui-wrapper {
   position: relative !important;
+}
+
+.btn-group {
+  height: 20px;
+  float: left;
+  position: relative;
+}
+
+#editor ul > li {
+  list-style-position: inside !important;
+  list-style-type: disc !important;
+}
+
+#editor ol > li {
+  list-style-position: inside !important;
+  list-style-type: decimal !important;
 }
