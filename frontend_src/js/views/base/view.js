@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
+define(['chaplin', 'handlebars', 'helper'], function(Chaplin, Handlebars, Helper) {
   'use strict';
   var View, _ref;
   return View = (function(_super) {
@@ -57,7 +57,8 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
     View.prototype.render = function() {
       View.__super__.render.apply(this, arguments);
       this.managerAuth();
-      return this.manageEditableContent();
+      this.manageEditableContent();
+      return pressFooter();
     };
 
     View.prototype.softRender = function() {
@@ -68,6 +69,7 @@ define(['chaplin', 'handlebars'], function(Chaplin, Handlebars) {
         this.render();
         this.rendered = true;
       }
+      pressFooter();
       this.managerAuth();
       return this.manageEditableContent();
     };

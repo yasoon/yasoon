@@ -30,6 +30,7 @@ define [
       super
       hv = new HeaderView()
       fv = new FooterView()
+      pressFooter()
 
 
 #      pModel = new PostModel(authorId: @authorId)

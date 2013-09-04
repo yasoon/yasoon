@@ -45,7 +45,7 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'],
       QueueView.__super__.render.apply(this, arguments);
       if (this.model.elements.length === 0) {
         if (this.placeholder != null) {
-          return this.$el.html(JST[this.placeholder](this.getTemplateData()));
+          this.$el.html(JST[this.placeholder](this.getTemplateData()));
         }
       } else {
         _ref1 = this.model.elements;
@@ -59,7 +59,7 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'],
           }
         }
         if (this.sortable) {
-          return this.$el.find('.sortable').sortable({
+          this.$el.find('.sortable').sortable({
             cursor: 'move',
             update: function() {
               return _this.updateOrder();
@@ -67,6 +67,7 @@ define(['views/base/view', 'JST', 'jqueryui', 'chaplin', 'views/base/editable'],
           });
         }
       }
+      return pressFooter();
     };
 
     QueueView.prototype.updateOrder = function() {

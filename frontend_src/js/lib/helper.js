@@ -38,3 +38,9 @@ function strip_tags (input, allowed) {
         return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
     });
 }
+
+function pressFooter()
+{
+    var h = $(document).height();
+    $('footer').css('top', h + 54);
+}

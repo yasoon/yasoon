@@ -1,7 +1,8 @@
 define [
          'chaplin',
          'handlebars'
-], (Chaplin, Handlebars) ->
+         'helper'
+], (Chaplin, Handlebars, Helper) ->
   'use strict'
 
   class View extends Chaplin.View
@@ -42,6 +43,7 @@ define [
       super
       @managerAuth()
       @manageEditableContent()
+      pressFooter()
 
     #
     softRender: ->
@@ -51,6 +53,8 @@ define [
       else
         @render()
         @rendered = true
+
+      pressFooter()
 
       @managerAuth()
       @manageEditableContent()

@@ -14,8 +14,7 @@
   padding-bottom: 50px;
 }
 footer {
-  position: fixed !important;
-  bottom: 0;
+  position: absolute !important;
 }
 .file_upload_container {
   height: 28px;

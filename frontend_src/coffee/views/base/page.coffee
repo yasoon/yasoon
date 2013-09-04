@@ -8,5 +8,5 @@ define [
     className: 'pageView'
     container: 'body'
 
-    softRender: ->
-      #page views must not be re-rendered
+#    softRender: ->
+#      #page views must not be re-rendered

@@ -27,7 +27,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
       var fv, hv;
       BlogAboutPageView.__super__.render.apply(this, arguments);
       hv = new HeaderView();
-      return fv = new FooterView();
+      fv = new FooterView();
+      return pressFooter();
     };
 
     return BlogAboutPageView;

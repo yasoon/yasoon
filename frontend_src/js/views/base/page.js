@@ -19,8 +19,6 @@ define(['views/base/view'], function(View) {
 
     PageView.prototype.container = 'body';
 
-    PageView.prototype.softRender = function() {};
-
     return PageView;
 
   })(View);

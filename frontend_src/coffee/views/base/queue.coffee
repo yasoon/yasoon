@@ -47,6 +47,8 @@ define [
               @updateOrder()
           )
 
+      pressFooter()
+
     #
     updateOrder: ->
       place = 0;
