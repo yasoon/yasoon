@@ -22,39 +22,8 @@ class IndexController {
      */
     private $service;
 
-
     /**
      * @Route("/")
-     *
-     * @return Response
-     */
-    public function testAction()
-    {
-        $html = <<<HTML
-    <script src="https://vk.com/js/api/openapi.js" type="text/javascript"></script>
-
-    <div id="login_button" onclick="VK.Auth.login(authInfo);"></div>
-
-    <script language="javascript">
-        VK.init({
-          apiId: 3847520
-        });
-        function authInfo(response) {
-          if (response.session) {
-            alert('user: '+response.session.mid);
-          } else {
-            alert('not auth');
-          }
-        }
-        VK.Auth.getLoginStatus(authInfo);
-        VK.UI.button('login_button');
-    </script>
-HTML;
-        return new Response($html);
-    }
-
-    /**
-     * @ Route("/")
      *
      * @return Response
      */
@@ -154,6 +123,19 @@ JST = {}
 
 HTML;
         return new Response($html);
+    }
+
+    /**
+     *
+     * Proxy for security firewall
+     *
+     * @Route("/admin")
+     *
+     * @return Response
+     */
+    public function adminAction()
+    {
+        return $this->indexAction();
     }
 
 }

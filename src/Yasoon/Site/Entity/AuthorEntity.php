@@ -5,16 +5,27 @@
  */
 namespace Yasoon\Site\Entity;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\Role;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Author
  *
  * @ORM\Table(name="author")
  * @ORM\Entity
+ *
+ * @DI\Service("yasoon.entity.author")
  */
-class AuthorEntity
+class AuthorEntity implements UserInterface, \Serializable
 {
+    private $roles = [
+      'ROLE_READER' => 1,
+      'ROLE_AUTHOR' => 2,
+      'ROLE_ADMIN'  => 4
+    ];
+
     /**
      * @var integer $id
      *
@@ -136,6 +147,20 @@ class AuthorEntity
      * @ORM\Column(name="password", type="string", nullable=true)
      */
     protected $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", nullable=false)
+     */
+    protected $salt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="role", type="integer", nullable=false)
+     */
+    protected $role;
 
     /**
      * @param $id
@@ -403,6 +428,90 @@ class AuthorEntity
         return $this->img;
     }
 
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
 
 
-}
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+        $roles  = [];
+        foreach ($this->roles as  $role => $bit) {
+            if ($this->role & $bit) {
+                $roles[] = $role;
+            }
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     *
+     * @return void
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            ) = unserialize($serialized);
+    }}

@@ -2,10 +2,12 @@ define [
         'controllers/base/controller'
         'views/index/page'
         'views/index/stories/page'
+        'views/index/e404page'
 ], (
   Controller,
   IndexView,
-  StoriesView
+  StoriesView,
+  e404View
 ) ->
   'use strict'
 
@@ -17,3 +19,6 @@ define [
 
     storiesAction: ->
       @view = new StoriesView()
+
+    e404Action: ->
+      @viwe = new e404View()

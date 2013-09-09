@@ -30,3 +30,6 @@ define [
         if $target.attr('id') is 'notify'
           @model.notify =>
             @setMode('sent')
+
+    addCallback: ->
+      console.log 'add'
