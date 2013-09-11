@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     AuthorPostsNewPageView.prototype.className = 'postPage';
 
     AuthorPostsNewPageView.prototype.regions = {
-      '#post': 'post',
+      'post': '#post',
       'footer': 'footer',
       'header': 'header'
     };

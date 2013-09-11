@@ -1,10 +1,10 @@
 define [
-  'views/base/view'
+  'views/index/header'
   'JST'
-], (View, JST) ->
+], (IndexHeaderView, JST) ->
   'use strict'
 
-  class PeopleHeaderView extends View
+  class PeopleHeaderView extends IndexHeaderView
     autoRender: true
     className: 'inside'
     region: 'header'
@@ -12,6 +12,7 @@ define [
     templateName: 'people_header'
 
     initialize: (params) ->
+      super(params)
       @categoryId = params.catId
       if params.mode
         @mode = params.mode
@@ -19,5 +20,10 @@ define [
         @mode = 'date'
 
 
-    getTemplateData: ->
-      {catId: @categoryId, mode: @mode}
+
+    getTemplateData: =>
+      {catId: @categoryId, mode: @mode, model: @model.data}
+
+    events:
+      'click #logout': ->
+        @model.logout => @render

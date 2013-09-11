@@ -18,7 +18,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     RegisterPageView.prototype.regions = {
       'footer': 'footer',
       'header': 'header',
-      '#page-layout': 'register'
+      'page-layout': '#register'
     };
 
     RegisterPageView.prototype.templateName = 'register_page';

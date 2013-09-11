@@ -18,7 +18,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     InfoPageView.prototype.regions = {
       'footer': 'footer',
       'header': 'header',
-      '#page-layout': 'info'
+      'info': '#page-layout'
     };
 
     InfoPageView.prototype.templateName = 'info_page';

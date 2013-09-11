@@ -17,22 +17,7 @@ define(['chaplin', 'routes', 'controllers/redirect-controller', 'controllers/mes
 
     Application.prototype.initialize = function() {
       Application.__super__.initialize.apply(this, arguments);
-      this.initRouter(routes, {
-        pushState: false
-      });
-      this.initDispatcher({
-        controllerSuffix: '-controller'
-      });
-      this.initControllers();
-      this.initLayout();
-      this.initComposer();
-      this.initMediator();
-      this.startRouting();
-      return typeof Object.freeze === "function" ? Object.freeze(this) : void 0;
-    };
-
-    Application.prototype.initMediator = function() {
-      return Chaplin.mediator.seal();
+      return this.initControllers();
     };
 
     Application.prototype.initControllers = function() {

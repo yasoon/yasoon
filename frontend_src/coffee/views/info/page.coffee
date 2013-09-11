@@ -20,7 +20,7 @@ define [
     regions:
       'footer': 'footer'
       'header': 'header'
-      '#page-layout' : 'info'
+      'info' : '#page-layout'
 
     templateName: 'info_page'
 

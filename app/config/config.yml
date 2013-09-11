@@ -3,12 +3,7 @@ framework:
   test: ~
   router: {resource: routing.yml}
 
-  session:
-      lifetime:             ~
-      path:                 ~
-      domain:               ~
-      secure:               true
-      httponly:             true
+  session: ~
 
 doctrine:
   dbal:
@@ -50,14 +45,15 @@ security:
       secured_area:
         pattern: ^/
         anonymous: ~
-        form_login:
-          login_path: login
-          check_path: login_check
-          username_parameter: email
-          password_parameter: password
+#        form_login:
+#          login_path: login
+#          check_path: login_check
+#          username_parameter: email
+#          password_parameter: password
 
     access_control:
       - {path: ^/admin, roles: ROLE_ADMIN}
+      - {path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
 
     providers:
       secured_area:

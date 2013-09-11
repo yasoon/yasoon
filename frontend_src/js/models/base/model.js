@@ -15,6 +15,8 @@ define(['chaplin'], function(Chaplin) {
 
     Model.prototype.data = {};
 
+    Model.prototype.access = 'NONE';
+
     Model.prototype.url = '';
 
     Model.prototype.method = '';
@@ -60,6 +62,10 @@ define(['chaplin'], function(Chaplin) {
         method: this.method,
         data: this.requestData,
         success: function(data) {
+          if (data.access != null) {
+            _this.access = data.access;
+            data = data.data;
+          }
           if (!dontUpdateData) {
             _this.data = data;
           }

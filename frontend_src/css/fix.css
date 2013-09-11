@@ -14,10 +14,133 @@
   padding-bottom: 50px;
 }
 footer {
-  position: fixed !important;
-  bottom: 0;
+  position: absolute !important;
+}
+.file_upload_container {
+  height: 28px;
+  margin-top: 13px;
+}
+#fileupload {
+  width: 119px;
+  margin-top: 21px;
+  float: left;
+}
+.file_upload_block {
+  height: 40px;
+  margin-top: 9px !important;
+}
+.file_upload_container input[type=file] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(20);
+  letter-spacing: 10em;
+  -ms-transform: scale(20);
+  /* IE 9 fix */
+
+  opacity: 0;
+  cursor: pointer;
+}
+.files_success_upload {
+  float: left;
+  height: 53px;
+  min-width: 53px;
+  margin-left: 12px;
+}
+.files_success_upload > img {
+  margin-right: 3px;
+}
+#editor {
+  overflow: auto;
+  width: 98%;
+  padding: 5px;
+  height: 300px;
+  border: 1px solid;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#editor img {
+  cursor: pointer;
+}
+#cleartxt {
+  width: 98%;
+  padding: 5px;
+  height: 202px;
+  border: 1px solid;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.btn-group .item {
+  float: left;
+  border-right: 1px solid #E2E2E2;
+  padding: 0 10px;
+  line-height: 30px;
+  cursor: move;
+}
+.btn-group .item:active {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.input-append {
+  display: none;
+}
+.pictureBtnInput {
+  width: 30px;
+  position: absolute;
+  margin-left: -37px;
+  opacity: 0;
+}
+.btn-toolbar {
+  width: 100%;
+  background-color: #f3f3f3;
+  height: 30px;
+}
+.ui-resizable-se {
+  cursor: se-resize;
+  width: 12px;
+  height: 12px;
+  right: 1px;
+  bottom: 1px;
+}
+.ui-resizable-handle {
+  position: absolute;
+  font-size: 0.1px;
+  display: block;
+}
+.ui-icon-gripsmall-diagonal-se {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+}
+.ui-wrapper {
+  position: relative !important;
+}
+.btn-group {
+  height: 20px;
+  float: left;
+  position: relative;
+}
+#editor ul > li {
+  list-style-position: inside !important;
+  list-style-type: disc !important;
+}
+#editor ol > li {
+  list-style-position: inside !important;
+  list-style-type: decimal !important;
 }
 
-#bg-main .bg.bg-panoram {
-    display: block !important;
+.log-in .inside #login{
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -15px;
+    height: 30px;
+    background: none;
+    z-index: 9;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'MuseoSansCyrl-100', Arial;
+    padding: 5px 10px;
+    cursor: pointer;
+
 }

@@ -24,6 +24,7 @@ class FriendsController {
     private $service;
 
 
+
     /**
      * @Route("/add/{writerId}", requirements={"writerId" = "\d+"})
      *

@@ -7,6 +7,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
@@ -16,6 +17,12 @@ use Yasoon\Site\Entity\QuestionEntity;
  */
 class QuestionService extends AbstractApiService {
 
+    /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
 
     /**
      * @param array $model
@@ -23,7 +30,7 @@ class QuestionService extends AbstractApiService {
      */
     public function add(array $model) {
 
-        $authorId = $model['authorId'];
+        $authorId = $this->securityContext->getToken()->getUsername();
 
         $place =$this->em->getConnection()
             ->executeQuery("select max(place) as place from question where author_id = $authorId and is_in_blank=0")
@@ -36,7 +43,7 @@ class QuestionService extends AbstractApiService {
             ->setAuthorId($model['authorId'])
             ->setPlace(++$place);
 
-        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['authorId']));
+        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -59,8 +66,10 @@ class QuestionService extends AbstractApiService {
      */
     public function setInterviewCaption($model)
     {
+        $authorId = $this->securityContext->getToken()->getUsername();
+
         /** @var AuthorEntity  $entity */
-        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($model['authorId']);
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
 
         $entity->setInterviewCaption($model['interviewCaption']);
 
@@ -79,6 +88,7 @@ class QuestionService extends AbstractApiService {
      */
     public function addInterview(array $model) {
 
+        $authorId = $this->securityContext->getToken()->getUsername();
 
         $place =$this->em->getConnection()
             ->executeQuery("select max(place) as place from question where author_id = $this->clientId and is_in_blank=1")
@@ -92,7 +102,7 @@ class QuestionService extends AbstractApiService {
             ->setAuthorId($this->clientId)
             ->setPlace($place);
 
-        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $this->clientId));
+        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
 
         $this->em->persist($entity);
         $this->em->flush();
@@ -116,8 +126,14 @@ class QuestionService extends AbstractApiService {
      */
     public function update(array $model) {
 
+        $authorId = $this->securityContext->getToken()->getUsername();
+
         /** @var QuestionEntity $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
+
+        if ($entity->getAuthorId() != $authorId) {
+            throw new AccessDeniedException();
+        }
 
         $entity->setCaption($model['caption'])
             ->setAnswer($model['answer']);
@@ -139,11 +155,19 @@ class QuestionService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function delete(array $model) {
-        $post = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
+        $authorId = $this->securityContext->getToken()->getUsername();
 
-        $this->em->remove($post);
+        /** @var QuestionEntity $question */
+        $question = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
+
+        if ($question->getAuthorId() != $authorId) {
+            throw new AccessDeniedException();
+        }
+
+        $this->em->remove($question);
         $this->em->flush();
     }
 
@@ -164,7 +188,9 @@ class QuestionService extends AbstractApiService {
             'date'    => $post->getDate()->format('d/m/Y'),
         ];
 
-        return $result;
+        $access = $this->getAccessLevel($post->getAuthorId());
+
+        return ['access' => $access, 'data' => $result];
     }
 
     public function getQuestions($postId) {

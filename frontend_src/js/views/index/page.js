@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/index/header', '
     IndexPageView.prototype.className = 'indexPage';
 
     IndexPageView.prototype.regions = {
-      '#daystory': 'daystory',
+      'daystory': '#daystory',
       'footer': 'footer',
       'header': 'header'
     };
@@ -27,8 +27,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/index/header', '
       var dsModel,
         _this = this;
       IndexPageView.__super__.render.apply(this, arguments);
-      new HeaderView();
       new FooterView();
+      new HeaderView();
       dsModel = new DaystoryModel;
       return dsModel.load(function() {
         return (new DaystoryView({

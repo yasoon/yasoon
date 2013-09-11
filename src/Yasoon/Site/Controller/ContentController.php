@@ -13,11 +13,12 @@ use JMS\DiExtraBundle\Annotation as DI;
 class ContentController {
 
     /**
-     * @var ContentService
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
      *
-     * @DI\Inject("yasoon.service.content")
+     * @DI\Inject("security.context")
      */
-    private $service;
+    private $securityContext;
+
 
     /**
      * @Route("/get_all")

@@ -29,6 +29,7 @@ class PeopleController {
      */
     private $service;
 
+
     /**
      * @Route("/get_authors/{categoryId}", requirements={"categoryId" = "\d+"})
      * @Method({"GET"})

@@ -21,7 +21,7 @@ define [
     className: 'peopleExplorePage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
     templateName: 'people_explore_page'

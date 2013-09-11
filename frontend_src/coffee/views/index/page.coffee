@@ -18,7 +18,7 @@ define [
     className: 'indexPage'
 
     regions:
-      '#daystory': 'daystory'
+      'daystory': '#daystory'
       'footer': 'footer'
       'header': 'header'
 
@@ -26,8 +26,8 @@ define [
 
     render: ->
       super
-      new HeaderView()
       new FooterView()
+      new HeaderView()
 
       dsModel = new DaystoryModel
       dsModel.load =>

@@ -6,6 +6,9 @@ define [
 
          'views/author/posts/post'
          'models/author/posts/post'
+
+         'models/author/posts/info'
+         'views/author/posts/info'
 ], (PageView,
     JST,
     FooterView,
@@ -13,6 +16,9 @@ define [
 
     PostView,
     PostModel
+
+    AuthorInfoModel,
+    AuthorInfoView
 ) ->
   'use strict'
 
@@ -20,7 +26,8 @@ define [
     className: 'postPage'
 
     regions:
-      '#post': 'post'
+      'author': '#author'
+      'post': '#post'
       'footer': 'footer'
       'header': 'header'
 
@@ -35,6 +42,13 @@ define [
       super
       hv = new HeaderView()
       fv = new FooterView()
+
+
+      am= new AuthorInfoModel(authorId: @authorId)
+      am.load =>
+        av = new AuthorInfoView(model: am)
+        av.setRegion('author').render()
+
 
       @pModel = new PostModel(authorId: @authorId, id: @postId)
       @pModel.load =>

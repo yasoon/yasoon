@@ -24,6 +24,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use JMS\DiExtraBundle\Annotation as DI;
+use Yasoon\Site\Entity\AuthorEntity;
 
 
 /**
@@ -44,6 +45,15 @@ class AuthorRepository extends EntityUserProvider implements UserProviderInterfa
      */
     protected $repository;
 
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     *
+     * @DI\Inject("doctrine.orm.default_entity_manager")
+     */
+    public $_em;
+
+
+
     public function __construct()
     {
 
@@ -55,19 +65,21 @@ class AuthorRepository extends EntityUserProvider implements UserProviderInterfa
      * This method must throw UsernameNotFoundException if the user is not
      * found.
      *
-     * @param string $username The username
+     * @param string $email The username
      *
-     * @return UserInterface
+     * @return AuthorEntity
      *
      * @see UsernameNotFoundException
      *
      * @throws UsernameNotFoundException if the user is not found
      *
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($email)
     {
-        return $this->createQueryBuilder('u')
-            ->where("u.name = $username")
+        return $this->_em->createQueryBuilder()
+            ->select('u')
+            ->from('Yasoon\Site\Entity\AuthorEntity', 'u')
+            ->where("u.email = '$email'")
             ->getQuery()->getSingleResult();
     }
 

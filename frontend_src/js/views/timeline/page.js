@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'models/timeline/postQueue', 'views/timeline/postQueue'], function(PageView, JST, FooterView, HeaderView, TimelinePostQueueModel, TimelinePostQueueView) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/header', 'models/timeline/postQueue', 'views/timeline/postQueue', 'models/index/header'], function(PageView, JST, FooterView, HeaderView, TimelinePostQueueModel, TimelinePostQueueView, HeaderModel) {
   'use strict';
   var TimelinePageView;
   return TimelinePageView = (function(_super) {
@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     TimelinePageView.prototype.className = 'timelinePage';
 
     TimelinePageView.prototype.regions = {
-      '#queue': 'queue',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };
@@ -28,10 +28,17 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     };
 
     TimelinePageView.prototype.render = function() {
-      var tq,
+      var hModel, tq,
         _this = this;
       TimelinePageView.__super__.render.apply(this, arguments);
-      new HeaderView();
+      hModel = new HeaderModel();
+      hModel.load(function() {
+        return (new HeaderView({
+          model: hModel,
+          catId: _this.activeCategoryId,
+          mode: _this.mode
+        })).render();
+      });
       new FooterView();
       tq = new TimelinePostQueueModel();
       return tq.load(function() {

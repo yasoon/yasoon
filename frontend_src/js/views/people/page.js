@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
     PeoplePageView.prototype.className = 'peoplePage';
 
     PeoplePageView.prototype.regions = {
-      '#queue': 'queue',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };

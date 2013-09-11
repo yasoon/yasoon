@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST', 'sitefunctions'], function(View, JST, SiteFunctions) {
+define(['views/base/view', 'JST', 'models/index/header', 'sitefunctions'], function(View, JST, HeaderModel, Sitefunctions) {
   'use strict';
   var IndexHeaderView;
   return IndexHeaderView = (function(_super) {
@@ -21,9 +21,21 @@ define(['views/base/view', 'JST', 'sitefunctions'], function(View, JST, SiteFunc
 
     IndexHeaderView.prototype.templateName = 'index_header';
 
+    IndexHeaderView.prototype.initialize = function() {
+      var _this = this;
+      IndexHeaderView.__super__.initialize.apply(this, arguments);
+      this.model = new HeaderModel;
+      return this.model.load(function() {
+        return _this.render();
+      });
+    };
+
     IndexHeaderView.prototype.events = {
-      'click .sign-in': function() {
-        return this.publishEvent('goLogin');
+      'click #logout': function() {
+        var _this = this;
+        return this.model.logout(function() {
+          return _this.render;
+        });
       }
     };
 

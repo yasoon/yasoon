@@ -2,14 +2,19 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/editable', 'JST', 'categories'], function(EditableView, JST, categories) {
+define(['views/base/editable', 'JST', 'categories', 'jquery_hotkeys', 'bootstrap', 'bootstrap_wysiwyg', 'helper', 'jqueryui'], function(EditableView, JST, categories, hotkeys, bootstrap, bootstrapWysiwyg, helper, jqueryui) {
   'use strict';
-  var AuthorPostsPostView;
+  var AuthorPostsPostView,
+    _this = this;
   return AuthorPostsPostView = (function(_super) {
 
     __extends(AuthorPostsPostView, _super);
 
     function AuthorPostsPostView() {
+      var _this = this;
+      this.render = function() {
+        return AuthorPostsPostView.prototype.render.apply(_this, arguments);
+      };
       return AuthorPostsPostView.__super__.constructor.apply(this, arguments);
     }
 
@@ -39,6 +44,20 @@ define(['views/base/editable', 'JST', 'categories'], function(EditableView, JST,
       data = AuthorPostsPostView.__super__.getTemplateData.apply(this, arguments);
       data.categories = cats;
       return data;
+    };
+
+    AuthorPostsPostView.prototype.render = function() {
+      var _this = this;
+      AuthorPostsPostView.__super__.render.apply(this, arguments);
+      return setTimeout(function() {
+        return _this.activatedWysiwyg();
+      }, 600);
+    };
+
+    AuthorPostsPostView.prototype.activatedWysiwyg = function() {
+      return $('#editor').wysiwyg().bind('DOMNodeInserted DOMNodeRemoved keyup', function() {
+        return $('#cleartxt').html(strip_tags($('#editor').html()));
+      });
     };
 
     return AuthorPostsPostView;

@@ -18,7 +18,7 @@ define [
     className: 'aboutPage'
 
     regions:
-      '#post': 'post'
+      'post': '#post'
       'footer': 'footer'
       'header': 'header'
 
@@ -32,3 +32,4 @@ define [
         super
         hv = new HeaderView()
         fv = new FooterView()
+        pressFooter()

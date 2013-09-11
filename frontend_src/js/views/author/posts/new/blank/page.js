@@ -16,10 +16,10 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
     AuthorPostsNewBlankPageView.prototype.className = 'postPage';
 
     AuthorPostsNewBlankPageView.prototype.regions = {
-      '#caption': 'caption',
-      '#category': 'category',
-      '#new': 'new',
-      '#queue': 'queue',
+      'caption': '#caption',
+      'category': '#category',
+      'new': '#new',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };

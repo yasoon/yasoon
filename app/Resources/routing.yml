@@ -2,9 +2,6 @@
 #  resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
 #  prefix:   /connect
 
-login_check:
-  pattern: /login_check
-
 yasoon_site:
   resource: "@YasoonSiteBundle/Controller"
   prefix: /

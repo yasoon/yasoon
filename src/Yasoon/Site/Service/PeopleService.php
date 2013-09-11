@@ -17,6 +17,14 @@ use Yasoon\Site\Entity\QuestionEntity;
 class PeopleService extends AbstractApiService {
 
     /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
+
+
+    /**
      * @param int $categoryId
      * @return array
      */

@@ -20,7 +20,7 @@ define [
     regions:
       'footer': 'footer'
       'header': 'header'
-      '#page-layout' : 'register'
+      'page-layout' : '#register'
 
     templateName: 'register_page'
 

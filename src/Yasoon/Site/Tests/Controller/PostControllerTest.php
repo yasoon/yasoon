@@ -16,7 +16,6 @@ class PostControllerTest extends TestCase {
 
     /** @test */
     public function addAction() {
-
         $this->request('GET', $this->url('get_daystory'), [])->assertSuccess();
     }
 }

@@ -31,5 +31,6 @@ define [
           @model.notify =>
             @setMode('sent')
 
-    addCallback: ->
-      console.log 'add'
+    addCallback: (data) ->
+      @publishEvent 'redirect', 'author/'+@model.data.id+'/posts'
+      @dispose()

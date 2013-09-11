@@ -11,28 +11,28 @@ define [
     title: 'Yasoon site'
 
     initialize: ->
-
       super
 
-      @initRouter routes, pushState: false
 
-      @initDispatcher controllerSuffix: '-controller'
-
+#      @initRouter routes, pushState: false
+#
+#      @initDispatcher controllerSuffix: '-controller'
+#
       @initControllers()
+#
+#      @initLayout()
+#
+#      @initComposer()
+#
+#      @initMediator()
+#
+#      @startRouting()
+#
+#      Object.freeze? this
 
-      @initLayout()
-
-      @initComposer()
-
-      @initMediator()
-
-      @startRouting()
-
-      Object.freeze? this
-
-    initMediator: ->
-      Chaplin.mediator.seal()
-
+#    initMediator: ->
+#      Chaplin.mediator.seal()
+#
     initControllers: ->
       new RedirectController()
       new MessageController()

@@ -7,6 +7,8 @@ define [
     # При заполнении модели из data-field в этот объект сохраняются ссылки на эти объекты в DOM
     #dataField: {}
 
+    access: 'NONE'
+
     url: ''
     method: ''
     requestData: ''
@@ -37,6 +39,10 @@ define [
         data:   @requestData
 
         success: (data) =>
+          if data.access?
+            @access = data.access
+            data = data.data
+
           if not dontUpdateData
             @data = data
           callback?(data)

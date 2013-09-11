@@ -1,8 +1,25 @@
-<a class="logo" href="#">yasoon</a>
-
-<div class="org-nav">
-    <nav>
-        <a href="#explore/{{mode}}/{{catId}}">Профессии</a>
-        <a href="#people/{{catId}}">Люди</a>
-    </nav>
-</div>
+    <div class="inside">
+        <a class="logo" href="/">yasoon</a>
+        <div class="org-nav">
+            <nav>
+                <a href="#explore/{{mode}}/{{catId}}">Профессии</a>
+                <a href="#people/{{catId}}">Люди</a>
+            </nav>
+        </div>
+        <div class="my-nav" data-permission="USER">
+            <a href=""> <img src="./_temp/a1.jpg" alt=""> <span>{{model.questions}}</span></a>
+            <nav>
+                <a href="#editinfo">Профиль</a>
+                <a href='#author/{{model.id}}/questions'>Вопросы
+                    {{#if model.questions}}
+                    ({{model.questions}})
+                    {{/if}}
+                </a>
+                <a href="#timeline">Лента</a>
+                <a id="logout">Выйти</a>
+            </nav>
+        </div>
+        <div class="my-nav" id='login' data-to-login data-permission="ANON">
+        Войти
+        </div>
+    </div>

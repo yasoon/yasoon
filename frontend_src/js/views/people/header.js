@@ -2,14 +2,19 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST'], function(View, JST) {
+define(['views/index/header', 'JST'], function(IndexHeaderView, JST) {
   'use strict';
-  var PeopleHeaderView;
+  var PeopleHeaderView,
+    _this = this;
   return PeopleHeaderView = (function(_super) {
 
     __extends(PeopleHeaderView, _super);
 
     function PeopleHeaderView() {
+      var _this = this;
+      this.getTemplateData = function() {
+        return PeopleHeaderView.prototype.getTemplateData.apply(_this, arguments);
+      };
       return PeopleHeaderView.__super__.constructor.apply(this, arguments);
     }
 
@@ -22,6 +27,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
     PeopleHeaderView.prototype.templateName = 'people_header';
 
     PeopleHeaderView.prototype.initialize = function(params) {
+      PeopleHeaderView.__super__.initialize.call(this, params);
       this.categoryId = params.catId;
       if (params.mode) {
         return this.mode = params.mode;
@@ -33,11 +39,21 @@ define(['views/base/view', 'JST'], function(View, JST) {
     PeopleHeaderView.prototype.getTemplateData = function() {
       return {
         catId: this.categoryId,
-        mode: this.mode
+        mode: this.mode,
+        model: this.model.data
       };
+    };
+
+    PeopleHeaderView.prototype.events = {
+      'click #logout': function() {
+        var _this = this;
+        return this.model.logout(function() {
+          return _this.render;
+        });
+      }
     };
 
     return PeopleHeaderView;
 
-  })(View);
+  })(IndexHeaderView);
 });

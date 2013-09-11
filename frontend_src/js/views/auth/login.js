@@ -42,8 +42,9 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
       }
     };
 
-    LoginView.prototype.addCallback = function() {
-      return console.log('add');
+    LoginView.prototype.addCallback = function(data) {
+      this.publishEvent('redirect', 'author/' + this.model.data.id + '/posts');
+      return this.dispose();
     };
 
     return LoginView;

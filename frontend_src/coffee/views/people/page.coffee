@@ -21,7 +21,7 @@ define [
     className: 'peoplePage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 

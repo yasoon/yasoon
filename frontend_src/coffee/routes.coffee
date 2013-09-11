@@ -42,6 +42,3 @@ define ->
     match 'timeline', 'timeline#indexAction'
 
     match '*notFound', 'index#e404Action'
-
-
-

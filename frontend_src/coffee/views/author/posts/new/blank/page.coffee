@@ -28,10 +28,10 @@ define [
     className: 'postPage'
 
     regions:
-      '#caption': 'caption'
-      '#category': 'category'
-      '#new':   'new'
-      '#queue': 'queue'
+      'caption': '#caption'
+      'category': '#category'
+      'new':   '#new'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 

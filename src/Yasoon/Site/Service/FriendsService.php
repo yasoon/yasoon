@@ -6,6 +6,7 @@
 
 namespace Yasoon\Site\Service;
 use Doctrine\ORM\AbstractQuery;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -14,13 +15,28 @@ use JMS\DiExtraBundle\Annotation as DI;
  */
 class FriendsService extends AbstractApiService {
 
+    /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
+
+
     //@TODO!! ЗАКРЫТЬ ВСЕ МЕТОДЫ АВТОРИЗАЦИЕЙ!!!
 
     /**
      * @param $writerId
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function addFriend($writerId) {
+
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if(!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
 
         $writerId = (int)$writerId;
 
@@ -28,7 +44,7 @@ class FriendsService extends AbstractApiService {
             ->select('friends.id')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.friends', 'friends')
-            ->where("author.id = $this->clientId")
+            ->where("author.id = $authorId")
             ->getQuery()->getResult();
 
         foreach ($ids as $arr) {
@@ -47,12 +63,19 @@ class FriendsService extends AbstractApiService {
     /**
      * @param $writerId
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function deleteFriend($writerId) {
 
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if(!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
+
         $writerId = (int)$writerId;
 
-        $sql = "DELETE FROM friends WHERE reader_id = {$this->clientId} AND writer_id = {$writerId}";
+        $sql = "DELETE FROM friends WHERE reader_id = {$authorId} AND writer_id = {$writerId}";
 
         $this->em->getConnection()->executeQuery($sql);
 
@@ -60,9 +83,18 @@ class FriendsService extends AbstractApiService {
     }
 
     /**
+     * @param int $offset
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function getTimelineStack($offset = 0) {
+
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if (!(int)$authorId) {
+            throw new AccessDeniedException();
+        }
+
 
         $limit = 200;
         $returnLimit = 50;
@@ -73,7 +105,7 @@ class FriendsService extends AbstractApiService {
             ->join('author.friends', 'friends')
             ->join('friends.posts', 'post')
             ->orderBy('post.date', 'DESC')
-            ->andWhere("author.id = $this->clientId")
+            ->andWhere("author.id = $authorId")
             ->setMaxResults($limit)
             ->getQuery()->getResult();
 
@@ -84,7 +116,7 @@ class FriendsService extends AbstractApiService {
             ->join('friends.questions', 'question')
             ->where('question.isInBlank = 0')
             ->andWhere('question.answer IS NOT NULL')
-            ->andWhere("author.id = $this->clientId")
+            ->andWhere("author.id = $authorId")
             ->orderBy('question.date', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()->getResult();
@@ -95,7 +127,7 @@ class FriendsService extends AbstractApiService {
             ->join('author.friends', 'friends')
             ->join('friends.questions', 'question')
             ->where('question.isInBlank = 1')
-            ->andWhere("author.id = $this->clientId")
+            ->andWhere("author.id = $authorId")
             ->orderBy('question.date', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()->getResult();
@@ -123,9 +155,17 @@ class FriendsService extends AbstractApiService {
     }
 
     /**
+     * @param array $map
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function getTimeline($map=array()) {
+
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if(!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
 
         $result = [];
 
@@ -202,6 +242,13 @@ class FriendsService extends AbstractApiService {
     }
 
     public function getAdminTimelineStack($offset = 0) {
+
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if(!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
+
         $limit = 200;
         $returnLimit = 50;
 

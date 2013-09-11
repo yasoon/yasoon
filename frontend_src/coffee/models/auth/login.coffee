@@ -25,7 +25,7 @@ define [
         $("input[data-field='password']").removeClass('error')
 
       @method = 'POST'
-      @url    = -> 'login_check'
+      @url    = -> 'login'
       @requestData = {email: @data.email, password: @data.password}
 
       @request(callback)

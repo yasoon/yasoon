@@ -32,7 +32,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
       }
       this.method = 'POST';
       this.url = function() {
-        return 'login_check';
+        return 'login';
       };
       this.requestData = {
         email: this.data.email,

@@ -1,8 +1,9 @@
 define [
   'views/base/view'
   'JST'
-'sitefunctions'
-], (View, JST, SiteFunctions) ->
+  'models/index/header'
+  'sitefunctions'
+], (View, JST, HeaderModel, Sitefunctions) ->
   'use strict'
 
   class IndexHeaderView extends View
@@ -13,7 +14,13 @@ define [
 
     templateName: 'index_header'
 
+    initialize: ->
+      super
+      @model = new HeaderModel
+      @model.load =>
+        @render()
+
     events:
-      'click .sign-in': ->
-        @publishEvent 'goLogin'
+        'click #logout': ->
+          @model.logout => @render
 

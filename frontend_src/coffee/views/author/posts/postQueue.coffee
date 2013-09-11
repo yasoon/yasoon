@@ -10,6 +10,7 @@ define [
     className: 'authorPostsPostQueue'
 
     templateName: 'author_posts_post_queue'
+    #TODO add placeholder
 
     sortable: true
 

@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/index/header', '
     IndexStoriesPageView.prototype.className = 'indexPage';
 
     IndexStoriesPageView.prototype.regions = {
-      '#queue': 'queue',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };

@@ -1,7 +1,8 @@
 define [
-  'chaplin',
-  'handlebars'
-], (Chaplin, Handlebars) ->
+         'chaplin',
+         'handlebars'
+         'helper'
+], (Chaplin, Handlebars, Helper) ->
   'use strict'
 
   class View extends Chaplin.View
@@ -29,7 +30,6 @@ define [
         else
           return block.inverse(this)
 
-
     #
     checkTemplate: ->
       if not JST[@templateName]?
@@ -43,17 +43,19 @@ define [
       super
       @manageAuthAreas()
       @manageEditableContent()
+      pressFooter()
 
     #
     softRender: ->
-      console.log 'softRender'
       if @rendered
         @$el.html JST[@templateName](@getTemplateData())
       else
         @render()
         @rendered = true
 
-      @manageAuthAreas()
+      pressFooter()
+
+      @managerAuthAreas()
       @manageEditableContent()
 
     #
@@ -68,19 +70,20 @@ define [
 
     #
     manageAuthAreas: ->
-      for el in @$el.find("[data-permission='authorized']")
-        if @authorized then $(el).show() else $(el).hide()
-      for el in @$el.find("[data-permission='not-authorized']")
-        if @authorized then $(el).hide() else $(el).show()
-      for el in @$el.find("[data-permission='author']")
-        if @authorized then $(el).show() else $(el).hide()
-      for el in @$el.find("[data-permission='not-author']")
-        if @authorized then $(el).hide() else $(el).show()
+      if @model?.access?
+        for el in @$el.find("[data-permission='ANON']")
+          if @model.access is 'ANON' then $(el).show() else $(el).hide()
+        for el in @$el.find("[data-permission='USER']")
+          if @model.access is 'USER' then $(el).show() else $(el).hide()
+        for el in @$el.find("[data-permission='ADMIN']")
+          if @model.access is 'ADMIN' then $(el).show() else $(el).hide()
+
+    permissions:
+      'admin' : ['create', 'update', 'read']
+      'guest' : ['read']
+      'author': ['create', 'update', 'read']
+      'user'  : ['read']
 
     #
     getTemplateData: ->
       if @model? then {model: @model.data}
-
-
-
-

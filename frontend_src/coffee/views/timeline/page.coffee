@@ -5,6 +5,7 @@ define [
          'views/author/posts/header'
          'models/timeline/postQueue'
          'views/timeline/postQueue'
+         'models/index/header'
 ], (PageView,
     JST,
     FooterView,
@@ -12,6 +13,8 @@ define [
 
     TimelinePostQueueModel,
     TimelinePostQueueView
+
+    HeaderModel
 ) ->
   'use strict'
 
@@ -19,7 +22,7 @@ define [
     className: 'timelinePage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 
@@ -30,7 +33,9 @@ define [
 
     render: ->
       super
-      new HeaderView()
+      hModel = new HeaderModel()
+      hModel.load =>
+        (new HeaderView(model: hModel, catId: @activeCategoryId, mode: @mode)).render()
       new FooterView()
 
       tq = new TimelinePostQueueModel()

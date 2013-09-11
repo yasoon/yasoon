@@ -20,10 +20,16 @@ abstract class AbstractApiService {
      */
     public $em;
 
+    protected function getAccessLevel($authorId)
+    {
+        if ($authorId == $this->securityContext->getToken()->getUsername()) {
+            $access = 'USER';
+        } else if ($this->securityContext->getToken()->getUsername() === "0") {
+            $access = 'ADMIN';
+        } else {
+            $access = 'ANON';
+        }
 
-    protected $clientId;
-
-    public function __construct() {
-        $this->clientId = 1; //@TODO получать из security context
+        return $access;
     }
 }
