@@ -37,6 +37,8 @@ footer {
   height: 100%;
   transform: scale(20);
   letter-spacing: 10em;
+  /* IE 9 fix */
+
   -ms-transform: scale(20);
   /* IE 9 fix */
 
@@ -86,8 +88,9 @@ footer {
 .pictureBtnInput {
   width: 30px;
   position: absolute;
-  margin-left: -37px;
+  margin-left: -107px;
   opacity: 0;
+  height: 27px;
 }
 .btn-toolbar {
   width: 100%;
@@ -127,20 +130,6 @@ footer {
   list-style-position: inside !important;
   list-style-type: decimal !important;
 }
-
-.log-in .inside #login{
-    display: block;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -15px;
-    height: 30px;
-    background: none;
-    z-index: 9;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-family: 'MuseoSansCyrl-100', Arial;
-    padding: 5px 10px;
-    cursor: pointer;
-
+#bg-main .bg.bg-panoram {
+  display: block !important;
 }

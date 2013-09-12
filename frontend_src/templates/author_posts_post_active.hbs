@@ -24,31 +24,16 @@
         <h3>текст:</h3>
         <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
             <div class="btn-group">
-                <div  class="item" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><b>B</b></div>
-                <div  class="item" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i>It</i></div>
-                <div  class="item" data-edit="strikethrough" title="Strikethrough"><s>S</s></div>
-                <div  class="item" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><u>U</u></div>
+                <div  class="item" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><b>Жирный</b></div>
+                <div  class="item" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i>Курсив</i></div>
+                <div  class="item" data-edit="strikethrough" title="Strikethrough"><s>Зачеркнутый</s></div>
+                <div  class="item" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><u>Подчеркнутый</u></div>
             </div>
 
             <div class="btn-group">
-                <div  class="item" title="Insert picture (or just drag & drop)" id="pictureBtn">Img</div>
+                <div  class="item" title="Вставить изображение" id="pictureBtn">Изображение</div>
                 <input type="file" data-role="magic-overlay" data-target="#pictureBtn" class="pictureBtnInput" data-edit="insertImage"/>
             </div>
-
-            <div class="btn-group">
-                <div class="item" data-edit="insertunorderedlist" title="" data-original-title="Bullet list">Ul</div>
-                <div class="item" data-edit="insertorderedlist" title="" data-original-title="Number list">Ol</div>
-                <div class="item" data-edit="outdent" title="" data-original-title="Reduce indent (Shift+Tab)">Tl</div>
-                <div class="item" data-edit="indent" title="" data-original-title="Indent (Tab)">Tr</div>
-            </div>
-
-            <div class="btn-group">
-                <div class="item" data-edit="justifyleft" title="" data-original-title="Align Left (Ctrl/Cmd+L)">Al</div>
-                <div class="item" data-edit="justifycenter" title="" data-original-title="Center (Ctrl/Cmd+E)">Ac</div>
-                <div class="item" data-edit="justifyright" title="" data-original-title="Align Right (Ctrl/Cmd+R)">Ar</div>
-                <div class="item" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)">Aj</div>
-            </div>
-
         </div>
         <div id="editor" data-field="text">{{model.text}}</div>
     </div>

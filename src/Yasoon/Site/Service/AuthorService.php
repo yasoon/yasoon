@@ -95,6 +95,22 @@ class AuthorService extends AbstractApiService {
      */
     public function getPrivateInfo()
     {
+        $result = [
+            'id'    => 1,
+            'name'    => 'sdsdsdsd',
+            'email'   => 'wef',
+            'password' => 1313,
+            'description' => 'SDFSDF',
+            'publicationDate' => (new \DateTime())->format('d/m/Y'),
+            'job' => '',
+            'interest' => '',
+            'dream' => ''
+        ];
+
+        $access = 'ADMIN';
+
+        return ['access' => $access, 'data' => $result];
+
         $authorId = $this->securityContext->getToken()->getUsername();
 
         if (!(int)$authorId) {

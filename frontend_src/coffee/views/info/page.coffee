@@ -34,5 +34,15 @@ define [
         infoView = new InfoView(model:infoModel)
         infoView.setRegion('info').setMode('edit')
         console.log infoModel
+        $('#fileupload').fileupload({
+          dataType: 'json',
+          autoUpload: true,
+          number: 1,
+          done: (e, data) ->
+            $.each(data.result, (index, file) ->
+              fileName = file.dir + file.file_name
+              $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>')
+            )
+        })
 
 
