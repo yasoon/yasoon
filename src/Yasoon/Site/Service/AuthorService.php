@@ -49,7 +49,7 @@ class AuthorService extends AbstractApiService {
     {
 
         $data = $this->em->createQueryBuilder()
-            ->select('author.id, author.name, author.description, author.publicationDate,
+            ->select('author.id, author.name, author.description, author.publicationDate, author.img,
             author.job, author.interest, author.dream, posts.id as postId, questions.id as questionId')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.posts', 'posts')
@@ -77,7 +77,8 @@ class AuthorService extends AbstractApiService {
             'interest' => $data['interest'],
             'dream' => $data['dream'],
             'posts'   => $data['postsCount'],
-            'answers' => $data['answersCount']
+            'answers' => $data['answersCount'],
+            'img'     => $data['img']
         ];
 
         $access = $this->getAccessLevel($authorId);

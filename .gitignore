@@ -1,3 +1,6 @@
+app/config/test/parameters.yml
+app/config/dev/parameters.yml
+
 #vendors
 vendor/
 
@@ -6,6 +9,8 @@ node_modules/
 
 #all compiled js files
 frontend_src/js/
+
+frontend_src/img/avs/
 
 #IDE files
 .idea/
