@@ -42,5 +42,12 @@ function strip_tags (input, allowed) {
 function pressFooter()
 {
     var h = $(document).height();
+    $('footer').css('top', 0);
     $('footer').css('top', h + 54);
+
+    $(window).resize(function() {
+        var hs = $(document).height();
+        $('footer').css('top', hs);
+        console.log(hs)
+    });
 }
