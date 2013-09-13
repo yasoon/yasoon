@@ -13,7 +13,13 @@
         <div class="di"><textarea placeholder="Напишите краткую историю о себе" data-field="description"></textarea></div>
 
         <div class="di"><input type="text" placeholder="Личная страница" data-field="homepage"></div>
+        <div class="di file_upload_block">
+            <div class="btn di btn_upload_img">Загрузить Изображение</div>
+            <input id="fileuploadr" type="file" name="files[]" data-url="api/author/upload_user_image">
+            <div class="files_success_upload"></div>
+        </div>
 
         <div class="regbtn di reg_srep2" data-send-button>Завершить регистрацию</div>
+
     </form>
 </div>
