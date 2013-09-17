@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Yasoon\Site\Service\AuthorService;
+use Yasoon\Site\Service\ImageService;
 
 /**
  * Class AuthorController
@@ -30,6 +31,13 @@ class AuthorController {
      * @DI\Inject("yasoon.service.author")
      */
     private $service;
+
+    /**
+     * @var ImageService
+     *
+     * @DI\Inject("yasoon.service.image")
+     */
+    private $imageService;
 
     /**
      * @Route("/get_short_info/{authorId}", requirements={"authorId" = "\d+"})
@@ -192,11 +200,17 @@ class AuthorController {
         $fileSource = array();
         /** @var UploadedFile[] $files */
         $files = $request->files->get('files');
+        $path  = 'upload/';
+
         foreach ($files as $key => $file) {
-             $fileInfo =  $file->move($request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload", $file->getClientOriginalName());
-             $fileSource[$key]['file_name'] = $fileInfo->getFilename();
-             $fileSource[$key]['dir']       = 'upload/';
+            $fileInfo    = $file->move($request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload", $file->getClientOriginalName());
+            $resultImage = $this->imageService->resizeImage($fileInfo->getFilename(), $path);
+            // удаляем старое изображение
+            unlink($path . $fileInfo->getFilename());
+            $fileSource[$key]['file_name'] = $resultImage;
+            $fileSource[$key]['dir']       = $path;
         }
+
         return $fileSource;
     }
 }
