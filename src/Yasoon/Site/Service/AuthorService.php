@@ -487,4 +487,25 @@ class AuthorService extends AbstractApiService {
         ];
 
     }
+
+    /**
+     * @param string $imageName
+     * @return string
+     */
+    public function setAvatarAuthor($imageName)
+    {
+        $authorId = 1;//$this->securityContext->getToken()->getUsername();
+
+        /** @var AuthorEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
+            ->find($authorId);
+
+        $oldImage = $entity->getImg();
+        $entity->setImg($imageName);
+
+        $this->em->merge($entity);
+        $this->em->flush();
+
+        return $oldImage;
+    }
 }

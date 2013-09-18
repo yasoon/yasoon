@@ -159,7 +159,7 @@
 #
 # ========================================================================#
 
-namespace Yasoon\ImageLibrary;
+namespace Yasoon\Site\ImageLibrary;
 
 class ImageLib
 {

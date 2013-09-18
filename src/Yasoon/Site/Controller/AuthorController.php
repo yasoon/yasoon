@@ -201,14 +201,21 @@ class AuthorController {
         /** @var UploadedFile[] $files */
         $files = $request->files->get('files');
         $path  = 'upload/';
+        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload";
 
-        foreach ($files as $key => $file) {
-            $fileInfo    = $file->move($request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload", $file->getClientOriginalName());
-            $resultImage = $this->imageService->resizeImage($fileInfo->getFilename(), $path);
-            // удаляем старое изображение
-            unlink($path . $fileInfo->getFilename());
-            $fileSource[$key]['file_name'] = $resultImage;
-            $fileSource[$key]['dir']       = $path;
+        $file = $files[0];
+
+        $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
+        $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
+
+        $fileSource['file_name'] = $resultImage;
+        $fileSource['dir']       = $path;
+
+        $oldImage = $this->service->setAvatarAuthor($resultImage);
+        // удаляем оригинальное и старое изображение
+        unlink($absolutePath  . '/' . $fileInfo->getFilename());
+        if (!empty($oldImage)) {
+            unlink($absolutePath  . '/' . $oldImage);
         }
 
         return $fileSource;
