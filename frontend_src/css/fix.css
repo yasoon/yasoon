@@ -142,3 +142,7 @@ footer {
   float: left;
   position: absolute;
 }
+#editor blockquote {
+  border-left: 3px solid #eaf39d !important;
+  padding-left: 5px !important;
+}
