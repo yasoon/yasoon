@@ -372,10 +372,17 @@ class AuthorService extends AbstractApiService {
 
             #$this->em->beginTransaction();
 
+            if (empty($author['subscribed']) || $author['subscribed'] !='on') {
+                $subscribed = false;
+            } else {
+                $subscribed = true;
+            }
+
             $entity = (new AuthorEntity())
                 ->setName($author['name'])
                 ->setEmail($author['email'])
                 ->setPassword(md5($author['password']))
+                ->setSubscribed($subscribed)
                 ->setPublicationDate(new \DateTime());
 
             $this->em->persist($entity);

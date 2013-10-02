@@ -33,6 +33,7 @@ define [
           interests: @data.interests
           dreams: @data.dreams
           homepage: @data.homepage
+          subscribed: @data.subscribed
 
 
       callback()
@@ -85,6 +86,7 @@ define [
           name: @data.name
           email: @data.email
           password: @data.password
+          subscribed: @data.subscribed
 
           shortHistory: @data.shortHistory
           job: @data.job

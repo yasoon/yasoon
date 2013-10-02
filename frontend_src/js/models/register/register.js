@@ -48,7 +48,8 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           job: this.data.job,
           interests: this.data.interests,
           dreams: this.data.dreams,
-          homepage: this.data.homepage
+          homepage: this.data.homepage,
+          subscribed: this.data.subscribed
         }
       };
       callback();
@@ -116,6 +117,7 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           name: this.data.name,
           email: this.data.email,
           password: this.data.password,
+          subscribed: this.data.subscribed,
           shortHistory: this.data.shortHistory,
           job: this.data.job,
           interests: this.data.interests,
