@@ -32,7 +32,7 @@ class FriendsService extends AbstractApiService {
      */
     public function addFriend($writerId) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         if(!is_int($authorId)) {
             throw new AccessDeniedException();
@@ -53,7 +53,7 @@ class FriendsService extends AbstractApiService {
             }
         }
 
-        $sql = "INSERT INTO friends (reader_id, writer_id) VALUES({$this->clientId}, $writerId)";
+        $sql = "INSERT INTO friends (reader_id, writer_id) VALUES($authorId, $writerId)";
 
         $this->em->getConnection()->executeQuery($sql);
 
@@ -67,7 +67,7 @@ class FriendsService extends AbstractApiService {
      */
     public function deleteFriend($writerId) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         if(!is_int($authorId)) {
             throw new AccessDeniedException();
@@ -89,7 +89,7 @@ class FriendsService extends AbstractApiService {
      */
     public function getTimelineStack($offset = 0) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         if (!(int)$authorId) {
             throw new AccessDeniedException();
@@ -161,7 +161,7 @@ class FriendsService extends AbstractApiService {
      */
     public function getTimeline($map=array()) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         if(!is_int($authorId)) {
             throw new AccessDeniedException();
@@ -243,7 +243,7 @@ class FriendsService extends AbstractApiService {
 
     public function getAdminTimelineStack($offset = 0) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         if(!is_int($authorId)) {
             throw new AccessDeniedException();

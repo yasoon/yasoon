@@ -30,7 +30,7 @@ class QuestionService extends AbstractApiService {
      */
     public function add(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         $place =$this->em->getConnection()
             ->executeQuery("select max(place) as place from question where author_id = $authorId and is_in_blank=0")
@@ -66,7 +66,7 @@ class QuestionService extends AbstractApiService {
      */
     public function setInterviewCaption($model)
     {
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         /** @var AuthorEntity  $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
@@ -88,7 +88,7 @@ class QuestionService extends AbstractApiService {
      */
     public function addInterview(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         $place =$this->em->getConnection()
             ->executeQuery("select max(place) as place from question where author_id = $this->clientId and is_in_blank=1")
@@ -126,7 +126,7 @@ class QuestionService extends AbstractApiService {
      */
     public function update(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         /** @var QuestionEntity $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
@@ -158,7 +158,7 @@ class QuestionService extends AbstractApiService {
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function delete(array $model) {
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         /** @var QuestionEntity $question */
         $question = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);

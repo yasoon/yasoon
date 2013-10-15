@@ -22,7 +22,7 @@ abstract class AbstractApiService {
 
     protected function getAccessLevel($authorId)
     {
-        if ($authorId == $this->securityContext->getToken()->getUsername()) {
+        if ($authorId == (int) $this->securityContext->getToken()->getUsername()) {
             $access = 'USER';
         } else if ($this->securityContext->getToken()->getUsername() === "0") {
             $access = 'ADMIN';

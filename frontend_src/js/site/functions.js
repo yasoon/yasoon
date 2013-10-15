@@ -1,5 +1,5 @@
 $(function(){
-	
+	return;
 	
 	$('.open-area').bind('click', function(){
 		var _th = $(this),

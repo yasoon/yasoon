@@ -1,6 +1,6 @@
 <div class="open-area"></div>
 
-<img src="./img/avs/{{model.img}}.jpg" alt="">
+<img src="upload/avatar/{{model.img}}" alt="Мой аватар">
 <h4 class="usr-name editable">{{model.name}}<a href="#editinfo" data-permission="USER"><i></i></a></h4>
 <p class="u-description">{{model.description}}</p>
 <div class="hr"></div>
@@ -25,6 +25,7 @@
         <div class="clearfix"></div>
         <div class="social" data-permission="ANON">
             <div class="hr"></div>
+                {{#model.img}}
                 <a class="btn" id='follow'>Подписаться</a>
                 <a class="btn close-question mLeft10" id='unfollow' style='display:none'>Отписаться</a>
         </div>

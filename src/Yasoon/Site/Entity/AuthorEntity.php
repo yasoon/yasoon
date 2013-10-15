@@ -60,7 +60,7 @@ class AuthorEntity implements UserInterface, \Serializable
     /**
      * @var string $description
      *
-     * @ORM\Column(name="description", type="string", nullable=false)
+     * @ORM\Column(name="description", type="string", nullable=true)
      */
     protected $description;
 
@@ -514,4 +514,14 @@ class AuthorEntity implements UserInterface, \Serializable
         list (
             $this->id,
             ) = unserialize($serialized);
-    }}
+    }
+
+    /**
+     * @param int $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+}

@@ -200,8 +200,8 @@ class AuthorController {
         $fileSource = array();
         /** @var UploadedFile[] $files */
         $files = $request->files->get('files');
-        $path  = 'upload/';
-        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload";
+        $path  = 'upload/avatar/';
+        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload/avatar";
 
         $file = $files[0];
 

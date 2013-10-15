@@ -33,7 +33,7 @@ class PostService extends AbstractApiService {
      */
     public function add(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (is_int($authorId)) {
             throw new AccessDeniedException();
         }
@@ -77,7 +77,7 @@ class PostService extends AbstractApiService {
      */
     public function update(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (is_int($authorId)) {
             throw new AccessDeniedException();
         }
@@ -117,7 +117,7 @@ class PostService extends AbstractApiService {
      */
     public function delete(array $model) {
 
-        $authorId = $this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (is_int($authorId)) {
             throw new AccessDeniedException();
         }

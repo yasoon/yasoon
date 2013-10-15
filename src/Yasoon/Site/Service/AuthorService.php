@@ -13,7 +13,9 @@ use Yasoon\Site\Entity\BlankQuestionEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Mail\Sender;
-
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * @DI\Service("yasoon.service.author")
  */
@@ -32,6 +34,13 @@ class AuthorService extends AbstractApiService {
      * @DI\Inject("yasoon.service.content")
      */
     public $contentService;
+
+    /**
+     * @var Container
+     *
+     * @DI\Inject("service_container")
+     */
+    public $container;
 
 
     /**
@@ -383,7 +392,8 @@ class AuthorService extends AbstractApiService {
                 ->setEmail($author['email'])
                 ->setPassword(md5($author['password']))
                 ->setSubscribed($subscribed)
-                ->setPublicationDate(new \DateTime());
+                ->setPublicationDate(new \DateTime())
+                ->setRole(1);
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -414,6 +424,16 @@ class AuthorService extends AbstractApiService {
         }
 
         #$this->em->commit();
+
+        // Сразу авторизуем чела
+        $token = new UsernamePasswordToken((string) $entity->getId(), $entity->getPassword(), "secured_area", ['ROLE_USER']);
+
+        $this->securityContext->setToken($token);
+
+        /** @var Session $session */
+        $session = $this->container->get('request')->getSession();
+        $session->set('_security_secured_area', serialize($token));
+        $this->container->get('request')->setSession($session);
 
         return [
             'id'    => $entity->getId(),
@@ -501,7 +521,7 @@ class AuthorService extends AbstractApiService {
      */
     public function setAvatarAuthor($imageName)
     {
-        $authorId = 1;//$this->securityContext->getToken()->getUsername();
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
 
         /** @var AuthorEntity $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
