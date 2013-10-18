@@ -51,9 +51,3 @@ define [
         qqModel = (new PostQueueModel(authorId: @authorId)).load =>
           qqView = new PostQueueView(model:  qqModel)
           qqView.setRegion('queue').render()
-
-
-
-    #
-    getTemplateData: ->
-      {authorId: @authorId}

@@ -163,7 +163,7 @@ class AuthorService extends AbstractApiService {
         }
 
         $data = $this->em->createQueryBuilder()
-            ->select('author.id, author.name, count(question) as questionsCount')
+            ->select('author.id, author.name, count(question) as questionsCount, author.img')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.questions', 'question', 'WITH', 'question.answer IS NULL')
             ->where("author.id = $authorId")
@@ -174,7 +174,8 @@ class AuthorService extends AbstractApiService {
           'data' => [
               'id' => $data['id'],
               'name' => $data['name'],
-              'questions' => $data['questionsCount']
+              'questions' => $data['questionsCount'],
+              'img' =>  $data['img']
           ]
         ];
     }

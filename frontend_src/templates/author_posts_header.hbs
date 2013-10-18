@@ -20,7 +20,13 @@
             </nav>
         </div>
         <div class="my-nav" data-permission="USER">
-            <a href=""> <img src="./_temp/a1.jpg" alt=""> <span>
+            <a href="">
+                {{#if model.img}}
+                    <img src="upload/avatar/{{model.img}}" alt=""/>
+                {{else}}
+                    <img src="./_temp/a1.jpg" alt="" />
+                {{/if}}
+                <span>
                 {{#if model.questions}}
                     {{model.questions}}
                 {{/if}}</span></a>
