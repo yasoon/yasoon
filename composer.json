@@ -13,8 +13,8 @@
         "sensio/framework-extra-bundle": "2.2.*",
         "sensio/generator-bundle": "dev-master",
         "jms/di-extra-bundle": "dev-master",
-
-        "hwi/oauth-bundle": "0.3.*@dev"
+        "hwi/oauth-bundle": "0.3.*@dev", // для нормальной работы 156372aa3451d51bacdd0e9b1f380577b8075ad8
+        "symfony/swiftmailer-bundle" : ">=2.0"
 
     },
     "scripts": {

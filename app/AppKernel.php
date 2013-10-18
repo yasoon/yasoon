@@ -28,6 +28,7 @@ class AppKernel extends Kernel{
             new \JMS\AopBundle\JMSAopBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \Yasoon\Site\YasoonSiteBundle(),
+            new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle()
 //            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         ];
 
