@@ -87,3 +87,4 @@ REST-like API, принимает GET и POST запросы, возвращае
 
      sudo npm install handlebars@v1.0.11
 
+2) проблема с бандлом унтификации, переключится на коммит 156372aa3451d51bacdd0e9b1f380577b8075ad8

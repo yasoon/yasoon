@@ -59,12 +59,6 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
       });
     };
 
-    AuthorPostsPageView.prototype.getTemplateData = function() {
-      return {
-        authorId: this.authorId
-      };
-    };
-
     return AuthorPostsPageView;
 
   })(PageView);

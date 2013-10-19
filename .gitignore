@@ -8,7 +8,7 @@ vendor/
 node_modules/
 
 #all compiled js files
-frontend_src/js/
+#frontend_src/js/
 
 frontend_src/img/avs/
 

@@ -30,10 +30,6 @@ define(['views/base/view', 'JST', 'categories'], function(View, JST, categories)
       }
     };
 
-    AuthorPostsInfoView.prototype.getTemplateData = function() {
-      return AuthorPostsInfoView.__super__.getTemplateData.apply(this, arguments);
-    };
-
     return AuthorPostsInfoView;
 
   })(View);
