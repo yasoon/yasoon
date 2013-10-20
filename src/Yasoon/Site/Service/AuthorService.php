@@ -392,7 +392,7 @@ class AuthorService extends AbstractApiService {
                 ->setName($author['name'])
                 ->setEmail($author['email'])
                 ->setPassword(md5($author['password']))
-                ->setSubscribed($subscribed)
+                ->setSubscribed((int) $subscribed)
                 ->setPublicationDate(new \DateTime())
                 ->setRole(1);
 

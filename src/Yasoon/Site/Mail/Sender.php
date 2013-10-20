@@ -17,18 +17,35 @@
 namespace Yasoon\Site\Mail;
 
 use JMS\DiExtraBundle\Annotation as DI;
-
+use Swift_Mailer;
 /**
  * @DI\Service("yasoon.mail.sender")
  */
 class Sender
 {
     /**
+     * @var Swift_Mailer
+     *
+     * @DI\Inject("mailer")
+     */
+    public $swiftMailer;
+
+    /**
      * @param string $email
      * @param string $text
+     * @return int
      */
     public function send($email, $text)
     {
-        file_put_contents(__DIR__.'/../../../../app/logs/mail.log', "Email to $email.\n $text");
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Регистрация нового пользователя')
+            ->setFrom('info@yasoon.ru')
+            ->setTo($email)
+            ->setBody($text)
+        ;
+
+//        return $this->swiftMailer->send($message);
+
+//        file_put_contents(__DIR__.'/../../../../app/logs/mail.log', "Email to $email.\n $text");
     }
 }

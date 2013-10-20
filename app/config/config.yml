@@ -74,3 +74,9 @@ security:
 #    providers:
 #        secured_area:
 #            id: yasoon.repository.author
+swiftmailer:
+    host:       smtp.gmail.com
+    port:       465
+    encryption: ssl
+    username: bagzon@gmail.com
+    password: 123
