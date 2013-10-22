@@ -48,7 +48,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
         aqView = new PostQueueView({
           model: aq
         });
-        return aqView.setRegion('queue').render();
+        aqView.setRegion('queue').render();
+        return console.log(aq);
       });
       activeCategoryId = this.activeCategoryId;
       mode = this.mode;

@@ -41,6 +41,7 @@ define [
       aq.load =>
         aqView = new PostQueueView(model: aq)
         aqView.setRegion('queue').render()
+        console.log aq
 
 
       activeCategoryId = @activeCategoryId

@@ -1186,6 +1186,21 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
+  buffer += "\n                                    upload/avatar/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.img)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n                                   ";
+  return buffer;
+  }
+
+function program3(depth0,data) {
+  
+  
+  return "\n                                     ./_temp/a1.jpg\n                                   ";
+  }
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1;
   buffer += "\n                    ("
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + ")\n                    ";
@@ -1204,12 +1219,15 @@ function program1(depth0,data) {
   if (stack1 = helpers.catId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.catId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">Люди</a>\n            </nav>\n        </div>\n        <div class=\"my-nav\" data-permission=\"USER\">\n            <a href=\"\"> <img src=\"./_temp/a1.jpg\" alt=\"\"> <span>"
+    + "\">Люди</a>\n            </nav>\n        </div>\n        <div class=\"my-nav\" data-permission=\"USER\">\n            <a href=\"\"> <img src=\"";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.img), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\" alt=\"\"> <span>"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</span></a>\n            <nav>\n                <a href=\"#editinfo\">Профиль</a>\n                <a href='#author/"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/questions'>Вопросы\n                    ";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n                </a>\n                <a href=\"#timeline\">Лента</a>\n                <a id=\"logout\">Выйти</a>\n            </nav>\n        </div>\n        <div class=\"my-nav\" id='login' data-to-login data-permission=\"ANON\">\n        Войти\n        </div>\n    </div>";
   return buffer;

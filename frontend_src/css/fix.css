@@ -156,3 +156,12 @@ footer {
 .post-date {
   margin-left: 5px;
 }
+.my-nav > a img {
+  top: 1px;
+  width: 28px;
+  height: 27px;
+  display: block;
+  position: absolute;
+  z-index: 2;
+  left: -28px;
+}
