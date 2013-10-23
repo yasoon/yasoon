@@ -37,6 +37,9 @@ define [
       self = @
       count = $(@el).find('[data-get-pre-send]').length
 
+      if count is 0
+        @callBackFn()
+        
       $(@el).find('[data-get-pre-send]').each(->
         if $(@).is('input')
           ell.data[$(@).attr('data-field')] = $(@).val()

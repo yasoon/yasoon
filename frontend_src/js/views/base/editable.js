@@ -58,6 +58,9 @@ define(['views/base/view', 'JST'], function(View, JST) {
       ell = this.model;
       self = this;
       count = $(this.el).find('[data-get-pre-send]').length;
+      if (count === 0) {
+        this.callBackFn();
+      }
       return $(this.el).find('[data-get-pre-send]').each(function() {
         if ($(this).is('input')) {
           ell.data[$(this).attr('data-field')] = $(this).val();
