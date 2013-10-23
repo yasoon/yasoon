@@ -78,5 +78,5 @@ swiftmailer:
     host:       smtp.gmail.com
     port:       465
     encryption: ssl
-    username: bagzon@gmail.com
-    password: 123
+    username: 'yasoon.info@gmail.com'
+    password: 'superinvestor1'
