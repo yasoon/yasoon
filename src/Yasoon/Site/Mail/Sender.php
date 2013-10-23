@@ -44,7 +44,7 @@ class Sender
             ->setBody($text)
         ;
 
-//        return $this->swiftMailer->send($message);
+        return $this->swiftMailer->send($message);
 
 //        file_put_contents(__DIR__.'/../../../../app/logs/mail.log', "Email to $email.\n $text");
     }
