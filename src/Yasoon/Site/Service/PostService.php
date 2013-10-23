@@ -34,7 +34,7 @@ class PostService extends AbstractApiService {
     public function add(array $model) {
 
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        if (is_int($authorId)) {
+        if (!is_int($authorId)) {
             throw new AccessDeniedException();
         }
 
@@ -46,7 +46,7 @@ class PostService extends AbstractApiService {
             ->setCaption($model['caption'])
             ->setPreview($model['preview'])
             ->setText($model['text'])
-            ->setPlace($place)
+            ->setPlace((int)$place)
             ->setAuthorId($authorId)
             ->setCategoryId($model['categoryId'])
             ->setDate(new \DateTime())
@@ -78,7 +78,7 @@ class PostService extends AbstractApiService {
     public function update(array $model) {
 
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        if (is_int($authorId)) {
+        if (!is_int($authorId)) {
             throw new AccessDeniedException();
         }
 
@@ -118,7 +118,7 @@ class PostService extends AbstractApiService {
     public function delete(array $model) {
 
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        if (is_int($authorId)) {
+        if (!is_int($authorId)) {
             throw new AccessDeniedException();
         }
 

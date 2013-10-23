@@ -578,14 +578,12 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<header class=\"log-in\"></header>\n\n<section id=\"page-layout\">\n\n    <nav class=\"navigate\">\n        <a class=\"active\">Истории</a>\n        <a data-link='author/";
+  buffer += "<header class=\"log-in\"></header>\n\n<section id=\"page-layout\">\n\n    <nav class=\"navigate\">\n        <a class=\"active\">Истории</a>\n        <a data-link='#author/";
   if (stack1 = helpers.authorId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.authorId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "/questions'>Ответы</a>\n    </nav>\n\n    <div class=\"postinfo\" id ='author'></div>\n\n    <article class=\"lim cat-title\" data-permission=\"USER\">\n        <div class=\"content\"><p><a class=\"btn\" data-link='author/";
-  if (stack1 = helpers.authorId) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.authorId; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+    + "/questions'>Ответы</a>\n    </nav>\n\n    <div class=\"postinfo\" id ='author'></div>\n\n    <article class=\"lim cat-title\" data-permission=\"USER\">\n        <div class=\"content\"><p><a class=\"btn\" data-link='#author/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "/posts/new'>Написать новый пост</a></p></div>\n        <div class=\"hr\"></div>\n    </article>\n\n    <div id='queue'></div>\n\n</section>\n<footer></footer>";
   return buffer;
   });
@@ -628,9 +626,9 @@ function program4(depth0,data) {
     + "'>\n        </div>\n\n        <div class=\"di\">\n            <h3>отрасль:</h3>\n            <select data-field=\"categoryId\">\n                ";
   stack2 = helpers.each.call(depth0, depth0.categories, {hash:{},inverse:self.noop,fn:self.programWithDepth(1, program1, data, depth0),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n            </select>\n        </div>\n    </div>\n\n    <div class=\"di\">\n        <h3>текст:</h3>\n        <div class=\"btn-toolbar\" data-role=\"editor-toolbar\" data-target=\"#editor\">\n            <div class=\"btn-group\">\n                <div  class=\"item\" data-edit=\"bold\" title=\"Bold (Ctrl/Cmd+B)\"><b>Жирный</b></div>\n                <div  class=\"item\" data-edit=\"italic\" title=\"Italic (Ctrl/Cmd+I)\"><i>Курсив</i></div>\n                <div  class=\"item\" data-edit=\"strikethrough\" title=\"Strikethrough\"><s>Зачеркнутый</s></div>\n                <div  class=\"item\" data-edit=\"underline\" title=\"Underline (Ctrl/Cmd+U)\"><u>Подчеркнутый</u></div>\n                <div  class=\"item\" data-edit=\"indent\" title=\"Выделение\">Выделение</div>\n            </div>\n\n            <div class=\"btn-group\">\n                <div  class=\"item\" title=\"Вставить изображение\" id=\"pictureBtn\">Изображение</div>\n                <input type=\"file\" data-role=\"magic-overlay\" data-target=\"#pictureBtn\" class=\"pictureBtnInput\" data-edit=\"insertImage\"/>\n            </div>\n        </div>\n        <div id=\"editor\" data-field=\"text\">"
+  buffer += "\n            </select>\n        </div>\n    </div>\n\n    <div class=\"di\">\n        <h3>текст:</h3>\n        <div class=\"btn-toolbar\" data-role=\"editor-toolbar\" data-target=\"#editor\">\n            <div class=\"btn-group\">\n                <div  class=\"item\" data-edit=\"bold\" title=\"Bold (Ctrl/Cmd+B)\"><b>Жирный</b></div>\n                <div  class=\"item\" data-edit=\"italic\" title=\"Italic (Ctrl/Cmd+I)\"><i>Курсив</i></div>\n                <div  class=\"item\" data-edit=\"strikethrough\" title=\"Strikethrough\"><s>Зачеркнутый</s></div>\n                <div  class=\"item\" data-edit=\"underline\" title=\"Underline (Ctrl/Cmd+U)\"><u>Подчеркнутый</u></div>\n                <div  class=\"item\" data-edit=\"indent\" title=\"Выделение\">Выделение</div>\n            </div>\n\n            <div class=\"btn-group\">\n                <div  class=\"item\" title=\"Вставить изображение\" id=\"pictureBtn\">Изображение</div>\n                <input type=\"file\" data-role=\"magic-overlay\" data-target=\"#pictureBtn\" class=\"pictureBtnInput\" data-edit=\"insertImage\"/>\n            </div>\n        </div>\n        <div id=\"editor\" data-field=\"text\" data-get-pre-send>"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</div>\n    </div>\n\n    <div class=\"di\">\n        <h3>аннотация:</h3>\n        <div id=\"cleartxt\" data-field='preview'>"
+    + "</div>\n    </div>\n\n    <div class=\"di\">\n        <h3>аннотация:</h3>\n        <div id=\"cleartxt\" data-field='preview' data-get-pre-send>"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</div>\n    </div>\n\n\n    <div class=\"di t-center\">\n\n        <a class=\"btn\" data-send-button>Опубликовать</a>\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.id), {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});

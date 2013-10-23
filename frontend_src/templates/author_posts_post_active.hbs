@@ -36,12 +36,12 @@
                 <input type="file" data-role="magic-overlay" data-target="#pictureBtn" class="pictureBtnInput" data-edit="insertImage"/>
             </div>
         </div>
-        <div id="editor" data-field="text">{{model.text}}</div>
+        <div id="editor" data-field="text" data-get-pre-send>{{model.text}}</div>
     </div>
 
     <div class="di">
         <h3>аннотация:</h3>
-        <div id="cleartxt" data-field='preview'>{{model.preview}}</div>
+        <div id="cleartxt" data-field='preview' data-get-pre-send>{{model.preview}}</div>
     </div>
 
 
