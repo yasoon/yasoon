@@ -74,5 +74,36 @@ class PeopleController {
         return $result;
     }
 
+    /**
+     * @Route("/search_post_by_date/{text}")
+     * @Method({"GET"})
+     */
+    public function searchPostByDateAction($text)
+    {
+        $result = $this->service->getPostsByDate(0, $text);
 
+        return $result;
+    }
+
+    /**
+     * @Route("/search_post_by_rating/{text}")
+     * @Method({"GET"})
+     */
+    public function searchPostByRatingAction($text)
+    {
+        $result = $this->service->getPostsByRating(0, $text);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/search_author/{text}")
+     * @Method({"GET"})
+     */
+    public function searchAuthorAction($text)
+    {
+        $result = $this->service->getAuthors(0, $text);
+
+        return $result;
+    }
 }

@@ -35,6 +35,24 @@ define(['controllers/base/controller', 'views/people/page', 'views/people/explor
       });
     };
 
+    PeopleController.prototype.searchAction = function(params) {
+      if (params.text == null) {
+        params.text = false;
+      }
+      if (params.mode === 'author') {
+        return this.view = this.view = new PeoplePageView({
+          catId: 0,
+          text: params.text
+        });
+      } else {
+        return this.view = new PeopleExplorePageView({
+          mode: params.mode,
+          catId: 0,
+          text: params.text
+        });
+      }
+    };
+
     return PeopleController;
 
   })(Controller);

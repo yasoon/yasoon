@@ -28,7 +28,7 @@ class PeopleService extends AbstractApiService {
      * @param int $categoryId
      * @return array
      */
-    public function getAuthors($categoryId = 0) {
+    public function getAuthors($categoryId = 0, $searchText = null) {
 
         $qb = $this->em->createQueryBuilder()
             ->select('post.preview, author.name, author.id as authorId, post.likes')
@@ -37,6 +37,9 @@ class PeopleService extends AbstractApiService {
 
         if ($categoryId) {
             $qb->where("post.categoryId = $categoryId");
+        } else if($searchText) {
+            $qb->where('post.text like \'%'.mysql_real_escape_string($searchText).'%\''); // по хардкору блять
+            $qb->orWhere('post.preview like \'%'.mysql_real_escape_string($searchText).'%\'');
         }
 
         $rows = $qb->getQuery()->getResult();
@@ -75,7 +78,7 @@ class PeopleService extends AbstractApiService {
      * @param int $categoryId
      * @return array
      */
-    public function getPostsByDate($categoryId = 0) {
+    public function getPostsByDate($categoryId = 0, $searchText = null) {
 
         $qb = $this->em->createQueryBuilder()
             ->select('post.preview, author.name, author.id as authorId, post.likes, post.id as postId, post.caption')
@@ -85,6 +88,9 @@ class PeopleService extends AbstractApiService {
 
         if ($categoryId) {
             $qb->where("post.categoryId = $categoryId");
+        } else if($searchText) {
+            $qb->where('post.text like \'%'.mysql_real_escape_string($searchText).'%\''); // по хардкору блять
+            $qb->orWhere('post.preview like \'%'.mysql_real_escape_string($searchText).'%\'');
         }
 
         $rows = $qb->getQuery()->getResult();
@@ -107,7 +113,7 @@ class PeopleService extends AbstractApiService {
      * @param int $categoryId
      * @return array
      */
-    public function getPostsByRating($categoryId = 0) {
+    public function getPostsByRating($categoryId = 0, $searchText = null) {
 
         $qb = $this->em->createQueryBuilder()
             ->select('post.preview, author.name, author.id as authorId, post.likes, post.id as postId, post.caption')
@@ -117,6 +123,9 @@ class PeopleService extends AbstractApiService {
 
         if ($categoryId) {
             $qb->where("post.categoryId = $categoryId");
+        } else if($searchText) {
+            $qb->where('post.text like \'%'.mysql_real_escape_string($searchText).'%\''); // по хардкору блять
+            $qb->orWhere('post.preview like \'%'.mysql_real_escape_string($searchText).'%\'');
         }
 
         $rows = $qb->getQuery()->getResult();

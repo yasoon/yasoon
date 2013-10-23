@@ -12,6 +12,7 @@ define(function() {
     match('people/:catId', 'people#peopleAction');
     match('explore/:mode', 'people#exploreAction');
     match('explore/:mode/:catId', 'people#exploreAction');
+    match('search/:mode/:text', 'people#searchAction');
     match('author/:authorId/posts/new/blank', 'author#newBlankPostAction');
     match('author/:authorId/posts/new', 'author#newPostAction');
     match('author/:authorId/posts/:postId', 'author#readPostAction');

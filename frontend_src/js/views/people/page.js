@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 'categories', 'views/people/authorQueue', 'models/people/authorQueue'], function(PageView, JST, FooterView, HeaderView, categories, AuthorQueueView, AuthorQueueModel) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 'categories', 'views/people/authorQueue', 'models/people/authorQueue', 'models/people/authorSearch'], function(PageView, JST, FooterView, HeaderView, categories, AuthorQueueView, AuthorQueueModel, AuthorSearchModel) {
   'use strict';
   var PeoplePageView, _ref;
   return PeoplePageView = (function(_super) {
@@ -26,27 +26,41 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
     PeoplePageView.prototype.initialize = function(params) {
       PeoplePageView.__super__.initialize.apply(this, arguments);
       this.activeCategoryId = parseInt(params.catId);
-      return this.activeCategory = categories[this.activeCategoryId];
+      this.activeCategory = categories[this.activeCategoryId];
+      return this.searchText = params.text;
     };
 
     PeoplePageView.prototype.render = function() {
-      var activeCategoryId, aq,
+      var activeCategoryId, aq, as,
         _this = this;
       PeoplePageView.__super__.render.apply(this, arguments);
       new HeaderView({
         catId: this.activeCategoryId
       });
       new FooterView();
-      aq = new AuthorQueueModel({
-        categoryId: this.activeCategoryId
-      });
-      aq.load(function() {
-        var aqView;
-        aqView = new AuthorQueueView({
-          model: aq
+      if (!this.searchText) {
+        aq = new AuthorQueueModel({
+          categoryId: this.activeCategoryId
         });
-        return aqView.setRegion('queue').render();
-      });
+        aq.load(function() {
+          var aqView;
+          aqView = new AuthorQueueView({
+            model: aq
+          });
+          return aqView.setRegion('queue').render();
+        });
+      } else {
+        as = new AuthorSearchModel({
+          text: this.searchText
+        });
+        as.load(function() {
+          var aqView;
+          aqView = new AuthorQueueView({
+            model: as
+          });
+          return aqView.setRegion('queue').render();
+        });
+      }
       activeCategoryId = this.activeCategoryId;
       return this.$el.find('.category').each(function() {
         if (parseInt($(this).attr('id')) === activeCategoryId) {
@@ -63,6 +77,17 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
         activeCategory: this.activeCategory,
         activeCatId: this.activeCategoryId
       };
+    };
+
+    PeoplePageView.prototype.events = {
+      'keypress .search': function(e) {
+        var searchText;
+        if (e.which === 13) {
+          searchText = $(e.currentTarget).val();
+          this.publishEvent('redirect', 'search/author/' + searchText);
+          return this.dispose();
+        }
+      }
     };
 
     return PeoplePageView;

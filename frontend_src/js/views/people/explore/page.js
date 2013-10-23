@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 'categories', 'views/people/explore/postQueue', 'models/people/explore/postQueue'], function(PageView, JST, FooterView, HeaderView, categories, PostQueueView, PostQueueModel) {
+define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 'categories', 'views/people/explore/postQueue', 'models/people/explore/postQueue', 'models/people/explore/postSearch'], function(PageView, JST, FooterView, HeaderView, categories, PostQueueView, PostQueueModel, PostSearchModel) {
   'use strict';
   var PeopleExplorePageView, _ref;
   return PeopleExplorePageView = (function(_super) {
@@ -27,11 +27,12 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
       PeopleExplorePageView.__super__.initialize.apply(this, arguments);
       this.activeCategoryId = parseInt(params.catId);
       this.activeCategory = categories[this.activeCategoryId];
-      return this.mode = params.mode;
+      this.mode = params.mode;
+      return this.searchText = params.text;
     };
 
     PeopleExplorePageView.prototype.render = function() {
-      var activeCategoryId, aq, mode,
+      var activeCategoryId, aq, mode, sp,
         _this = this;
       PeopleExplorePageView.__super__.render.apply(this, arguments);
       new HeaderView({
@@ -39,18 +40,31 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
         mode: this.mode
       });
       new FooterView();
-      aq = new PostQueueModel({
-        categoryId: this.activeCategoryId,
-        mode: this.mode
-      });
-      aq.load(function() {
-        var aqView;
-        aqView = new PostQueueView({
-          model: aq
+      if (!this.searchText) {
+        aq = new PostQueueModel({
+          categoryId: this.activeCategoryId,
+          mode: this.mode
         });
-        aqView.setRegion('queue').render();
-        return console.log(aq);
-      });
+        aq.load(function() {
+          var aqView;
+          aqView = new PostQueueView({
+            model: aq
+          });
+          return aqView.setRegion('queue').render();
+        });
+      } else {
+        sp = new PostSearchModel({
+          text: this.searchText,
+          mode: this.mode
+        });
+        sp.load(function() {
+          var aqView;
+          aqView = new PostQueueView({
+            model: sp
+          });
+          return aqView.setRegion('queue').render();
+        });
+      }
       activeCategoryId = this.activeCategoryId;
       mode = this.mode;
       this.$el.find('.category').each(function() {
@@ -80,6 +94,17 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/people/header', 
         activeCatId: this.activeCategoryId,
         mode: this.mode
       };
+    };
+
+    PeopleExplorePageView.prototype.events = {
+      'keypress .search': function(e) {
+        var searchText;
+        if (e.which === 13) {
+          searchText = $(e.currentTarget).val();
+          this.publishEvent('redirect', 'search/' + this.mode + '/' + searchText);
+          return this.dispose();
+        }
+      }
     };
 
     return PeopleExplorePageView;

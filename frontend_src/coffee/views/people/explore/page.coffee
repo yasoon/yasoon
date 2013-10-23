@@ -6,6 +6,7 @@ define [
          'categories'
          'views/people/explore/postQueue'
          'models/people/explore/postQueue'
+         'models/people/explore/postSearch'
 ], (PageView,
     JST,
     FooterView,
@@ -13,7 +14,8 @@ define [
 
     categories
     PostQueueView
-    PostQueueModel
+    PostQueueModel,
+    PostSearchModel
 ) ->
   'use strict'
 
@@ -31,17 +33,23 @@ define [
       @activeCategoryId =  parseInt(params.catId)
       @activeCategory = categories[@activeCategoryId]
       @mode = params.mode
+      @searchText = params.text
 
     render: ->
       super
       new HeaderView(catId: @activeCategoryId, mode: @mode)
       new FooterView()
 
-      aq = new PostQueueModel(categoryId: @activeCategoryId, mode: @mode)
-      aq.load =>
-        aqView = new PostQueueView(model: aq)
-        aqView.setRegion('queue').render()
-        console.log aq
+      if not @searchText
+        aq = new PostQueueModel(categoryId: @activeCategoryId, mode: @mode)
+        aq.load =>
+          aqView = new PostQueueView(model: aq)
+          aqView.setRegion('queue').render()
+      else
+        sp = new PostSearchModel(text: @searchText, mode: @mode)
+        sp.load =>
+          aqView = new PostQueueView(model: sp)
+          aqView.setRegion('queue').render()
 
 
       activeCategoryId = @activeCategoryId
@@ -65,3 +73,10 @@ define [
       for cat in categories
         cat.mode = @mode
       {categories: categories, activeCategory: @activeCategory, activeCatId: @activeCategoryId, mode: @mode}
+
+    events:
+      'keypress .search': (e) ->
+        if e.which is 13
+            searchText = $(e.currentTarget).val()
+            @publishEvent 'redirect', 'search/'+@mode+'/'+searchText
+            @dispose()

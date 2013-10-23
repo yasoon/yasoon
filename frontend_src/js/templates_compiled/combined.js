@@ -415,9 +415,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.posts)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a></div>\n            <div><p class=\"p-label\">ответов</p> <a href=\"\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a></div>\n        </div>\n\n        <div class=\"clearfix\"></div>\n        <div class=\"social\" data-permission=\"ANON\">\n            <div class=\"hr\"></div>\n                "
-    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.img)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n                <a class=\"btn\" id='follow'>Подписаться</a>\n                <a class=\"btn close-question mLeft10\" id='unfollow' style='display:none'>Отписаться</a>\n        </div>\n        <div class=\"hr\"></div>\n    </div>\n</div>";
+    + "</a></div>\n        </div>\n\n        <div class=\"clearfix\"></div>\n        <div class=\"social\" data-permission=\"ANON\">\n            <div class=\"hr\"></div>\n                <a class=\"btn\" id='follow'>Подписаться</a>\n                <a class=\"btn close-question mLeft10\" id='unfollow' style='display:none'>Отписаться</a>\n        </div>\n        <div class=\"hr\"></div>\n    </div>\n</div>";
   return buffer;
   });
 
@@ -1157,7 +1155,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   buffer += "<article class=\"lim\">\n\n    <div class=\"p-label\"><a href=\"user.html\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorName)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a></div>\n    <h2><a href=\"\">"
+    + "</a></div>\n    <h2><a href=\"#author/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "/posts/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.id)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.caption)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a></h2>\n    <div class=\"content\">\n        <p>"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.preview)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -1253,7 +1255,7 @@ function program1(depth0,data) {
   return buffer;
   }
 
-  buffer += "<header class=\"log-in\"></header>\n\n<section id=\"page-layout\">\n\n    <div class=\"left-side\">\n        <div class=\"di\"><input type=\"text\" class=\"search\" placeholder=\"Поиск\"></div>\n        <div class=\"p-label di\"><b>Отрасль</b></div>\n        <nav class=\"nav-cat\" id='categories'>\n            ";
+  buffer += "<header class=\"log-in\"></header>\n\n<section id=\"page-layout\">\n\n    <div class=\"left-side\">\n        <div class=\"di\"><input type=\"text\" class=\"search\" placeholder=\"Поиск2\"></div>\n        <div class=\"p-label di\"><b>Отрасль</b></div>\n        <nav class=\"nav-cat\" id='categories'>\n            ";
   stack1 = helpers.each.call(depth0, depth0.categories, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        </nav>\n    </div>\n\n    <article class=\"lim cat-title\">\n        <h3 id='activeCategory'>";
