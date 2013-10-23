@@ -37,7 +37,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
         });
         infoView.setRegion('info').setMode('edit');
         console.log(infoModel);
-        return $('#fileupload').fileupload({
+        $('#fileupload').fileupload({
           dataType: 'json',
           autoUpload: true,
           number: 1,
@@ -49,6 +49,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
             return $(".btn_upload_img").text("Изменить изображение");
           }
         });
+        return pressFooter();
       });
     };
 

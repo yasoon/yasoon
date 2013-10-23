@@ -45,4 +45,6 @@ define [
             $(".btn_upload_img").text("Изменить изображение")
         })
 
+        pressFooter()
+
 
