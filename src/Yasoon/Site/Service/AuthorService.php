@@ -411,19 +411,20 @@ class AuthorService extends AbstractApiService {
             $sql = 'INSERT INTO question (author_id, caption, date, is_in_blank, place) VALUES '.implode(',', $questions);
             $this->em->getConnection()->executeQuery($sql);
 
-
-            $message = $this->contentService->getAllContent()[6]['text'];
-
-            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
-
-            $this->mailer->send($entity->getEmail(), $message);
-
-
         } catch (\Exception $e) {
             throw $e;
             #$this->em->rollback();
         }
 
+        try {
+            $message = $this->contentService->getAllContent()[6]['text'];
+
+            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
+
+            $this->mailer->send($entity->getEmail(), $message);
+        } catch (\Exception $e) {
+
+        }
         #$this->em->commit();
 
         // Сразу авторизуем чела
