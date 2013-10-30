@@ -112,6 +112,7 @@ define [
       @modesHistory.push(@mode) if @mode ?
       @mode = mode
       callback?()
+      pressFooter()
       @
 
     #

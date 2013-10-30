@@ -76,7 +76,5 @@ security:
 #            id: yasoon.repository.author
 swiftmailer:
     host:       smtp.gmail.com
-    port:       465
-    encryption: ssl
     username: 'yasoon.info@gmail.com'
     password: 'superinvestor1'

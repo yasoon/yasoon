@@ -32,3 +32,5 @@ define [
       dsModel = new DaystoryModel
       dsModel.load =>
         (new DaystoryView(model: dsModel)).setRegion('daystory').render()
+
+      pressFooter()

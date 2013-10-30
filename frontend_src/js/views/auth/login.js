@@ -23,6 +23,11 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
 
     LoginView.prototype.templateName = 'auth_login';
 
+    LoginView.prototype.initialize = function(params) {
+      LoginView.__super__.initialize.call(this, params);
+      return this.callback = params.callback;
+    };
+
     LoginView.prototype.events = {
       'click .go_register': function() {
         return this.dispose();
@@ -44,6 +49,7 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
 
     LoginView.prototype.addCallback = function(data) {
       this.publishEvent('redirect', 'author/' + this.model.data.id + '/posts');
+      this.callback(false);
       return this.dispose();
     };
 

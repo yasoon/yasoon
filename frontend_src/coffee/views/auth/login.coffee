@@ -17,6 +17,10 @@ define [
 
     templateName: 'auth_login'
 
+    initialize: (params)->
+      super(params)
+      @callback = params.callback
+
     events:
       'click .go_register': ->
         @dispose()
@@ -33,4 +37,5 @@ define [
 
     addCallback: (data) ->
       @publishEvent 'redirect', 'author/'+@model.data.id+'/posts'
+      @callback(false)
       @dispose()

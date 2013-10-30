@@ -77,14 +77,14 @@ define(['chaplin', 'models/base/model'], function(Chaplin, Model) {
           shortHistory: this.data.shortHistory,
           job: this.data.job,
           interests: this.data.interests,
-          dreams: this.data.dreams
+          dreams: this.data.dreams,
+          homepage: this.data.homepage
         }
       };
       addCallback = function(data) {
         var authorId;
         if (data.error == null) {
-          authorId = data.id;
-          return _this.publishEvent('redirect', "author/" + authorId + "/posts/new/blank");
+          return authorId = data.id;
         }
       };
       return this.request(addCallback, true);

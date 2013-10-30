@@ -155,6 +155,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
       if (typeof callback === "function") {
         callback();
       }
+      pressFooter();
       return this;
     };
 

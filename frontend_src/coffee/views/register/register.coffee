@@ -29,8 +29,6 @@ define [
         autoUpload: true,
         number: 1,
         done: (e, data) ->
-          $.each(data.result, (index, file) ->
-            fileName = file.dir + file.file_name
-            $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>')
-          )
+          fileName = data.result.dir + data.result.file_name
+          $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>')
       })

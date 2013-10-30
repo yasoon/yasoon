@@ -30,11 +30,12 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/index/header', '
       new FooterView();
       new HeaderView();
       dsModel = new DaystoryModel;
-      return dsModel.load(function() {
+      dsModel.load(function() {
         return (new DaystoryView({
           model: dsModel
         })).setRegion('daystory').render();
       });
+      return pressFooter();
     };
 
     return IndexPageView;

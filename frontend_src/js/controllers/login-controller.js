@@ -10,6 +10,7 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
     __extends(LoginController, _super);
 
     function LoginController() {
+      this.setLoginActive = __bind(this.setLoginActive, this);
       this.hideLogin = __bind(this.hideLogin, this);
       this.goLogin = __bind(this.goLogin, this);
       this.initialize = __bind(this.initialize, this);
@@ -30,7 +31,8 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
         this.loginActive = 1;
         loginModel = new LoginModel();
         this.loginView = new LoginView({
-          model: loginModel
+          model: loginModel,
+          callback: this.setLoginActive
         });
         return this.loginView.setMode('active');
       }
@@ -39,6 +41,10 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
     LoginController.prototype.hideLogin = function() {
       this.loginActive = false;
       return this.loginView.dispose();
+    };
+
+    LoginController.prototype.setLoginActive = function(state) {
+      return this.loginActive = state;
     };
 
     return LoginController;

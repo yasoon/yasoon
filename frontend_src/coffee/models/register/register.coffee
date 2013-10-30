@@ -58,11 +58,12 @@ define [
             job: @data.job
             interests: @data.interests
             dreams: @data.dreams
+            homepage: @data.homepage
 
         addCallback = (data) =>
           if !data.error?
             authorId = data.id
-            @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
+#            @publishEvent 'redirect', "author/#{authorId}/posts/new/blank"
 
         @request(addCallback, true)
 

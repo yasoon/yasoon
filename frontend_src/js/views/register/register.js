@@ -36,11 +36,9 @@ define(['views/base/editable', 'jqueryui', 'jquery.ui.widget', 'jqueryupload', '
         autoUpload: true,
         number: 1,
         done: function(e, data) {
-          return $.each(data.result, function(index, file) {
-            var fileName;
-            fileName = file.dir + file.file_name;
-            return $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>');
-          });
+          var fileName;
+          fileName = data.result.dir + data.result.file_name;
+          return $(".files_success_upload").append('<img src="' + fileName + '" width="53" height="53"/>');
         }
       });
     };

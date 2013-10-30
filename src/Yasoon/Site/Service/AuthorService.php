@@ -460,10 +460,10 @@ class AuthorService extends AbstractApiService {
 
         isset($author['name']) && $entity->setDescription($author['name']);
         isset($author['email']) && $entity->setDescription($author['email']);
-        isset($author['description']) && $entity->setDescription($author['description']);
+        isset($author['shortHistory']) && $entity->setDescription($author['shortHistory']);
         isset($author['job']) && $entity->setJob($author['job']);
-        isset($author['interest']) && $entity->setInterest($author['interest']);
-        isset($author['dream']) && $entity->setDream($author['dream']);
+        isset($author['interests']) && $entity->setInterest($author['interests']);
+        isset($author['dreams']) && $entity->setDream($author['dreams']);
 
         isset($author['homepage']) && $entity->setHomepage($author['homepage']);
 

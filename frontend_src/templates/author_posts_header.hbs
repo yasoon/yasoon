@@ -20,7 +20,7 @@
             </nav>
         </div>
         <div class="my-nav" data-permission="USER">
-            <a href="">
+            <a href="#author/{{model.id}}/posts">
                 {{#if model.img}}
                     <img src="upload/avatar/{{model.img}}" alt=""/>
                 {{else}}
@@ -31,7 +31,7 @@
                     {{model.questions}}
                 {{/if}}</span></a>
             <nav>
-                <a href="#editinfo">Профиль</a>
+                <a href="#author/{{model.id}}/posts">Профиль</a>
                 <a href='#author/{{model.id}}/questions'>Вопросы
                 {{#if model.questions}}
                     ({{model.questions}})

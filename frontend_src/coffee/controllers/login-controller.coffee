@@ -24,9 +24,12 @@ define [
         @loginActive = 1
 
         loginModel = new LoginModel()
-        @loginView = new LoginView(model:loginModel)
+        @loginView = new LoginView(model:loginModel, callback: @setLoginActive)
         @loginView.setMode('active')
 
     hideLogin: =>
       @loginActive = false
       @loginView.dispose()
+
+    setLoginActive: (state) =>
+      @loginActive = state

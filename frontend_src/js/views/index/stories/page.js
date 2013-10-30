@@ -30,11 +30,12 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/index/header', '
       new HeaderView();
       new FooterView();
       pq = new PostQueueModel();
-      return pq.load(function() {
+      pq.load(function() {
         return (new PostQueueView({
           model: pq
         })).setRegion('queue').render();
       });
+      return pressFooter();
     };
 
     return IndexStoriesPageView;

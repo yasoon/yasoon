@@ -43,7 +43,7 @@ function pressFooter()
 {
     var h = $(document).height();
     $('footer').css('top', 0);
-    $('footer').css('top', h + 54);
+    $('footer').css('top', h + 84);
 
     $(window).resize(function() {
         var hs = $(document).height();
