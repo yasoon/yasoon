@@ -37,9 +37,8 @@ REST-like API, принимает GET и POST запросы, возвращае
 
 5) coffee -w -b -o js coffee/
 
-6) **Настройка БД:** Структура БД формируется на основании Entity, для этого требуется создать бд **yasoon** 
-   прописать все данные в parametrs.yml и попробовать перезапустить **composer:update** или же через нативную команду доктрины
-   **php app/console doctrine:schema:update --force** . В будующем планируется накатить миграцию
+6) **Настройка БД:** Завести базу в MYSQL. Дамп лежит в misc/sql. Сначала надо накатить dump.sql, потом content.sql. 
+Настройки коннекта прописать в parameters.yml.
 
 ### Настройка nginx под php-fpm
 
