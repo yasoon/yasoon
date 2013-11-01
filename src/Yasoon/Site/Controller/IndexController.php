@@ -22,39 +22,8 @@ class IndexController {
      */
     private $service;
 
-
     /**
      * @Route("/")
-     *
-     * @return Response
-     */
-    public function testAction()
-    {
-        $html = <<<HTML
-    <script src="https://vk.com/js/api/openapi.js" type="text/javascript"></script>
-
-    <div id="login_button" onclick="VK.Auth.login(authInfo);"></div>
-
-    <script language="javascript">
-        VK.init({
-          apiId: 3847520
-        });
-        function authInfo(response) {
-          if (response.session) {
-            alert('user: '+response.session.mid);
-          } else {
-            alert('not auth');
-          }
-        }
-        VK.Auth.getLoginStatus(authInfo);
-        VK.UI.button('login_button');
-    </script>
-HTML;
-        return new Response($html);
-    }
-
-    /**
-     * @ Route("/")
      *
      * @return Response
      */
@@ -78,14 +47,12 @@ HTML;
 <link rel="stylesheet" href="css/media.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="css/fix.css" type="text/css" media="screen" />
 
-<script src='js/lib/requirejs-2.1.6.js'></script>
+<script src='js/lib/requirejs-2.1.8.js'></script>
 
 <script src='js/lib/jquery-2.0.1.min.js'></script>
 <script src='js/lib/respond.min.js'></script>
-<script src='js/lib/jquery.preload.js'></script>
 
-
-  <script>
+<script>
 
 JST = {}
   // Configure the AMD module loader
@@ -96,14 +63,21 @@ JST = {}
     paths: {
       jquery: 'lib/jquery-2.0.1.min',
       jqueryui: 'lib/jquery-ui-1.10.3.custom.min',
-      underscore: 'lib/underscore-1.4.4.min',
+      'jquery.ui.widget': 'lib/jquery.ui.widget',
+      jqueryupload: 'lib/jquery.fileupload',
+      jqueryuploadiframetransport: 'lib/jquery.iframe-transport',
+      underscore: 'lib/underscore-min-1.5.2',
       backbone: 'lib/backbone-1.0.0.min',
-      handlebars: 'lib/handlebars-runtime-1.0.0.rc.4',
-      chaplin: 'lib/chaplin-0.9.0',
+      handlebars: 'lib/handlebars-runtime-1.0.0',
+      chaplin: 'lib/chaplin-min',
       JST: 'templates_compiled/combined',
       tinyEditor: 'lib/tiny.editor',
       categories: 'categories',
-      sitefunctions: 'site/functions'
+      sitefunctions: 'site/functions',
+      bootstrap_wysiwyg : 'lib/bootstrap-wysiwyg',
+      jquery_hotkeys : 'lib/jquery.hotkeys',
+      helper : 'lib/helper',
+      bootstrap : 'lib/bootstrap.min'
     },
     // Underscore and Backbone are not AMD-capable per default,
     // so we need to use the AMD wrapping of RequireJS
@@ -141,8 +115,8 @@ JST = {}
   });
 
   // Bootstrap the application
-  require(['application'], function(Application) {
-    (new Application).initialize();
+  require(['application', 'routes'], function(Application, routes) {
+    new Application({controllerSuffix: '-controller', routes: routes, pushState: false})
   });
 
   var managedContent = JSON.parse('$content');
@@ -154,6 +128,19 @@ JST = {}
 
 HTML;
         return new Response($html);
+    }
+
+    /**
+     *
+     * Proxy for security firewall
+     *
+     * @Route("/admin")
+     *
+     * @return Response
+     */
+    public function adminAction()
+    {
+        return $this->indexAction();
     }
 
 }

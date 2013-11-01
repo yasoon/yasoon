@@ -1,3 +1,7 @@
+#hwi_oauth_redirect:
+#  resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+#  prefix:   /connect
+
 yasoon_site:
   resource: "@YasoonSiteBundle/Controller"
   prefix: /

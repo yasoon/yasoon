@@ -26,7 +26,7 @@ define [
     className: 'blogPage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 

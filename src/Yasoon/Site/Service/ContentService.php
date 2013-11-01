@@ -18,10 +18,27 @@ use Yasoon\Site\Entity\QuestionEntity;
 class ContentService extends AbstractApiService {
 
     /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
+
+
+    private function checkAdminAccess() {
+        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
+            throw new AccessDeniedException();
+        }
+    }
+
+    /**
      * @param array $model
      * @return array
      */
     public function editRow(array $model) {
+
+        $this->checkAdminAccess();
+
         /** @var ContentEntity $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find($model['id']);
 
@@ -41,6 +58,7 @@ class ContentService extends AbstractApiService {
      * @return array
      */
     public function getAllContent() {
+
         $result = [];
 
         $entities = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->findAll();

@@ -25,8 +25,8 @@ define [
     className: 'postPage'
 
     regions:
-      '#queue': 'queue'
-      '#author': 'author'
+      'queue': '#queue'
+      'author': '#author'
       'footer': 'footer'
       'header': 'header'
 
@@ -38,20 +38,16 @@ define [
 
 
     render: =>
-      super
       am= new AuthorInfoModel(authorId: @authorId)
       am.load =>
+        @model = am #сетим себе модель автора чтобы получить статус доступа
+        super
         av = new AuthorInfoView(model: am)
         av.setRegion('author').render()
 
-      hv = new HeaderView()
-      fv = new FooterView()
+        new HeaderView()
+        new FooterView()
 
-
-      qqModel = (new PostQueueModel(authorId: @authorId)).load =>
-        qqView = new PostQueueView(model:  qqModel)
-        qqView.setRegion('queue').render()
-
-    #
-    getTemplateData: ->
-      {authorId: @authorId}
+        qqModel = (new PostQueueModel(authorId: @authorId)).load =>
+          qqView = new PostQueueView(model:  qqModel)
+          qqView.setRegion('queue').render()

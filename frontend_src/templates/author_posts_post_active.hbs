@@ -22,19 +22,26 @@
 
     <div class="di">
         <h3>текст:</h3>
-        <div class="post-edit-tools">
-            <div class="item"><b>b</b></div>
-            <div class="item"><b><i>It</i></b></div>
-            <div class="item"><b>Quote</b></div>
-            <div class="item">Загрузить картинку</div>
-            <div class="clearfix"></div>
+        <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+            <div class="btn-group">
+                <div  class="item" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><b>Жирный</b></div>
+                <div  class="item" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i>Курсив</i></div>
+                <div  class="item" data-edit="strikethrough" title="Strikethrough"><s>Зачеркнутый</s></div>
+                <div  class="item" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><u>Подчеркнутый</u></div>
+                <div  class="item" data-edit="indent" title="Выделение">Выделение</div>
+            </div>
+
+            <div class="btn-group">
+                <div  class="item" title="Вставить изображение" id="pictureBtn">Изображение</div>
+                <input type="file" data-role="magic-overlay" data-target="#pictureBtn" class="pictureBtnInput" data-edit="insertImage"/>
+            </div>
         </div>
-        <textarea class="big" placeholder="Тело поста" data-field="text">{{model.text}}</textarea>
+        <div id="editor" data-field="text" data-get-pre-send>{{model.text}}</div>
     </div>
 
     <div class="di">
         <h3>аннотация:</h3>
-        <textarea placeholder="Краткая аннотация к Вашей истории, которую будут видеть другие пользователи" data-field='preview'>{{model.preview}}</textarea>
+        <div id="cleartxt" data-field='preview' data-get-pre-send>{{model.preview}}</div>
     </div>
 
 

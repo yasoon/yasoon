@@ -20,12 +20,14 @@ define ->
     match 'explore/:mode', 'people#exploreAction'
     match 'explore/:mode/:catId', 'people#exploreAction'
 
+    match 'search/:mode/:text', 'people#searchAction'
+
     match 'author/:authorId/posts/new/blank', 'author#newBlankPostAction'
     match 'author/:authorId/posts/new', 'author#newPostAction'
     match 'author/:authorId/posts/:postId', 'author#readPostAction'
 
     match 'author/:authorId/posts', 'author#postsAction'
-    match  'author/:authorId/questions', 'author#questionsAction'
+    match 'author/:authorId/questions', 'author#questionsAction'
 
     #match 'posts/new', 'author#newPostAction'
     #match 'posts/new_interview', 'author#newPostInterviewAction'
@@ -41,5 +43,4 @@ define ->
 
     match 'timeline', 'timeline#indexAction'
 
-
-
+    match '*notFound', 'index#e404Action'

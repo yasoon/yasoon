@@ -20,7 +20,7 @@ define [
     className: 'postPage'
 
     regions:
-      '#post': 'post'
+      'post': '#post'
       'footer': 'footer'
       'header': 'header'
 

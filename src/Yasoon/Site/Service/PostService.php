@@ -7,6 +7,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
@@ -18,12 +19,24 @@ use Yasoon\Site\Entity\QuestionEntity;
 class PostService extends AbstractApiService {
 
     /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
+
+
+    /**
      * @param array $model
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function add(array $model) {
 
-        $authorId = 1; //@TODO получать из сесии
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
 
         $place = $this->em->createQueryBuilder()->select('max(post.place) as place')
             ->from('Yasoon\Site\Entity\PostEntity', 'post')->where("post.authorId = $authorId")->getQuery()->getSingleResult()['place'];
@@ -33,7 +46,7 @@ class PostService extends AbstractApiService {
             ->setCaption($model['caption'])
             ->setPreview($model['preview'])
             ->setText($model['text'])
-            ->setPlace($place)
+            ->setPlace((int)$place)
             ->setAuthorId($authorId)
             ->setCategoryId($model['categoryId'])
             ->setDate(new \DateTime())
@@ -63,7 +76,18 @@ class PostService extends AbstractApiService {
      * @return array
      */
     public function update(array $model) {
+
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
+
+        /** @var PostEntity $post */
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($model['id']);
+
+        if ($post->getAuthorId() != $authorId) {
+            throw new AccessDeniedException();
+        }
 
         $post->setCaption($model['caption'])
             ->setPreview($model['preview'])
@@ -89,9 +113,20 @@ class PostService extends AbstractApiService {
 
     /**
      * @param array $model
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function delete(array $model) {
+
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
+
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($model['id']);
+
+        if ($post->getAuthorId() != $authorId) {
+            throw new AccessDeniedException();
+        }
 
         $this->em->remove($post);
         $this->em->flush();
@@ -115,7 +150,10 @@ class PostService extends AbstractApiService {
             'categoryId' => $post->getCategoryId()
         ];
 
-        return $result;
+        $access = $this->getAccessLevel($post->getAuthorId());
+
+        return ['access' => $access, 'data' => $result];
+
     }
 
     /**
@@ -143,7 +181,9 @@ class PostService extends AbstractApiService {
             ];
         }
 
-        return $result;
+        $access = $this->getAccessLevel($this->securityContext->getToken()->getUsername());
+
+        return ['access' => $access, 'data' => $result];
     }
 
 
@@ -185,10 +225,6 @@ class PostService extends AbstractApiService {
      */
     public function getStoryOfTheDay()
     {
-//        , author.name as authorName, author.description as authorDescription
-//                author.date as authorDate, post.caption  as postCaption, post.text as postText, post.likes as post,
-//                count(questions.id)
-
         /** @var PostOfTheDayEntity $story */
         $story = $this->em->createQueryBuilder()
             ->select('story, author, post, questions')
@@ -209,7 +245,6 @@ class PostService extends AbstractApiService {
           'text'    => $story->getPost()->getText(),
           'likes'   => $story->getPost()->getLikes(),
           'questions' => count($story->getPost()->getAuthor()->getQuestions())
-
         ];
 
         return $result;
@@ -221,6 +256,7 @@ class PostService extends AbstractApiService {
      */
     public function setStoryOfTheDay($postId)
     {
+        $this->checkAdminAccess();
 
         $story = (new PostOfTheDayEntity())
             ->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId))
@@ -230,6 +266,15 @@ class PostService extends AbstractApiService {
         $this->em->flush();
 
         return ['ok' => 'ok'];
+    }
+
+    /**
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    private function checkAdminAccess() {
+        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
+            throw new AccessDeniedException();
+        }
     }
 
     /**
@@ -286,7 +331,6 @@ class PostService extends AbstractApiService {
         }
 
         return $result;
-
     }
 
 }

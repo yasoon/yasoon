@@ -20,7 +20,7 @@ define [
     regions:
       'footer': 'footer'
       'header': 'header'
-      '#page-layout' : 'register'
+      'page-layout' : '#page-layout'
 
     templateName: 'register_page'
 
@@ -31,6 +31,6 @@ define [
 
       registerModel = new RegisterModel()
       registerView = new RegisterView(model:registerModel)
-      registerView.setRegion('register').setMode('active')
+      registerView.setRegion('page-layout').setMode('active')
 
 

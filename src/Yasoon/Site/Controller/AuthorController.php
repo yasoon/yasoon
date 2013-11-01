@@ -6,13 +6,16 @@
 
 namespace Yasoon\Site\Controller;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Yasoon\Site\Service\AuthorService;
+use Yasoon\Site\Service\ImageService;
 
 /**
  * Class AuthorController
@@ -30,42 +33,11 @@ class AuthorController {
     private $service;
 
     /**
-     * @Route("/add")
+     * @var ImageService
      *
-     * @Method({"POST"})
+     * @DI\Inject("yasoon.service.image")
      */
-    public function addAction(Request $request) {
-        $model = $request->request->get('model');
-
-        return $this->service->add($model);
-    }
-
-    /**$id =
-     * @Route("/update")
-     * @Method({"POST"})
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function updateAction(Request $request) {
-        $model = $request->request->get('model');
-
-        return $this->service->update($model);
-    }
-
-    /**
-     * @Route("/delete")
-     * @Method({"POST"})
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function deleteAction(Request $request) {
-        $model = $request->request->get('model');
-
-        return $this->service->delete($model);
-    }
+    private $imageService;
 
     /**
      * @Route("/get_short_info/{authorId}", requirements={"authorId" = "\d+"})
@@ -76,6 +48,7 @@ class AuthorController {
      * @return array
      */
     public function getShortInfoAction($authorId) {
+
         $result = $this->service->getShortInfo($authorId);
 
         return $result;
@@ -89,6 +62,18 @@ class AuthorController {
      */
     public function getPrivateInfoAction() {
         $result = $this->service->getPrivateInfo();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_status_info")
+     *
+     * @Method({"GET"})
+     */
+    public function getStatusInfoAction()
+    {
+        $result = $this->service->getStatusInfo();
 
         return $result;
     }
@@ -206,4 +191,33 @@ class AuthorController {
         return $this->service->notify($email);
     }
 
+    /**
+     * @Route("/upload_user_image")
+     * @Method({"FILES|POST"})
+     */
+    public function uploadUserImage(Request $request)
+    {
+        $fileSource = array();
+        /** @var UploadedFile[] $files */
+        $files = $request->files->get('files');
+        $path  = 'upload/avatar/';
+        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/../frontend_src/upload/avatar";
+
+        $file = $files[0];
+
+        $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
+        $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
+
+        $fileSource['file_name'] = $resultImage;
+        $fileSource['dir']       = $path;
+
+        $oldImage = $this->service->setAvatarAuthor($resultImage);
+        // удаляем оригинальное и старое изображение
+        unlink($absolutePath  . '/' . $fileInfo->getFilename());
+        if (!empty($oldImage)) {
+            unlink($absolutePath  . '/' . $oldImage);
+        }
+
+        return $fileSource;
+    }
 }

@@ -7,12 +7,15 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\BlankQuestionEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Mail\Sender;
-
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * @DI\Service("yasoon.service.author")
  */
@@ -33,38 +36,19 @@ class AuthorService extends AbstractApiService {
     public $contentService;
 
     /**
-     * @param array $model
-     * @return int
+     * @var Container
+     *
+     * @DI\Inject("service_container")
      */
-    public function add(array $model) {
-        $entity = (new AuthorEntity())
-            ->setName($model['name']);
+    public $container;
 
-        $this->addEntity($entity);
-
-        return $entity->getId();
-    }
 
     /**
-     * @param array $model
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
      */
-    public function update(array $model) {
-        $entity = (new AuthorEntity())
-            ->setId($model['id'])
-            ->setName($model['name']);
-
-        $this->updateEntity($entity);
-    }
-
-    /**
-     * @param array $model
-     */
-    public function delete(array $model) {
-        $entity = (new AuthorEntity())
-            ->setId($model['id']);
-
-        $this->deleteEntity($entity);
-    }
+    public  $securityContext;
 
     /**
      * @param int $authorId
@@ -74,7 +58,7 @@ class AuthorService extends AbstractApiService {
     {
 
         $data = $this->em->createQueryBuilder()
-            ->select('author.id, author.name, author.description, author.publicationDate,
+            ->select('author.id, author.name, author.description, author.publicationDate, author.img,
             author.job, author.interest, author.dream, posts.id as postId, questions.id as questionId')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->leftJoin('author.posts', 'posts')
@@ -98,23 +82,50 @@ class AuthorService extends AbstractApiService {
             'id'      => $data['id'],
             'name'    => $data['name'],
             'description' => $data['description'],
-            'publicationDate' => $data['publicationDate']->format('d/m/Y'),
             'job' => $data['job'],
             'interest' => $data['interest'],
             'dream' => $data['dream'],
             'posts'   => $data['postsCount'],
-            'answers' => $data['answersCount']
+            'answers' => $data['answersCount'],
+            'img'     => $data['img']
         ];
 
-        return $result;
+        $access = $this->getAccessLevel($authorId);
+
+        return ['access' => $access, 'data' => $result];
     }
 
+
+
     /**
+     * приватная инфа для редактирования профиля
+     *
      * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function getPrivateInfo()
     {
-        $authorId = 1; //@TODO получать из сессии
+        $result = [
+            'id'    => 1,
+            'name'    => 'sdsdsdsd',
+            'email'   => 'wef',
+            'password' => 1313,
+            'description' => 'SDFSDF',
+            'publicationDate' => (new \DateTime())->format('d/m/Y'),
+            'job' => '',
+            'interest' => '',
+            'dream' => ''
+        ];
+
+        $access = 'ADMIN';
+
+        return ['access' => $access, 'data' => $result];
+
+        $authorId = $this->securityContext->getToken()->getUsername();
+
+        if (!(int)$authorId) {
+            throw new AccessDeniedException();
+        }
 
         $data = $this->em->createQueryBuilder()
             ->select('author.id, author.name, author.description, author.publicationDate,
@@ -122,7 +133,6 @@ class AuthorService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
             ->where("author.id = $authorId")
             ->getQuery()->getSingleResult();
-
 
         $result = [
             'id'    => $data['id'],
@@ -136,10 +146,39 @@ class AuthorService extends AbstractApiService {
             'dream' => $data['dream']
         ];
 
-        return $result;
+        $access = $this->getAccessLevel($authorId);
+
+        return ['access' => $access, 'data' => $result];
     }
 
+    /**
+     * Информация об обновлениях
+     */
+    public function getStatusInfo()
+    {
+        $authorId = $this->securityContext->getToken()->getUsername();
 
+        if ($authorId == 'anon.') {
+            return ['access' => 'ANON'];
+        }
+
+        $data = $this->em->createQueryBuilder()
+            ->select('author.id, author.name, count(question) as questionsCount, author.img')
+            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
+            ->leftJoin('author.questions', 'question', 'WITH', 'question.answer IS NULL')
+            ->where("author.id = $authorId")
+            ->getQuery()->getSingleResult();
+
+        return [
+          'access' => 'USER',
+          'data' => [
+              'id' => $data['id'],
+              'name' => $data['name'],
+              'questions' => $data['questionsCount'],
+              'img' =>  $data['img']
+          ]
+        ];
+    }
 
 
     /**
@@ -193,7 +232,9 @@ class AuthorService extends AbstractApiService {
         }
 
 
-        return $result;
+        $access = $this->getAccessLevel($authorId);
+
+        return ['access' => $access, 'data' => $result];
     }
 
     public function getQuestionsStack($authorId, $offset) {
@@ -214,7 +255,9 @@ class AuthorService extends AbstractApiService {
             $result[] = $question['id'];
         }
 
-        return $result;
+        $access = $this->getAccessLevel($authorId);
+
+        return ['access' => $access, 'data' => $result];
 
     }
 
@@ -244,7 +287,7 @@ class AuthorService extends AbstractApiService {
             ];
         }
 
-        return $result;
+        //@TODO addd authorization
     }
 
 
@@ -274,7 +317,9 @@ class AuthorService extends AbstractApiService {
             ];
         }
 
-        return $result;
+        $access = $this->getAccessLevel($authorId);
+
+        return ['access' => $access, 'data' => $result];
     }
 
     /**
@@ -295,6 +340,8 @@ class AuthorService extends AbstractApiService {
         $this->em->getConnection()->executeQuery($sql);
 
         return $map;
+
+        //@TODO addd authorization
     }
 
     /**
@@ -315,6 +362,8 @@ class AuthorService extends AbstractApiService {
         $this->em->getConnection()->executeQuery($sql);
 
         return $map;
+
+        //@TODO addd authorization
     }
 
     /**
@@ -333,11 +382,19 @@ class AuthorService extends AbstractApiService {
 
             #$this->em->beginTransaction();
 
+            if (empty($author['subscribed']) || $author['subscribed'] !='on') {
+                $subscribed = false;
+            } else {
+                $subscribed = true;
+            }
+
             $entity = (new AuthorEntity())
                 ->setName($author['name'])
                 ->setEmail($author['email'])
                 ->setPassword(md5($author['password']))
-                ->setPublicationDate(new \DateTime());
+                ->setSubscribed((int) $subscribed)
+                ->setPublicationDate(new \DateTime())
+                ->setRole(1);
 
             $this->em->persist($entity);
             $this->em->flush();
@@ -354,20 +411,31 @@ class AuthorService extends AbstractApiService {
             $sql = 'INSERT INTO question (author_id, caption, date, is_in_blank, place) VALUES '.implode(',', $questions);
             $this->em->getConnection()->executeQuery($sql);
 
-
-            $message = $this->contentService->getAllContent()[6]['text'];
-
-            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
-
-            $this->mailer->send($entity->getEmail(), $message);
-
-
         } catch (\Exception $e) {
             throw $e;
             #$this->em->rollback();
         }
 
+        try {
+            $message = $this->contentService->getAllContent()[6]['text'];
+
+            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
+
+            $this->mailer->send($entity->getEmail(), $message);
+        } catch (\Exception $e) {
+
+        }
         #$this->em->commit();
+
+        // Сразу авторизуем чела
+        $token = new UsernamePasswordToken((string) $entity->getId(), $entity->getPassword(), "secured_area", ['ROLE_USER']);
+
+        $this->securityContext->setToken($token);
+
+        /** @var Session $session */
+        $session = $this->container->get('request')->getSession();
+        $session->set('_security_secured_area', serialize($token));
+        $this->container->get('request')->setSession($session);
 
         return [
             'id'    => $entity->getId(),
@@ -383,17 +451,19 @@ class AuthorService extends AbstractApiService {
      */
     public function editInfo(array $author)
     {
+        $authorId = $this->securityContext->getToken()->getUsername();
+
         /** @var AuthorEntity $entity */
         $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
-            ->find($author['id']);
+            ->find($authorId);
 
 
         isset($author['name']) && $entity->setDescription($author['name']);
         isset($author['email']) && $entity->setDescription($author['email']);
-        isset($author['description']) && $entity->setDescription($author['description']);
+        isset($author['shortHistory']) && $entity->setDescription($author['shortHistory']);
         isset($author['job']) && $entity->setJob($author['job']);
-        isset($author['interest']) && $entity->setInterest($author['interest']);
-        isset($author['dream']) && $entity->setDream($author['dream']);
+        isset($author['interests']) && $entity->setInterest($author['interests']);
+        isset($author['dreams']) && $entity->setDream($author['dreams']);
 
         isset($author['homepage']) && $entity->setHomepage($author['homepage']);
 
@@ -445,5 +515,26 @@ class AuthorService extends AbstractApiService {
             'id' => $author->getId()
         ];
 
+    }
+
+    /**
+     * @param string $imageName
+     * @return string
+     */
+    public function setAvatarAuthor($imageName)
+    {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+
+        /** @var AuthorEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
+            ->find($authorId);
+
+        $oldImage = $entity->getImg();
+        $entity->setImg($imageName);
+
+        $this->em->merge($entity);
+        $this->em->flush();
+
+        return $oldImage;
     }
 }

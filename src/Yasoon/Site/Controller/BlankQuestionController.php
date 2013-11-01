@@ -20,12 +20,14 @@ use Yasoon\Site\Service\BlankQuestionService;
  */
 class BlankQuestionController {
 
+
     /**
-     * @var BlankQuestionService
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
      *
-     * @DI\Inject("yasoon.service.blank_question")
+     * @DI\Inject("security.context")
      */
-    private $service;
+    private $securityContext;
+
 
 
     /**

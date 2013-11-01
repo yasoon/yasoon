@@ -4,13 +4,13 @@
 
     <nav class="navigate">
         <a class="active">Истории</a>
-        <a data-link='author/{{author.authorId}}/questions'>Ответы</a>
+        <a data-link='#author/{{authorId}}/questions'>Ответы</a>
     </nav>
 
     <div class="postinfo" id ='author'></div>
 
-    <article class="lim cat-title">
-        <div class="content"><p><a class="btn" data-link='author/{{authorId}}/posts/new'>Написать новый пост</a></p></div>
+    <article class="lim cat-title" data-permission="USER">
+        <div class="content"><p><a class="btn" data-link='#author/{{model.id}}/posts/new'>Написать новый пост</a></p></div>
         <div class="hr"></div>
     </article>
 

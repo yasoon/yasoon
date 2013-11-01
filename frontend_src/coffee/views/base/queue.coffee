@@ -17,7 +17,7 @@ define [
       Chaplin.mediator.subscribe 'modelDeleted', @del
 
     regions:
-      '#elements': 'elements'
+      'elements': '#elements'
 
     #
     add: (model) =>
@@ -46,6 +46,8 @@ define [
             update: =>
               @updateOrder()
           )
+
+      pressFooter()
 
     #
     updateOrder: ->

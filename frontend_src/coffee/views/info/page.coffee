@@ -20,7 +20,7 @@ define [
     regions:
       'footer': 'footer'
       'header': 'header'
-      '#page-layout' : 'info'
+      'info' : '#page-layout'
 
     templateName: 'info_page'
 
@@ -34,5 +34,17 @@ define [
         infoView = new InfoView(model:infoModel)
         infoView.setRegion('info').setMode('edit')
         console.log infoModel
+        $('#fileupload').fileupload({
+          dataType: 'json',
+          autoUpload: true,
+          number: 1,
+          done: (e, file) ->
+            file = file.result
+            fileName = file.dir + file.file_name
+            $(".files_success_upload").html('<img src="' + fileName + '" width="53" height="53"/>')
+            $(".btn_upload_img").text("Изменить изображение")
+        })
+
+        pressFooter()
 
 

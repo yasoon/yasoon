@@ -18,7 +18,7 @@ define [
     className: 'indexPage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 
@@ -32,3 +32,5 @@ define [
       pq = new PostQueueModel()
       pq.load =>
         (new PostQueueView(model: pq)).setRegion('queue').render()
+
+      pressFooter()

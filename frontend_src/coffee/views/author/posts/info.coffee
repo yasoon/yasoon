@@ -20,7 +20,3 @@ define [
         @model.unfollow()
         $('#follow').show()
         $('#unfollow').hide()
-
-    getTemplateData: ->
-      super
-

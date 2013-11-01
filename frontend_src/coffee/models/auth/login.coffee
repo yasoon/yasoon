@@ -25,7 +25,7 @@ define [
         $("input[data-field='password']").removeClass('error')
 
       @method = 'POST'
-      @url    = -> 'api/author/notify'
-      @requestData = {email: @data.email}
+      @url    = -> 'login'
+      @requestData = {email: @data.email, password: @data.password}
 
       @request(callback)

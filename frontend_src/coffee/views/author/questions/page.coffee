@@ -9,6 +9,8 @@ define [
 
           'views/author/questions/question'
           'models/author/questions/question'
+          'models/author/posts/info'
+          'views/author/posts/info'
 ], (PageView,
     JST,
     FooterView,
@@ -18,7 +20,10 @@ define [
     QuestionQueueModel,
 
     QuestionView,
-    QuestionModel
+    QuestionModel,
+
+    AuthorInfoModel,
+    AuthorInfoView
 ) ->
   'use strict'
 
@@ -26,8 +31,8 @@ define [
     className: 'postPage'
 
     regions:
-      '#queue': 'queue'
-      '#new': 'new'
+      'queue' : '#queue'
+      'new'   : '#new'
       'footer': 'footer'
       'header': 'header'
 
@@ -38,16 +43,19 @@ define [
       @authorId = params.authorId
 
     render: ->
-      super
-      hv = new HeaderView()
-      fv = new FooterView()
+      am= new AuthorInfoModel(authorId: @authorId)
+      am.load =>
+        @model = am #сетим себе модель автора чтобы получить статус доступа (чертовски грязный хак)
+        super
+        hv = new HeaderView()
+        fv = new FooterView()
 
-      qtv = new QuestionView(model: new QuestionModel(authorId: @authorId))
-      qtv.setRegion('new').setMode('button')
+        qtv = new QuestionView(model: new QuestionModel(authorId: @authorId))
+        qtv.setRegion('new').setMode('button')
 
-      qqModel = (new QuestionQueueModel(authorId: @authorId)).load =>
-        qqView = new QuestionQueueView(model:  qqModel)
-        qqView.setRegion('queue').render()
+        qqModel = (new QuestionQueueModel(authorId: @authorId)).load =>
+          qqView = new QuestionQueueView(model:  qqModel)
+          qqView.setRegion('queue').render()
 
     #
     getTemplateData: ->

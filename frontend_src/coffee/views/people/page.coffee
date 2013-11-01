@@ -6,6 +6,7 @@ define [
          'categories'
          'views/people/authorQueue'
          'models/people/authorQueue'
+         'models/people/authorSearch'
 ], (PageView,
     JST,
     FooterView,
@@ -14,6 +15,7 @@ define [
     categories
     AuthorQueueView
     AuthorQueueModel
+    AuthorSearchModel
 ) ->
   'use strict'
 
@@ -21,7 +23,7 @@ define [
     className: 'peoplePage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 
@@ -31,16 +33,23 @@ define [
       super
       @activeCategoryId =  parseInt(params.catId)
       @activeCategory = categories[@activeCategoryId]
+      @searchText = params.text
 
     render: ->
       super
       new HeaderView(catId: @activeCategoryId)
       new FooterView()
 
-      aq = new AuthorQueueModel(categoryId: @activeCategoryId)
-      aq.load =>
-        aqView = new AuthorQueueView(model: aq)
-        aqView.setRegion('queue').render()
+      if not @searchText
+        aq = new AuthorQueueModel(categoryId: @activeCategoryId)
+        aq.load =>
+          aqView = new AuthorQueueView(model: aq)
+          aqView.setRegion('queue').render()
+      else
+        as = new AuthorSearchModel(text: @searchText)
+        as.load =>
+          aqView = new AuthorQueueView(model: as)
+          aqView.setRegion('queue').render()
 
       activeCategoryId = @activeCategoryId
       @$el.find('.category').each(->
@@ -52,3 +61,10 @@ define [
 
     getTemplateData: ->
       {categories: categories, activeCategory: @activeCategory, activeCatId: @activeCategoryId}
+
+    events:
+      'keypress .search': (e) ->
+        if e.which is 13
+            searchText = $(e.currentTarget).val()
+            @publishEvent 'redirect', 'search/author/'+searchText
+            @dispose()

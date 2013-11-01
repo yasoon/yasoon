@@ -20,10 +20,11 @@ define [
 
       'keyup': (e) ->
         $target = $(e.target)
-        if $target.attr('data-field')?
-          #          if e.target.tagName is 'INPUT'
-          @model.data[$target.attr('data-field')] = $target.val()
-          #@model.dataField[$target.attr('data-field')] = $target
+        if $target.attr('data-field')
+          if $(e.target).is('input')
+            @model.data[$target.attr('data-field')] = $target.val()
+          else
+            @model.data[$target.attr('data-field')] = $target.html()
 
       'change': (e) ->
         $target = $(e.target)
@@ -32,6 +33,26 @@ define [
           #@model.dataField[$target.attr('data-field')] = $target
     #
     send: ->
+      ell = @model
+      self = @
+      count = $(@el).find('[data-get-pre-send]').length
+
+      if count is 0
+        @callBackFn()
+        
+      $(@el).find('[data-get-pre-send]').each(->
+        if $(@).is('input')
+          ell.data[$(@).attr('data-field')] = $(@).val()
+        else
+          ell.data[$(@).attr('data-field')] = $(@).html()
+
+        if (!--count)
+          self.callBackFn()
+      )
+
+
+    callBackFn: =>
+      console.log @model , @model.data.id
       if @model.data.id?
         @update()
       else
@@ -91,6 +112,7 @@ define [
       @modesHistory.push(@mode) if @mode ?
       @mode = mode
       callback?()
+      pressFooter()
       @
 
     #

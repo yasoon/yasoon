@@ -7,6 +7,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\BlankQuestionEntity;
 use Yasoon\Site\Entity\PostEntity;
@@ -18,10 +19,21 @@ use Yasoon\Site\Entity\QuestionEntity;
 class BlankQuestionService extends AbstractApiService {
 
     /**
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @DI\Inject("security.context")
+     */
+    public  $securityContext;
+
+
+    /**
      *
      * @return array
      */
     public function getAll() {
+
+        $this->checkAdminAccess();
+
         /** @var BlankQuestionEntity[] $allQuestions  */
         $allQuestions = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')
             ->findBy([], ['place' => 'asc']);
@@ -38,11 +50,20 @@ class BlankQuestionService extends AbstractApiService {
         return $result;
     }
 
+    private function checkAdminAccess() {
+        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
+            throw new AccessDeniedException();
+        }
+    }
+
     /**
      * @param array $model
      * @return array
      */
     public function add(array $model) {
+
+        $this->checkAdminAccess();
+
         $place =$this->em->getConnection()->executeQuery('select max(place) as place from blank_question ')
             ->fetch()['place'];
 
@@ -64,6 +85,9 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function update(array $model) {
+
+        $this->checkAdminAccess();
+
         /** @var BlankQuestionEntity $question  */
         $question = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->find($model['id']);
 
@@ -87,6 +111,9 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function delete(array $model) {
+
+        $this->checkAdminAccess();
+
         $question = $this->em->getRepository('Yasoon\Site\Entity\BlankQuestionEntity')->find($model['id']);
 
         $this->em->remove($question);
@@ -104,6 +131,9 @@ class BlankQuestionService extends AbstractApiService {
      * @return array
      */
     public function updatePlaces(array $map) {
+
+        $this->checkAdminAccess();
+
         $values = [];
         foreach ($map as $place => $id) {
             $place = (int)$place;
