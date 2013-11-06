@@ -12,11 +12,13 @@ define [
 
     events:
       'click #follow': ->
-        @model.follow()
-        $('#follow').hide()
-        $('#unfollow').show()
+        if @model.access is 'USER'
+          @model.follow()
+          $('#follow').hide()
+          $('#unfollow').show()
 
       'click #unfollow': ->
-        @model.unfollow()
-        $('#follow').show()
-        $('#unfollow').hide()
+        if @model.access is 'USER'
+          @model.unfollow()
+          $('#follow').show()
+          $('#unfollow').hide()
