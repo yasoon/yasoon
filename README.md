@@ -87,3 +87,56 @@ REST-like API, принимает GET и POST запросы, возвращае
      sudo npm install handlebars@v1.0.11
 
 2) проблема с бандлом унтификации, переключится на коммит 156372aa3451d51bacdd0e9b1f380577b8075ad8
+3) Проблема с сессией, заменить методы в файле vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/Session/Storage/NativeSessionStorage.php
+
+          /**
+          * {@inheritdoc}
+          */
+         public function save()
+         {
+             session_write_close();
+     
+             if (!$this->saveHandler->isWrapper() && !$this->saveHandler->isSessionHandlerInterface()) {
+                 // This condition matches only PHP 5.3 with internal save handlers
+                 $this->saveHandler->setActive(false);
+             }
+     
+             $this->closed = true;
+             $this->started = true;
+         }
+     
+         /**
+          * {@inheritdoc}
+          */
+         public function clear()
+         {
+             // clear out the bags
+             foreach ($this->bags as $bag) {
+                 $bag->clear();
+             }
+     
+             // clear out the session
+             $_SESSION = array();
+     
+             // reconnect the bags to the session
+             $this->loadSession(null, true);
+         }
+         
+         protected function loadSession(array &$session = null, $clear=false)
+         {
+             if (null === $session) {
+                 $session = &$_SESSION;
+             }
+     
+             $bags = array_merge($this->bags, array($this->metadataBag));
+     
+             foreach ($bags as $bag) {
+                 $key = $bag->getStorageKey();
+                 $session[$key] = isset($session[$key]) ? $session[$key] : array();
+                 $bag->initialize($session[$key]);
+             }
+     
+             $this->started = !$clear;
+             $this->closed = false;
+         }
+
