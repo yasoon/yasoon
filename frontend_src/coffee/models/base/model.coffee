@@ -15,6 +15,7 @@ define [
 
     initialize: ->
       super
+      @isLoggedIn = (document.cookie.indexOf('PHPSESSID=') >= 0 )
       if not @name? then throw 'Model name must be defined'
 
     formatUrl: (url) ->

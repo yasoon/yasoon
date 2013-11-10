@@ -16,7 +16,10 @@
     </div>
     <div class="q-box">
         <span class="like-this"><a href=""><i></i></a> {{model.likes}} <span>лайков</span></span>
-        <span class="q-post"><a href="#author/{{model.authorId}}/questions"><i></i></a> Вопросов автору: {{model.questions}}</span>
+        <span class="q-post">
+            {{#if isLoggedIn}}<a href="#author/{{model.authorId}}/questions"><i></i></a>
+            {{else}}<a href="javascript:;"><i data-to-login></i></a>{{/if}}
+            Вопросов автору: {{model.questions}}</span>
     </div>
     <article class="bottom-toolbar t-center">
         <a href="#explore/date/0" class="btn">Больше историй</a>

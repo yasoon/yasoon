@@ -86,4 +86,4 @@ define [
 
     #
     getTemplateData: ->
-      if @model? then {model: @model.data}
+      if @model? then {model: @model.data, isLoggedIn: @model.isLoggedIn}
