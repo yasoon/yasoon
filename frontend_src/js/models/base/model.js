@@ -25,6 +25,7 @@ define(['chaplin'], function(Chaplin) {
 
     Model.prototype.initialize = function() {
       Model.__super__.initialize.apply(this, arguments);
+      this.isLoggedIn = document.cookie.indexOf('PHPSESSID=') >= 0;
       if (this.name == null) {
         throw 'Model name must be defined';
       }

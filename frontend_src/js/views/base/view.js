@@ -138,7 +138,8 @@ define(['chaplin', 'handlebars', 'helper'], function(Chaplin, Handlebars, Helper
     View.prototype.getTemplateData = function() {
       if (this.model != null) {
         return {
-          model: this.model.data
+          model: this.model.data,
+          isLoggedIn: this.model.isLoggedIn
         };
       }
     };
