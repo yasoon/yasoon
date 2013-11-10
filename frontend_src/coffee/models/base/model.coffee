@@ -19,7 +19,7 @@ define [
       if not @name? then throw 'Model name must be defined'
 
     formatUrl: (url) ->
-      'http://'+document.domain+"/#{url}"
+      'http://' +  window.location.host + "/#{url}"
 
 
     validateNotNull: (fields...) ->
