@@ -810,10 +810,24 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_questions_question_button'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, self=this;
+
+function program1(depth0,data) {
   
+  
+  return "<div class=\"btn\" data-to-mode='new_active'>Новый вопрос</div>\n";
+  }
 
+function program3(depth0,data) {
+  
+  
+  return "<div class=\"btn\" data-to-mode='new_active.anon' data-to-login>Новый вопрос</div>";
+  }
 
-  return "<div class=\"btn\" data-to-mode='new_active'>Новый вопрос</div>\n<div class=\"hr\"></div>";
+  stack1 = helpers['if'].call(depth0, depth0.isLoggedIn, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n<div class=\"hr\"></div>";
+  return buffer;
   });
 
 var Handlebars = require('handlebars');
