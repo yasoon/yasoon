@@ -29,18 +29,14 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/author/posts/hea
 
     BlogBlogPageView.prototype.events = {
       'click #follow': function() {
-        if (this.model.access === 'USER') {
-          this.model.follow();
-          $('#follow').hide();
-          return $('#unfollow').show();
-        }
+        this.model.follow();
+        $('#follow').hide();
+        return $('#unfollow').show();
       },
       'click #unfollow': function() {
-        if (this.model.access === 'USER') {
-          this.model.unfollow();
-          $('#follow').show();
-          return $('#unfollow').hide();
-        }
+        this.model.unfollow();
+        $('#follow').show();
+        return $('#unfollow').hide();
       }
     };
 

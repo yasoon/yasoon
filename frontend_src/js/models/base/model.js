@@ -32,7 +32,7 @@ define(['chaplin'], function(Chaplin) {
     };
 
     Model.prototype.formatUrl = function(url) {
-      return 'http://' + document.domain + ("/" + url);
+      return 'http://' + window.location.host + ("/" + url);
     };
 
     Model.prototype.validateNotNull = function() {
