@@ -65,6 +65,11 @@ class AuthController
      */
     protected $providerKey = 'secured_area';
 
+    protected $roles = array(
+        1 => 'ROLE_USER',
+        2 => 'ROLE_AUTHOR',
+        4 => 'ROLE_ADMIN'
+    );
 
     /**
      * @Route("/login")
@@ -85,7 +90,7 @@ class AuthController
             throw new AuthenticationCredentialsNotFoundException();
         }
 
-        $token = new UsernamePasswordToken((string) $user->getId(), $password, $this->providerKey, ['ROLE_USER']);
+        $token = new UsernamePasswordToken((string) $user->getId(), $password, $this->providerKey, $user->getRoles());
 
         $this->securityContext->setToken($token);
 

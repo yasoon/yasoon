@@ -19,14 +19,18 @@ define(['views/base/view', 'JST', 'categories'], function(View, JST, categories)
 
     AuthorPostsInfoView.prototype.events = {
       'click #follow': function() {
-        this.model.follow();
-        $('#follow').hide();
-        return $('#unfollow').show();
+        if (this.model.access === 'USER') {
+          this.model.follow();
+          $('#follow').hide();
+          return $('#unfollow').show();
+        }
       },
       'click #unfollow': function() {
-        this.model.unfollow();
-        $('#follow').show();
-        return $('#unfollow').hide();
+        if (this.model.access === 'USER') {
+          this.model.unfollow();
+          $('#follow').show();
+          return $('#unfollow').hide();
+        }
       }
     };
 

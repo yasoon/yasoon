@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/header', '
     AdminStoriesPageView.prototype.className = 'AdminStoriesPage';
 
     AdminStoriesPageView.prototype.regions = {
-      '#queue': 'queue',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };

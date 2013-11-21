@@ -21,9 +21,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class AuthorEntity implements UserInterface, \Serializable
 {
     private $roles = [
-      'ROLE_READER' => 1,
-      'ROLE_AUTHOR' => 2,
-      'ROLE_ADMIN'  => 4
+      1 => 'ROLE_USER',
+      2 => 'ROLE_AUTHOR',
+      4 => 'ROLE_ADMIN'
     ];
 
     /**
@@ -463,14 +463,16 @@ class AuthorEntity implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        $roles  = [];
-        foreach ($this->roles as  $role => $bit) {
-            if ($this->role & $bit) {
-                $roles[] = $role;
-            }
-        }
+//        $roles  = [];
+//        foreach ($this->roles as  $role => $bit) {
+//            if ($this->role & $bit) {
+//                $roles[] = $role;
+//            }
+//        }
+//
+//        return $roles;
 
-        return $roles;
+        return [$this->role];
     }
 
     /**

@@ -16,7 +16,7 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/header', '
     AdminContentPageView.prototype.className = 'postPage';
 
     AdminContentPageView.prototype.regions = {
-      '#queue': 'queue',
+      'queue': '#queue',
       'footer': 'footer',
       'header': 'header'
     };

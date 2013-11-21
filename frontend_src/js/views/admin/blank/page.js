@@ -16,8 +16,8 @@ define(['views/base/page', 'JST', 'views/common/footer', 'views/admin/header', '
     AdminBlankPageView.prototype.className = 'postPage';
 
     AdminBlankPageView.prototype.regions = {
-      '#queue': 'queue',
-      '#new': 'new',
+      'queue': '#queue',
+      'new': '#new',
       'footer': 'footer',
       'header': 'header'
     };
