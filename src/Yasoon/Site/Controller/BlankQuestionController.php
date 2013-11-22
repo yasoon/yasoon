@@ -12,7 +12,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\HttpFoundation\Request;
 use Yasoon\Site\Service\BlankQuestionService;
 
-;
 /**
  * Class BlankQurstionController
  * @Route("/api/blank_question")
@@ -28,7 +27,12 @@ class BlankQuestionController {
      */
     private $securityContext;
 
-
+    /**
+     * @var BlankQuestionService
+     *
+     * @DI\Inject("yasoon.service.blank_question")
+     */
+    private $service;
 
     /**
      * @Route("/get_blank")

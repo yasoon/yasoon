@@ -4,6 +4,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
+use Yasoon\Site\Service\ContentService;
+
 /**
  * Class ContentController
  *
@@ -19,6 +21,12 @@ class ContentController {
      */
     private $securityContext;
 
+    /**
+     * @var ContentService
+     *
+     * @DI\Inject("yasoon.service.content")
+     */
+    private $service;
 
     /**
      * @Route("/get_all")

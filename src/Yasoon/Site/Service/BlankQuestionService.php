@@ -51,7 +51,7 @@ class BlankQuestionService extends AbstractApiService {
     }
 
     private function checkAdminAccess() {
-        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
+        if ('ROLE_ADMIN' != $this->securityContext->getToken()->getRoles()[0]->getRole()) {
             throw new AccessDeniedException();
         }
     }

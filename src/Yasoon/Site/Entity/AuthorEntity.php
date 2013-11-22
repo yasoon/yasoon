@@ -472,7 +472,7 @@ class AuthorEntity implements UserInterface, \Serializable
 //
 //        return $roles;
 
-        return [$this->role];
+        return [$this->roles[$this->role]];
     }
 
     /**
