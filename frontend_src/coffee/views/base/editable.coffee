@@ -21,7 +21,7 @@ define [
       'keyup': (e) ->
         $target = $(e.target)
         if $target.attr('data-field')
-          if $(e.target).is('input')
+          if $(e.target).is('input') or $target.is("textarea")
             @model.data[$target.attr('data-field')] = $target.val()
           else
             @model.data[$target.attr('data-field')] = $target.html()

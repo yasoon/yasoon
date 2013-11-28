@@ -308,6 +308,8 @@ class PostService extends AbstractApiService {
      */
     public function getAllLastWeek()
     {
+        $this->checkAdminAccess();
+
         $dateTime = new \DateTime();
         $dateTime->modify('-7 day');
 

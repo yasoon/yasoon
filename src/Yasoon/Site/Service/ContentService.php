@@ -7,6 +7,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\ContentEntity;
 use Yasoon\Site\Entity\PostEntity;
@@ -55,9 +56,15 @@ class ContentService extends AbstractApiService {
     }
 
     /**
+     * @param bool $isAdmin
+     *
      * @return array
      */
-    public function getAllContent() {
+    public function getAllContent($isAdmin = false) {
+
+        if ($isAdmin) {
+            $this->checkAdminAccess();
+        }
 
         $result = [];
 
