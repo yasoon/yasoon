@@ -44,8 +44,8 @@ class BlankQuestionController {
     public function getBlankAction() {
         try {
             $result = $this->service->getAll();
-        } catch (AccessDeniedException $e) {
-            return new Response('', 302);
+        } catch (\Exception $e) {
+            return new Response('', 403);
         }
 
         return $result;

@@ -150,7 +150,7 @@ class PostController {
         try {
             $result = $this->service->getAllLastWeek();
         } catch (AccessDeniedException $e) {
-            return new Response('', 302);
+            return new Response('', 403);
         }
 
         return $result;

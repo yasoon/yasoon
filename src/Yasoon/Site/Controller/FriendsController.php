@@ -73,7 +73,7 @@ class FriendsController {
         try {
             $result = $this->service->getAdminTimelineStack($offset);
         } catch (AccessDeniedException $e) {
-            return new Response('', 302);
+            return new Response('', 403);
         }
 
         return $result;
