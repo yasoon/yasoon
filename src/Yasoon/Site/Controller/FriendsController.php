@@ -6,8 +6,6 @@
 
 namespace Yasoon\Site\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Service\FriendsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -70,11 +68,7 @@ class FriendsController {
     public function getAdminTimelineStackAction(Request $request) {
         $offset = $request->request->get('offset');
 
-        try {
-            $result = $this->service->getAdminTimelineStack($offset);
-        } catch (AccessDeniedException $e) {
-            return new Response('', 403);
-        }
+        $result = $this->service->getAdminTimelineStack($offset);
 
         return $result;
     }

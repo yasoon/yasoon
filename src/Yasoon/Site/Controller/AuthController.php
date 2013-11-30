@@ -17,9 +17,11 @@
 namespace Yasoon\Site\Controller;
 
 use Doctrine\ORM\NoResultException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\CssSelector\Token;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -38,83 +40,21 @@ use Yasoon\Site\Repository\AuthorRepository;
  */
 class AuthController
 {
-
     /**
-     * @var \Symfony\Component\Security\Core\SecurityContextInterface
-     *
-     * @DI\Inject("security.context")
-     */
-    public  $securityContext;
-
-    /**
-     * @var Container
-     *
-     * @DI\Inject("service_container")
-     */
-    public $container;
-
-    /**
-     * @var AuthorRepository
-     *
-     * @DI\Inject("yasoon.repository.author")
-     */
-    public $userProvider;
-
-    /**
-     * @var string
-     */
-    protected $providerKey = 'secured_area';
-
-    protected $roles = array(
-        1 => 'ROLE_USER',
-        2 => 'ROLE_AUTHOR',
-        4 => 'ROLE_ADMIN'
-    );
-
-    /**
-     * @Route("/login")
+     * @Route("/login_check", name="login_check")
      *
      * @Method({"POST"})
      */
-    public function loginAction(Request $request) {
-
-        $login = $request->request->get('email');
-        $password = $request->request->get('password');
-
-        try {
-            $user = $this->userProvider->loadUserByUsername($login);
-        } catch (NoResultException $e) {
-            throw new AuthenticationCredentialsNotFoundException();
-        }
-        if ($user->getPassword() != md5($password)) {
-            throw new AuthenticationCredentialsNotFoundException();
-        }
-
-        $token = new UsernamePasswordToken((string) $user->getId(), $password, $this->providerKey, $user->getRoles());
-
-        $this->securityContext->setToken($token);
-
-        /** @var Session $session */
-        $session = $this->container->get('request')->getSession();
-        $session->set('_security_secured_area', serialize($token));
-        $this->container->get('request')->setSession($session);
-
-        return [
-            'id' => $user->getId()
-            ];
+    public function loginCheckAction(Request $request)
+    {
+        return [];
     }
-
 
     /**
-     * @Route("/logout")
-     *
-     * @Method({"GET"})
+     * @Route("/login", name="login")
      */
-    public function logoutAction() {
-
-        $this->container->get('request')->getSession()->invalidate();
-
-        return ['ok' => 'ok'];
+    public function loginAction(Request $request)
+    {
+        return new RedirectResponse('/');
     }
-
 }

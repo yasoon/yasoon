@@ -9,11 +9,10 @@ namespace Yasoon\Site\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Yasoon\Site\Service\BlankQuestionService;
 
+;
 /**
  * Class BlankQurstionController
  * @Route("/api/blank_question")
@@ -29,12 +28,7 @@ class BlankQuestionController {
      */
     private $securityContext;
 
-    /**
-     * @var BlankQuestionService
-     *
-     * @DI\Inject("yasoon.service.blank_question")
-     */
-    private $service;
+
 
     /**
      * @Route("/get_blank")
@@ -42,13 +36,7 @@ class BlankQuestionController {
      * @Method({"GET"})
      */
     public function getBlankAction() {
-        try {
-            $result = $this->service->getAll();
-        } catch (\Exception $e) {
-            return new Response('', 403);
-        }
-
-        return $result;
+        return $this->service->getAll();
     }
 
     /**

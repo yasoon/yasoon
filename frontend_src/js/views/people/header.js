@@ -44,9 +44,10 @@ define(['views/index/header', 'JST'], function(IndexHeaderView, JST) {
     PeopleHeaderView.prototype.events = {
       'click #logout': function() {
         var _this = this;
-        return this.model.logout(function() {
+        this.model.logout(function() {
           return _this.render;
         });
+        return this.publishEvent('onLogout');
       }
     };
 

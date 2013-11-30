@@ -2,7 +2,7 @@
 var __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(['views/base/view', 'JST'], function(View, JST) {
+define(['views/base/view', 'JST', 'chaplin'], function(View, JST, Chaplin) {
   'use strict';
   var IndexDaystoryView, _ref;
   return IndexDaystoryView = (function(_super) {
@@ -16,6 +16,15 @@ define(['views/base/view', 'JST'], function(View, JST) {
     IndexDaystoryView.prototype.className = 'daystory';
 
     IndexDaystoryView.prototype.templateName = 'index_daystory';
+
+    IndexDaystoryView.prototype.initialize = function() {
+      IndexDaystoryView.__super__.initialize.apply(this, arguments);
+      return Chaplin.mediator.subscribe('onLogout', this.softRender());
+    };
+
+    IndexDaystoryView.prototype.softRender = function() {
+      return IndexDaystoryView.__super__.softRender.apply(this, arguments);
+    };
 
     return IndexDaystoryView;
 

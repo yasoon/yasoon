@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Service\PostService;
 
 /**
@@ -147,11 +146,7 @@ class PostController {
      */
     public function getLastWeekPosts()
     {
-        try {
-            $result = $this->service->getAllLastWeek();
-        } catch (AccessDeniedException $e) {
-            return new Response('', 403);
-        }
+        $result = $this->service->getAllLastWeek();
 
         return $result;
     }

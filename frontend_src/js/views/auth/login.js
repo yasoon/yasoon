@@ -19,13 +19,16 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
 
     LoginView.prototype.container = 'body';
 
+    LoginView.prototype.afterLoginUrl = null;
+
     LoginView.prototype.modes = ['active', 'notify', 'sent'];
 
     LoginView.prototype.templateName = 'auth_login';
 
     LoginView.prototype.initialize = function(params) {
       LoginView.__super__.initialize.call(this, params);
-      return this.callback = params.callback;
+      this.callback = params.callback;
+      return this.afterLoginUrl = params.afterLoginUrl;
     };
 
     LoginView.prototype.events = {
@@ -48,7 +51,7 @@ define(['views/base/editable', 'JST', 'models/auth/login'], function(EditableVie
     };
 
     LoginView.prototype.addCallback = function(data) {
-      this.publishEvent('redirect', 'author/' + this.model.data.id + '/posts');
+      this.publishEvent('redirect', this.afterLoginUrl ? this.afterLoginUrl : 'author/' + this.model.data.id + '/posts');
       this.callback(false);
       return this.dispose();
     };

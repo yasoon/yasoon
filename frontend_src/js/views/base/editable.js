@@ -37,7 +37,7 @@ define(['views/base/view', 'JST'], function(View, JST) {
         var $target;
         $target = $(e.target);
         if ($target.attr('data-field')) {
-          if ($(e.target).is('input') || $target.is("textarea")) {
+          if ($(e.target).is('input')) {
             return this.model.data[$target.attr('data-field')] = $target.val();
           } else {
             return this.model.data[$target.attr('data-field')] = $target.html();

@@ -272,7 +272,7 @@ class PostService extends AbstractApiService {
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     private function checkAdminAccess() {
-        if (!$this->securityContext->getToken()->getRoles() || 'ROLE_ADMIN' != $this->securityContext->getToken()->getRoles()[0]->getRole()) {
+        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
             throw new AccessDeniedException();
         }
     }
@@ -308,8 +308,6 @@ class PostService extends AbstractApiService {
      */
     public function getAllLastWeek()
     {
-        $this->checkAdminAccess();
-
         $dateTime = new \DateTime();
         $dateTime->modify('-7 day');
 

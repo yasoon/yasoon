@@ -1,9 +1,13 @@
+imports:
+    - { resource: security.yml }
 framework:
   secret: %secret%
   test: ~
   router: {resource: routing.yml}
-
-  session: ~
+  session:
+    cookie_lifetime: 604800
+    cookie_httponly: false
+    cookie_domain: yasoon.local
 
 doctrine:
   dbal:
@@ -32,48 +36,6 @@ jms_di_extra:
     bundles: ['YasoonSiteBundle']
     directories: ["%kernel.root_dir%/../src"]
 
-#hwi_oauth:
-#    firewall_name: secured_area
-#    resource_owners:
-#        vk:
-#            type:                vkontakte
-#            client_id:           <client_id>
-#            client_secret:       <client_secret>
-
-security:
-    firewalls:
-      secured_area:
-        pattern: ^/
-        anonymous: ~
-#        form_login:
-#          login_path: login
-#          check_path: login_check
-#          username_parameter: email
-#          password_parameter: password
-
-    access_control:
-      - {path: ^/admin, roles: ROLE_ADMIN}
-      - {path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-
-    providers:
-      secured_area:
-        id: yasoon.repository.author
-
-#            oauth:
-#                resource_owners:
-#                    vk:                 "/login/vk"
-#                login_path:        /login
-#                failure_path:      /failure
-#
-#                oauth_user_provider:
-#                  service: yasoon.repository.author
-
-#    role_hierarchy:
-#        ROLE_ADMIN:       ROLE_USER
-#
-#    providers:
-#        secured_area:
-#            id: yasoon.repository.author
 swiftmailer:
     host:       smtp.gmail.com
     username: 'yasoon.info@gmail.com'

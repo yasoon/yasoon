@@ -14,7 +14,7 @@ define [
         $target = $(e.target)
 
         if $target.attr('data-link')? then @publishEvent 'redirect', $target.attr('data-link')
-        if $target.attr('data-to-login')? then @publishEvent 'goLogin'
+        if $target.attr('data-to-login')? then @publishEvent 'goLogin', $target.attr('data-to-login')
 
     #
     initialize: ->
@@ -55,7 +55,7 @@ define [
 
       pressFooter()
 
-      @managerAuthAreas()
+      @manageAuthAreas()
       @manageEditableContent()
 
     #

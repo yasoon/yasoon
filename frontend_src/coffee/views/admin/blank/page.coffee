@@ -24,8 +24,8 @@ define [
     className: 'postPage'
 
     regions:
-      'queue': '#queue'
-      'new': '#new'
+      '#queue': 'queue'
+      '#new': 'new'
       'footer': 'footer'
       'header': 'header'
 

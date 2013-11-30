@@ -20,17 +20,11 @@ abstract class AbstractApiService {
      */
     public $em;
 
-    private $adminIds = array(
-        43,
-        56,
-        57
-    );
-
     protected function getAccessLevel($authorId)
     {
         if ($authorId == (int) $this->securityContext->getToken()->getUsername()) {
             $access = 'USER';
-        } else if (array_key_exists((int) $this->securityContext->getToken()->getUsername(), $this->adminIds)) {
+        } else if ($this->securityContext->getToken()->getUsername() === "0") {
             $access = 'ADMIN';
         } else {
             $access = 'ANON';

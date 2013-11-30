@@ -13,7 +13,7 @@
         <span class="like-this"><a ><i></i></a> {{model.likes}} <span>likes</span></span>
         <span class="q-post">
             {{#if isLoggedIn}}<a href='#author/{{model.authorId}}/questions'><i></i></a>
-            {{else}}<a href='javascript:;'><i data-to-login></i></a>{{/if}}
+            {{else}}<a><i data-to-login="author/{{model.authorId}}/questions"></i></a>{{/if}}
             Вопросов автору: {{model.questions}}</span>
     </div>
     <div class="bottom-toolbar t-center">

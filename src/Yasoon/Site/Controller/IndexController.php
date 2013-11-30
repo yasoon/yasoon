@@ -106,7 +106,7 @@ JST = {}
     }
     // For easier development, disable browser caching
     // Of course, this should be removed in a production environment
-    , urlArgs: 'bust=' +  (new Date()).getTime()
+//    , urlArgs: 'bust=' +  (new Date()).getTime()
   });
 
   //add some templates helper

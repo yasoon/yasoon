@@ -1,0 +1,40 @@
+security:
+    encoders:
+        \Yasoon\Site\Entity\AuthorEntity:
+            algorithm:        md5
+            encode_as_base64: false
+            iterations: 1
+
+    role_hierarchy:
+        ROLE_READER: ROLE_USER,
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
+    providers:
+        users:
+            entity: { class: "\Yasoon\Site\Entity\AuthorEntity", property: email }
+
+    firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+                username_parameter: email
+                password_parameter: password
+                require_previous_session: false
+                success_handler: yasoon.site.authentication_success_handler
+
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/.+, roles: ROLE_READER }
+
+services:
+  yasoon.site.authentication_success_handler:
+    class: Yasoon\Site\Handler\AuthenticationSuccessHandler
+    arguments:
+      - @security.context

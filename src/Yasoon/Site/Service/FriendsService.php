@@ -249,8 +249,6 @@ class FriendsService extends AbstractApiService {
             throw new AccessDeniedException();
         }
 
-        $this->checkAdminAccess();
-
         $limit = 200;
         $returnLimit = 50;
 
@@ -307,9 +305,5 @@ class FriendsService extends AbstractApiService {
 
     }
 
-    private function checkAdminAccess() {
-        if (!$this->securityContext->getToken()->getRoles() || 'ROLE_ADMIN' != $this->securityContext->getToken()->getRoles()[0]->getRole()) {
-            throw new AccessDeniedException();
-        }
-    }
+
 }

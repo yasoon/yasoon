@@ -673,8 +673,11 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  
-  return "<a href='javascript:;'><i data-to-login></i></a>";
+  var buffer = "", stack1;
+  buffer += "<a><i data-to-login=\"author/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "/questions\"></i></a>";
+  return buffer;
   }
 
   buffer += "<article class=\"lim\">\n\n    <div class=\"like-title\">\n        <span class=\"like-this\"><a ><i></i></a> "
@@ -1007,8 +1010,11 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
-  
-  return "<a href=\"javascript:;\"><i data-to-login></i></a>";
+  var buffer = "", stack1;
+  buffer += "<a><i data-to-login=\"author/"
+    + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.authorId)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "/questions\"></i></a>";
+  return buffer;
   }
 
   buffer += "<a class=\"postinfo\" href='#author/"

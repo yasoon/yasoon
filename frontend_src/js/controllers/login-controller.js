@@ -10,6 +10,7 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
     __extends(LoginController, _super);
 
     function LoginController() {
+      this.onLogout = __bind(this.onLogout, this);
       this.setLoginActive = __bind(this.setLoginActive, this);
       this.hideLogin = __bind(this.hideLogin, this);
       this.goLogin = __bind(this.goLogin, this);
@@ -22,17 +23,19 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
       LoginController.__super__.initialize.apply(this, arguments);
       Chaplin.mediator.subscribe('goLogin', this.goLogin);
       Chaplin.mediator.subscribe('hideLogin', this.hideLogin);
+      Chaplin.mediator.subscribe('onLogout', this.onLogout);
       return this.loginActive = false;
     };
 
-    LoginController.prototype.goLogin = function() {
+    LoginController.prototype.goLogin = function(afterLoginUrl) {
       var loginModel;
       if (!this.loginActive) {
         this.loginActive = 1;
         loginModel = new LoginModel();
         this.loginView = new LoginView({
           model: loginModel,
-          callback: this.setLoginActive
+          callback: this.setLoginActive,
+          afterLoginUrl: afterLoginUrl
         });
         return this.loginView.setMode('active');
       }
@@ -45,6 +48,10 @@ define(['controllers/base/controller', 'chaplin', 'views/auth/login', 'models/au
 
     LoginController.prototype.setLoginActive = function(state) {
       return this.loginActive = state;
+    };
+
+    LoginController.prototype.onLogout = function() {
+      return alert('onLogout');
     };
 
     return LoginController;

@@ -12,6 +12,7 @@ define [
     autoRender: true
     className: 'login'
     container: 'body'
+    afterLoginUrl: null
 
     modes: ['active', 'notify', 'sent']
 
@@ -20,6 +21,7 @@ define [
     initialize: (params)->
       super(params)
       @callback = params.callback
+      @afterLoginUrl = params.afterLoginUrl
 
     events:
       'click .go_register': ->
@@ -36,6 +38,6 @@ define [
             @setMode('sent')
 
     addCallback: (data) ->
-      @publishEvent 'redirect', 'author/'+@model.data.id+'/posts'
+      @publishEvent 'redirect', if @afterLoginUrl then @afterLoginUrl else 'author/'+@model.data.id+'/posts'
       @callback(false)
       @dispose()

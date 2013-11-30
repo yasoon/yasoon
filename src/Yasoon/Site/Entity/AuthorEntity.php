@@ -21,9 +21,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class AuthorEntity implements UserInterface, \Serializable
 {
     private $roles = [
-      1 => 'ROLE_USER',
-      2 => 'ROLE_AUTHOR',
-      4 => 'ROLE_ADMIN'
+      'ROLE_READER' => 1,
+      'ROLE_AUTHOR' => 2,
+      'ROLE_ADMIN'  => 4
     ];
 
     /**
@@ -463,26 +463,26 @@ class AuthorEntity implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-//        $roles  = [];
-//        foreach ($this->roles as  $role => $bit) {
-//            if ($this->role & $bit) {
-//                $roles[] = $role;
-//            }
-//        }
-//
-//        return $roles;
+        $roles  = [];
+        foreach ($this->roles as  $role => $bit) {
+            if ($this->role & $bit) {
+                $roles[] = $role;
+            }
+        }
 
-        return [$this->roles[$this->role]];
+        return $roles;
     }
 
     /**
      * Returns the username used to authenticate the user.
+     * In current case, user's ID really identifies the user.
+     * @todo change it to email in future?
      *
      * @return string The username
      */
     public function getUsername()
     {
-        return $this->getName();
+        return $this->getId();
     }
 
     /**

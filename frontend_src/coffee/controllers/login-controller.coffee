@@ -16,15 +16,16 @@ define [
       super
       Chaplin.mediator.subscribe 'goLogin', @goLogin
       Chaplin.mediator.subscribe 'hideLogin', @hideLogin
+      Chaplin.mediator.subscribe 'onLogout', @onLogout
 
       @loginActive = false
 
-    goLogin: =>
+    goLogin: (afterLoginUrl) =>
       if not @loginActive
         @loginActive = 1
 
         loginModel = new LoginModel()
-        @loginView = new LoginView(model:loginModel, callback: @setLoginActive)
+        @loginView = new LoginView(model:loginModel, callback: @setLoginActive, afterLoginUrl: afterLoginUrl)
         @loginView.setMode('active')
 
     hideLogin: =>
@@ -33,3 +34,6 @@ define [
 
     setLoginActive: (state) =>
       @loginActive = state
+
+    onLogout: =>
+      alert('onLogout')

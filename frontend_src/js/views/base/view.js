@@ -23,7 +23,7 @@ define(['chaplin', 'handlebars', 'helper'], function(Chaplin, Handlebars, Helper
           this.publishEvent('redirect', $target.attr('data-link'));
         }
         if ($target.attr('data-to-login') != null) {
-          return this.publishEvent('goLogin');
+          return this.publishEvent('goLogin', $target.attr('data-to-login'));
         }
       }
     };
@@ -72,7 +72,7 @@ define(['chaplin', 'handlebars', 'helper'], function(Chaplin, Handlebars, Helper
         this.rendered = true;
       }
       pressFooter();
-      this.managerAuthAreas();
+      this.manageAuthAreas();
       return this.manageEditableContent();
     };
 
