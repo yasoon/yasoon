@@ -25,8 +25,8 @@
         <div class="clearfix"></div>
         <div class="social">
             <div class="hr"></div>
-            <a class="btn" id='follow' {{#unless model.is_friend }}style="display:none"{{/unless}} data-permission="THEM">Подписаться</a>
-            <a class="btn close-question mLeft10" id='unfollow' {{#if model.is_friend }}style="display:none"{{/if}} data-permission="THEM">Отписаться</a>
+            <a class="btn" id='follow' data-permission="THEM">Подписаться</a>
+            <a class="btn close-question mLeft10" id='unfollow' data-permission="THEM">Отписаться</a>
             <a class="btn" id='follow.anon' data-to-login data-permission="ANON">Подписаться</a>
         </div>
         <div class="hr"></div>

@@ -400,13 +400,8 @@ var template = Handlebars.template, templates = JST = JST || {};
 templates['author_posts_info'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
-function program1(depth0,data) {
-  
-  
-  return "style=\"display:none\"";
-  }
 
   buffer += "<div class=\"open-area\"></div>\n\n<img src=\"upload/avatar/"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.img)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -424,13 +419,7 @@ function program1(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.posts)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</a></div>\n            <div><p class=\"p-label\">ответов</p> <a href=\"\">"
     + escapeExpression(((stack1 = ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.questions)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</a></div>\n        </div>\n\n        <div class=\"clearfix\"></div>\n        <div class=\"social\">\n            <div class=\"hr\"></div>\n            <a class=\"btn\" id='follow' ";
-  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.is_friend), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += " data-permission=\"THEM\">Подписаться</a>\n            <a class=\"btn close-question mLeft10\" id='unfollow' ";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.model),stack1 == null || stack1 === false ? stack1 : stack1.is_friend), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += " data-permission=\"THEM\">Отписаться</a>\n            <a class=\"btn\" id='follow.anon' data-to-login data-permission=\"ANON\">Подписаться</a>\n        </div>\n        <div class=\"hr\"></div>\n    </div>\n</div>";
+    + "</a></div>\n        </div>\n\n        <div class=\"clearfix\"></div>\n        <div class=\"social\">\n            <div class=\"hr\"></div>\n            <a class=\"btn\" id='follow' data-permission=\"THEM\">Подписаться</a>\n            <a class=\"btn close-question mLeft10\" id='unfollow' data-permission=\"THEM\">Отписаться</a>\n            <a class=\"btn\" id='follow.anon' data-to-login data-permission=\"ANON\">Подписаться</a>\n        </div>\n        <div class=\"hr\"></div>\n    </div>\n</div>";
   return buffer;
   });
 

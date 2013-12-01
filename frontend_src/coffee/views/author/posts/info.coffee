@@ -13,10 +13,24 @@ define [
     events:
       'click #follow': ->
         @model.follow()
-        $('#follow').hide()
-        $('#unfollow').show()
+        @drawUnfollow();
 
       'click #unfollow': ->
         @model.unfollow()
-        $('#follow').show()
-        $('#unfollow').hide()
+        @drawFollow();
+
+    render: =>
+      super
+      unless @model.access is 'ANON'
+        if @model.data.is_friend
+          @drawUnfollow()
+        else
+          @drawFollow()
+
+    drawFollow: ->
+      @$el.find('#follow').show() unless @model.access is 'US'
+      @$el.find('#unfollow').hide()
+
+    drawUnfollow: ->
+      @$el.find('#follow').hide()
+      @$el.find('#unfollow').show() unless @model.access is 'US'
