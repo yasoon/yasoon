@@ -22,6 +22,6 @@ define [
 
     events:
         'click #logout': ->
-          @model.logout => @render
+          @model.logout @render
           @publishEvent 'onLogout'
 

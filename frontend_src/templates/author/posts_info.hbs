@@ -1,7 +1,7 @@
 <div class="open-area"></div>
 
 <img src="upload/avatar/{{model.img}}" alt="Мой аватар">
-<h4 class="usr-name editable">{{model.name}}<a href="#editinfo" data-permission="USER"><i></i></a></h4>
+<h4 class="usr-name editable">{{model.name}}<a href="#editinfo" data-permission="US,ADMIN"><i></i></a></h4>
 <p class="u-description">{{model.description}}</p>
 <div class="hr"></div>
 
@@ -23,12 +23,11 @@
         </div>
 
         <div class="clearfix"></div>
-        <div class="social" data-permission="ANON">
+        <div class="social">
             <div class="hr"></div>
-                {{#if isLoggedIn}}
-                    <a class="btn" id='follow'>Подписаться</a>
-                    <a class="btn close-question mLeft10" id='unfollow' style='display:none'>Отписаться</a>
-                {{else}}<a class="btn" id='follow.anon' data-to-login>Подписаться</a>{{/if}}
+            <a class="btn" id='follow' {{#unless model.is_friend }}style="display:none"{{/unless}} data-permission="THEM">Подписаться</a>
+            <a class="btn close-question mLeft10" id='unfollow' {{#if model.is_friend }}style="display:none"{{/if}} data-permission="THEM">Отписаться</a>
+            <a class="btn" id='follow.anon' data-to-login data-permission="ANON">Подписаться</a>
         </div>
         <div class="hr"></div>
     </div>

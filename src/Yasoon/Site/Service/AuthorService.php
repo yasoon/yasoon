@@ -6,6 +6,8 @@
 
 namespace Yasoon\Site\Service;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
@@ -57,29 +59,52 @@ class AuthorService extends AbstractApiService {
     public function getShortInfo($authorId)
     {
 
-        $data = $this->em->createQueryBuilder()
-            ->select('author.id, author.name, author.description, author.publicationDate, author.img,
-            author.job, author.interest, author.dream, posts.id as postId, questions.id as questionId')
-            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
-            ->leftJoin('author.posts', 'posts')
-            ->leftJoin('author.questions', 'questions', 'WITH', 'questions.answer IS NOT NULL')
-            ->where("author.id = $authorId")
-            ->getQuery()->getResult();
+//        $data = $this->em->createQueryBuilder()
+//            ->select('author.id, author.name, author.description, author.publicationDate, author.img,
+//            author.job, author.interest, author.dream, posts.id as postId, questions.id as questionId')
+//            ->from('Yasoon\Site\Entity\AuthorEntity', 'author')
+//            ->leftJoin('author.posts', 'posts')
+//            ->leftJoin('author.questions', 'questions', 'WITH', 'questions.answer IS NOT NULL')
+//            ->where("author.id = $authorId")
+//            ->getQuery()->getResult();
+//
+//
+//        //@TODO пипец костыль (устал и хочу спать). Исправить на нормальный подсчёт sql-ем или ещё как
+//        $posts = []; $questions = [];
+//        foreach ($data as $row) {
+//            $posts[] = $row['postId'];
+//            $questions[] = $row['questionId'];
+//        }
+//        $data = $row;
+//        $data['postsCount'] = count(array_unique($posts));
+//        $data['answersCount'] = count(array_unique($questions));
+//        //------------------- костыль моде офф
 
+        $userId = $this->securityContext->getToken()->getUsername();
 
-        //@TODO пипец костыль (устал и хочу спать). Исправить на нормальный подсчёт sql-ем или ещё как
-        $posts = []; $questions = [];
-        foreach ($data as $row) {
-            $posts[] = $row['postId'];
-            $questions[] = $row['questionId'];
-        }
-        $data = $row;
-        $data['postsCount'] = count(array_unique($posts));
-        $data['answersCount'] = count(array_unique($questions));
-        //------------------- костыль моде офф
+        $stmt = $this->em->getConnection()->prepare(
+            "SELECT a.id, a.id ownerId, a.name, a.description,
+              a.job, a.interest, a.dream,
+              (SELECT count(1) FROM post     WHERE author_id = a.id) posts,
+              (SELECT count(1) FROM question WHERE author_id = a.id and answer is not null) answers,
+              (f.id is not null) is_friend
+            FROM author a
+              LEFT JOIN friends f
+                ON a.id = f.writer_id AND f.reader_id = :userId
+            WHERE a.id = :authorId");
+        $stmt->bindValue('userId', $userId);
+        $stmt->bindValue('authorId', $authorId);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+        $stmt->closeCursor();
 
+        $data[0]['is_friend'] = $data[0]['is_friend'] != 0;
+
+        return $data[0];
+/*
         $result = [
             'id'      => $data['id'],
+            'ownerId' => $data['id'],
             'name'    => $data['name'],
             'description' => $data['description'],
             'job' => $data['job'],
@@ -87,12 +112,15 @@ class AuthorService extends AbstractApiService {
             'dream' => $data['dream'],
             'posts'   => $data['postsCount'],
             'answers' => $data['answersCount'],
-            'img'     => $data['img']
+            'friend' => $data['friend'],
+            'img'     => $data['img'],
         ];
 
-        $access = $this->getAccessLevel($authorId);
+//        $access = $this->getAccessLevel($authorId);
+//
+//        return ['access' => $access, 'data' => $result];
 
-        return ['access' => $access, 'data' => $result];
+        return $result; */
     }
 
 
@@ -117,9 +145,9 @@ class AuthorService extends AbstractApiService {
             'dream' => ''
         ];
 
-        $access = 'ADMIN';
-
-        return ['access' => $access, 'data' => $result];
+//        $access = 'ADMIN';
+//
+//        return ['access' => $access, 'data' => $result];
 
         $authorId = $this->securityContext->getToken()->getUsername();
 
@@ -136,6 +164,7 @@ class AuthorService extends AbstractApiService {
 
         $result = [
             'id'    => $data['id'],
+            'ownerId'=> $data['id'],
             'name'    => $data['name'],
             'email'   => $data['email'],
             'password' => $data['password'],
@@ -146,9 +175,11 @@ class AuthorService extends AbstractApiService {
             'dream' => $data['dream']
         ];
 
-        $access = $this->getAccessLevel($authorId);
+//        $access = $this->getAccessLevel($authorId);
+//
+//        return ['access' => $access, 'data' => $result];
 
-        return ['access' => $access, 'data' => $result];
+        return $result;
     }
 
     /**
@@ -170,13 +201,14 @@ class AuthorService extends AbstractApiService {
             ->getQuery()->getSingleResult();
 
         return [
-          'access' => 'USER',
-          'data' => [
+//          'access' => 'USER',
+//          'data' => [
               'id' => $data['id'],
+              'ownerId' => $data['id'],
               'name' => $data['name'],
               'questions' => $data['questionsCount'],
               'img' =>  $data['img']
-          ]
+//          ]
         ];
     }
 
@@ -231,10 +263,12 @@ class AuthorService extends AbstractApiService {
             ]);
         }
 
+        $result['ownerId'] = $authorId;
+//        $access = $this->getAccessLevel($authorId);
+//
+//        return ['access' => $access, 'data' => $result];
 
-        $access = $this->getAccessLevel($authorId);
-
-        return ['access' => $access, 'data' => $result];
+        return $result;
     }
 
     public function getQuestionsStack($authorId, $offset) {
@@ -255,10 +289,13 @@ class AuthorService extends AbstractApiService {
             $result[] = $question['id'];
         }
 
-        $access = $this->getAccessLevel($authorId);
+//        $access = $this->getAccessLevel($authorId);
+//
+//        return ['access' => $access, 'data' => $result];
 
-        return ['access' => $access, 'data' => $result];
+        $result['ownerId'] = $authorId;
 
+        return $result;
     }
 
     /**
@@ -313,13 +350,14 @@ class AuthorService extends AbstractApiService {
                 'id'     => $question->getId(),
                 'caption'   => $question->getCaption(),
                 'answer' => $question->getAnswer(),
-                'place' => $question->getPlace()
+                'place' => $question->getPlace(),
+                'ownerId' => $authorId
             ];
         }
 
-        $access = $this->getAccessLevel($authorId);
-
-        return ['access' => $access, 'data' => $result];
+//        $access = $this->getAccessLevel($authorId);
+//
+//        return ['access' => $access, 'data' => $result];
     }
 
     /**

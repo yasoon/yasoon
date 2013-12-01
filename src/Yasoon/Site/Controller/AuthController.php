@@ -57,4 +57,12 @@ class AuthController
     {
         return new RedirectResponse('/');
     }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction(Request $request)
+    {
+        return [];
+    }
 }

@@ -24,13 +24,6 @@ class ContentService extends AbstractApiService {
      */
     public  $securityContext;
 
-
-    private function checkAdminAccess() {
-        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
-            throw new AccessDeniedException();
-        }
-    }
-
     /**
      * @param array $model
      * @return array

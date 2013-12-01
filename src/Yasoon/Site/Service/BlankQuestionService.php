@@ -50,12 +50,6 @@ class BlankQuestionService extends AbstractApiService {
         return $result;
     }
 
-    private function checkAdminAccess() {
-        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
-            throw new AccessDeniedException();
-        }
-    }
-
     /**
      * @param array $model
      * @return array

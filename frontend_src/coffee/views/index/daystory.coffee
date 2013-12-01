@@ -12,7 +12,6 @@ define [
 
     initialize: ->
       super
-      Chaplin.mediator.subscribe 'onLogout', @softRender()
-
-    softRender: ->
-      super
+      Chaplin.mediator.subscribe 'onLogout', =>
+        @model.access = 'ANON'
+        @softRender()

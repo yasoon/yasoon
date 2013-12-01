@@ -144,16 +144,18 @@ class PostService extends AbstractApiService {
             'id'         => $post->getId(),
             'caption'    => $post->getCaption(),
             'authorId'   => $post->getAuthorId(),
+            'ownerId'    => $post->getAuthorId(),
             'preview'    => $post->getPreview(),
             'text'       => $post->getText(),
             'date'       => $post->getDate()->format('Y-m-d'),
             'categoryId' => $post->getCategoryId()
         ];
 
-        $access = $this->getAccessLevel($post->getAuthorId());
+//        $access = $this->getAccessLevel($post->getAuthorId());
+//
+//        return ['access' => $access, 'data' => $result];
 
-        return ['access' => $access, 'data' => $result];
-
+        return $result;
     }
 
     /**
@@ -181,9 +183,11 @@ class PostService extends AbstractApiService {
             ];
         }
 
-        $access = $this->getAccessLevel($this->securityContext->getToken()->getUsername());
+//        $access = $this->getAccessLevel($this->securityContext->getToken()->getUsername());
+//
+//        return ['access' => $access, 'data' => $result];
 
-        return ['access' => $access, 'data' => $result];
+        return $result;
     }
 
 
@@ -266,15 +270,6 @@ class PostService extends AbstractApiService {
         $this->em->flush();
 
         return ['ok' => 'ok'];
-    }
-
-    /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    private function checkAdminAccess() {
-        if (!in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles())) {
-            throw new AccessDeniedException();
-        }
     }
 
     /**

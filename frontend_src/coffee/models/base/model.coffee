@@ -15,11 +15,10 @@ define [
 
     initialize: ->
       super
-      @isLoggedIn = (document.cookie.indexOf('PHPSESSID=') >= 0 )
       if not @name? then throw 'Model name must be defined'
 
     formatUrl: (url) ->
-      'http://' +  window.location.host + "/#{url}"
+      'https://' +  window.location.host + "/#{url}"
 
 
     validateNotNull: (fields...) ->
@@ -39,9 +38,10 @@ define [
         method: @method
         data:   @requestData
 
-        success: (data) =>
+        success: (data, status, resp) =>
+          @access = resp.getResponseHeader('access')
           if data.access?
-            @access = data.access
+#            @access = data.access
             data = data.data
 
           if not dontUpdateData

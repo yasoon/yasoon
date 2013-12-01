@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;
 
 use Doctrine\Tests\Common\Annotations\Ticket\Doctrine\ORM\Entity;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class AbstractApiService {
 
@@ -19,6 +20,17 @@ abstract class AbstractApiService {
      * @var EntityManager
      */
     public $em;
+
+    public function isAdmin() {
+        return in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles());
+    }
+
+    public function checkAdminAccess()
+    {
+        if (!$this->isAdmin()) {
+            throw new AccessDeniedException();
+        }
+    }
 
     protected function getAccessLevel($authorId)
     {

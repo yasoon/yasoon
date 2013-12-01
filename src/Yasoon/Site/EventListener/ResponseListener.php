@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class ResponseListener
 {
-    const USER_HEADER_NAME = 'author-id';
+    const ACCESS_HEADER_NAME = 'access';
 
     const ACCESS_ANONYMOUS = 'ANON';
 
@@ -59,12 +59,31 @@ class ResponseListener
 
         $response = new JsonResponse($responseData);
         $securityContext = $this->container->get('security.context');
-        if ($securityContext) {
-
-            $authorId = $securityContext->getToken()->getUsername();
-
-            $response->headers->set(self::USER_HEADER_NAME, $authorId);
+        $token = $securityContext->getToken();
+        $userId = $token->getUsername();
+        if ($userId != 'anon.') {
+            if (in_array('ROLE_ADMIN', array_map(function($role){ return $role->getRole(); }, $token->getRoles()))) {
+                $access = self::ACCESS_ADMIN;
+            } else {
+                if ( array_key_exists('ownerId', $responseData) && $responseData['ownerId'] == $userId) {
+                    $response->headers->set('owner-id', $responseData['ownerId']);
+                    $access = self::ACCESS_AUTHOR;
+                } else {
+                    $access = self::ACCESS_READER;
+                }
+            }
+        } else {
+            $access = self::ACCESS_ANONYMOUS;
         }
+
+        $roles = "";
+        foreach ($token->getRoles() as $role){
+            $roles = $roles . ", ". $role->getRole();
+        }
+
+        $response->headers->set('user-id', $userId);
+        $response->headers->set('roles', $roles);
+        $response->headers->set(self::ACCESS_HEADER_NAME, $access);
 
         $event->setResponse($response);
     }

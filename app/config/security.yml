@@ -25,7 +25,7 @@ security:
                 password_parameter: password
                 require_previous_session: false
                 success_handler: yasoon.site.authentication_success_handler
-
+            logout: ~
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -25,7 +25,6 @@ define(['chaplin'], function(Chaplin) {
 
     Model.prototype.initialize = function() {
       Model.__super__.initialize.apply(this, arguments);
-      this.isLoggedIn = document.cookie.indexOf('PHPSESSID=') >= 0;
       if (this.name == null) {
         throw 'Model name must be defined';
       }
@@ -62,9 +61,9 @@ define(['chaplin'], function(Chaplin) {
         url: this.formatUrl(this.url()),
         method: this.method,
         data: this.requestData,
-        success: function(data) {
+        success: function(data, status, resp) {
+          _this.access = resp.getResponseHeader('access');
           if (data.access != null) {
-            _this.access = data.access;
             data = data.data;
           }
           if (!dontUpdateData) {

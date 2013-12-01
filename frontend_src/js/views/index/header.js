@@ -32,10 +32,7 @@ define(['views/base/view', 'JST', 'models/index/header', 'sitefunctions'], funct
 
     IndexHeaderView.prototype.events = {
       'click #logout': function() {
-        var _this = this;
-        this.model.logout(function() {
-          return _this.render;
-        });
+        this.model.logout(this.render);
         return this.publishEvent('onLogout');
       }
     };

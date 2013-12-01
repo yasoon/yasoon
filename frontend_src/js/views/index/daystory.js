@@ -18,12 +18,12 @@ define(['views/base/view', 'JST', 'chaplin'], function(View, JST, Chaplin) {
     IndexDaystoryView.prototype.templateName = 'index_daystory';
 
     IndexDaystoryView.prototype.initialize = function() {
+      var _this = this;
       IndexDaystoryView.__super__.initialize.apply(this, arguments);
-      return Chaplin.mediator.subscribe('onLogout', this.softRender());
-    };
-
-    IndexDaystoryView.prototype.softRender = function() {
-      return IndexDaystoryView.__super__.softRender.apply(this, arguments);
+      return Chaplin.mediator.subscribe('onLogout', function() {
+        _this.model.access = 'ANON';
+        return _this.softRender();
+      });
     };
 
     return IndexDaystoryView;

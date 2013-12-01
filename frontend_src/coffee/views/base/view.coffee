@@ -20,7 +20,7 @@ define [
     initialize: ->
       @initHandlebarsHelpers()
       @checkTemplate()
-      if not @autoRender then @rendered = false
+      @rendered = false
 
     #
     initHandlebarsHelpers: ->
@@ -44,19 +44,17 @@ define [
       @manageAuthAreas()
       @manageEditableContent()
       pressFooter()
+      @rendered = true
 
     #
     softRender: ->
       if @rendered
         @$el.html JST[@templateName](@getTemplateData())
+        pressFooter()
+        @manageAuthAreas()
+        @manageEditableContent()
       else
         @render()
-        @rendered = true
-
-      pressFooter()
-
-      @manageAuthAreas()
-      @manageEditableContent()
 
     #
     setRegion: (region) ->
@@ -71,12 +69,19 @@ define [
     #
     manageAuthAreas: ->
       if @model?.access?
-        for el in @$el.find("[data-permission='ANON']")
-          if @model.access is 'ANON' then $(el).show() else $(el).hide()
-        for el in @$el.find("[data-permission='USER']")
-          if @model.access is 'USER' then $(el).show() else $(el).hide()
-        for el in @$el.find("[data-permission='ADMIN']")
-          if @model.access is 'ADMIN' then $(el).show() else $(el).hide()
+        elementsThatHavePermission = @$el.find("[data-permission]")
+        map = $.map(elementsThatHavePermission, (it) ->
+          {el: it, perm: $(it).attr('data-permission').split(',')})
+        for it in map
+          b = @model.access in it.perm
+          if b then $(it.el).show() else $(it.el).hide()
+
+#        for el in @$el.find("[data-permission='ANON']")
+#          if @model.access is 'ANON' then $(el).show() else $(el).hide()
+#        for el in @$el.find("[data-permission='USER']")
+#          if @model.access is 'USER' then $(el).show() else $(el).hide()
+#        for el in @$el.find("[data-permission='ADMIN']")
+#          if @model.access is 'ADMIN' then $(el).show() else $(el).hide()
 
     permissions:
       'admin' : ['create', 'update', 'read']
@@ -86,4 +91,4 @@ define [
 
     #
     getTemplateData: ->
-      if @model? then {model: @model.data, isLoggedIn: @model.isLoggedIn}
+      if @model? then {model: @model.data}

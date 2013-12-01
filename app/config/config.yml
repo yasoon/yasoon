@@ -7,7 +7,6 @@ framework:
   session:
     cookie_lifetime: 604800
     cookie_httponly: false
-    cookie_domain: yasoon.local
 
 doctrine:
   dbal:

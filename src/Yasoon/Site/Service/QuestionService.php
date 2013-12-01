@@ -183,14 +183,15 @@ class QuestionService extends AbstractApiService {
             'id'      => $post->getId(),
             'caption' => $post->getCaption(),
             'authorId'=> $post->getAuthorId(),
+            'ownerId' => $post->getAuthorId(),
             'preview' => $post->getPreview(),
             'text'    => $post->getText(),
             'date'    => $post->getDate()->format('d/m/Y'),
         ];
 
-        $access = $this->getAccessLevel($post->getAuthorId());
-
-        return ['access' => $access, 'data' => $result];
+//        $access = $this->getAccessLevel($post->getAuthorId());
+//
+//        return ['access' => $access, 'data' => $result];
     }
 
     public function getQuestions($postId) {

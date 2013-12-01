@@ -16,7 +16,6 @@ define [
       super
       Chaplin.mediator.subscribe 'goLogin', @goLogin
       Chaplin.mediator.subscribe 'hideLogin', @hideLogin
-      Chaplin.mediator.subscribe 'onLogout', @onLogout
 
       @loginActive = false
 
@@ -34,6 +33,3 @@ define [
 
     setLoginActive: (state) =>
       @loginActive = state
-
-    onLogout: =>
-      alert('onLogout')
