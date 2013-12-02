@@ -29,7 +29,7 @@ class IndexController {
      */
     public function indexAction() {
 
-        $content = json_encode($this->service->getAllContent());
+        $content = str_replace("\\n", "\\\\n", json_encode($this->service->getAllContent()));
 
 
         $html = <<<HTML
