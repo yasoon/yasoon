@@ -18,7 +18,7 @@ define [
     className: 'AdminStoriesPage'
 
     regions:
-      '#queue': 'queue'
+      'queue': '#queue'
       'footer': 'footer'
       'header': 'header'
 
