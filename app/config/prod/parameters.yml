@@ -6,4 +6,4 @@ parameters:
   db_yasoon_port: 3306
   db_yasoon_dbname: yasoon
   db_yasoon_user: root
-  db_yasoon_password: 111
+  db_yasoon_password: root

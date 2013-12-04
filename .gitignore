@@ -10,7 +10,8 @@ node_modules/
 #all compiled js files
 #frontend_src/js/
 
-frontend_src/img/avs/
+frontend_src/upload/
+
 
 #IDE files
 .idea/

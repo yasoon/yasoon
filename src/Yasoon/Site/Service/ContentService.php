@@ -60,7 +60,7 @@ class ContentService extends AbstractApiService {
             $result[] = [
                 'id' => $entity->getId(),
                 'description' => $entity->getDescription(),
-                'text' => $entity->getText()
+                'text' => $entity->getText() 
             ];
         }
 
