@@ -1,0 +1,59 @@
+<% var currentUser = app.userModel.attributes.userData.id == autor.id ? true : false; %>
+
+
+<div class="info">
+    <div class="open-area"></div>
+    <img src="<%= autor.avatarImg %>" alt="Мой аватар">
+    <h4>
+        <a href="/#author/<%= autor.id %>/posts"><%= autor.name %></a>
+        <% if(currentUser){ %> <a href="/#editprofile" data-permission="US,ADMIN" class="editable"><i></i></a> <% } %>
+    </h4>
+    <p class="u-description"><%= autor.interviewCaption %></p>
+    <div class="hr"></div>
+    <div class="pub">
+        <h4 class="p-label">Обновлено</h4><%= autor.publishDateText %><div class="hr"></div>
+    </div>
+
+    <div class="media-hidden">
+        <div class="inner">
+            <div class="b-indent">Работаю:<br>
+                <t class="t-under c-black"><%= autor.job %></t>
+            </div>
+            <div class="b-indent">Мечта:<br>
+                 <t class="t-under c-black"><%= autor.dream %></t>
+            </div>
+            <div class="b-indent">Профессия, которая восхищает:<br>
+                 <t class="t-under c-black"><%= autor.interest %></t>
+            </div>            
+            <div class="hr"></div>
+            <div class="d-box">
+                <div><p class="p-label">историй</p> <a href="/#author/<%= autor.id %>/posts"><%= autor.posts.length %></a></div>
+                <div><p class="p-label">ответов</p> <a href="/#author/<%= autor.id %>/questions" class="answersCount"><%= autor.answers.length %></a></div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="social">
+                <div class="hr"></div>
+
+                <% if( autor.self_link !== '' ){  %> 
+
+                    <div class="social-links">
+                        <a href="<%= autor.self_link %>" class="<%= autor.linkClass %>"></a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="hr"></div>
+
+                 <% } %>  
+
+                <% if(!currentUser){ %> 
+                    <!-- <a class="btn" id="follow" data-permission="THEM" style="display: none;">Подписаться</a> -->
+                    <!-- <a class="btn close-question mLeft10" id="unfollow" data-permission="THEM" style="display: none;">Отписаться</a> -->
+                    <a class="btn friend" id="follow.anon" data-to-login="" data-permission="ANON">Подписаться</a>
+                    <div class="hr"></div>
+                <% } %>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="clear"></div>

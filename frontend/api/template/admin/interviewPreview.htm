@@ -1,0 +1,41 @@
+<% if( type == 'new' ){ %>
+
+	<h2 style="display: none;"><a href="#" class="openInterview"></a></h2>
+	<div class="editBlock" style="display: block;">
+		<input type="text" value="" placeholder="Введите название интервью" data-field="name"/>
+		<a href="#" class="btn cancleEdit">Отмена</a>
+	</div>
+	<div class="interview_question_list" style="display: block;">
+		<ul></ul>
+		<article class="bottom-toolbar t-center"><a href="#" class="btn addQuestion">Добавить вопрос</a></article>
+		<article class="bottom-toolbar t-center newInterviewButtons"><a href="#" class="btn saveInterview">Сохранить интервью</a></article>
+	</div>	
+	<div class="hr"></div>
+	
+
+<% } else { %>
+
+	<h2><a href="#" class="openInterview"><%= name %></a></h2>
+	<div class="editBlock">
+		<input type="text" value="<%= name %>" data-field="name" placeholder="Введите название интервью" class="interviewName" />
+		<a href="#" class="btn cancleEdit">Отмена</a>
+	</div>
+	<div class="interview_question_list">
+		<ul>	
+			<% _.each(questions,function(question,indx){ %>
+				<li data-id="<%= question.id %>">
+					<span>Вопрос: </span>
+					<input type="text" class="interview_question" placeholder="Введите текст вопроса" value="<%= question.text %>" data-id="<%= question.id %>"/>
+					<a href="#" class="btn deleteQuestion">Удалить вопрос</a>
+				</li>
+			<% }); %>
+		</ul>
+		<article class="bottom-toolbar t-center"><a href="#" class="btn addQuestion">Добавить вопрос</a></article>
+		<article class="bottom-toolbar t-center">
+			<a href="#" class="btn saveInterview">Сохранить</a> 
+			<a href="#" class="btn deleteInterview">Удалить</a>
+		</article>
+	</div>
+	<div class="hr"></div>
+
+<% } %>

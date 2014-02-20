@@ -1,0 +1,3 @@
+yasoon_site:
+  resource: "@YasoonSiteBundle/Controller"
+  prefix: /

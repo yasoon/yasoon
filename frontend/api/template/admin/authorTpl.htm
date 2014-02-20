@@ -1,0 +1,12 @@
+<article>
+	<img src="<%= autor.avatarImg %>" class="usr-ic" alt="">
+	<h4 class="p-label">
+		ВСЕГО ИТОРИЙ <a class="green" href="/#author/<%= autor.id %>/posts"><%= autor.story_count %></a> &nbsp;&nbsp;&nbsp; 
+		ОТВЕЧЕННЫХ ВОПРОСОВ <a class="green" href="/#author/<%= autor.id %>/questions"><%= autor.answer_count %></a>
+	</h4>
+	<h2><a href="/#author/<%= autor.id %>/posts"><%= autor.name %></a></h2>
+	<div class="content lic">E-mail: <%= autor.email %></div>
+	<div class="content lic">Зарегистрировался: <%= autor.publishDateText %></div>
+	<div class="t-center"><a href="#" class="btn authorDelete">Удалить автора</a></div>
+	<div class="hr"></div>
+</article>

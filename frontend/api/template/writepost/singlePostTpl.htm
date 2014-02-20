@@ -1,0 +1,34 @@
+<div class="post-edit">
+	<article>
+		<h3 class="t-center">Напишите свою историю</h3>
+		<div class="hr"></div>
+	</article>
+	<div class="di">
+		<select>
+			<% _.each(industryList, function(category){ %>
+				<option value="<%= category.id %>">
+					<label>
+						<input type="checkbox" value="<%= category.id %>" >
+						<%= category.name %>
+					</label>
+				</option>
+			<% }); %>
+		</select>
+	</div>
+	<div class="di"><input type="text" placeholder="Заголов истории"></div>
+	<div class="di"><textarea placeholder="Краткое описание истории"></textarea></div>
+		
+	<div class="di">
+		<div class="post-edit-tools">
+			<div class="item"><b>b</b></div>
+			<div class="item"><b><i>It</i></b></div>
+			<div class="item"><b>Quote</b></div>
+			<div class="item">Upload a picture</div>
+			<div class="clearfix"></div>
+		</div>
+		<textarea class="big" placeholder="Текст истории"></textarea>
+	</div>
+	<div class="di t-center">
+		<a href="" class="btn">Опубликовать</a> <a href="" class="mLeft10">Отмена</a>
+	</div>
+</div>

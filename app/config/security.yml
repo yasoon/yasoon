@@ -1,0 +1,50 @@
+security:
+    encoders:
+        \Yasoon\Site\Entity\AuthorEntity:
+            algorithm:        md5
+            encode_as_base64: false
+            iterations: 1
+
+    role_hierarchy:
+        ROLE_READER: ROLE_USER,
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
+    providers:
+        users:
+            id: yasoon.repository.author
+
+    firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+                username_parameter: email
+                password_parameter: password
+                require_previous_session: false
+                failure_path: /login/fail
+                success_handler: yasoon.site.authentication_success_handler
+            logout: ~
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/api, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/.+, roles: ROLE_READER }
+
+
+services:
+  yasoon.site.authentication_success_handler:
+    class: Yasoon\Site\Handler\AuthenticationSuccessHandler
+    arguments:
+      - @security.context
+      - @doctrine.orm.entity_manager
+  yasoon.site.authentication_failure_handler:
+    class: Yasoon\Site\Handler\AuthenticationFailureHandler
+    arguments:
+      - @security.context
+      - @doctrine.orm.entity_manager
+#  phpexcel:
+#    class: Export\ExcelBundle\Services\Export

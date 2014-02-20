@@ -1,0 +1,21 @@
+app/config/test/parameters.yml
+app/config/dev/parameters.yml
+
+#vendors
+vendor/
+
+#node modules
+node_modules/
+
+#all compiled js files
+#frontend_src/js/
+
+frontend_src/upload/
+
+
+#IDE files
+.idea/
+
+#cache
+app/cache/
+app/logs/

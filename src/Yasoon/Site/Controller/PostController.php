@@ -1,0 +1,309 @@
+<?php
+/**
+ * Author: Fedor Avetisov <cousenavi@gmail.com>
+ * Date: 5/22/13
+ */
+
+namespace Yasoon\Site\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use JMS\DiExtraBundle\Annotation as DI;
+use Yasoon\Site\Service\PostService;
+use Yasoon\Site\Service\PartnerService;
+use Yasoon\Site\Service\AuthorService;
+
+/**
+ * Class PostController
+ *
+ * @Route("/api/post")
+ * @package Yasoon\Site\Controller
+ */
+class PostController {
+
+    /**
+     * @var PostService
+     *
+     * @DI\Inject("yasoon.service.post")
+     */
+    private $service;
+    
+    /**
+     * @var PartnerService
+     *
+     * @DI\Inject("yasoon.service.partner")
+     */
+    private $partnerservice;
+    
+    /**
+     * @var PostCategoryService
+     *
+     * @DI\Inject("yasoon.service.postcategory")
+     */
+    private $postcategoryservice;
+    
+    /**
+     * @var AuthorService
+     *
+     * @DI\Inject("yasoon.service.author")
+     */
+    private $authorservice;
+    
+    
+    /**
+     * @Route("/savePost")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function savePost(Request $request) {
+        $data = $request->request->get('postData');
+        return  $this->service->addPost($data);
+    }
+
+
+    /**
+     * @Route("/add")
+     *
+     * @Method({"POST"})
+     */
+    public function addAction(Request $request) {
+        $model = $request->request->get('model');
+
+        return  $this->service->add($model);
+    }
+
+    /**
+     * @Route("/update")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function updateAction(Request $request) {
+        $model = $request->request->get('postData');
+        
+        if(!$model)
+        {
+            return ['error' => true, 'errorText' => 'notFound'];
+        }
+        
+        /*$model = ['postid' => 53,
+                  'authorid' => 1,
+                  'postTitle' => 'fffff',
+                  'category' => [1,4,5,7],
+                  'postText' => 'text text text text text',
+                  'postDescription' => 'Краткое описание',
+                  'questionList' => [['id' => 1,
+                                      'text' => 'reeretfffff'],
+                                      ['id' => 2,
+                                      'text' => 'dfsfsf'],
+                                      ['id' => 4,
+                                      'text' => 'dfsfsf'],]];*/
+        
+        return  $this->service->updatePost($model);
+
+    }
+
+    /**
+     * @Route("/deletePost")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function deletePost(Request $request) {
+        $post_id = $request->request->get('post_id');
+        return $this->service->delete($post_id);
+    }
+
+    /**
+     * @Route("/getPost")
+     * @Method({"POST"})
+     *
+     */
+    public function getPostAction(Request $request)
+    {
+        $postId = $request->request->get('postid');        
+        if(!is_array($postId))
+        {
+            $postId = [$postId];
+        }
+        
+        $result = $this->service->getPost($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/getPostsByDate")
+     * @Method({"POST"})
+     *
+     */
+    public function getPostsByDate(Request $request)
+    {
+        //$authorId = [41, 91];
+        //$date = ['22/01/2014', '23/01/2014'];
+        
+        $data = $request->request->get('authors');      
+        
+        $result = $this->service->getPostsByDate($data['id'], $data['date']);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/getEditPost/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     *
+     */
+    public function getEditPost($postId)
+    {
+        $result = $this->service->getEditPost($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_questions/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     *
+     */
+    public function getQuestionsAction($postId)
+    {
+        $result = $this->service->getQuestions($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/getQuestions")
+     * @Method({"POST"})
+     *
+     */
+    public function getQuestions(Request $request)
+    {
+        $questionId = $request->request->get('questionid');   
+             
+        if(!is_array($questionId))
+        {
+            $questionId = [$questionId];
+        }
+        
+        $result = $this->service->getQuestionsByIds($questionId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_daystory", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function getStoryOfTheDayAction()
+    {
+        $result = $this->service->getStoryOfTheDay();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/set_daystory/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function setStoryOfTheDayAction($postId)
+    {
+        $result = $this->service->setStoryOfTheDay($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/like/{postId}", requirements={"postId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function like($postId)
+    {
+        $result = $this->service->like($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/add_likes")
+     * @Method({"POST"})
+     */
+    public function addLikes(Request $request)
+    {
+        $data = $request->request->get('postlike');
+        
+        $result = [];
+        
+        if($data['type'] == 'add')
+        {
+            $result = $this->service->like($data['postId']);
+        }
+
+        return $result;
+    }
+    /**
+     * @Route("/get_all_last_week")
+     * @Method({"GET"})
+     */
+    public function getLastWeekPosts()
+    {
+        $result = $this->service->getAllLastWeek();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_best_posts")
+     * @Method({"GET"})
+     */
+    public function getBestPosts()
+    {
+        $result = $this->service->getBestPosts(0, 20);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/partnerInfo")
+     * @Method({"GET"})
+     */
+    public function partnerInfo()
+    {
+        $result = $this->partnerservice->getPartnerInfo();
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_categoryPosts/{catId}/{catPage}/{maxPagePosts}", requirements={"catId" = "\d+", "catPage" = "\d+", "maxPagePosts" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function get_categoryPosts($catId, $catPage, $maxPagePosts)
+    {
+        $result = $this->postcategoryservice->getPostsByCategory($catId, $catPage, $maxPagePosts);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/get_categoryPeople/{catId}/{catPage}/{maxPagePeople}", requirements={"catId" = "\d+"})
+     * @Method({"GET"})
+     */
+    public function get_categoryPeople($catId, $catPage, $maxPagePeople)
+    {
+        $qposts = $this->postcategoryservice->getPostsByAuthorCategory($catId, $catPage, $maxPagePeople);
+        $author = $this->authorservice->getAuthorsByIds($qposts['result']);
+
+        return ['peoples' => $author, 'peoplesCount' => $qposts['count_all']];
+    }
+}

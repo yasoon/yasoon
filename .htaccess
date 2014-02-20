@@ -1,0 +1,16 @@
+DirectoryIndex web/app_dev.php
+
+RewriteEngine on
+#RewriteCond %{REQUEST_URI} \.(css|jpg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico)$|test\.php$
+#RewriteRule ^(.*)$ frontend/$1 [L,QSA]
+
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to index.php/URL
+RewriteRule .* web/app_dev.php/$0 [PT]
+
+<IfModule mod_suphp.c>
+  AddHandler application/x-httpd-php-5.4.8 .php
+</IfModule>

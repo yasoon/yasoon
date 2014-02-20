@@ -1,0 +1,26 @@
+<% if( user !== false ){ %>			
+
+	<div class="my-nav loginned <%= window.config.pageType %> <% if(window.config.pageType == 'mainPage') {%>mainHeader<%} %>">
+		<a href="/#author/<%= user.id %>/posts"> <img src="<%= user.avatarImg %>" alt="" /> <span><%= user.newsCount %></span></a>
+		<div class="nav">
+			<a href="/#author/<%= user.id %>/posts">Профиль</a>
+			<a href="/#author/<%= user.id %>/questions">Вопросы (<%= user.timeline.question_count %>)</a>
+			<a href="/#timeline">Лента(<% print(parseInt(user.timeline.posts_count)+parseInt(user.timeline.answers_count)) %>)</a>
+			<a href="#" id="logout">Выйти</a>
+		</div>
+	</div>
+
+
+<% } else { %>
+
+	<% if( window.config.pageType == 'mainPage' ){ %>
+
+		<a class="sign-in" href="#">Войти</a>
+
+	<% } else { %>
+
+		<div class="my-nav" id="login">Войти</div>
+
+	<% } %>
+
+<% } %>

@@ -1,0 +1,38 @@
+
+<!-- Если главная страница -->
+<% if( headerType == 'mainPage' ){ %>
+
+	<div id="bg-main" class="mainPageHeader">
+		<div class="bg bg-panoram" style="background-image: url(/frontend<%= partner.partnerBgImg %>);">bg</div>
+		<div class="inside">
+			<a class="logo" href="/">yasoon</a>
+			<div class="main-w">
+				<p><%= partner.parnterText %></p>
+				<a href="/#explore" class="btn">Узнать больше</a>
+				<!-- <a href="<%= partner.parnterLink %>" class="btn">Узнать больше</a> -->
+			</div>
+			<nav>
+				<a href="/#explore">професcии</a>
+				<a href="/#peoples">люди</a>
+			</nav>
+			<div class="login_side"></div>
+		</div>
+	</div>	
+<!-- конец главной страницы -->	
+
+<% } else { %>
+
+<!-- На всех других страницах -->
+
+<div class="inside sidePageHeader">
+	<a class="logo" href="/">yasoon</a>
+	<div class="org-nav">
+		<nav>
+			<a href="/#explore" class="profs_link">Профессии</a>
+			<a href="/#peoples" class="people_link">Люди</a>
+		</nav>
+	</div>
+	<div class="login_side"></div>
+</div>
+
+<% } %>
