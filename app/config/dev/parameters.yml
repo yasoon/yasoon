@@ -1,9 +1,0 @@
-parameters:
-  secret: 567876
-
-  db_yasoon_driver: pdo_mysql
-  db_yasoon_host: localhost
-  db_yasoon_port: 3306
-  db_yasoon_dbname: yasoon
-  db_yasoon_user: yasoon
-  db_yasoon_password: yasoon
