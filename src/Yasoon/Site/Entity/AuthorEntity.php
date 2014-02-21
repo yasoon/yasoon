@@ -514,6 +514,7 @@ class AuthorEntity implements UserInterface, \Serializable
     public function setHomepage($homepage)
     {
         $this->homepage = $homepage;
+        return $this;
     }
 
     /**

@@ -1190,7 +1190,9 @@ class AuthorService extends AbstractApiService {
                         'timeline' => 0,
                         'questions_author' => 0,
                         'questions_askauthor' => 0,
-                        'author' => 0];
+                        'author' => 0,
+                        'post_category' => 0];
+        $id = (int)$id;
         
         try {
             $user = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($id);
@@ -1201,7 +1203,7 @@ class AuthorService extends AbstractApiService {
                 foreach($tbl_changed_pass as $tcp)
                 {
                     $this->em->remove($tcp);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['author_changed_pass']++;
                 }
                 
@@ -1210,7 +1212,7 @@ class AuthorService extends AbstractApiService {
                 foreach($tbl_friends_readers as $tfr)
                 {
                     $this->em->remove($tfr);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['friends_readers']++;
                 }
                 
@@ -1219,7 +1221,7 @@ class AuthorService extends AbstractApiService {
                 foreach($tbl_friends_writers as $tfw)
                 {
                     $this->em->remove($tfw);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['friends_writers']++;
                 }
                 
@@ -1232,7 +1234,7 @@ class AuthorService extends AbstractApiService {
                     foreach($answer as $ans)
                     {
                         $this->em->remove($ans);
-                        $this->em->flush();
+                        //$this->em->flush();
                         $delete_data['post_answer']++;
                     }
                     /** Категории постов **/
@@ -1240,7 +1242,7 @@ class AuthorService extends AbstractApiService {
                     foreach($category as $cat)
                     {
                         $this->em->remove($cat);
-                        $this->em->flush();
+                        //$this->em->flush();
                         $delete_data['post_category']++;
                     }
                     
@@ -1249,19 +1251,20 @@ class AuthorService extends AbstractApiService {
                     foreach($likes as $like)
                     {
                         $this->em->remove($like);
-                        $this->em->flush();
+                        //$this->em->flush();
                         $delete_data['post_likes']++;
                     }
                     
                     /** Истории дня **/
+                    $story_day = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')->findBy(array('postId' => $id));
                     foreach($story_day as $sd)
                     {
                         $this->em->remove($sd);
-                        $this->em->flush();
+                        //$this->em->flush();
                         $delete_data['story_of_the_day']++;
                     }
                     $this->em->remove($tp);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['post']++;
                 }
                 /** Лента новостей **/
@@ -1274,16 +1277,16 @@ class AuthorService extends AbstractApiService {
                 if (count($timeline) > 0 || is_object($timeline[0]))
                 {
                     $this->em->remove($timeline[0]);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['timeline']++;
                 }
                 
                 /** Вопросы автора **/
                 $tbl_questions_author = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->findBy(array('authorId' => $id));
-                foreach($tbl_questions as $tq)
+                foreach($tbl_questions_author as $tq)
                 {
                     $this->em->remove($tq);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['questions_author']++;
                 }
                 
@@ -1292,7 +1295,7 @@ class AuthorService extends AbstractApiService {
                 foreach($tbl_questions_askauthor as $tqa)
                 {
                     $this->em->remove($tqa);
-                    $this->em->flush();
+                    //$this->em->flush();
                     $delete_data['questions_askauthor']++;
                 }
                 if(is_file($_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$user->getImg()))
