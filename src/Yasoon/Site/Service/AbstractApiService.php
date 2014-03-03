@@ -22,7 +22,15 @@ abstract class AbstractApiService {
     public $em;
 
     public function isAdmin() {
-        return in_array('ROLE_ADMIN', $this->securityContext->getToken()->getRoles());
+        $roles = $this->securityContext->getToken()->getRoles();
+        foreach($roles as $role)
+        {
+            if($role->getRole() == 'ROLE_ADMIN')
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function checkAdminAccess()

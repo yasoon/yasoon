@@ -1,0 +1,12 @@
+<article>
+	<div class="p-label"><a href="/#author/<%= post.author_id %>/posts"><%= post.author_name %></a></div>
+	<h4 class="p-label">Рейтинг: <a class="green" id="rating"><%= post.likes %></a></h4>
+	<h2>
+		<a href="/#post/<%= post.id %>"><%= post.caption %></a>			
+		<a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
+		<span class="post-date"><%= post.publishDateText %></span>
+	</h2>
+	<div class="content"><%= post.preview %></div>
+	<div class="dayStoryBtn"><a href="#" class="btn setDayStory">Назначить историей дня</a></div>
+	<div class="hr"></div>
+</article>

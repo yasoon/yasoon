@@ -25,6 +25,7 @@ define([
 					return;
 				}
 				self.model = new postModel(model[0],{postType : 'fullPost'});
+				console.log(self.model);
 				self.render(false);
 			});
 			
@@ -35,7 +36,7 @@ define([
 				$('section.page_content').empty().html(this.$el);
 
 			if( empty ){
-				$('.postTextBlock',this.$el).empty().append( '<h3>Данны пост не найден!</h3>');
+				window.location = '/#404';
 			} else {
 				$('.postTextBlock',this.$el).empty().append( this.model.view.$el );
 				$('.postinfo',this.$el).empty().append( this.model.autorModel.view.$el );	

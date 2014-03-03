@@ -24,9 +24,13 @@
 	        </span>
 			<h2>
 				<a href="/#post/<%= post.id %>"><%= post.title %></a>
-				<% if( currentUser ){ %>
-					<a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
-				<% } %>
+				<% if(currentUser){ %> 
+		            <a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
+		        <% } else { %>
+		            <% if(app.userModel.attributes.userData.role == 4){ %> 
+		                <a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
+		            <% } %>
+		        <% } %>
 				<span class="post-date"><%= post.publishDateText %></span>
 			</h2>
 		</div>
@@ -58,9 +62,13 @@
 	        </span>
 			<h2>
 				<a href="/#post/<%= post.id %>"><%= post.title %></a>
-				<% if( currentUser ){ %>
-					<a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
-				<% } %>
+				 <% if(currentUser){ %> 
+		            <a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
+		        <% } else { %>
+		            <% if(app.userModel.attributes.userData.role == 4){ %> 
+		                <a href="/#editpost/<%= post.id %>" data-permission="US,ADMIN" class="editable"><i></i></a> 
+		            <% } %>
+		        <% } %>
 				<span class="post-date"><%= post.publishDateText %></span>
 			</h2>
 		</div>
@@ -80,13 +88,13 @@
         <% } %>
 	   
 
-	    <h2><a>пусто</a></h2>
+	    <h2><a><%= config.getContent(34) %></a></h2>
 	    <div class="content lic">
-	        <p>К сожалению, на эту тему ещё нет историй</p>
+	        <p><%= config.getContent(35) %></p>
 	        <% if(!app.userModel.attributes.userData){ %>
-	        	<p><a href="/#register" class="btn">Напишите свою</a></p>
+	        	<p><a href="/#writepost" class="btn writeSelf"><%= config.getContent(37) %></a></p>
 	        <% } else { %>
-				<p><a href="/#writepost" class="btn">Напишите свою</a></p>
+				<p><a href="/#writepost" class="btn"><%= config.getContent(37) %></a></p>
 	        <% } %>
 	    </div>
 	    <div class="hr"></div>
@@ -105,13 +113,13 @@
         <% } %>
 	   
 
-	    <h2><a>пусто</a></h2>
+	    <h2><a><%= config.getContent(34) %></a></h2>
 	    <div class="content lic">
-	        <p>К сожалению, на эту тему ещё нет историй</p>
+	        <p><%= config.getContent(35) %></p>
 	        <% if(!app.userModel.attributes.userData){ %>
-	        	<p><a href="/#register" class="btn">Стать автором</a></p>
+	        	<p><a href="/#writepost" class="btn writeSelf"><%= config.getContent(36) %></a></p>
 	        <% } else { %>
-				<p><a href="/#writepost" class="btn">Напишите свою</a></p>
+				<p><a href="/#writepost" class="btn"><%= config.getContent(37) %></a></p>
 	        <% } %>
 	    </div>
 	    <div class="hr"></div>

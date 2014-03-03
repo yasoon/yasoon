@@ -13,9 +13,11 @@ requirejs.config({
         coockie: 			"../js/cookie-js",
         uiwidget: 			"../js/jquery.ui.widget",
         iframe_transport:   "../js/jquery.fileupload",
-        uploader: 			"../js/jquery.iframe-transport" 
-       
+        uploader: 			"../js/jquery.iframe-transport",
+        jqueryUI: 			"../js/jquery-ui-1.10.4.custom.min",
+        editor: 			"../js/redactor"       
 	},
+
 	shim: {
 
 		uploader:{
@@ -23,15 +25,27 @@ requirejs.config({
 			exports: 'uploader'
 		},
 
+		editor: {
+			deps: ['jquery'],
+			exports: 'editor'
+		},
+
+		jqueryUI:{
+			deps:['jquery'],
+			exports: 'jqueryUI'
+		},
+
 		mainHtml:{
-			deps: ['jquery', 'coockie', 'uploader'],
+			deps: ['jquery', 'coockie', 'uploader', 'jqueryUI'],
 			exports: 'mainHtml'
 		},
 
 		backbone:{
 			deps: ['jquery', 'underscore', 'text'],
 			exports: 'backbone'
-		}
+		},
+
+
 	}
 });
 

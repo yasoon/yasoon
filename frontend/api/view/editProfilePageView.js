@@ -10,7 +10,8 @@ define([
 		initialize: function(options){
 
 			this.$el.append( this.template() );
-			this.formView = new editProfile_view({pageType: options.pageType});
+			this.needAuthor = options.authorId;
+			this.formView = new editProfile_view({pageType: options.pageType, authorId: this.needAuthor});
 			this.render();
 		},
 

@@ -63,7 +63,6 @@ define([
 				
 				success: function(data){
 					var peopleLength = 0;
-					console.log( data );
 	
 					if( data == null || data.length <= 0){
 						callBack();
@@ -74,6 +73,29 @@ define([
 										
 
 					if( self.length >= config.siteStat.count_users ) self.ready = true;
+					callBack();
+
+				},
+				error: callBack,
+				type: 'GET',
+				dataType: 'json'
+			})
+		},
+
+		updateAllAdminUsers: function(callBack){
+			var self = this;
+			$.ajax({
+				url: '/admin/get_admins',
+				
+				success: function(data){
+					var peopleLength = 0;
+	
+					if( data == null || data.length <= 0){
+						callBack();
+						return;
+					}
+
+					self.add(data);	
 					callBack();
 
 				},

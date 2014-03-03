@@ -19,10 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Export\ExcelBundle\Services\Export;
 use PHPExcel;
 
+ error_reporting( 0 );
+
 /**
  * Class AdminController
  *
- * 
  * @Route("/admin")
  * @package Yasoon\Site\Controller
  */
@@ -92,6 +93,8 @@ class AdminController extends Controller {
     {
         if(!$this->isAdmin())
         {
+            header('Location: /#404', true, 307);
+            die();
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
         $content =  json_encode([[
@@ -114,6 +117,8 @@ class AdminController extends Controller {
 <link rel="stylesheet" href="../frontend/css/forms.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="../frontend/css/style.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="../frontend/css/media.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../frontend/css/loader.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../frontend/css/redactor.css" type="text/css" media="screen" />
 <!-- <link rel="stylesheet" href="../css/fix.css" type="text/css" media="screen" /> -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
@@ -301,6 +306,13 @@ HTML;
      */
     public function excel_users()
     {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        error_reporting( 0 );
+        
         $users = $this->authorservice->get_all();
         
         
@@ -330,6 +342,7 @@ HTML;
             'name'   => 'Name',
             'email'  => 'E-mail',
             'date' => 'Date',
+            'reg_from' => 'Register From',
         );
         
         $data = [];
@@ -338,7 +351,8 @@ HTML;
             $data[] = ['id' => $user['id'],
                        'name' => $user['name'],
                        'email' => $user['email'],
-                       'date' => $user['date_reg']];
+                       'date' => $user['date_reg'],
+                       'reg_from' => $user['reg_from']];
         }
         
 
@@ -347,6 +361,32 @@ HTML;
         $phpExcelObject->setNameOfSheet('Users '.date('Y-m-d'));
         $phpExcelObject->writeTable($data, $labels, $options);
         $phpExcelObject->writeExport('users');
+        
+        return ['file_xls' => $_SERVER['HTTP_HOST'].'/web/users.xls'];
+    }
+    
+    /**
+     * @Route("/csv_users")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function csv_users()
+    {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        $users = $this->authorservice->get_all();
+        
+        $result = '';
+        foreach($users as $user)
+        {
+            $data = [$user['id'], $user['name'], $user['email'], $user['date_reg'], 'reg_from' => $user['reg_from']];
+            $result .= implode(',', $data)."\n";
+        }
+        return ['result' => $result];
     }
     
     /**
@@ -357,6 +397,13 @@ HTML;
      */
     public function excel_email_users()
     {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        error_reporting( 0 );
+        
         $users = $this->authorservice->get_all_subscribed();
         
         $options = array(
@@ -385,6 +432,7 @@ HTML;
             'name'   => 'Name',
             'email'  => 'E-mail',
             'date' => 'Date',
+            'reg_from' => 'Register From'
         );
         
         $data = [];
@@ -393,7 +441,8 @@ HTML;
             $data[] = ['id' => $user['id'],
                        'name' => $user['name'],
                        'email' => $user['email'],
-                       'date' => $user['date_reg']];
+                       'date' => $user['date_reg'],
+                       'reg_from' => $user['reg_from']];
         }
         
 
@@ -402,5 +451,71 @@ HTML;
         $phpExcelObject->setNameOfSheet('Users '.date('Y-m-d'));
         $phpExcelObject->writeTable($data, $labels, $options);
         $phpExcelObject->writeExport('users_subscribed');
+        
+        return ['file_xls' => $_SERVER['HTTP_HOST'].'/web/users_subscribed.xls'];
+    }
+    
+    
+    
+    
+    /**
+     * @Route("/csv_users_email")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function csv_users_email()
+    {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        $users = $this->authorservice->get_all_subscribed();
+        
+        $result = '';
+        foreach($users as $user)
+        {
+            $data = [$user['id'], $user['name'], $user['email'], $user['date_reg'], 'reg_from' => $user['reg_from']];
+            $result .= implode(',', $data)."\n";
+        }
+        return ['result' => $result];
+    }
+    
+    
+    /**
+     * @Route("/get_admins")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function get_admins()
+    {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        $users = $this->authorservice->get_all_admins();
+        return $users;
+    }
+    
+    
+    /**
+     * @Route("/set_admin")
+     * @Method({"POST"})
+     *
+     * @return array
+     */
+    public function set_admin(Request $request)
+    {
+        if(!$this->isAdmin())
+        {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        
+        $id = $request->request->get('id');
+        $result = $this->authorservice->set_admin($id);
+        return $result;
     }
 }

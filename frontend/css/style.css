@@ -123,8 +123,8 @@ html, body, #bg-main, #bg-main table, #bg-main td {
 }
 
 .org-nav nav.adminNav{
-	width: 100%;
-	left: 25%;
+	width: 85%;
+	left: 35%;
 }
 
 .close-question, .cancle_ask, .deletePost{
@@ -418,6 +418,7 @@ section,.inside{
 	font-size: 14px;
 	font-weight: normal;
 	white-space: nowrap;
+	margin-left: 10px;
 }
 
 .media-pub{
@@ -572,11 +573,11 @@ article h1{
 	width: 100%;
 }
 
-.content .quotes{
-	border-left: 2px solid #238C00;
-	padding: 5px 15px;
-	font-family: 'MuseoSansCyrl-100Italic', Arial;
-	margin-bottom: 1em;
+.content .quotes, .content blockquote{
+	border-left: 2px solid #238C00 !important;
+	padding: 5px 15px !important;
+	font-family: 'MuseoSansCyrl-100Italic', Arial !important;
+	margin: 1em 0 !important;
 }
 
 .lim .q-box{
@@ -688,7 +689,7 @@ article.cat-title{
 }
 .nav-cat a{
 	display: block;
-	color: #A39D9D;
+	color: #838080;
 	padding: 6px 10px;	
 	font-family: 'MuseoSansCyrl-100', Arial;
 	font-size: 14px;
@@ -778,7 +779,26 @@ section.reserve_block{ height: 43px; }
 
 .interview_question_list ul li > *{ display: inline-block; margin-right: 10px; }
 .interview_question_list ul input[type="text"]{ width: 60%; padding: 8px; }
-.interview_question_list ul .btn, .deleteInterview, .cancleEdit, .authorDelete{ color: red !important;}
+.interview_question_list ul .btn, .deleteInterview, .cancleEdit, .authorDelete, .cancle, .redBtn{ color: red !important;}
 .interview_question_list ul li span{ width: 52px; }
 .interview_question_list .bottom-toolbar{ padding: 10px 0; }
 
+.contentItem .editArea{ display: none; }
+
+.contentItem input, .contentItem textarea{
+	padding: 8px 10px;
+	margin: 10px 0;
+}
+
+
+.csvBlock, .excelBock{ margin-top: 20px; display: none; }
+.csvBlock textarea{ margin-top: 10px; min-height: 120px; }
+
+.register-form .regbtn{ width: 87%; }
+.register-form input[type="file"]{ display: none; }
+
+.content .questionTitle{ margin-bottom: 20px; }
+.content .questionContent{ overflow: hidden; }
+
+.redactor_editor ul{ list-style: circle outside; }
+.redactor_editor ol{ list-style: decimal outside; }

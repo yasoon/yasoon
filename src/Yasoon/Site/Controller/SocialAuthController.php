@@ -148,6 +148,7 @@ class SocialAuthController {
                     ->setSubscribed(1)
                     ->setVkontakteId($response['response'][0]['uid'])
                     ->setPublicationDate(new \DateTime())
+                    ->setRegFrom(2)
                     ->setRole(1);
                     
                 $url  = $response['response'][0]['photo_medium'];
@@ -273,6 +274,7 @@ class SocialAuthController {
                     ->setSubscribed(1)
                     ->setFacebookId($userInfo->id)
                     ->setPublicationDate(new \DateTime())
+                    ->setRegFrom(1)
                     ->setRole(1);
                     
                 

@@ -41,16 +41,25 @@ function(
             'post/:postId': 'getFullPost',
             'author/:autorId/:tabOpen': 'getAutor',
             'editprofile': 'editPage',
+            'editprofile/:authorId': 'editPage',
             'register': 'registerPage',
             'writepost': 'writepostPage',
+            'writepost/:interviewId': 'writepostPage',
             'editpost/:postId': 'editPostPage',            
-            'timeline': 'timelinePage'
+            'timeline': 'timelinePage',
+            '404': 'notfoundPage'
         },
 
         initialize: function(){      
             this.selectAutorId = false;
             this.bind('route', this.trackPageview);
             window.app.view.messageView = new messageView();
+            $.get('/api/content/get_all',function(content){ 
+                var content_arr = [];
+                _.each(content, function(cont){ content_arr[cont.id] = cont.text; });
+                window.config.content = content_arr; 
+                Backbone.history.start();
+            })
         },
 
          trackPageview: function ()
@@ -70,10 +79,21 @@ function(
             });
         },
 
+        notfoundPage: function(){
+            window.config.pageType = 'explore';
+            this.renderHeader();
+            this.selectAutorId = false;
+
+            $('section.page_content').empty().html( '<article class="cat-title"><h4 class="t-center">'+config.getContent(60)+'</h4><div class="hr"></div></article>' );
+        },
+
         getPosts: function(catId,sortType){
             window.config.pageType = 'explore';
             this.renderHeader();
             this.selectAutorId = false;
+
+            $('.barrier > div').hide();
+            $('.barrier').show();
             
             if( window.app.view.explore ) window.app.view.explore.render({catId: catId, sortType: sortType});
             else window.app.view.explore = new explorePageView({catId: catId, sortType: sortType});
@@ -94,6 +114,9 @@ function(
             window.config.pageType = 'peoples';
             this.renderHeader();
             this.selectAutorId = false;
+
+            $('.barrier > div').hide();
+            $('.barrier').show();
 
             if( window.app.view.peoples ) window.app.view.peoples.render({catId: catId});
             else window.app.view.peoples = new peoplesPageView({catId: catId});
@@ -133,13 +156,15 @@ function(
             else window.app.view.headerView = new headerView();
         },
 
-        editPage: function(){
+        editPage: function(authorId){
             window.config.pageType = 'editProfile';
             this.renderHeader();
             this.selectAutorId = false;
             this.clearNavClass();
 
-            this.editProfilePageView = new editProfilePageView({pageType: 'editProfile'});
+            var needId = authorId ? authorId : false; 
+
+            this.editProfilePageView = new editProfilePageView({pageType: 'editProfile', authorId: needId});
         },
 
         registerPage: function(){
@@ -151,13 +176,15 @@ function(
             this.editProfilePageView = new editProfilePageView({pageType: 'register'});
         },
 
-        writepostPage: function(){
+        writepostPage: function(interviewId){
             window.config.pageType = 'writePostPage';
             this.renderHeader();
             this.selectAutorId = false;
             this.clearNavClass();
 
-            this.writepostPage = new writepostPageView();
+            var routerInterview = interviewId ? interviewId : 1;
+
+            this.writepostPage = new writepostPageView(null,{interviewId: routerInterview});
         },
 
         editPostPage: function(postId){

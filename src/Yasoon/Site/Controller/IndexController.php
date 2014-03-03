@@ -50,6 +50,8 @@ class IndexController {
 <link rel="stylesheet" href="frontend/css/forms.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="frontend/css/style.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="frontend/css/media.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="frontend/css/loader.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="frontend/css/redactor.css" type="text/css" media="screen" />
 <!-- <link rel="stylesheet" href="css/fix.css" type="text/css" media="screen" /> -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
@@ -57,6 +59,7 @@ class IndexController {
 
 <script src="frontend/js/require.js" type="text/javascript"></script>
 <script src="frontend/api/config.js" type="text/javascript"></script>
+ <script async="true" type="text/javascript" src="http://servant.indexisto.com/files/searchbox/searchbox.nocache.js?type=edit"></script>
 <!-- <script>
 
 JST = {}

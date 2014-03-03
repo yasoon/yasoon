@@ -39,7 +39,9 @@ define([
 					
 					self.model = new autorModel(autorData[0]);
 					self.renderAutorInfo();
-					self.askQuestion = new askQuestion({id: self.model.get('id'), name: self.model.get('name') });
+
+					if( self.model.attributes.posts.length > 0 )
+						self.askQuestion = new askQuestion({id: self.model.get('id'), name: self.model.get('name') });
 
 					var needPosts = self.getPostsLimit( self.model.get('posts') );
 					if( needPosts.lessPosts == 0 ) self.model.set('postsReady',true);
@@ -54,7 +56,7 @@ define([
 					self.model.set('answers',needQuestions.lessPosts);
 
 					self.questionsCollection.updateCollection(needQuestions.postsIds,function(){
-						$('.postinfo .answersCount',self.$el).html( self.questionsCollection.answersCount );
+						//$('.postinfo .answersCount',self.$el).html( self.questionsCollection.answersCount );
 						self.renderQuestions(false);
 
 						if( self.currentUser !== false && self.autorId == self.currentUser ){
@@ -89,7 +91,10 @@ define([
 
 		renderAutorInfo: function(){
 
-			$('.postinfo',this.$el).empty().append( this.model.view.$el );
+			if( this.model.view )
+				$('.postinfo',this.$el).empty().append( this.model.view.$el );
+			else
+				window.location = '/#404';
 
 			//window.updateScrolling();
 		},
@@ -102,7 +107,7 @@ define([
 
 			$('.nav-tabs .postsList',this.$el).empty();
 			if( window.app.userModel.attributes.userData.id == self.model.get('id') )
-				$('.nav-tabs .postsList',this.$el).append('<article class="lim"><a class="btn" href="/#writepost">Написать свою историю</a></article>');
+				$('.nav-tabs .postsList',this.$el).append('<article class="lim"><a class="btn" href="/#writepost">'+config.getContent(45)+'</a></article>');
 
 			if( this.postsCollection.length == 0 ){
 				
@@ -131,16 +136,19 @@ define([
 			if (scroll) var lastPostEl = $('.nav-tabs .questionsList > div',self.$el).last().offset() ? $('.nav-tabs .questionsList > div',self.$el).last().offset().top : 0;
 			else var lastPostEl = 0;
 
-			$('.nav-tabs .questionsList',this.$el).empty().append(self.askQuestion.$el);
+			if( self.askQuestion )
+				$('.nav-tabs .questionsList',this.$el).empty().append(self.askQuestion.$el);
+			else
+				$('.nav-tabs .questionsList',this.$el).empty();
 
-			if( this.questionsCollection.models.length == 0 ){
+			if( this.questionsCollection.models.length == 0 || this.questionsCollection.answersCount == 0){
 				if( window.app.userModel.attributes.userData.id !== self.model.get('id') ){
-					$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>Автор не ответил ни на один вопрос.</h3></article>' );
+					$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>'+config.getContent(47)+'</h3></article>' );
 				} else {
-					if( this.postsCollection.length == 0 )
-						$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>К сожалению, другие люди пока не могут расспросить Вас о Вашем деле. Чтобы начать получать вопросы, напишите хотя бы одну историю!</h3></article>' );
+					if( self.askQuestion )
+						$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>'+config.getContent(50)+'</h3></article>' );
 					else
-						$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>К сожалению, Вам еще не задали ни одного вопроса.</h3></article>' );
+						$('.nav-tabs .questionsList',self.$el).append( '<article class="lim"><h3>'+config.getContent(48)+'</h3></article>' );		
 				}
 			} else {
 				_.each(this.questionsCollection.models,function(post){
@@ -150,7 +158,8 @@ define([
 
 			
 
-			if( !this.model.get('questionsReady') ) $('.nav-tabs .questionsList',this.$el).append('<article class="bottom-toolbar t-center"><a href="#" class="btn moreQuestions">Больше вопросов</a></article>')	
+			if( !this.model.get('questionsReady') ) 
+				$('.nav-tabs .questionsList',this.$el).append('<article class="bottom-toolbar t-center"><a href="#" class="btn moreQuestions">'+config.getContent(49)+'</a></article>')	
 			
 			$('html,body').animate({scrollTop: lastPostEl},400);	
 		},

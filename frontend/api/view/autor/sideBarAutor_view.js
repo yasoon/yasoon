@@ -12,6 +12,8 @@ define([
 		initialize: function(){
 			var self = this;
 
+			//console.log(this.model.attributes);
+
 			this.$el.append( _.template(autorTemplate, {autor: this.model.toJSON()}) );
 
 			this.follower = false;
@@ -38,7 +40,8 @@ define([
 			};
 
 			if( self.currentUserId == null ){
-				app.view.messageView.render('Ошибка', 'Вы должны авторизироваться, для того что бы подписаться на атора.');
+				app.view.headerView.showLoginForm();
+				//app.view.messageView.render('', 'Вы должны авторизироваться, для того что бы подписаться на атора.');
 				return;
 			}
 
@@ -46,7 +49,7 @@ define([
 				console.log( data );
 
 				if( data.error !== undefined ){
-					app.view.messageView.render('Ошибка', 'Произошла ошибка при отправке данных на сервер, попробуйте еще раз.');
+					app.view.messageView.render('', 'Произошла ошибка при отправке данных на сервер, попробуйте еще раз.');
 					return;
 				}
 

@@ -68,7 +68,7 @@ textarea.needShow{
 
 
 [type="file"]{
-	display: none;
+	/* display: none; */
 }
 
 

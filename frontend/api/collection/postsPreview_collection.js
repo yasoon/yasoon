@@ -84,13 +84,15 @@ define([
 		updateCollectionPostsList: function(posts,callBack){
 			var self = this;
 
+			if( self.options.needSort )
+				self.comparator = function(post){ return -post.get('formatDate').getTime(); };
+			else
+				self.comparator = function(post){ return post };
+
 			self.fetch({
 				data: {postType: 'needPost', postid: posts },
 				success: function(){
-					self.render();
-					if( self.options.needSort ){ 
-						self.comparator = function(post){ return -post.get('formatDate').getTime(); };
-					}
+					//self.render();
 					callBack();
 				},
 				error: callBack,

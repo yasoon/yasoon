@@ -1,0 +1,27 @@
+<% if(type == 'new'){ %>
+	<div class="content" style="display: none">
+	    <b>id: ?</b><h4><b>?</b><a class="editable"><i data-to-mode="active"></i></a></h4>
+	    <p>?</p>
+	</div>
+	<div class="editArea" style="display: block">
+		<input type="text" name="description" value="" />
+		<textarea name="text"></textarea>
+		<a href="#" class="btn saveContent">Сохранить</a> 
+		<a href="#" class="btn cancle">Отмена</a>
+	</div>
+	<div class="hr"></div>
+
+<% } else { %>
+	<div class="content">
+	    <b>id: <%= id %></b><h4><b><%= description %></b><a class="editable"><i data-to-mode="active"></i></a></h4>
+	    <p><%= text %></p>
+	</div>
+	<div class="editArea">
+		<input type="text" name="description" value="<%= description %>" />
+		<textarea name="text"><%= text %></textarea>
+		<a href="#" class="btn saveContent">Сохранить</a> 
+		<a href="#" class="btn cancle">Отмена</a>
+		<a href="#" class="btn delete">Удалить</a>
+	</div>
+	<div class="hr"></div>
+<% } %>

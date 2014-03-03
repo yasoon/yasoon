@@ -14,7 +14,8 @@ define([
 	var peoplesPageView = Backbone.View.extend({
 
 		events:{
-			'click .morePeoples': 'showNextPage'
+			'click .morePeoples': 'showNextPage',
+			'click .writeSelf': 'showLoginForm'
 		},
 
 		initialize: function(routerData){
@@ -53,6 +54,8 @@ define([
 
 			if( !$('section.page_content').find('.peoplesPage').is('section') )
 				$('section.page_content').empty().html(this.$el);
+
+			$('.barrier').hide();
 
 			this.$sideBar.empty().append( this.industryCollection.peoplesCategoryView.$el );
 
@@ -133,6 +136,13 @@ define([
 			var self = this;
 			$('.cat-title h3',self.$el).html( info.name );
 			//$('.cat-title p',self.$el).html( info.description );
+		},
+
+		showLoginForm: function(e){			
+			if( !app.userModel.attributes.userData ){
+				app.view.headerView.showLoginForm();
+				return false;
+			} 
 		}
 
 

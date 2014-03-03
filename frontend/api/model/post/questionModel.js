@@ -20,8 +20,11 @@ define([
 			if( this.collection.type == 'timeline' ){
 				this.updateModel();
 				this.view = new questionList_view({model: this});
-			} else { this.view = new questionView({model: this}); }
+			} else { 
+				this.view = new questionView({model: this}); 
+			}
 
+			if( this.attributes.hasAnswer ) this.collection.answersCount++;
 		},
 
 		updateModel: function(){

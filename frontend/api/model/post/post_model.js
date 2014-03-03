@@ -42,6 +42,11 @@ define([
 					this.view = new smallPostView(this.toJSON());
 				}
 
+				if( this.collection.options.type == 'adminList' ){
+					this.set('type','adminListPost');
+					this.view = new smallPostView(this.toJSON());
+				}
+
 				if( this.collection.options.type == 'timeline' ){
 					this.set('type','timelinePost');
 					this.updatePostData();
@@ -60,6 +65,10 @@ define([
 			}
 
 			if( self.get('type') == 'dayStory' ){
+				if( self.get('avatarImg') == null || self.get('avatarImg') == undefined )
+					self.set('avatarImg',config.getContent(18));
+				else
+					self.set( 'avatarImg', '/upload/avatar/'+self.get('avatarImg') );
 				self.view = new smallPostView(self.toJSON());
 			}
 
@@ -78,7 +87,7 @@ define([
 				dataType: 'json',
 				success: function(request){
 					self.set('autor',request[0]);
-					self.set('questions',request[0].answers);
+					self.set('questions',request[0].answers);					
 					self.view = new smallPostView(self.toJSON());
 				}
 
@@ -101,7 +110,10 @@ define([
 				dataType: 'json',
 				success: function(request){
 					self.set('autor',request[0]);
-					self.set('questions',request[0].answers);					
+					if( request[0].answers_count !== undefined)
+						self.set('answers_count',request[0].answers_count);
+					else
+						self.set('answers_count',0);					
 				},
 				error: function(data){
 					console.log( data );

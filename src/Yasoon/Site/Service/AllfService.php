@@ -91,4 +91,19 @@ class AllfService extends AbstractApiService {
     	$response = curl_exec($ch);
     	//return $response;
     }
+    
+    
+    
+    public function isAdmin()
+    {
+        $roles = $this->securityContext->getToken()->getRoles();
+        foreach($roles as $role)
+        {
+            if($role->getRole() == 'ROLE_ADMIN')
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -72,6 +72,13 @@ class AuthorEntity implements UserInterface, \Serializable
     protected $publicationDate;
 
     /**
+     * @var \DateTime $date_change
+     *
+     * @ORM\Column(name="date_change", type="datetime", nullable=true)
+     */
+    protected $date_change;
+
+    /**
      * @var string $job
      *
      * @ORM\Column(name="job", type="string", nullable=true)
@@ -171,6 +178,13 @@ class AuthorEntity implements UserInterface, \Serializable
      * @ORM\Column(name="role", type="integer", nullable=false)
      */
     protected $role;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="reg_from", type="integer", nullable=true)
+     */
+    protected $reg_from;
     
     
 
@@ -396,6 +410,25 @@ class AuthorEntity implements UserInterface, \Serializable
     {
         return $this->publicationDate;
     }
+    
+
+    /**
+     * @param \DateTime $date_change
+     * @return $this
+     */
+    public function setDateChange($date_change)
+    {
+        $this->date_change = $date_change;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateChange()
+    {
+        return $this->date_change;
+    }
 
     /**
      * @param \Yasoon\Site\Entity\QuestionEntity[] $questions
@@ -556,6 +589,26 @@ class AuthorEntity implements UserInterface, \Serializable
     {
         return $this->newpass;
     }
+    
+    
+
+    /**
+     * @param $reg_from
+     * @return $this
+     */
+    public function setRegFrom($reg_from)
+    {
+        $this->reg_from = $reg_from;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegFrom()
+    {
+        return $this->reg_from;
+    }
 
     /**
      * @param string $salt
@@ -654,6 +707,14 @@ class AuthorEntity implements UserInterface, \Serializable
     {
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**

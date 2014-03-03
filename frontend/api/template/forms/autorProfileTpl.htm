@@ -1,51 +1,56 @@
-<div class="info"><div class="register-form">
-    <form name="info-form">
-        <article class="cat-title">
-            <h3>Редактирование личной информации</h3>
-            <p class="fs c-grey">Отредактируйте свой профиль и допишите истории</p>
-            <div class="hr"></div>
-        </article>
-        <div class="di">
-            <input type="text" placeholder="Имя" data-field="name"  necessarily='true' value="<%= name %>">
-            <div class="hhdi hide-warning name">Обязательно для заполнения</div>
-            <div class="hhdi hide-warning nameChange"></div>
-        </div>
-
-        <div class="di"><input type="text" placeholder="Email" data-field="email" necessarily='true' value="<%= email %>">
-            <div class="hhdi hide-warning wrongMail">Неправильный формат email</div>
-            <div class="hhdi hide-warning email">Обязательно для заполнения</div>
-            <div class="hhdi"><label> <input type="checkbox">Подписаться на обновления</label></div>
-        </div>
-
-        <div class="di">
-            <input type="password" id="newpass" placeholder="Новый пароль" data-field="new_password" value="" />
-            <div id="oldpass" style="display: none">Введите текущий пароль:
-                <input type="password" placeholder="Старый пароль" data-field="old_password">
-            </div>
-        </div>
-
-
-        <div class="di">
-            <input type="text" placeholder="Ваша профессия или деятельность" data-field="job" necessarily='true' value="<%= job %>">
-            <div class="hhdi hide-warning profession">Обязательно для заполнения</div>
-        </div>
-        <div class="di"><input type="text" placeholder="Профессия, о которой мечтали в детстве" data-field="dream" value="<%= dream %>"></div>
-        <div class="di"><input type="text" placeholder="Профессия, которая Вас восхищает" data-field="interest" value="<%= interest %>"></div>
-
-        <div class="di">
-            <textarea placeholder="Самое место рассказать о себе" data-field="interviewCaption" maxlength="199"><%= interviewCaption %></textarea>
-            <p class="simbolsLeft">Осталось <b>199</b> символов</p>
-        </div>
-
-        <div class="di"><input type="text" placeholder="Личная страница" data-field="homepage" value="<%= self_link %>"></div>
-        <div class="di file_upload_block">
-            <div class="btn btn_upload_img">Загрузить Изображение</div>
-            <input id="fileupload" type="file" name="files[]" data-url="/api/author/upload_user_image">
-            <div class="files_success_upload">
-                <img src="<%= avatarImg %>" width="53" height="53" alt="Ваш аватар" />
-            </div>
-        </div>
-
-        <input type="submit" class="regbtn di" value="Сохранить правки">
-    </form>
+<div class="info"><div class="register-form">
+    <form name="info-form">
+        <article class="cat-title">
+            <% if( app.userModel.attributes.userData.role == 4 && app.userModel.attributes.userData.id !== id ){ %>
+                <h3>Редактирование личной информации пользователя <a href="/#author/<%= id %>/posts"><%= name %></a></h3>
+            <% } else { %>
+                <h3><%= config.getContent(43) %></h3>
+                <p class="fs c-grey"><%= config.getContent(15) %></p>
+            <% } %>
+
+            <div class="hr"></div>
+        </article>
+        <div class="di">
+            <input type="text" placeholder="Имя" data-field="name"  necessarily='true' value="<%= name %>">
+            <div class="hhdi hide-warning name">Обязательно для заполнения</div>
+            <div class="hhdi hide-warning nameChange"></div>
+        </div>
+
+        <div class="di">
+            <input type="text" placeholder="Email" data-field="email" disabled value="<%= email %>">
+            <div class="hhdi hide-warning wrongMail">Запрешенно редактировать email</div>
+            <div class="hhdi"><label> <input type="checkbox">Подписаться на обновления</label></div>
+        </div>
+
+        <div class="di">
+            <input type="password" id="newpass" placeholder="Новый пароль" data-field="new_password" value="" />
+            <div id="oldpass" style="display: none">
+                <input type="password" placeholder="Старый пароль" data-field="old_password">
+            </div>
+        </div>
+
+
+        <div class="di">
+            <input type="text" placeholder="Ваша профессия или деятельность" data-field="job" necessarily='true' value="<%= job %>">
+            <div class="hhdi hide-warning profession">Обязательно для заполнения</div>
+        </div>
+        <div class="di"><input type="text" placeholder="Профессия, о которой мечтали в детстве" data-field="dream" value="<%= dream %>"></div>
+        <div class="di"><input type="text" placeholder="Профессия, которая Вас восхищает" data-field="interest" value="<%= interest %>"></div>
+
+        <div class="di">
+            <textarea placeholder="Самое место рассказать о себе" data-field="interviewCaption" maxlength="199"><%= interviewCaption %></textarea>
+            <p class="simbolsLeft"><b>199</b> символов</p>
+        </div>
+
+        <div class="di"><input type="text" placeholder="Личная страница" data-field="homepage" value="<%= self_link %>"></div>
+        <div class="di file_upload_block">
+            <div class="btn btn_upload_img">Загрузить Изображение</div>
+            <input id="fileupload" type="file" name="files[]" data-url="/api/author/upload_user_image">
+            <div class="files_success_upload">
+                <img src="<%= avatarImg %>" width="53" height="53" alt="Ваш аватар" />
+            </div>
+        </div>
+
+        <input type="submit" class="regbtn di" value="<%= config.getContent(44) %>">
+    </form>
 </div></div>

@@ -8,12 +8,12 @@
 			<a class="logo" href="/">yasoon</a>
 			<div class="main-w">
 				<p><%= partner.parnterText %></p>
-				<a href="/#explore" class="btn">Узнать больше</a>
+				<a href="/#explore" class="btn"><%= partner.buttonText %></a>
 				<!-- <a href="<%= partner.parnterLink %>" class="btn">Узнать больше</a> -->
 			</div>
 			<nav>
-				<a href="/#explore">професcии</a>
-				<a href="/#peoples">люди</a>
+				<a href="/#explore"><%= config.getContent(54) %></a>
+				<a href="/#peoples"><%= config.getContent(55) %></a>
 			</nav>
 			<div class="login_side"></div>
 		</div>
@@ -28,8 +28,8 @@
 	<a class="logo" href="/">yasoon</a>
 	<div class="org-nav">
 		<nav>
-			<a href="/#explore" class="profs_link">Профессии</a>
-			<a href="/#peoples" class="people_link">Люди</a>
+			<a href="/#explore" class="profs_link"><%= config.getContent(54) %></a>
+			<a href="/#peoples" class="people_link"><%= config.getContent(55) %></a>
 		</nav>
 	</div>
 	<div class="login_side"></div>

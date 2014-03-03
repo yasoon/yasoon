@@ -6,6 +6,7 @@
 
 namespace Yasoon\Site\Controller;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,6 +16,9 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\PostService;
 use Yasoon\Site\Service\PartnerService;
 use Yasoon\Site\Service\AuthorService;
+use Yasoon\Site\Service\ImageService;
+
+error_reporting(E_ALL);
 
 /**
  * Class PostController
@@ -37,6 +41,13 @@ class PostController {
      * @DI\Inject("yasoon.service.partner")
      */
     private $partnerservice;
+
+    /**
+     * @var ImageService
+     *
+     * @DI\Inject("yasoon.service.image")
+     */
+    private $imageService;
     
     /**
      * @var PostCategoryService
@@ -99,7 +110,7 @@ class PostController {
                   'postTitle' => 'fffff',
                   'category' => [1,4,5,7],
                   'postText' => 'text text text text text',
-                  'postDescription' => 'Êðàòêîå îïèñàíèå',
+                  'postDescription' => 'ÃŠÃ°Ã Ã²ÃªÃ®Ã¥ Ã®Ã¯Ã¨Ã±Ã Ã­Ã¨Ã¥',
                   'questionList' => [['id' => 1,
                                       'text' => 'reeretfffff'],
                                       ['id' => 2,
@@ -213,11 +224,13 @@ class PostController {
     }
 
     /**
-     * @Route("/set_daystory/{postId}", requirements={"postId" = "\d+"})
-     * @Method({"GET"})
+     * @Route("/set_daystory")
+     * @Method({"POST"})
      */
-    public function setStoryOfTheDayAction($postId)
+    public function setStoryOfTheDayAction(Request $request)
     {
+        $postId = $request->request->get('postId');
+        
         $result = $this->service->setStoryOfTheDay($postId);
 
         return $result;
@@ -306,4 +319,33 @@ class PostController {
 
         return ['peoples' => $author, 'peoplesCount' => $qposts['count_all']];
     }
+
+    /**
+     * @Route("/upload_image")
+     * @Method({"FILES|POST"})
+     */
+    public function uploadImages(Request $request)
+    {
+        $fileSource = array();
+        /** @var UploadedFile[] $files */
+        $files = $request->files->get('file');
+        $path  = '/upload/images/';
+        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/upload/images";
+
+        $file = $files;
+
+        //return $file;
+
+        $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
+        $resultImage = $this->imageService->saveImg($fileInfo, $absolutePath . '/');
+
+        $fileSource['file_name'] = $resultImage;
+        $fileSource['dir']       = $path;
+        $fileSource['filelink']  = $path.$resultImage;
+
+        unlink($absolutePath  . '/' . $fileInfo->getFilename());
+       
+        return $fileSource;
+    }
+
 }

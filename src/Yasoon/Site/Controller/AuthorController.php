@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Yasoon\Site\Service\AuthorService;
 use Yasoon\Site\Service\ImageService;
 
-error_reporting(E_ALL);
+error_reporting(0);
 
 /**
  * Class AuthorController
@@ -312,12 +312,11 @@ class AuthorController {
 
     /**
      * @Route("/notify")
-     * @Method({"GET"})
+     * @Method({"POST"})
      */
     public function notify(Request $request)
     {
-        //$email = $request->request->get('email');
-        $email = 'parandiy.mihail@gmail.com';
+        $email = $request->request->get('email');
 
         return $this->service->notify($email);
     }

@@ -1,9 +1,9 @@
 <% var likesClass = post.post_likes > 0 ? '' : 'emptyLike'; %>
 
 <div id="daystory">
-    <div class="daystory">
-        <a class="postinfo" href="/#author/<%= post.autorId %>/posts">
-            <img src="<%= post.authorAvatar %>" alt="">
+    <div class="daystory info">
+        <a class="postinfo" href="/#author/<%= post.authorId %>/posts">
+            <img class="usr-ic" src="<%= post.avatarImg %>" alt="">
             <h4 class="usr-name"><%= post.authorName %></h4>
             <p class="u-description"><%= post.authorDescription %></p>
             <div class="hr"></div>
@@ -37,7 +37,7 @@
                     <% } %>
                 </span>
                 <span class="q-post">
-                    <a href="/#author/<%= post.autorId %>/questions/"><i data-to-login="/#author/<%= post.autorId %>/questions/" data-permission="ANON" style="display: inline;"></i></a>
+                    <a href="/#author/<%= post.authorId %>/questions/"><i data-to-login="/#author/<%= post.authorId %>/questions/" data-permission="ANON" style="display: inline;"></i></a>
                     Вопросов автору: <%= post.questions %></span>
             </div>
             

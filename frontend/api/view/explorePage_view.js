@@ -17,7 +17,8 @@ define([
 
 		events: {
 			'click .navigate a': 'showTab',
-			'click .morePosts': 'showNextPage'
+			'click .morePosts': 'showNextPage',
+			'click .writeSelf': 'showLoginForm'
 		},
 
 		initialize: function(routerData){
@@ -67,6 +68,8 @@ define([
 			if( !$('section.page_content').find('.explorePage').is('section') )
 				$('section.page_content').empty().html(this.$el);
 
+			$('.barrier').hide();
+
 			this.$sideBar.empty().append( this.industryCollection.postsCategoryView.$el );
 			
 			if( this.nowCatId == needCat && !this.selectSort)
@@ -106,7 +109,7 @@ define([
 			var selectModel = self.industryCollection.get(catId);
 
 			if( catId == 0 ) 
-				self.setCatTitle({ name: 'Все отрасли', description: 'Истории людей, которые любят то, что делают', id: 'all' });
+				self.setCatTitle({ name: 'Все отрасли', description: config.getContent(14), id: 'all' });
 			else 
 				self.setCatTitle(selectModel.toJSON());	
 
@@ -122,7 +125,7 @@ define([
 
 		showNextPage: function(e){
 
-			if( event ) event.preventDefault();
+			if( e ) e.preventDefault();
 			var catId = this.routerData.catId == 'all' ? 0 : this.routerData.catId;
 			var self = this;			
 			var selectModel = self.industryCollection.get(catId);
@@ -151,7 +154,7 @@ define([
 				});
 
 				if( !catModel.postsCollection.ready )
-					$('.nav-tabs .byDate, .nav-tabs .byRate',self.$el).append('<article class="bottom-toolbar leftM t-center"><a href="#" class="btn morePosts">Больше историй</a></article>');
+					$('.nav-tabs .byDate, .nav-tabs .byRate',self.$el).append('<article class="bottom-toolbar leftM t-center"><a href="#" class="btn morePosts">'+config.getContent(19)+'</a></article>');
 				
 				$('html,body').animate({scrollTop: lastPostEl},400);
 
@@ -195,7 +198,14 @@ define([
 			//$('.cat-title p',self.$el).html( info.description );
 			$('.navigate a.byDate',self.$el).attr( 'href', '/#explore/'+info.id+'/date' );
 			$('.navigate a.byRate',self.$el).attr( 'href', '/#explore/'+info.id+'/rate' );
-		}
+		},
+
+		showLoginForm: function(e){
+			if( !app.userModel.attributes.userData ){
+				app.view.headerView.showLoginForm();
+				return false;
+			} 
+		}			
 
 	})
 

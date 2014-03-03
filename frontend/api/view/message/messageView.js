@@ -7,7 +7,8 @@ define([
 		template: _.template(messageTpl),
 
 		events: {
-			'click .btn': 'hideMessage'
+			'click .btn.ok': 'hideMessage',
+			'click .btn.cancle': 'hideMessage'
 		},
 
 		el: '',
@@ -30,14 +31,40 @@ define([
 			$('h3',this.$el).html(title);
 			$('.content',this.$el).html(text);
 			this.$el.show().siblings().hide();
+			$('.cancle',this.$el).hide();
+			$('.ok',this.$el).html('ОК');
 			$('.barrier').fadeIn(500);
 			this.delegateEvents();
 		},
 
-		hideMessage: function(e){
-			e.preventDefault();
-			$('.barrier').fadeOut(500);
+		confirm: function(title,text,handler){
+			var self = this;
+			$('h3',this.$el).html(title);
+			$('.content',this.$el).html(text);
+
+			this.$el.show().siblings().hide();
+			$('.cancle',this.$el).show().html('Нет, вернуться в редактор');
+			$('.ok',this.$el).html('Да, я хочу этого');
+
+			$('.barrier').fadeIn(500,function(){
+				$('.cancle',self.$el).unbind().on('click',function(){ 
+					self.hideMessage();
+					handler(false); 
+					self.delegateEvents();
+				})
+				$('.ok',self.$el).unbind().on('click',function(){ 
+					self.hideMessage();
+					handler(true); 
+					self.delegateEvents();
+				})
+			});
+
 			
+		},
+
+		hideMessage: function(e){
+			if( e !== undefined ) e.preventDefault();
+			$('.barrier').fadeOut(500);
 		}
 
 	});

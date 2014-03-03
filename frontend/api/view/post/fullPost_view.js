@@ -9,6 +9,7 @@ define([
 			'click .like-this a': 'addLike'
 		},
 		initialize: function(){
+			console.log( this.model.attributes );
 			this.$el.append( _.template(postTpl,{postInfo: this.model.toJSON()}) );
 		},
 
@@ -24,9 +25,9 @@ define([
 				if( request.error !== undefined && request.error == true){
 
 					if( request.errorText == 'userLiked' )
-						app.view.messageView.render( 'Ошибка','Вы уже вдохновлялись данной историей!' );
+						app.view.messageView.render( '',config.getContent(52) );
 					if( request.errorText == 'timeLimit' )
-						app.view.messageView.render( 'Ошибка','Не авторизованные пользователи могут вдохновиться историей только раз в сутки!' );
+						app.view.messageView.render( '',config.getContent(51) );
 
 					return;
 				}

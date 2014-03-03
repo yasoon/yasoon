@@ -1,16 +1,9 @@
-<% var needClass = text == '' ? '' : 'active'; %>
-<a href="#" class="a-quertion <%= needClass %>"><%= questionNumber %>) <%= question %></a>
-<div class="questionContent" style="display: none;">
-			
-	<div class="di">
-		<div class="post-edit-tools">
-			<div class="item"><b>b</b></div>
-			<div class="item"><b><i>It</i></b></div>
-			<div class="item"><b>Quote</b></div>
-			<div class="item">Upload a picture</div>
-			<div class="clearfix"></div>
-		</div>
-		<textarea placeholder="Текст истории"><%= text %></textarea>
-	</div>
-	
+<% var needClass = text == '' ? '' : 'active'; %>
+<a href="#" class="a-quertion <%= needClass %>"><%= question %></a>
+<div class="questionContent" style="display: none;">
+			
+	<div class="di">
+		<textarea class="editor" placeholder="Текст истории"><%= text %></textarea>
+	</div>
+	
 </div>

@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
+error_reporting(0);
 
 /**
  * @DI\Service("yasoon.service.author")
@@ -353,7 +353,7 @@ class AuthorService extends AbstractApiService {
         $userId = $this->securityContext->getToken()->getUsername();
 
         $stmt = $this->em->getConnection()->prepare(
-            "SELECT a.id, a.id ownerId, a.name, a.description,
+            "SELECT a.id, a.id ownerId, a.role, a.name, a.description,
               a.job, a.interest, a.dream,
               (SELECT count(1) FROM post     WHERE author_id = a.id) posts,
               (SELECT count(1) FROM question WHERE author_id = a.id and answer is not null) answers,
@@ -470,7 +470,8 @@ class AuthorService extends AbstractApiService {
             'dream' => $data->getDream(),
             'ask_questions' => $ask_questions,
             'friends' => $friends,
-            'timeline' => $timeline
+            'timeline' => $timeline,
+            'roles' => $data->getRoles()
         ];
 
 //        $access = $this->getAccessLevel($authorId);
@@ -730,6 +731,8 @@ class AuthorService extends AbstractApiService {
                 ->setPassword(md5($author['password']))
                 ->setSubscribed((int) $author['subscribed'])
                 ->setPublicationDate(new \DateTime())
+                ->setDateChange(new \DateTime())
+                ->setRegFrom(0)
                 ->setRole(1);
 
             $this->em->persist($entity);
@@ -741,9 +744,9 @@ class AuthorService extends AbstractApiService {
                      'subtype' => 'users',
                      'sumtext' => trim( strip_tags($entity->getDescription()) ).' ' .trim( strip_tags($entity->getInterest()) ),
                      'tags' => '"Authors"',
-                     'body' => trim( strip_tags($author->getDescription()) ),
-                     'date' => date('Y-m-d\TH:i:s', $author->getPublicationDate()->getTimestamp() ),
-                     'title' => trim( strip_tags($author->getName()))];
+                     'body' => trim( strip_tags($entity->getDescription()) ),
+                     'date' => date('Y-m-d\TH:i:s', $entity->getPublicationDate()->getTimestamp() ),
+                     'title' => trim( strip_tags($entity->getName()))];
             
             $this->allf->indexistoQueryAdd($data);
 
@@ -796,7 +799,17 @@ class AuthorService extends AbstractApiService {
      */
     public function editInfo(array $author)
     {
-        $authorId = $this->securityContext->getToken()->getUsername();
+        if ($this->allf->isAdmin()) {
+            (int)$authorId = $author['id'];
+        }
+        else
+        {
+            (int)$authorId = $this->securityContext->getToken()->getUsername();
+        }
+        
+        if ($authorId < 1) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
         
         try {
             /** @var AuthorEntity $entity */
@@ -816,7 +829,7 @@ class AuthorService extends AbstractApiService {
             }
     
     
-            isset($author['name']) && $entity->setDescription($author['name']);
+            isset($author['name']) && $entity->setName($author['name']);
             isset($author['email']) && $entity->setEmail($author['email']);
             isset($author['description']) && $entity->setDescription($author['description']);
             isset($author['job']) && $entity->setJob($author['job']);
@@ -825,7 +838,7 @@ class AuthorService extends AbstractApiService {
             isset($author['img']) && $entity->setImg($author['img']);
             isset($author['interviewCaption']) && $entity->setInterviewCaption($author['interviewCaption']);
             isset($author['homepage']) && $entity->setHomepage($author['homepage']);
-            $entity->setPublicationDate(new \DateTime());
+            $entity->setDateChange(new \DateTime());
             if(isset($author['subscribed']))
             {
                 $entity->setSubscribed(1);
@@ -845,7 +858,7 @@ class AuthorService extends AbstractApiService {
                      'sumtext' => trim( strip_tags($entity->getDescription()) ).' ' .trim( strip_tags($entity->getInterest()) ),
                      'tags' => '"Authors"',
                      'body' => trim( strip_tags($entity->getDescription()) ),
-                     'date' => date('Y-m-d\TH:i:s', $entity->getPublicationDate()->getTimestamp() ),
+                     'date' => date('Y-m-d\TH:i:s', $entity->getDateChange()->getTimestamp() ),
                      'title' => trim( strip_tags($entity->getName()))];
             
             $this->allf->indexistoQueryAdd($data);
@@ -862,31 +875,39 @@ class AuthorService extends AbstractApiService {
      */
     public function notify($email)
     {
-        $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
-
-        $newPass = '';
-        for ($i = 0; $i < 10; $i++) {
-            $newPass .= mt_rand(0, mt_rand(5,9));
+        try {
+            $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
+            
+            if($author->getRole() == 4)
+            {
+                return ['error' => true, 'errorText' => 'Admin cannot change pass'];
+            }
+    
+            $newPass = '';
+            for ($i = 0; $i < 10; $i++) {
+                $newPass .= mt_rand(0, mt_rand(5,9));
+            }
+    
+            $author->setNewpass($newPass);
+    
+            $this->em->merge($author);
+            $this->em->flush();
+    
+            $name = $author->getName();
+            
+            $link = $_SERVER['HTTP_HOST'].'#api/author/change_pass/'.$author->getEmail().'/'.md5($newPass);
+    
+            $message = $this->contentService->getAllContent()[7]['text'];
+            $message = str_replace(['%email%', '%newpass%', '%link%'], [$author->getEmail(), $newPass, $link], $message);
+    
+            $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
+    
+            return [
+                'id' => $author->getId()
+            ];
+        } catch(\Exception $e) {
+            return ['authorData' => false, 'message' => $e->getMessage()];
         }
-
-        $author->setNewpass($newPass);
-
-        $this->em->merge($author);
-        $this->em->flush();
-
-        $name = $author->getName();
-        
-        $link = $_SERVER['HTTP_HOST'].'#api/author/change_pass/'.$author->getEmail().'/'.md5($newPass);
-
-        $message = $this->contentService->getAllContent()[7]['text'];
-        $message = str_replace(['%email%', '%newpass%', '%link%'], [$author->getEmail(), $newPass, $link], $message);
-
-        $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
-
-        return [
-            'id' => $author->getId()
-        ];
-
     }
     
     /**
@@ -976,7 +997,8 @@ class AuthorService extends AbstractApiService {
                             'last_publish_date' => $author->getPublicationDate()->format('d/m/Y'),
                             'interviewCaption' => $author->getInterviewCaption(),
                             'likes_count' => $ids[$author->getId()]['likes'],
-                            'posts_count' => $ids[$author->getId()]['posts']];
+                            'posts_count' => $ids[$author->getId()]['posts'],
+                            'email' => $author->getEmail()];
             }
             //print_r($ids);
             
@@ -1041,9 +1063,14 @@ class AuthorService extends AbstractApiService {
                 ->where('a.id = '.$author->getId())
                 ->orderBy('q.date', 'desc')->getQuery()->getResult();
             $aquestions = [];
+            $answer_count = 0;
             foreach($questions as $question)
             {
                 $aquestions[] = $question->getId();
+                if($question->getAnswer() != '')
+                {
+                    $answer_count++;
+                }
             }
             
             if(!is_object($last_date) || (isset($last_date) && $last_date->getTimestamp() < $author->getPublicationDate()->getTimestamp()))
@@ -1076,7 +1103,8 @@ class AuthorService extends AbstractApiService {
                         'friends' => $afriends,
                         'answers' => $aquestions,
                         'last_publish_date' => $date,
-                        'interest' => $author->getInterest()];
+                        'interest' => $author->getInterest(),
+                        'answers_count' => $answer_count];
         }
         return $adata;
     }
@@ -1119,13 +1147,37 @@ class AuthorService extends AbstractApiService {
                 }
             }
             
+            switch($author->getRegFrom())
+            {
+                case 1:
+                    $from = 'facebook';
+                break;
+                case 2:
+                    $from = 'vkontakte';
+                break;
+                default: 
+                    $from = 'email';
+                break;
+            }
+            
+            if($author->getDateChange() != null)
+            {
+                $lchange = $author->getDateChange()->format('Y-m-d H:i:s');
+            }
+            else{
+                $lchange = '';
+            }
+            
             $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
                         'email' => $author->getEmail(),
                         'avatarImg' => $author->getImg(),
                         'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s'),
                         'story_count' => $story_count,
-                        'answer_count' => $answer_count];
+                        'answer_count' => $answer_count,
+                        'reg_from' => $from,
+                        'roles' => $author->getRoles(),
+                        'last_change' => $lchange];
         }
         return $adata;
         
@@ -1162,10 +1214,71 @@ class AuthorService extends AbstractApiService {
                 }
             }
             
+            
+            if($author->getDateChange() != null)
+            {
+                $lchange = $author->getDateChange()->format('Y-m-d H:i:s');
+            }
+            else{
+                $lchange = '';
+            }
+            
             $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
                         'email' => $author->getEmail(),
-                        'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s')];
+                        'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s'),
+                        'last_change' => $lchange];
+        }
+        return $adata;
+        
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+    }
+    
+    
+    /**
+     * @return array
+     */
+    public function get_all_admins()
+    {
+        try {
+        $authors = $this->em->createQueryBuilder()
+            ->select('a')
+            ->from('Yasoon\Site\Entity\AuthorEntity', 'a')
+            ->orderBy('a.publicationDate', 'desc')
+            ->where('a.role = 4')
+            ->getQuery()->getResult();
+            
+        $adata = [];
+        foreach($authors as $author)
+        {
+            $story_count = count($author->getPosts());
+            
+            $answer_count = 0;
+            $answers = $author->getQuestions();
+            foreach($answers as $answer)
+            {
+                if($answer->getAnswer() != '')
+                {
+                    $answer_count++;
+                }
+            }
+            
+            
+            if($author->getDateChange() != null)
+            {
+                $lchange = $author->getDateChange()->format('Y-m-d H:i:s');
+            }
+            else{
+                $lchange = '';
+            }
+            
+            $adata[] = ['id' => $author->getId(),
+                        'name' => $author->getName(),
+                        'email' => $author->getEmail(),
+                        'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s'),
+                        'last_change' => $lchange];
         }
         return $adata;
         
@@ -1314,5 +1427,36 @@ class AuthorService extends AbstractApiService {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         return $delete_data;
+    }
+    
+    /**
+     * @param $id
+     * @return array
+     */
+    public function set_admin($id)
+    {
+        try {
+            /** @var AuthorEntity $entity */
+            $entity = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')
+                ->find($id);
+            
+            if($entity->getRole() == 4)
+            {
+                $entity->setRole(1);
+                $oper = 'unset';
+            }
+            else
+            {
+                $entity->setRole(4);
+                $oper = 'set';
+            }
+        
+            $this->em->merge($entity);
+            $this->em->flush();
+            
+            return ['authorData' => true, 'oper' => $oper];
+        } catch(\Exception $e) {
+            return ['authorData' => false, 'message' => $e->getMessage()];
+        }
     }
 }

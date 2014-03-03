@@ -1,14 +1,17 @@
 define([
 	'text!template/post/postPreview.htm',
 	'text!template/post/dayStory.htm',
+	'text!template/admin/adminPost.htm',
 	'backbone'
 
-],function(postPreview, dayStory){
+],function(postPreview, dayStory, adminPost){
 
 	var smallPostView = Backbone.View.extend({
 
 		events: {
-			'click .like-this a i': 'addLike'
+			'click .like-this a i': 'addLike',
+			'click .setDayStory': 'setDayStory',
+			'click .writeSelf': 'showLoginForm'
 		},
 
 		initialize: function(model){
@@ -21,6 +24,11 @@ define([
 				model.type == 'bestStories' ||
 				model.type == 'autorPostPreview' ||
 				model.type == 'timelinePost') self.$el.append( _.template( postPreview,{post: model} ) );
+
+			//console.log( model );
+
+			if( model.type == 'adminListPost') self.$el.append( _.template( adminPost,{post: model} ) );
+
 
 		},
 
@@ -37,9 +45,9 @@ define([
 				if( request.error !== undefined && request.error == true){
 
 					if( request.errorText == 'userLiked' )
-						app.view.messageView.render( 'Ошибка','Вы уже вдохновлялись данной историей!' );
+						app.view.messageView.render( '','Вы уже вдохновлялись данной историей!' );
 					if( request.errorText == 'timeLimit' )
-						app.view.messageView.render( 'Ошибка','Не авторизованные пользователи могут вдохновиться историей только раз в сутки!' );
+						app.view.messageView.render( '','Не авторизованные пользователи могут вдохновиться историей только раз в сутки!' );
 
 					return;
 				}
@@ -50,8 +58,18 @@ define([
 
 		},
 
-		aa: function(){
-			console.log( this.$el.find('.like-this') );
+		setDayStory: function(e){
+			e.preventDefault();
+			var self = this;
+			$.post('/api/post/set_daystory',{postId: this.model.id},function(data){
+				if( data.error !== undefined && data.error == 'true' ) return;
+				$('.dayStoryBtn',self.$el).html('<b>История дня</b>');
+			})
+		},
+
+		showLoginForm: function(e){
+			if( e !== undefined ) e.preventDefault();
+			app.view.headerView.showLoginForm();
 		}				
 
 	});

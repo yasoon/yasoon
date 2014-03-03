@@ -162,7 +162,7 @@ class PostService extends AbstractApiService {
      */
     public function updatePost(array $dataPost) {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        if (!is_int($authorId)) {
+        if (!is_int($authorId) && !$this->allf->isAdmin()) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
 
@@ -557,7 +557,7 @@ class PostService extends AbstractApiService {
                         'author_id' => $post->getAuthor()->getId(),
                         'author_name' => $post->getAuthor()->getName(),
                         'caption' => $post->getCaption(),
-                        'date' => $post->getDate()->format('Y-m-d H:i:s'),
+                        'publishDate' => $post->getDate()->format('d/m/Y'),
                         'likes' => $post->getLikes(),
                         'preview' => $post->getPreview(),
                         'text' => $post->getText(),
@@ -679,8 +679,9 @@ class PostService extends AbstractApiService {
      */
     public function getStoryOfTheDay()
     {
+        error_reporting(E_ALL);
         /** @var PostOfTheDayEntity $story */
-        $story = $this->em->createQueryBuilder()
+        /*$story = $this->em->createQueryBuilder()
             ->select('story, author, post, questions')
             ->from('Yasoon\Site\Entity\PostOfTheDayEntity', 'story')
             ->join('story.post', 'post')
@@ -701,7 +702,48 @@ class PostService extends AbstractApiService {
           'text'    => $story->getPost()->getText(),
           'post_likes'   => $story->getPost()->getLikes(),
           'questions' => count($story->getPost()->getAuthor()->getQuestions())
-        ];
+        ];*/
+        $date = getdate();
+        $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
+        $from_date = date('Y-m-d H:i:s', $time);
+        $to_date = date('Y-m-d H:i:s', ($time+86400));
+            
+        try {
+            $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
+                ->createQueryBuilder('pd')
+                ->where("(pd.assignedDatetime > '".$from_date."' AND pd.assignedDatetime < '$to_date')")
+                ->orderBy('pd.assignedDatetime', 'DESC')
+                ->getQuery()
+                ->getResult();
+            
+            if(count($dayentity) > 0)
+            {
+                $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
+                    ->leftJoin('c.post', 'p')
+                    ->where('c.post_id = '.$dayentity[0]->getPost()->getId())
+                    ->orderBy('p.date', 'desc')->getQuery()->getResult();
+                $pcats = [];
+                foreach($tags as $tag)
+                {
+                    $pcats[] = $tag->getCategoryId();
+                }
+                
+                return ['id'          => $dayentity[0]->getPost()->getId(),
+                        'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
+                        'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
+                        'authorName'  => $dayentity[0]->getPost()->getAuthor()->getName(),
+                        'tags'        => $pcats,
+                        'title'       => $dayentity[0]->getPost()->getCaption(),
+                        'description' => $dayentity[0]->getPost()->getPreview(),
+                        'text'        => $dayentity[0]->getPost()->getText(),
+                        'publishDate' => $dayentity[0]->getPost()->getDate()->format('d/m/Y'),
+                        'post_likes'  => $dayentity[0]->getPost()->getLikes()];
+            }
+            
+            return ['error' => 'true', 'errorText' => 'storyNotAssigned'];
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
 
         return $result;
     }
