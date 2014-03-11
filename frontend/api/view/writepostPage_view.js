@@ -11,6 +11,7 @@ define([
 		template: _.template(pageTpl),
 
 		events: {
+			'keydown [data-field="postDescription"]': 'simvolCalk',
 			'click .navigate a': 'showTab',
 			'click .select [type="checkbox"]': 'catSelect',
 			'click .savePost': 'savePost',
@@ -115,8 +116,19 @@ define([
 			$('body,html').animate({scrollTop: 0},400);
 
 
-		}
+		},
 
+		simvolCalk: function(e){
+			var $this = $(e.currentTarget);
+				check = $this.val().length;
+				maxlenghth = 255;
+
+				result = maxlenghth - check;
+				this.$el.find('.symbols_count b').html(result);
+				
+						
+
+		}
 	});
 
 	return writepostPageView;

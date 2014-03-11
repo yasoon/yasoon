@@ -802,3 +802,12 @@ section.reserve_block{ height: 43px; }
 
 .redactor_editor ul{ list-style: circle outside; }
 .redactor_editor ol{ list-style: decimal outside; }
+
+.postTextBlock .like-title h1 {
+	max-width: 600px;
+}
+
+.symbols_count{
+	display: inline-block;
+	margin: 5px 0;
+}

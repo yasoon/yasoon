@@ -294,6 +294,7 @@ a,.btn{
 	text-transform: uppercase;
 	font-family: 'MuseoSansCyrl-700', Arial;
 	display: block;
+	font-size: 18px;
 }
 
 .a-quertion.active{ color: #238c00; }

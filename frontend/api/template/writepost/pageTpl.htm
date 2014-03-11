@@ -20,7 +20,10 @@
 			</div>
 		</div>
 
-		<div class="di"><textarea data-field="postDescription"  placeholder="<%= config.getContent(40) %>"></textarea></div>
+		<div class="di">
+			<textarea data-field="postDescription"  placeholder="<%= config.getContent(40) %>" maxlength="255"></textarea>
+			<p class="symbols_count">Осталось <b>255</b> символов</p>
+		</div>
 
 		<div class="questions_list sortable"></div>				
 		
