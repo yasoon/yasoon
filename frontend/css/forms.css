@@ -16,7 +16,7 @@ input[type="submit"]:focus, input[type="button"]:focus{ outline : none}
 	color: #000;
 }
 textarea{
-	min-height: 150px;
+	min-height: 100px;
 }
 textarea.big{
 	min-height: 450px;

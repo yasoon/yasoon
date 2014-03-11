@@ -342,7 +342,7 @@ body .redactor_air .redactor_toolbar {
 	step 25px
 */
 body .redactor_toolbar li a.redactor_btn_html				{ background-position: 0px; }
-body .redactor_toolbar li a.redactor_btn_formatting		    { background-position: -25px; }
+body .redactor_toolbar li a.redactor_btn_formatting		    { background: url(../img/brackets.png) no-repeat 5px; }
 body .redactor_toolbar li a.redactor_btn_bold				{ background-position: -50px; }
 body .redactor_toolbar li a.redactor_btn_italic			    { background-position: -75px; }
 body .redactor_toolbar li a.redactor_btn_deleted		 	{ background-position: -500px; }
@@ -693,4 +693,8 @@ body .redactor_toolbar li a.redactor_btn_alignment	 		{ background-position: -62
 .redactor_dropareabox.drop {
     background: #f4f4ee;
     border-color: #e0e5d6;
+}
+
+.redactor_editor p{
+	margin-bottom: 2px !important;
 }

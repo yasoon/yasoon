@@ -173,6 +173,8 @@
     padding: 0 0 0 10px !important;
   }
 }
+@media screen and (max-width: 690px){
+ }
 @media screen and (max-width: 460px) {
   h1 {
     font-size: 3em;

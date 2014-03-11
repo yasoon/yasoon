@@ -85,7 +85,7 @@ define([
 
 			$('header .profs_link').addClass('active').siblings().removeClass('active');
 
-			//window.updateScrolling();
+			window.updateScrolling();
 
 			this.delegateEvents();
 							

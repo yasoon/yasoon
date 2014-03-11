@@ -23,9 +23,18 @@ define([
 			$('.questions_list',this.model.collection.view.$el).append( this.$el );
 			this.$textarea = $('.editor',this.$el);
 
-			//this.$textarea.val('<b>asdas</b>');
 			this.$textarea.redactor({
-				imageUpload: '/api/post/upload_image'
+				imageUpload: '/api/post/upload_image',
+				buttons: [
+					'formatting','|',
+					'bold','italic','deleted','|',
+					'unorderedlist','orderedlist','|',
+					'image',
+					'video',
+					'table',
+					'link'
+				],
+				formattingTags: ['p', 'blockquote']
 			});
 		},
 

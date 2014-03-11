@@ -198,11 +198,19 @@ html, body, #bg-main, #bg-main table, #bg-main td {
 #bg-main .main-w{
 	font-family: "MuseoSansCyrl-100", Arial;
 	font-size: 5em;
-	padding-top: 3em;
+	padding-top: 55px;
 	padding-bottom: 3em;
 	margin: 0 auto 0.6em auto;
 	color: #fff;
-	text-align: center;
+	display: table;
+   	width: 100%;
+   	height: 525px;
+}
+
+.logo_text {
+	display: table-cell;
+   	text-align: center;
+   	vertical-align: middle;
 }
 
 .bg-panoram{
@@ -809,5 +817,5 @@ section.reserve_block{ height: 43px; }
 
 .symbols_count{
 	display: inline-block;
-	margin: 5px 0;
+	padding: 5px 0;
 }
