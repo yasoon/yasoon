@@ -40,6 +40,13 @@ class ContentEntity
     protected $text;
 
     /**
+     * @var string $tagId
+     *
+     * @ORM\Column(name="tagId", type="string", nullable=true)
+     */
+    protected $tagId;
+
+    /**
      * @param string $description
      * @return $this
      */
@@ -95,6 +102,24 @@ class ContentEntity
 
 
 
+
+    /**
+     * @param string $tagId
+     * @return $this
+     */
+    public function setTagId($tagId)
+    {
+        $this->tagId = $tagId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagId()
+    {
+        return $this->tagId;
+    }
 
 
 }

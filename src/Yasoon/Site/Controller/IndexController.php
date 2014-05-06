@@ -13,8 +13,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\ContentService;
 
 class IndexController {
-
-
     /**
      * @var ContentService
      *
@@ -42,122 +40,31 @@ class IndexController {
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Yasoon</title>
-<!--<link href="css/common.css" rel="stylesheet"/>-->
-<link rel="stylesheet" href="frontend/css/reset.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/fonts.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/forms.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/media.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/loader.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="frontend/css/redactor.css" type="text/css" media="screen" />
-<!-- <link rel="stylesheet" href="css/fix.css" type="text/css" media="screen" /> -->
+    <meta charset="utf-8">
+    <title>Yasoon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, user-scalable=yes" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="frontend/css/media.css" type="text/css" media="screen" />
-
-<script src="frontend/js/require.js" type="text/javascript"></script>
-<script src="frontend/api/config.js" type="text/javascript"></script>
- <script async="true" type="text/javascript" src="http://servant.indexisto.com/files/searchbox/searchbox.nocache.js?type=edit"></script>
-<!-- <script>
-
-JST = {}
-  // Configure the AMD module loader
-  requirejs.config({
-    // The path where your JavaScripts are located
-    baseUrl: './js/',
-    // Specify the paths of vendor libraries
-    paths: {
-      jquery: 'lib/jquery-2.0.1.min',
-      jqueryui: 'lib/jquery-ui-1.10.3.custom.min',
-      'jquery.ui.widget': 'lib/jquery.ui.widget',
-      jqueryupload: 'lib/jquery.fileupload',
-      jqueryuploadiframetransport: 'lib/jquery.iframe-transport',
-      underscore: 'lib/underscore-min-1.5.2',
-      backbone: 'lib/backbone-1.0.0.min',
-      handlebars: 'lib/handlebars-runtime-1.0.0',
-      chaplin: 'lib/chaplin-min',
-      JST: 'templates_compiled/combined',
-      tinyEditor: 'lib/tiny.editor',
-      categories: 'categories',
-      sitefunctions: 'site/functions',
-      bootstrap_wysiwyg : 'lib/bootstrap-wysiwyg',
-      jquery_hotkeys : 'lib/jquery.hotkeys',
-      helper : 'lib/helper',
-      bootstrap : 'lib/bootstrap.min'
-    },
-    // Underscore and Backbone are not AMD-capable per default,
-    // so we need to use the AMD wrapping of RequireJS
-    shim: {
-      underscore: {
-        exports: '_'
-      },
-      categories: {
-        exports: 'categories'
-      },
-      backbone: {
-        deps: ['underscore', 'jquery'],
-        exports: 'Backbone'
-      },
-      handlebars: {
-        exports: 'Handlebars'
-      },
-      JST: {
-        deps: ['handlebars'],
-        exports: 'JST'
-      },
-      'jqueryui.sortable': ['jqueryui'],
-      'tinyEditor': {
-        exports: 'TINY'
-      }
-    }
-    // For easier development, disable browser caching
-    // Of course, this should be removed in a production environment
-//    , urlArgs: 'bust=' +  (new Date()).getTime()
-  });
-
-  //add some templates helper
-  require(['handlebars'], function(Handlebars) {
-
-  });
-
-  // Bootstrap the application
-  require(['application', 'routes'], function(Application, routes) {
-    new Application({controllerSuffix: '-controller', routes: routes, pushState: false})
-  });
-
-  var managedContent = JSON.parse('$content');
-  </script> -->
+    <link rel="stylesheet" href="/frontend/css/source.css" type="text/css" media="screen" />
+    <script src="/frontend/js/vendor/require.js" data-main="/frontend/js/main.min.js" type="text/javascript"></script>
 </head>
 </html>
 <body>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-48201159-1', 'mnb-t.com');
-  ga('send', 'pageview');
-
-</script>
-    <div class="main_block">
-     <div class="barrier"></div>
-     <header></header>
-   <section class="page_content"></section>
-   <section class="reserve_block"></section>
-  </div>
-  <footer>
-   <div class="inside">
-    <div class="left aus">© 2013 yasoon</div>
-    <nav>
-     <a href="">About us</a>
-     <a href="">Contact us</a>
-    </nav>
-    <div class="clearfix"></div>
-   </div>
-  </footer>
+    <header id="header"></header>
+    <div class="wrap">
+        <div class="main_block">
+            <section class="page_content"></section>
+        </div>
+    </div>
+    <footer>
+        <div class="inside">
+            <div class="left aus">© 2013 yasoon</div>
+            <nav>
+                <a href="/about">О нас</a>
+                <a href="/digest">Дайджест</a>
+            </nav>
+            <div class="clearfix"></div>
+        </div>
+    </footer>
 </body>
 
 HTML;

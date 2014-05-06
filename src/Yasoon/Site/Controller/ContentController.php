@@ -28,12 +28,12 @@ class ContentController {
 
 
     /**
-     * @Route("/get_all")
+     * @Route("/get_all/{tagId}", defaults={"tagId" = 0})
      *
      * @Method({"GET"})
      */
-    public function getAllContent() {
-        $result = $this->service->getAllContent();
+    public function getAllContent($tagId) {
+        $result = $this->service->getAllContent($tagId);
 
         return $result;
     }
@@ -73,6 +73,59 @@ class ContentController {
         $id = $request->request->get('id');
 
         $result = $this->service->deleteRow($id);
+
+        return $result;
+    }
+    
+    /**
+     * @Route("/get_all_tags")
+     *
+     * @Method({"GET"})
+     */
+    public function getAllTags() {
+        $result = $this->service->getAllTags();
+
+        return $result;
+    }
+    
+
+    /**
+     * @Route("/add_tag")
+     *
+     * @Method({"POST"})
+     */
+    public function addTag(Request $request) {
+        $model = $request->request->get('tag');
+        
+        $result = $this->service->addTag($model);
+
+        return $result;
+    }
+    
+
+    /**
+     * @Route("/edit_tag")
+     *
+     * @Method({"POST"})
+     */
+    public function editTag(Request $request) {
+        $model = $request->request->get('tag');
+        
+        $result = $this->service->editTag($model);
+
+        return $result;
+    }
+    
+
+    /**
+     * @Route("/delete_tag")
+     *
+     * @Method({"POST"})
+     */
+    public function deleteTag(Request $request) {
+        $id = $request->request->get('id');
+
+        $result = $this->service->deleteTag($id);
 
         return $result;
     }

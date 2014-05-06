@@ -1,0 +1,35 @@
+<div class="p-label">
+  <% if (typeof(authorId) !== "undefined") { %>
+  	<a href="#/speaker/<%= authorId %>/posts">
+  <% } else { %>
+    <a href="#/speaker/<%= authorid %>/posts">
+  <% } %>
+
+  <% if (typeof(authorName) !== "undefined") { %>
+		<%= authorName %>
+  <% } else { %>
+    <%= autorName %>
+  <% } %>
+	</a>
+</div>
+<h2>
+	<a href="#/post/<%= id %>">
+  <% if (typeof(caption) !== "undefined") { %>
+		<%= caption %>
+  <% } else { %>
+    <%= title %>
+  <% } %>
+	</a>
+</h2>
+<div class="content">
+	<p>
+
+  <% if (typeof(preview) !== "undefined") { %>
+		<%= preview %>
+  <% } else { %>
+    <%= description %>
+  <% } %>
+  
+	</p>
+</div>
+<div class="hr"></div>

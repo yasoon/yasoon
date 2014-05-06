@@ -1,0 +1,40 @@
+<form role="form">
+	<div class="post-edit">
+		<article>
+			<h3 class="t-center">
+				Напишите свою историю
+			</h3>
+			<div class="hr"></div>
+		</article>
+		
+		<div class="di form-group">
+			<input type="text" class="form-control" name="postTile" id="postTile" placeholder="Заголовок истории">
+			<p class="help-block"></p>
+		</div>
+		
+		<div class="di form-group">
+			<div class="select">
+			<!-- category -->
+			</div>
+		</div>
+
+		<div class="di form-group">
+			<textarea class="postDescrip"  name="postDescription" id="postDescription" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
+			<p class="help-block"></p>
+			<span class="counter"><%= maxLength %></span>
+		</div>
+
+		<div class="questions_list sortable"></div>
+		
+		<div class="di t-center buttons_area">
+			<div class="row">
+				<div class="col-sm-6 text-right">
+					<a href="#" class="btn save">Опубликовать</a>
+				</div>
+				<div class="col-sm-6 text-left">
+					<a href="#" class="btn cancel">Отмена</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

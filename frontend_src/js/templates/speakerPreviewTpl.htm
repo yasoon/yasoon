@@ -1,0 +1,24 @@
+<div class="speaker-avatar">
+	<a href="#/speaker/<%= id %>/posts">
+		<% if(avatarImg === null) { %>
+			<img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic" alt="<%= name %>">
+		<% } else { %>
+			<img src="/upload/avatar/<%= avatarImg %>" class="usr-ic" alt="<%= name %>">
+		<% } %>
+	</a>
+</div>
+<div class="speaker-info">
+	<h4 class="p-label">
+		Posts <a href="#/speaker/<%= id %>/posts" class="green"><%= posts_count %></a> &nbsp;&nbsp;&nbsp;
+		Answers <a href="#/speaker/<%= id %>/answers" class="green"><%= posts_count %></a>
+	</h4>
+	<h2>
+		<a href="#/speaker/<%= id %>/posts">
+			<%= name %>
+		</a>
+	</h2>
+	<div class="content lic">
+		<%= interviewCaption %>
+	</div>
+</div>
+<div class="hr"></div>

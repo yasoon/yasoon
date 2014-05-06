@@ -112,89 +112,20 @@ class AdminController extends Controller {
   <meta charset="utf-8">
   <title>Yasoon</title>
 <!--<link href="css/common.css" rel="stylesheet"/>-->
-<link rel="stylesheet" href="../frontend/css/reset.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/fonts.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/forms.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/media.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/loader.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../frontend/css/redactor.css" type="text/css" media="screen" />
-<!-- <link rel="stylesheet" href="../css/fix.css" type="text/css" media="screen" /> -->
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/fonts.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/forms.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/style.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/media.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/loader.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="http://yasoon.mnb-t.com/frontend/css/redactor.css" type="text/css" media="screen" />
+<!-- <link rel="stylesheet" href="css/fix.css" type="text/css" media="screen" /> -->
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
-<link rel="stylesheet" href="../frontend/css/media.css" type="text/css" media="screen" />
+<meta name="viewport" content="width=device-width, initial-scale=0.6, user-scalable=yes" />
+<link rel="stylesheet" href="frontend/css/media.css" type="text/css" media="screen" />
 
-<script src="../frontend/js/require.js" type="text/javascript"></script>
-<script src="../frontend/api/adminConfig.js" type="text/javascript"></script>
-<!-- <script>
-
-JST = {}
-  // Configure the AMD module loader
-  requirejs.config({
-    // The path where your JavaScripts are located
-    baseUrl: './js/',
-    // Specify the paths of vendor libraries
-    paths: {
-      jquery: 'lib/jquery-2.0.1.min',
-      jqueryui: 'lib/jquery-ui-1.10.3.custom.min',
-      'jquery.ui.widget': 'lib/jquery.ui.widget',
-      jqueryupload: 'lib/jquery.fileupload',
-      jqueryuploadiframetransport: 'lib/jquery.iframe-transport',
-      underscore: 'lib/underscore-min-1.5.2',
-      backbone: 'lib/backbone-1.0.0.min',
-      handlebars: 'lib/handlebars-runtime-1.0.0',
-      chaplin: 'lib/chaplin-min',
-      JST: 'templates_compiled/combined',
-      tinyEditor: 'lib/tiny.editor',
-      categories: 'categories',
-      sitefunctions: 'site/functions',
-      bootstrap_wysiwyg : 'lib/bootstrap-wysiwyg',
-      jquery_hotkeys : 'lib/jquery.hotkeys',
-      helper : 'lib/helper',
-      bootstrap : 'lib/bootstrap.min'
-    },
-    // Underscore and Backbone are not AMD-capable per default,
-    // so we need to use the AMD wrapping of RequireJS
-    shim: {
-      underscore: {
-        exports: '_'
-      },
-      categories: {
-        exports: 'categories'
-      },
-      backbone: {
-        deps: ['underscore', 'jquery'],
-        exports: 'Backbone'
-      },
-      handlebars: {
-        exports: 'Handlebars'
-      },
-      JST: {
-        deps: ['handlebars'],
-        exports: 'JST'
-      },
-      'jqueryui.sortable': ['jqueryui'],
-      'tinyEditor': {
-        exports: 'TINY'
-      }
-    }
-    // For easier development, disable browser caching
-    // Of course, this should be removed in a production environment
-//    , urlArgs: 'bust=' +  (new Date()).getTime()
-  });
-
-  //add some templates helper
-  require(['handlebars'], function(Handlebars) {
-
-  });
-
-  // Bootstrap the application
-  require(['application', 'routes'], function(Application, routes) {
-    new Application({controllerSuffix: '-controller', routes: routes, pushState: false})
-  });
-
-  var managedContent = JSON.parse('$content');
-  </script> -->
+<script src="http://yasoon.mnb-t.com/frontend/js/require.js" type="text/javascript"></script>
+<script src="http://yasoon.mnb-t.com/frontend/api/adminConfig.js" type="text/javascript"></script>
 </head>
 </html>
 <body>

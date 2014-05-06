@@ -1,0 +1,10 @@
+<article class="lim cat-title">
+	<h3><%= name %></h3>
+	<p><%= description %></p>
+	<div class="hr"></div>
+</article>
+
+<nav class="navigate">
+	<a href="#/posts/<%= category %>/dateSort/" class="<% if (sort === 'dateSort') print('active') %>">By post add</a>
+	<a href="#/posts/<%= category %>/rateSort/" class="<% if (sort === 'rateSort') print('active') %>">By post rate</a>
+</nav>

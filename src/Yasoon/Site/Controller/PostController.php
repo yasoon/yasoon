@@ -159,12 +159,14 @@ class PostController {
      */
     public function getPostsByDate(Request $request)
     {
-        //$authorId = [41, 91];
-        //$date = ['22/01/2014', '23/01/2014'];
+        //$authorId = [63, 91];
+        //$date = ['25/02/2014', '23/01/2014'];
         
         $data = $request->request->get('authors');      
-        
+
+       
         $result = $this->service->getPostsByDate($data['id'], $data['date']);
+        //$result = $this->service->getPostsByDate($authorId, $date);
 
         return $result;
     }

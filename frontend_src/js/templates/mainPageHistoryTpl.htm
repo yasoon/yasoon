@@ -1,0 +1,38 @@
+<div class="postinfo st">
+	<% if(avatarImg === null) { %>
+		<img src="/frontend/img/noAvatar.jpg" alt="<%= authorName %>">
+	<% } else { %>
+		<img src="/upload/avatar/<%= avatarImg %>" alt="<%= authorName %>">
+	<% } %>
+	<h4><a href="#/speaker/<%= id %>/posts" class="usr-name"><%= authorName %></a></h4>
+	<!-- <p class="u-description">authorDescription</p> -->
+	<div class="hr"></div>
+	<div class="pub">
+		<h4 class="p-label">Опубликовано</h4>
+		<%= publishDate %>
+		<div class="hr"></div>
+	</div>
+</div>
+
+<article class="lim">
+	<div class="like-title">
+		<span class="like-this">
+			<b><i></i></b>
+			<span class="counter"><%= post_likes %></span>
+			<span>лайков</span>
+		</span>
+		<h1><%= description %> <span class="media-pub">опубликовано <%= publishDate %></span></h1>
+	</div>
+	<div class="content"><%= text %></div>
+	<div class="q-box">
+		<span class="like-this">
+			<b><i></i></b>
+			<span class="counter"><%= post_likes %></span>
+			<span>лайков</span>
+		</span>
+		<!-- <span class="q-post"><a href="#"><i></i></a> 3 question about this post</span> -->
+	</div>
+	<div class="hdi">
+		<img src="./_temp/social.png" alt="">
+	</div>
+</article>

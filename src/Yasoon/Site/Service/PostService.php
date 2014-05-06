@@ -466,6 +466,7 @@ class PostService extends AbstractApiService {
      */
     public function getPostsByDate($authorId, $date)
     {
+
         try {
             $time = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date)));
             
@@ -474,11 +475,14 @@ class PostService extends AbstractApiService {
             foreach($authorId as $k => $v)
             {
                 $time = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date[$k])));
-                $where_arr[] = "(p.authorId = $v AND p.date > '$time')";
+                //$where_arr[] = "(p.authorId = $v AND p.date >= '$time')";
+                $where_arr[] = "(p.authorId = $v)";
             }
             $where_str = implode(' OR ', $where_arr);
-            //echo $where_str;
+            //return $where_arr;
+
             /** @var PostEntity $post */
+            
             $posts = $this->em->createQueryBuilder()
                 ->select('p')
                 ->from('Yasoon\Site\Entity\PostEntity', 'p')
@@ -732,6 +736,7 @@ class PostService extends AbstractApiService {
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
                         'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
                         'authorName'  => $dayentity[0]->getPost()->getAuthor()->getName(),
+                        'authorBio'  => $dayentity[0]->getPost()->getAuthor()->getInterest(),
                         'tags'        => $pcats,
                         'title'       => $dayentity[0]->getPost()->getCaption(),
                         'description' => $dayentity[0]->getPost()->getPreview(),

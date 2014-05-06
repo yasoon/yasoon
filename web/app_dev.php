@@ -9,7 +9,7 @@ $loader = require_once __DIR__.'/../app/autoload.php';
 
 require_once __DIR__.'/../app/AppKernel.php';
 
-date_default_timezone_set ( 'Europe/Kiev' );
+date_default_timezone_set ( 'Europe/Moscow' );
 
 $kernel = new AppKernel('dev', true);
 Request::enableHttpMethodParameterOverride();

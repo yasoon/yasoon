@@ -1,0 +1,21 @@
+<% if (hasAnswer) { %>
+	<div class="p-label small">
+		<b>
+			<span class="green">
+				<a href="#/speaker/<%= ask_authorId %>/posts">
+					<%= ask_authorName %>, <%= ask_authorProf %>
+				</a>
+			</span> спросил(а)
+		</b>
+	</div>
+	<h3>
+		<%= questionText %>
+		<span class="post-date"><%= publishDate %></span>
+	</h3>
+	<div class="content">
+		<p><%= questionAnswerText %></p>
+	</div>
+	<div class="hr"></div>
+<% } else { %>
+	<div style="margin-top: -20px;"></div>
+<% } %>

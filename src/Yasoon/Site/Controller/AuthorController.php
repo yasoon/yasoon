@@ -305,7 +305,7 @@ class AuthorController {
      */
     public function editInfo(Request $request)
     {
-        $author = $request->request->get('autorInfo');
+        $author = $request->request->all();
 
         return $this->service->editinfo($author);
     }

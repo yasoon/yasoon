@@ -1,0 +1,17 @@
+<nav class="navigate">
+	<a href="#/author/posts" id="posts">Stories</a>
+	<a href="#/author/answers" id="answers">Answers</a>
+</nav>
+
+<% if (page === 'posts') { %>
+  <article class="lim cat-title">
+    <div class="content">
+      <p>
+        <a href="#/post-new" class="btn">
+          Write a new post
+        </a>
+      </p>
+    </div>
+    <div class="hr"></div>
+  </article>
+<% } %>

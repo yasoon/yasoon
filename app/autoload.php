@@ -17,8 +17,10 @@ AnnotationRegistry::registerLoader(function($class) use ($loader) {
 //AnnotationRegistry::registerPrefix('PHPExcel', __DIR__.'/../vendor/bundles/Export/ExcelBundle/Library/phpExcel/Classes');
 
 $vendorDir = __DIR__.'/../vendor/';
+$namespaces = [
+  'Sensio\\Bundle\\FrameworkExtraBundle' =>  __DIR__.'/../vendor/sensio/framework-extra-bundle/'
+  ];
 
 AnnotationRegistry::registerFile( __DIR__.'/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/AnnotationDriver.php');
 
-AnnotationRegistry::registerAutoloadNamespaces(
-    ['Sensio\\Bundle\\FrameworkExtraBundle' =>  __DIR__.'/../vendor/sensio/framework-extra-bundle/']);
+AnnotationRegistry::registerAutoloadNamespaces($namespaces);

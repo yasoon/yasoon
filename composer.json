@@ -2,8 +2,6 @@
     "name": "yasoon/site",
     "version": "0.0.1",
     "require": {
-        "php": ">=5.4.6",
-
         "symfony/symfony": "2.3.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": ">=2.1",

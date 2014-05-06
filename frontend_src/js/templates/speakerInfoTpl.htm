@@ -1,0 +1,78 @@
+<div class="fixed-position-aside">
+	<% if(avatarImg === null) { %>
+		<img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
+	<% } else { %>
+		<img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
+	<% } %>
+	<h4>
+		<a href="#/speaker/<%= id %>/posts" class="usr-name">
+			<%= name %>
+		</a>
+	</h4>
+	<p class="u-description">
+		<%= interviewCaption %>
+	</p>
+	<div class="hr"></div>
+	<div class="pub">
+		<h4 class="p-label">published on</h4>
+		<%= last_publish_date %>
+		<div class="hr"></div>
+	</div>
+
+	<div class="media-hidden">
+		<div class="inner">
+			<div class="b-indent">Job:<br>
+				<a href="#" class="t-under c-black">
+					<%= job %>
+				</a>
+			</div>
+			<div class="b-indent">Interest:<br>
+				<a href="#" class="t-under c-black">
+					<%= interest %>
+				</a>
+			</div>
+			<div class="b-indent">Dream:<br>
+				<a href="#" class="t-under c-black">
+					<%= dream %>
+				</a>
+			</div>
+			<div class="hr"></div>
+			<div class="d-box">
+				<div>
+					<p class="p-label">posts</p>
+					<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
+						<a href="#/speaker/<%= id %>/posts">
+					<% } else { %>
+						<a href="#/author/posts">
+					<% } %>
+						<%= posts.length %>
+					</a>
+				</div>
+				<div>
+					<p class="p-label">answers</p>
+					<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
+						<a href="#/speaker/<%= id %>/answers">
+					<% } else { %>
+						<a href="#/author/answers">
+					<% } %>
+						<%= answers_count %>
+					</a>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="social">
+        <div class="hr"></div>
+				<div class="social-links">
+					<a href="#<%= self_link %>" class="ws"></a>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="hr"></div>
+			<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
+				<div class="hdi">
+					<a href="#" class="btn">Follow</a>
+				</div>
+			<% } %>
+		</div>
+	</div>
+</div>
