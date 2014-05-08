@@ -1,0 +1,9 @@
+<% var test = (typeof(text) !== "undefined") ? true : false; %>
+<a href="#" class="a-quertion <% if (test) { print('active') } %>">
+	<%= question %>
+</a>
+<div class="questionContent">
+	<div class="di">
+		<textarea class="editor" placeholder="Текст истории"><% if (test) { print(text) } %></textarea>
+	</div>
+</div>

@@ -16,14 +16,17 @@ define(['controller', 'backbone']
       Backbone.history.start({
         # pushState: true
       })
-      $(document).on('click', 'a:not([data-bypass])', (event) =>
-        $this = $(event.currentTarget)
-        href = $this.attr('href')
-        protocol = event.currentTarget.protocol + '//'
 
-        if href.slice(protocol.length) isnt protocol
+      $(document).on('click', 'a[href^="/"]', (event) =>
+        if not event.altKey and
+        not event.ctrlKey and
+        not event.metaKey and
+        not event.shiftKey
           event.preventDefault()
-          @navigate(href, on)
+          url = $(event.currentTarget).attr('href').replace(/^\//, '')
+          @navigate(url, {
+            trigger: true
+          })
       )
     index: ->
       Controller.index()

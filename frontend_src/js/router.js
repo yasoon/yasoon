@@ -15,15 +15,15 @@
       },
       initialize: function() {
         Backbone.history.start({});
-        return $(document).on('click', 'a:not([data-bypass])', (function(_this) {
+        return $(document).on('click', 'a[href^="/"]', (function(_this) {
           return function(event) {
-            var $this, href, protocol;
-            $this = $(event.currentTarget);
-            href = $this.attr('href');
-            protocol = event.currentTarget.protocol + '//';
-            if (href.slice(protocol.length) !== protocol) {
+            var url;
+            if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
               event.preventDefault();
-              return _this.navigate(href, true);
+              url = $(event.currentTarget).attr('href').replace(/^\//, '');
+              return _this.navigate(url, {
+                trigger: true
+              });
             }
           };
         })(this));
