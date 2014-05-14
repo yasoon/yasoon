@@ -6388,7 +6388,7 @@ footer nav {
   *display: inline;
   zoom: 1;
 }
-a.editable {
+.editable i {
   background: url(../img/spr.png);
   background-position: -98px -32px;
   background-repeat: no-repeat;
@@ -6421,6 +6421,7 @@ a.editable {
   color: #ddd;
   font-size: 14px;
   font-family: 'MuseoSansCyrl-100', Arial;
+  display: none;
   font-weight: normal;
   margin-top: 10px;
 }
