@@ -9,7 +9,8 @@
       'text': 'vendor/text',
       'jquery': 'vendor/jquery-1.11.0',
       'editor': 'vendor/editor',
-      'fileupload': 'vendor/fileupload'
+      'fileupload': 'vendor/fileupload',
+      'bootstrap': 'vendor/bootstrap.min'
     },
     shim: {
       'underscore': {
@@ -17,6 +18,9 @@
       },
       'backbone': {
         deps: ['jquery', 'underscore']
+      },
+      'bootstrap': {
+        deps: ['jquery']
       }
     }
   });

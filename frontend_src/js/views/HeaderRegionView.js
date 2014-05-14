@@ -1,26 +1,21 @@
 (function() {
-  define(['text!templates/headerTpl.htm', 'views/LoginPopUpView', 'views/HeaderLoginView', 'views/HeaderLogedView', 'models/UserLoginModel', 'models/userModel', 'backbone'], function(headerTpl, LoginPopUpView, HeaderLoginView, HeaderLogedView, UserLoginModel, userModel) {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLogedView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLogedView, userModel) {
     var HeaderRegionView;
-    return HeaderRegionView = Backbone.View.extend({
-      template: _.template(headerTpl),
-      className: 'inside',
-      events: function() {
-        return {
-          'click #login-trigger': 'loginPopUp'
-        };
-      },
-      loginPopUp: function(event) {
-        event.preventDefault();
-        if (this.loginpopUpView == null) {
-          this.loginpopUpView = new LoginPopUpView({
-            model: new UserLoginModel()
-          });
-        } else {
-          this.loginpopUpView.delegateEvents();
-        }
-        return $('body').append(this.loginpopUpView.render().$el);
-      },
-      render: function() {
+    return HeaderRegionView = (function(_super) {
+      __extends(HeaderRegionView, _super);
+
+      function HeaderRegionView() {
+        return HeaderRegionView.__super__.constructor.apply(this, arguments);
+      }
+
+      HeaderRegionView.prototype.template = _.template(headerTpl);
+
+      HeaderRegionView.prototype.className = 'inside';
+
+      HeaderRegionView.prototype.render = function() {
         this.$el.html(this.template());
         this.userNav = this.$('.my-nav');
         userModel.deferred.done((function(_this) {
@@ -46,8 +41,11 @@
           };
         })(this));
         return this;
-      }
-    });
+      };
+
+      return HeaderRegionView;
+
+    })(Backbone.View);
   });
 
 }).call(this);

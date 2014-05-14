@@ -15,14 +15,12 @@
       render: function() {
         this.$el.empty().append(this.template(this.data));
         this.categoriesList = this.$('ul');
-        this.categories = $('<div></div>');
         this.collection.each((function(_this) {
           return function(category) {
             category.set(_this.data);
             return _this.addOne(category);
           };
         })(this));
-        this.categoriesList.append(this.categories.children());
         this.$("a#" + this.data.category).addClass('active');
         return this;
       },
@@ -30,7 +28,7 @@
         category = new CategoryView({
           model: category
         });
-        return this.categories.append(category.render().$el);
+        return this.categoriesList.append(category.render().$el);
       }
     });
   });

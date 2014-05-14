@@ -1,20 +1,35 @@
 <div class="like-title">
 	<span class="like-this">
 		<b><i></i></b>
-		<span class="counter"><%= post_likes %></span>
+		<span class="counter">
+			<%= post_likes %>
+		</span>
 		<span>лайков</span>
 	</span>
-	<h1><%= title %> <span class="media-pub">опубликовано <%= publishDate %></span></h1>
+	<h1>
+		<%= title %>
+		<% if (authorId === window.userId) { %>
+			<a href="#/post/<%= id %>/edit" class="editable"></a>
+		<% } %>
+		<span class="media-pub">
+			опубликовано <%= publishDate %>
+		</span>
+	</h1>
 </div>
-<div class="content"><%= text %></div>
+<div class="content">
+	<%= text %>
+</div>
 <div class="q-box">
 	<span class="like-this">
 		<b><i></i></b>
-		<span class="counter"><%= post_likes %></span>
-		<span>лайков</span>
+		<span class="counter">
+			<%= post_likes %>
+		</span>
+		<span>
+			лайков
+		</span>
 	</span>
-	<!-- <span class="q-post"><a href=""><i></i></a> 3 question about this post</span> -->
+	<span class="q-post">
+		<a href=""><i></i></a> 3 question about this post
+	</span>
 </div>
-<!-- <div class="bottom-toolbar t-center">
-	<a href="" class="btn">Read another</a>
-</div> -->

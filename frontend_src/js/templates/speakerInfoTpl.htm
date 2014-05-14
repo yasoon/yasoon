@@ -1,3 +1,4 @@
+<% var path = (window.userId === id) ? "#/author" : "#/speaker/" + id %>
 <div class="fixed-position-aside">
 	<% if(avatarImg === null) { %>
 		<img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
@@ -5,7 +6,7 @@
 		<img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
 	<% } %>
 	<h4>
-		<a href="#/speaker/<%= id %>/posts" class="usr-name">
+		<a href="<%= path %>/posts" class="usr-name">
 			<%= name %>
 		</a>
 	</h4>
@@ -40,21 +41,13 @@
 			<div class="d-box">
 				<div>
 					<p class="p-label">posts</p>
-					<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
-						<a href="#/speaker/<%= id %>/posts">
-					<% } else { %>
-						<a href="#/author/posts">
-					<% } %>
+						<a href="<%= path %>/posts">
 						<%= posts.length %>
 					</a>
 				</div>
 				<div>
 					<p class="p-label">answers</p>
-					<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
-						<a href="#/speaker/<%= id %>/answers">
-					<% } else { %>
-						<a href="#/author/answers">
-					<% } %>
+						<a href="<%= path %>/answers">
 						<%= answers_count %>
 					</a>
 				</div>
@@ -68,9 +61,9 @@
 				</div>
 			</div>
 			<div class="hr"></div>
-			<% if (typeof(window.userId) !== "undefined" && window.userId !== id) {%>
+			<% if (window.userId !== id) { %>
 				<div class="hdi">
-					<a href="#" class="btn">Follow</a>
+					<button type="button" class="btn js-follow">Follow</a>
 				</div>
 			<% } %>
 		</div>

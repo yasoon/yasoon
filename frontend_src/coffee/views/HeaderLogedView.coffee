@@ -12,4 +12,16 @@ define(
     render: ->
       @$el.append(@template(@model.toJSON()))
       @
+
+    events: ->
+      'click #js-logout': 'logout'
+
+    logout: (event) ->
+      event.preventDefault()
+      event.stopPropagation()
+      $.post('/logout', {
+      }, (data) ->
+        window.userId = no
+        window.location.reload(true)
+      )
 )

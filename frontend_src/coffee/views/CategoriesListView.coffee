@@ -24,20 +24,18 @@ define(
     render: ->
       @$el.empty().append(@template(@data))
       @categoriesList = @$('ul')
-      @categories = $('<div></div>')
 
       @collection.each( (category) =>
         category.set(@data)
         @addOne(category)
       )
-      @categoriesList.append(@categories.children())
       @$("a##{@data.category}").addClass('active')
 
       @
 
     addOne: (category) ->
       category = new CategoryView({model: category})
-      @categories.append(category.render().$el)
+      @categoriesList.append(category.render().$el)
 
   })
 )

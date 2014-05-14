@@ -11,6 +11,9 @@
 	<h2>
 		<a href="#/post/<%= id %>">
       <%= title %>
+      <% if (authorId === window.userId) { %>
+        <a href="#/post/<%= id %>/edit" class="editable"></a>
+      <% } %>
     </a>
 		<span class="post-date">
       <%= publishDate %>

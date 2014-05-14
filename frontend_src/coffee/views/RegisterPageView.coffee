@@ -124,7 +124,6 @@ define(
         , (data) ->
           console.log data
           if data.authorData is yes
-            Backbone.Mediator.pub('user:loginned')
             window.location = '/#author/';
         , 'json')
       else

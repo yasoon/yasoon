@@ -40,13 +40,14 @@ define(
       $.post("/api/post/getPost", {
         postid: @options.id
       }, (data) =>
+        data = data[0]
         if not @postPageModelView?
           @postPageModelView = new PostPageModelView({
-            model: new PostPageModel(data[0])
+            model: new PostPageModel(data)
           })
         else
           @postPageModelView.delegateEvents()
-        @createHistoryAuthor(data[0].authorId)
+        @createHistoryAuthor(data.authorId)
         @$el.append(@postPageModelView.render().$el)
       , 'json')
 
@@ -54,9 +55,10 @@ define(
       $.post("/api/author/getAuthorInfo", {
         author_id: id
       }, (data) =>
+        data = data[0]
         if not @postAuthorModelView?
           @postAuthorModelView = new PostAuthorModelView({
-            model: new PostAuthorModel(data[0])
+            model: new PostAuthorModel(data)
           })
         else
           @postAuthorModelView.delegateEvents()

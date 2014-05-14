@@ -1,16 +1,16 @@
 define(
   [
-    'views/SpeakerInfoView'
+    'views/PostAuthorModelView'
     'views/SpeakerNavigationView'
     'views/SpeakerContentView'
-    'models/SpeakerInfoModel'
+    'models/PostAuthorModel'
     'backbone'
   ]
 (
-  SpeakerInfoView
+  PostAuthorModelView
   SpeakerNavigationView
   SpeakerContentView
-  SpeakerInfoModel
+  PostAuthorModel
 ) ->
   class SpeakerPage extends Backbone.View
     tagName: 'section'
@@ -28,13 +28,13 @@ define(
         author_id: @options.id
       }, (data) =>
         data = data[0]
-        if not @speakerInfoView?
-          @speakerInfoView = new SpeakerInfoView({
-            model: new SpeakerInfoModel(data)
+        if not @postAuthorModelView?
+          @postAuthorModelView = new PostAuthorModelView({
+            model: new PostAuthorModel(data)
           })
         else
-          @speakerInfoView.delegateEvents()
-        @$el.append(@speakerInfoView.render().$el)
+          @postAuthorModelView.delegateEvents()
+        @$el.append(@postAuthorModelView.render().$el)
         @createNavigation()
         @createSpeakerContent(data.answers, data.posts)
       , 'json')

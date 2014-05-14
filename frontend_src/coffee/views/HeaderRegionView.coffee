@@ -1,38 +1,21 @@
 define(
   [
     'text!templates/headerTpl.htm'
-    'views/LoginPopUpView'
     'views/HeaderLoginView'
     'views/HeaderLogedView'
-    'models/UserLoginModel'
     'models/userModel'
     'backbone'
   ]
 (
   headerTpl
-  LoginPopUpView
   HeaderLoginView
   HeaderLogedView
-  UserLoginModel
   userModel
 ) ->
-  HeaderRegionView = Backbone.View.extend({
+  class HeaderRegionView extends Backbone.View
     template: _.template(headerTpl)
     
     className: 'inside'
-
-    events: ->
-      'click #login-trigger': 'loginPopUp'
-    
-    loginPopUp: (event) ->
-      event.preventDefault()
-      if not @loginpopUpView?
-        @loginpopUpView = new LoginPopUpView({
-          model: new UserLoginModel()
-        })
-      else
-        @loginpopUpView.delegateEvents()
-      $('body').append(@loginpopUpView.render().$el)
     
     render: ->
       @$el.html(@template())
@@ -61,5 +44,4 @@ define(
             .append(@headerLoginView.render().$el)
       )
       @
-    })
 )

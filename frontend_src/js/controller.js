@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'models/UserRegisterModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, UserRegisterModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'models/UserRegisterModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, UserRegisterModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -40,6 +40,17 @@
         });
         LayoutView.contentRegion.$el.empty().append(this.newPostPageView.render().$el);
         this.newPostPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.editPost = function(id) {
+        $('body').removeClass().addClass('new-post');
+        this.editPostPageView = new EditPostPageView({
+          id: id,
+          model: new PostPageModel()
+        });
+        LayoutView.contentRegion.$el.empty().append(this.editPostPageView.render().$el);
+        this.editPostPageView.delegateEvents();
         return this;
       };
 

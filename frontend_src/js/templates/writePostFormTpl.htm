@@ -8,31 +8,42 @@
 		</article>
 		
 		<div class="di form-group">
-			<input type="text" class="form-control" name="postTile" id="postTile" placeholder="Заголовок истории">
+			<input type="text" class="form-control" name="postTitle" id="postTitle" placeholder="Заголовок истории">
 			<p class="help-block"></p>
 		</div>
 		
-		<div class="di form-group">
-			<div class="select">
-			<!-- category -->
+		<div class="di panel-group" id="collapse">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#collapse" href="#categoryList">
+							Категории: <span class="categoryHeading"></span>
+						</a>
+					</h4>
+				</div>
+				<div id="categoryList" class="panel-collapse collapse">
+					<!-- categoryList -->
+				</div>
 			</div>
 		</div>
 
 		<div class="di form-group">
 			<textarea class="postDescrip"  name="postDescription" id="postDescription" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
 			<p class="help-block"></p>
-			<span class="counter"><%= maxLength %></span>
+			<span class="counter">
+				<%= maxLength %>
+			</span>
 		</div>
 
-		<div class="questions_list sortable"></div>
+		<div id="questionsList" class="sortable"></div>
 		
 		<div class="di t-center buttons_area">
 			<div class="row">
 				<div class="col-sm-6 text-right">
-					<a href="#" class="btn save">Опубликовать</a>
+					<button type="submit" class="btn">Опубликовать</a>
 				</div>
 				<div class="col-sm-6 text-left">
-					<a href="#" class="btn cancel">Отмена</a>
+					<button type="reset" class="btn">Отмена</a>
 				</div>
 			</div>
 		</div>

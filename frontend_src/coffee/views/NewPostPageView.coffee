@@ -9,6 +9,7 @@ define(
     'backbone'
     'stickit'
     'mediator'
+    'bootstrap'
   ]
 (
   registerTpl
@@ -17,14 +18,17 @@ define(
   CategoryCollection
   InterviewCollection
 ) ->
-  Backbone.View.extend({
+  class WritePostPage extends Backbone.View
     events: ->
-      'change .select input[type="checkbox"]': 'setCategories'
-      'click .questionContent': 'editor'
+      'click button:submit': 'savePost'
+      'click button:reset': 'resetData'
 
     bindings:
       '#postDescription': 'postDescription'
-      '#postTile': 'postTile'
+      '#postTitle': 'postTitle'
+
+    subscriptions:
+      'category:checked': 'changeCategoryHeading'
 
     className: 'page-layout m-page'
 
@@ -42,8 +46,8 @@ define(
     ui: ->
       @.ui =
         counter: @$('.counter')
-        categories: @$('.select')
-        interviews: @$('.questions_list')
+        categories: @$('#categoryList')
+        interviews: @$('#questionsList')
 
     render: ->
       @$el.empty().append(@template(@model.toJSON()))
@@ -55,6 +59,7 @@ define(
       @ui()
       @createCategoryList()
       @createInterviewsList()
+      $('.collapse').collapse()
 
     createCategoryList: ->
       $.get('/api/category/get_CategoryList'
@@ -74,7 +79,7 @@ define(
             collection: new InterviewCollection(data)
           })
         @ui.interviews.append(@postInterviews.render().$el)
-        @$('.editor').redactor()
+        @$('.editor').redactor('sync')
       , 'json')
 
     showErrors: (errors) ->
@@ -99,17 +104,29 @@ define(
       length = model.get('maxLength') - value.length
       @ui.counter.text(length)
 
-    editor: (event) ->
-      event.stopPropagation()
-      event.preventDefault()
-      console.log event
+    changeCategoryHeading: ->
+      names = @postCategories.checkedCategoriesNames()
+      @$('.categoryHeading')
+        .text(names)
 
-    setCategories: (event) ->
-      categories = @$('input:checkbox:checked').map( (iterator, elem) ->
-        $(@).val()
-      ).get()
-      @model.set('categories', categories)
-      blocked = if categories.length > 2 then yes else no
-      @$('input:checkbox:not(:checked)').prop('disabled', blocked)
-  })
+    savePost: (event) ->
+      event.preventDefault()
+      fullText = @postInterviews.createFullText()
+      categories = @postCategories.checkedCategories()
+      if fullText
+        @model.set({
+          'postText': fullText
+          'category': categories
+        })
+        $.post('/api/post/savePost', {
+          postData: @model.toJSON()
+        }, (data) ->
+          Backbone.Mediator.publish('post:submitted', data.postId)
+        )
+
+    resetData: ->
+      console.log @
+      @changeCategoryHeading()
+      @postCategories.checkedCategories()
+
 )

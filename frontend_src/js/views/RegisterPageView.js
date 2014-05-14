@@ -117,7 +117,6 @@
           return $.post('/api/author/editinfo', this.model.toJSON(), function(data) {
             console.log(data);
             if (data.authorData === true) {
-              Backbone.Mediator.pub('user:loginned');
               return window.location = '/#author/';
             }
           }, 'json');

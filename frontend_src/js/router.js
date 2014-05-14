@@ -1,12 +1,11 @@
 (function() {
-  define(['controller', 'backbone'], function(Controller) {
+  define(['controller', 'backbone', 'mediator'], function(Controller) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
       routes: {
         '': 'index',
         'posts(/:category)(/:sort)(/)': 'posts',
-        'post(/:id)(/)': 'post',
-        'post-new(/)': 'newPost',
+        'post(/:id)(/:edit)(/)': 'post',
         'speakers(/:category)(/)': 'speakers',
         'speaker(/:id)(/:page)(/)': 'speaker',
         'register(/)': 'register',
@@ -15,6 +14,7 @@
       },
       initialize: function() {
         Backbone.history.start({});
+        Backbone.Mediator.subscribe('post:submitted', this.loadPost, this);
         return $(document).on('click', 'a[href^="/"]', (function(_this) {
           return function(event) {
             var url;
@@ -34,11 +34,16 @@
       posts: function(category, sort) {
         return Controller.posts(category, sort);
       },
-      post: function(id) {
-        return Controller.post(id);
-      },
-      newPost: function() {
-        return Controller.newPost();
+      post: function(id, edit) {
+        if (id === 'new') {
+          return Controller.newPost();
+        } else {
+          if (edit) {
+            return Controller.editPost(id);
+          } else {
+            return Controller.post(id);
+          }
+        }
       },
       speakers: function(category) {
         return Controller.speakers(category);
@@ -51,6 +56,11 @@
       },
       author: function(page) {
         return Controller.author(page);
+      },
+      loadPost: function(id) {
+        return this.navigate("/post/" + id, {
+          trigger: true
+        });
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

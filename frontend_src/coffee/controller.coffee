@@ -5,6 +5,7 @@ define(
     'views/PostsPageView'
     'views/PostPageView'
     'views/NewPostPageView'
+    'views/EditPostPageView'
     'views/SpeakersPageView'
     'views/SpeakerPageView'
     'views/RegisterPageView'
@@ -21,6 +22,7 @@ define(
   PostsPageView
   PostPageView
   NewPostPageView
+  EditPostPageView
   SpeakersPageView
   SpeakerPageView
   RegisterPageView
@@ -32,7 +34,7 @@ define(
 ) ->
   class Controller
     constructor: () ->
-    
+
     index: ->
       $('body').removeClass().addClass('index')
       @mainPageView = new MainPageView
@@ -74,6 +76,18 @@ define(
         .empty()
         .append(@newPostPageView.render().$el)
       @newPostPageView.delegateEvents()
+      @
+
+    editPost: (id) ->
+      $('body').removeClass().addClass('new-post')
+      @editPostPageView = new EditPostPageView({
+        id: id
+        model: new PostPageModel()
+      })
+      LayoutView.contentRegion.$el
+        .empty()
+        .append(@editPostPageView.render().$el)
+      @editPostPageView.delegateEvents()
       @
     
     speakers: (category) ->

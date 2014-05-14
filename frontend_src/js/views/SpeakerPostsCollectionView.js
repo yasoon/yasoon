@@ -15,7 +15,7 @@
         speakerPostView = new SpeakerPostView({
           model: post
         });
-        return this.$el.append(speakerPostView.render().$el);
+        return this.$el.prepend(speakerPostView.render().$el);
       }
     });
   });

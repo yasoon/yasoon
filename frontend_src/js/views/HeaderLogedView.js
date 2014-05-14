@@ -18,6 +18,21 @@
         return this;
       };
 
+      HeaderLogedView.prototype.events = function() {
+        return {
+          'click #js-logout': 'logout'
+        };
+      };
+
+      HeaderLogedView.prototype.logout = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return $.post('/logout', {}, function(data) {
+          window.userId = false;
+          return window.location.reload(true);
+        });
+      };
+
       return HeaderLogedView;
 
     })(Backbone.View);

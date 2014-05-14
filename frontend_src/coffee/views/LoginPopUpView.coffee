@@ -96,6 +96,7 @@ define(
                 message: 'Неверный пароль'
               }])
           else
+            window.userId = data.userData.id
             window.location.reload(true)
         , 'json')
       else

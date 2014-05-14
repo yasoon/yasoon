@@ -1,9 +1,6 @@
+<% var author = (typeof(authorId) !== "undefined") ? authorId : authorid %>
 <div class="p-label">
-  <% if (typeof(authorId) !== "undefined") { %>
-  	<a href="#/speaker/<%= authorId %>/posts">
-  <% } else { %>
-    <a href="#/speaker/<%= authorid %>/posts">
-  <% } %>
+  <a href="#/speaker/<%= author %>/posts">
 
   <% if (typeof(authorName) !== "undefined") { %>
 		<%= authorName %>
@@ -15,11 +12,14 @@
 <h2>
 	<a href="#/post/<%= id %>">
   <% if (typeof(caption) !== "undefined") { %>
-		<%= caption %>
+    <%= caption %>
   <% } else { %>
     <%= title %>
   <% } %>
-	</a>
+  </a>
+  <% if (author === window.userId) { %>
+    <a href="#/post/<%= id %>/edit" class="editable"></a>
+  <% } %>
 </h2>
 <div class="content">
 	<p>

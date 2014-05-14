@@ -83,6 +83,7 @@
                   ]);
                 }
               } else {
+                window.userId = data.userData.id;
                 return window.location.reload(true);
               }
             };

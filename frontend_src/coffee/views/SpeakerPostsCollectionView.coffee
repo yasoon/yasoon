@@ -17,7 +17,7 @@ define(
 
     addOne: (post) ->
       speakerPostView = new SpeakerPostView({model: post})
-      @$el.append(speakerPostView.render().$el)
+      @$el.prepend(speakerPostView.render().$el)
 
   })
 )

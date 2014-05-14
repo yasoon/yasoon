@@ -32,14 +32,15 @@
           postid: this.options.id
         }, (function(_this) {
           return function(data) {
+            data = data[0];
             if (_this.postPageModelView == null) {
               _this.postPageModelView = new PostPageModelView({
-                model: new PostPageModel(data[0])
+                model: new PostPageModel(data)
               });
             } else {
               _this.postPageModelView.delegateEvents();
             }
-            _this.createHistoryAuthor(data[0].authorId);
+            _this.createHistoryAuthor(data.authorId);
             return _this.$el.append(_this.postPageModelView.render().$el);
           };
         })(this), 'json');
@@ -49,9 +50,10 @@
           author_id: id
         }, (function(_this) {
           return function(data) {
+            data = data[0];
             if (_this.postAuthorModelView == null) {
               _this.postAuthorModelView = new PostAuthorModelView({
-                model: new PostAuthorModel(data[0])
+                model: new PostAuthorModel(data)
               });
             } else {
               _this.postAuthorModelView.delegateEvents();
