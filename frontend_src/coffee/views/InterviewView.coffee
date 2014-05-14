@@ -17,6 +17,7 @@ define(
 
     render: ->
       @$el.html(@template(@model.toJSON()))
+      @stickit()
       @
 
   })
