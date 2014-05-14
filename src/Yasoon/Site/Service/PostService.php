@@ -108,9 +108,17 @@ class PostService extends AbstractApiService {
             }
             
             $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+
+
             foreach($friends as $friend)
             {
-                $timeline =  $this->em->createQueryBuilder()
+                $postTimelineEntity = (new PostsTimelineEntity())
+                    ->setPostId($post_id)
+                    ->setAuthorId($friend->getId());
+
+                $this->em->persist($postTimelineEntity);
+                $this->em->flush();
+                /*$timeline =  $this->em->createQueryBuilder()
                     ->select('t')
                     ->from('Yasoon\Site\Entity\TimelineEntity', 't')
                     ->where('t.author_id = :aid')
@@ -131,7 +139,7 @@ class PostService extends AbstractApiService {
                     $timeline[0]->setPostsCount(($timeline[0]->getPostsCount()*1) + 1);
                     $this->em->merge($timeline[0]);
                     $this->em->flush();
-                }
+                }*/
             }
             
             $data = ['id' => 'post_'.$postEntity->getId(),
