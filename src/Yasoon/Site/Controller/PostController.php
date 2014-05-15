@@ -85,8 +85,16 @@ class PostController {
      */
     public function addAction(Request $request) {
         $model = $request->request->get('model');
-
         return  $this->service->add($model);
+    }
+
+    /**
+     * @Route("/getTimeline")
+     *
+     * @Method({"GET"})
+     */
+    public function getTimelineAction(Request $request) {
+        $model = $request->request->get('model');
     }
 
     /**
