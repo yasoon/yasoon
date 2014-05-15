@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap'], function(registerTpl, PostCategories, PostInterviews, CategoryCollection, InterviewCollection) {
+  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap'], function(writePostTpl, PostCategories, PostInterviews, CategoryCollection, InterviewCollection) {
     var WritePostPage;
     return WritePostPage = (function(_super) {
       __extends(WritePostPage, _super);
@@ -13,25 +13,20 @@
 
       WritePostPage.prototype.events = function() {
         return {
-          'click button:submit': 'savePost',
-          'click button:reset': 'resetData'
+          'click button:submit': 'savePost'
         };
       };
 
       WritePostPage.prototype.bindings = {
-        '#postDescription': 'postDescription',
-        '#postTitle': 'postTitle'
-      };
-
-      WritePostPage.prototype.subscriptions = {
-        'category:checked': 'changeCategoryHeading'
+        '#description': 'description',
+        '#title': 'title'
       };
 
       WritePostPage.prototype.className = 'page-layout m-page';
 
       WritePostPage.prototype.tagName = 'section';
 
-      WritePostPage.prototype.template = _.template(registerTpl);
+      WritePostPage.prototype.template = _.template(writePostTpl);
 
       WritePostPage.prototype.initialize = function() {
         this.model.set('maxLength', 255);
@@ -120,7 +115,7 @@
         categories = this.postCategories.checkedCategories();
         if (fullText) {
           this.model.set({
-            'postText': fullText,
+            'text': fullText,
             'category': categories
           });
           return $.post('/api/post/savePost', {
@@ -129,12 +124,6 @@
             return Backbone.Mediator.publish('post:submitted', data.postId);
           });
         }
-      };
-
-      WritePostPage.prototype.resetData = function() {
-        console.log(this);
-        this.changeCategoryHeading();
-        return this.postCategories.checkedCategories();
       };
 
       return WritePostPage;

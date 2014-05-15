@@ -8,7 +8,7 @@
 		</article>
 		
 		<div class="di form-group">
-			<input type="text" class="form-control" name="postTitle" id="postTitle" placeholder="Заголовок истории">
+			<input type="text" class="form-control" name="title" id="title" placeholder="Заголовок истории">
 			<p class="help-block"></p>
 		</div>
 		
@@ -28,7 +28,7 @@
 		</div>
 
 		<div class="di form-group">
-			<textarea class="postDescrip"  name="postDescription" id="postDescription" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
+			<textarea class="description"  name="description" id="description" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
 			<p class="help-block"></p>
 			<span class="counter">
 				<%= maxLength %>
@@ -41,6 +41,9 @@
 			<div class="row">
 				<div class="col-sm-6 text-right">
 					<button type="submit" class="btn">Опубликовать</a>
+				</div>
+				<div class="col-sm-6 text-left">
+					<button type="button" class="btn js-delete">Удалить</a>
 				</div>
 				<div class="col-sm-6 text-left">
 					<button type="reset" class="btn">Отмена</a>

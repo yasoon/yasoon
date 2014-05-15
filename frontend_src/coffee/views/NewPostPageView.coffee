@@ -12,7 +12,7 @@ define(
     'bootstrap'
   ]
 (
-  registerTpl
+  writePostTpl
   PostCategories
   PostInterviews
   CategoryCollection
@@ -21,20 +21,20 @@ define(
   class WritePostPage extends Backbone.View
     events: ->
       'click button:submit': 'savePost'
-      'click button:reset': 'resetData'
+#      'click button:reset': 'resetData'
 
     bindings:
-      '#postDescription': 'postDescription'
-      '#postTitle': 'postTitle'
+      '#description': 'description'
+      '#title': 'title'
 
-    subscriptions:
-      'category:checked': 'changeCategoryHeading'
+#    subscriptions:
+#      'category:checked': 'changeCategoryHeading'
 
     className: 'page-layout m-page'
 
     tagName: 'section'
 
-    template: _.template(registerTpl)
+    template: _.template(writePostTpl)
 
     initialize: ->
       @model.set('maxLength', 255)
@@ -115,7 +115,7 @@ define(
       categories = @postCategories.checkedCategories()
       if fullText
         @model.set({
-          'postText': fullText
+          'text': fullText
           'category': categories
         })
         $.post('/api/post/savePost', {
@@ -124,9 +124,9 @@ define(
           Backbone.Mediator.publish('post:submitted', data.postId)
         )
 
-    resetData: ->
-      console.log @
-      @changeCategoryHeading()
-      @postCategories.checkedCategories()
+#    resetData: ->
+#      console.log @
+#      @changeCategoryHeading()
+#      @postCategories.checkedCategories()
 
 )

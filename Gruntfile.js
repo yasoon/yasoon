@@ -47,7 +47,7 @@ module.exports = function(grunt) {
           name: 'config',
           out: 'frontend_src/build/js/main.min.js',
           optimize : 'none',
-          baseUrl: 'frontend_src/js',
+          baseUrl: 'frontend_src/js'
 				}
 			}
 		},
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
     'watch': {
       options: {
         livereload: {
-          port: 35729,
+          port: 35729
         }
       },
       scripts: {
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
       css: {
         files: ['frontend_src/less/{,*/}*.less'],
         tasks: ['less', 'copy:css', 'copy:build']
-      },
+      }
     }
     });
 
