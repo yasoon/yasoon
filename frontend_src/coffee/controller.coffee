@@ -79,7 +79,7 @@ define(
       @
 
     editPost: (id) ->
-      $('body').removeClass().addClass('new-post')
+      $('body').removeClass().addClass('edit-post')
       @editPostPageView = new EditPostPageView({
         id: id
         model: new PostPageModel()

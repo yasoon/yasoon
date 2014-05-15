@@ -44,7 +44,7 @@
       };
 
       Controller.prototype.editPost = function(id) {
-        $('body').removeClass().addClass('new-post');
+        $('body').removeClass().addClass('edit-post');
         this.editPostPageView = new EditPostPageView({
           id: id,
           model: new PostPageModel()

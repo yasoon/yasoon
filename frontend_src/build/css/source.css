@@ -5965,6 +5965,12 @@ a.dd,
   border-bottom: 1px dashed #000;
   cursor: pointer;
 }
+.new-post .buttons_area .col-sm-6:nth-child(2) {
+  display: none;
+}
+.edit-post .buttons_area .col-sm-6:nth-child(3) {
+  display: none;
+}
 .media-main-nav,
 .media-cat {
   display: none;

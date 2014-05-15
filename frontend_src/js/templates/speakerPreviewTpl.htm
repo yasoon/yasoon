@@ -1,5 +1,6 @@
+<% var path = (window.userId === id) ? "#/author" : "#/speaker/" + id %>
 <div class="speaker-avatar">
-	<a href="#/speaker/<%= id %>/posts">
+	<a href="<%= path %>/posts">
 		<% if(avatarImg === null) { %>
 			<img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic" alt="<%= name %>">
 		<% } else { %>
@@ -9,11 +10,12 @@
 </div>
 <div class="speaker-info">
 	<h4 class="p-label">
-		Posts <a href="#/speaker/<%= id %>/posts" class="green"><%= posts_count %></a> &nbsp;&nbsp;&nbsp;
-		Answers <a href="#/speaker/<%= id %>/answers" class="green"><%= posts_count %></a>
+		<span>Posts <a href="<%= path %>/posts" class="green"><%= posts_count %></a></span>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+		<span>Rate <a class="green"><%= likes_count %></a></span>
 	</h4>
 	<h2>
-		<a href="#/speaker/<%= id %>/posts">
+		<a href="<%= path %>/posts">
 			<%= name %>
 		</a>
 	</h2>
