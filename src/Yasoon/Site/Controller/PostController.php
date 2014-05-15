@@ -72,7 +72,7 @@ class PostController {
      *
      * @return array
      */
-    public function savePost(Request $request) {
+    public function savePostAction(Request $request) {
         $data = $request->request->get('postData');
         return  $this->service->addPost($data);
     }

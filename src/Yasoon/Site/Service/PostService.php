@@ -9,6 +9,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
@@ -18,6 +19,7 @@ use Yasoon\Site\Entity\PostLikesEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
+use Yasoon\Site\Entity\PostsTimelineEntity;
 
 error_reporting(0);
 
@@ -63,9 +65,9 @@ class PostService extends AbstractApiService {
         try {
             /** @var $postEntity PostEntity */
             $postEntity = (new PostEntity())
-                ->setCaption($post['postTitle'])
-                ->setPreview($post['postDescription'])
-                ->setText($post['postText'])
+                ->setCaption($post['title'])
+                ->setPreview($post['description'])
+                ->setText($post['text'])
                 ->setPlace((int)$place)
                 ->setAuthorId($authorId)
                 ->setDate(new \DateTime())
@@ -112,12 +114,17 @@ class PostService extends AbstractApiService {
 
             foreach($friends as $friend)
             {
-                $postTimelineEntity = (new PostsTimelineEntity())
-                    ->setPostId($post_id)
-                    ->setAuthorId($friend->getId());
+                try {
+                    $postTimelineEntity = (new PostsTimelineEntity())
+                        ->setPostId($post_id)
+                        ->setAuthorId($friend->getId());
 
-                $this->em->persist($postTimelineEntity);
-                $this->em->flush();
+                    $this->em->persist($postTimelineEntity);
+                    $this->em->flush();
+                } catch(Exception $e) {
+                    $aaa = $e;
+                }
+
                 /*$timeline =  $this->em->createQueryBuilder()
                     ->select('t')
                     ->from('Yasoon\Site\Entity\TimelineEntity', 't')
