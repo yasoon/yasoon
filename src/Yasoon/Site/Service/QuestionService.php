@@ -35,10 +35,6 @@ class QuestionService extends AbstractApiService {
         if (!is_int($authorId)) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
-/*
-        $place =$this->em->getConnection()
-            ->executeQuery("select max(place) as place from question where author_id = $authorId and is_in_blank=0")
-            ->fetch()['place'];*/
 
         $entity = (new QuestionEntity())
             ->setDate(new \DateTime())
@@ -122,6 +118,29 @@ class QuestionService extends AbstractApiService {
 
         return $result;
 
+    }
+
+    /**
+     * @param array $model
+     * @return array
+     */
+    public function addAnswer(array $model) {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        $question = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->find($model['id']);
+        if ($question->getAuthorId() != $authorId) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        try {
+            $question->setAnswer($model['answer']);
+
+            $this->em->merge($question);
+            $this->em->flush();
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+        return [
+            'error' => false
+        ];
     }
 
     /**
