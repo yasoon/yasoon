@@ -42,7 +42,7 @@ class QuestionService extends AbstractApiService {
 
         $entity = (new QuestionEntity())
             ->setDate(new \DateTime())
-            ->setText($model['text'])
+            ->setText($model['question'])
             ->setAskAuthorId($model['ask_author_id'])
             ->setAuthorId($authorId);
 
@@ -54,10 +54,10 @@ class QuestionService extends AbstractApiService {
 
         $result = [
             'id'        => $entity->getId(),
-            'authorId'  => $entity->getAuthorId(),
+            'authorId'      => $entity->getAuthorId(),
             'ask_author_id'  => $entity->getAskAuthorId(),
             'date'      => $entity->getDate()->format('d/m/Y'),
-            'text'      => $entity->getText()
+            'question'  => $entity->getText()
         ];
 
         return $result;
