@@ -122,31 +122,8 @@ class PostService extends AbstractApiService {
                     $this->em->persist($postTimelineEntity);
                     $this->em->flush();
                 } catch(Exception $e) {
-                    $aaa = $e;
+                    return ['error' => true, 'errorText' => $e->getMessage()];
                 }
-
-                /*$timeline =  $this->em->createQueryBuilder()
-                    ->select('t')
-                    ->from('Yasoon\Site\Entity\TimelineEntity', 't')
-                    ->where('t.author_id = :aid')
-                    ->setParameter('aid', $friend->getId())
-                    ->getQuery()->getResult();
-                if (count($timeline) < 1 || !is_object($timeline[0])) {
-                    $timeline = (new TimelineEntity())
-                        ->setAuthorId($friend->getId())
-                        ->setPostsCount('1')
-                        ->setQuestionsCount('0')
-                        ->setAnswersCount('0');
-                        
-                    $this->em->persist($timeline);
-                    $this->em->flush();
-                }
-                else
-                {
-                    $timeline[0]->setPostsCount(($timeline[0]->getPostsCount()*1) + 1);
-                    $this->em->merge($timeline[0]);
-                    $this->em->flush();
-                }*/
             }
             
             $data = ['id' => 'post_'.$postEntity->getId(),

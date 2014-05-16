@@ -55,6 +55,7 @@ define(
           answers: answers
           posts: posts
           page: @options.page
+          id: @options.id
         })
       else
         @speakerContentView.delegateEvents()

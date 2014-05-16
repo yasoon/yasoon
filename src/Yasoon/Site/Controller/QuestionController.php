@@ -51,6 +51,15 @@ class QuestionController {
         return $this->service->addAnswer($model);
     }
 
+    /**
+     * @Route("/get_answer_timeline")
+     * @Method({"GET"})
+     *
+     */
+    public function getAnswerTimeline() {
+        return $this->service->getAnswerTimeline();
+    }
+
 
     /**
      * @Route("/add_interview")
@@ -99,6 +108,10 @@ class QuestionController {
         $model = $request->request->get('model');
 
         return $this->service->delete($model);
+    }
+
+    public function getAction() {
+
     }
 
 }

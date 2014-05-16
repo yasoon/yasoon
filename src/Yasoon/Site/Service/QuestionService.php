@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
+use Yasoon\Site\Entity\AnswerTimelineEntity;
 
 error_reporting(E_ALL);
 /**
@@ -135,6 +136,21 @@ class QuestionService extends AbstractApiService {
 
             $this->em->merge($question);
             $this->em->flush();
+
+            $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+            foreach($friends as $friend)
+            {
+                try {
+                    $answerTimelineEntity = (new AnswerTimelineEntity())
+                        ->setQuestionId($question->getId())
+                        ->setAuthorId($friend->getId());
+
+                    $this->em->persist($answerTimelineEntity);
+                    $this->em->flush();
+                } catch(Exception $e) {
+                    return ['error' => true, 'errorText' => $e->getMessage()];
+                }
+            }
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
@@ -250,6 +266,34 @@ class QuestionService extends AbstractApiService {
             ->getQuery()->getResult();
             
         return $questions;
+    }
+
+    public function getAnswerTimeline() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        $answers = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
+            ->where('author_id = :author_id')
+            ->setParameter('author_id',$authorId)
+            ->getQuery()->getResult();
+        foreach($answers as $answer)
+        {
+            $result[] = [
+                'error'       => false,
+                'result'      => [
+                    'id'          => $post->getId(),
+                    'authorId'    => $post->getAuthorId(),
+                    'authorName'  => $post->getAuthor()->getName(),
+                    'authorImg'   => $authorImg,
+                    'title'       => $post->getCaption(),
+                    'description' => $post->getPreview(),
+                    'text'        => $post->getText(),
+                    'publishDate' => $post->getDate()->format('d/m/Y'),
+                    'post_likes'  => $post->getLikes()
+                ]
+            ];
+        }
+
     }
 
 
