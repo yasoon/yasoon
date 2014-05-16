@@ -174,40 +174,86 @@ class PostService extends AbstractApiService {
     /**
      * @return array
      */
-    public function getTimeline($authorId) {
+    public function getTimeline() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
         $posts_timeline = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from('Yasoon\Site\Entity\PostsTimelineEntity', 'p')
-            ->where('p.author_id ='.$authorId)
+            ->select('pt')
+            ->from('Yasoon\Site\Entity\PostsTimelineEntity', 'pt')
+            ->where('pt.authorId = :author_id ')
+            ->setParameter('author_id',$authorId)
             ->getQuery()->getResult();
         $posts_id = array();
         foreach ($posts_timeline as $post_timeline) {
-            $posts_id[] = $post_timeline->getId();
+            $posts_id[] = $post_timeline->getPostId();
         }
+        if (count($posts_id) > 0) {
+            $posts = $this->em->createQueryBuilder()
+                ->select('p')
+                ->from('Yasoon\Site\Entity\PostEntity', 'p')
+                ->where('p.id IN (:posts_id)')
+                ->setParameter('posts_id',$posts_id)
+                ->getQuery()->getResult();
 
-
-        $posts = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-            ->where('p.id IN('.implode(',', $posts_id).')')
-            ->getQuery()->getResult();
-
-        foreach($posts as $post)
-        {
-
-            $result[] = [
-                'id'          => $post->getId(),
-                'authorId'    => $post->getAuthorId(),
-                'authorName'  => $post->getAuthor()->getName(),
-                'title'       => $post->getCaption(),
-                'description' => $post->getPreview(),
-                'text'        => $post->getText(),
-                'publishDate' => $post->getDate()->format('d/m/Y'),
-                'post_likes'  => $post->getLikes()
+            foreach($posts as $post)
+            {
+                if ($post->getAuthor()->getImg()) {
+                    $authorImg = '/upload/avatar/'.$post->getAuthor()->getImg();
+                } else {
+                    $authorImg = null;
+                }
+                $result[] = [
+                    'id'          => $post->getId(),
+                    'authorId'    => $post->getAuthorId(),
+                    'authorName'  => $post->getAuthor()->getName(),
+                    'authorImg'   => $authorImg,
+                    'title'       => $post->getCaption(),
+                    'description' => $post->getPreview(),
+                    'text'        => $post->getText(),
+                    'publishDate' => $post->getDate()->format('d/m/Y'),
+                    'post_likes'  => $post->getLikes()
+                ];
+            }
+        } else {
+            $result = [
+                'error' => false,
+                'result' => "NOT_FOUND"
             ];
         }
 
+
+
         return $result;
+    }
+
+    /**
+     * @param $post_id
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function clearTimeline()
+    {
+        try {
+            $authorId = (int)$this->securityContext->getToken()->getUsername();
+            if (!is_int($authorId)) {
+                return ['error' => true, 'errorText' => 'accessDenied'];
+            }
+            $posts_timeline = $this->em->createQueryBuilder()
+                ->select('pt')
+                ->from('Yasoon\Site\Entity\PostsTimelineEntity', 'pt')
+                ->where('pt.authorId = :author_id ')
+                ->setParameter('author_id', $authorId)
+                ->getQuery()->getResult();
+            foreach ($posts_timeline as $post_timeline) {
+                $this->em->remove($post_timeline);
+                $this->em->flush();
+            }
+
+        } catch (\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+        return ['error' => false, 'errorText' => ''];
     }
 
     /**

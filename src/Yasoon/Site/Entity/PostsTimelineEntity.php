@@ -40,6 +40,24 @@ class PostsTimelineEntity
     protected $postId;
 
     /**
+     * @param $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\AuthorEntity
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param $postId
      * @return $this
      */

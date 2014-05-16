@@ -89,13 +89,23 @@ class PostController {
     }
 
     /**
-     * @Route("/getTimeline/{authorId}", requirements={"authorId" = "\d+"})
+     * @Route("/getTimeline")
      *
      * @Method({"GET"})
      */
-    public function getTimelineAction($authorId) {
-        return $this->service->getTimeline($authorId);
+    public function getTimelineAction() {
+        return $this->service->getTimeline();
     }
+
+    /**
+     * @Route("/clearTimeline")
+     *
+     * @Method({"GET"})
+     */
+    public function clearTimelineAction() {
+        return $this->service->clearTimeline();
+    }
+
 
     /**
      * @Route("/update")
