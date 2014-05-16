@@ -7,11 +7,6 @@ define(
   SpeakerAnswerView
 ) ->
   Backbone.View.extend({
-    tagName: 'section'
-
-    answered: ->
-      _.where(@collection.toJSON(), {hasAnswer: true})
-      
     render: ->
       @collection.each( (answer) =>
         @addOne(answer)
@@ -20,7 +15,9 @@ define(
 
     addOne: (answer) ->
       speakerAnswerView = new SpeakerAnswerView({model: answer})
-      @$el.append(speakerAnswerView.render().$el)
+      @$('section').append(speakerAnswerView.render().$el)
 
+    answered: ->
+      _.where(@collection.toJSON(), {hasAnswer: true})
   })
 )
