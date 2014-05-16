@@ -15,7 +15,7 @@ define(
 
     addOne: (answer) ->
       speakerAnswerView = new SpeakerAnswerView({model: answer})
-      @$('section').append(speakerAnswerView.render().$el)
+      @$el.append(speakerAnswerView.render().$el)
 
     answered: ->
       _.where(@collection.toJSON(), {hasAnswer: true})

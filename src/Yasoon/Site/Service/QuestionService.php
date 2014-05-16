@@ -273,28 +273,56 @@ class QuestionService extends AbstractApiService {
         $answers = $this->em->createQueryBuilder()
             ->select('p')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
-            ->where('author_id = :author_id')
-            ->setParameter('author_id',$authorId)
+            ->where("p.authorId = :authorId")
+            ->setParameter('authorId',$authorId)
             ->getQuery()->getResult();
-        foreach($answers as $answer)
-        {
-            $result[] = [
+        if (count($answers) > 0) {
+            $result = [];
+            foreach($answers as $answer)
+            {
+                $result[] = [
+                    'id'        => $answer->getId(),
+                    'authorId'      => $answer->getAuthorId(),
+                    'ask_author_id'  => $answer->getAskAuthorId(),
+                    'date'      => $answer->getDate()->format('d/m/Y'),
+                    'question'  => $answer->getText(),
+                    'answer'    => $answer->getAnswer()
+                ];
+            }
+
+            return [
                 'error'       => false,
-                'result'      => [
-                    'id'          => $post->getId(),
-                    'authorId'    => $post->getAuthorId(),
-                    'authorName'  => $post->getAuthor()->getName(),
-                    'authorImg'   => $authorImg,
-                    'title'       => $post->getCaption(),
-                    'description' => $post->getPreview(),
-                    'text'        => $post->getText(),
-                    'publishDate' => $post->getDate()->format('d/m/Y'),
-                    'post_likes'  => $post->getLikes()
-                ]
+                'result'      => $result
+            ];
+        } else {
+            return [
+                'error' => false,
+                'result' => 'NOT_FOUND'
             ];
         }
-
     }
 
+    public function claerAnswerTimeline() {
+        try {
+            $authorId = (int)$this->securityContext->getToken()->getUsername();
+            if (!is_int($authorId)) {
+                return ['error' => true, 'errorText' => 'accessDenied'];
+            }
+            $answers_timeline = $this->em->createQueryBuilder()
+                ->select('ate')
+                ->from('Yasoon\Site\Entity\AnswerTimelineEntity', 'ate')
+                ->where('ate.authorId = :author_id ')
+                ->setParameter('author_id', $authorId)
+                ->getQuery()->getResult();
+            foreach ($answers_timeline as $answer_timeline) {
+                $this->em->remove($answer_timeline);
+                $this->em->flush();
+            }
+
+        } catch (\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+        return ['error' => false, 'errorText' => ''];
+    }
 
 }

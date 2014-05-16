@@ -60,6 +60,15 @@ class QuestionController {
         return $this->service->getAnswerTimeline();
     }
 
+    /**
+     * @Route("/clear_answer_timeline")
+     * @Method({"GET"})
+     *
+     */
+    public function clearAnswerTimeline() {
+        return $this->service->claerAnswerTimeline();
+    }
+
 
     /**
      * @Route("/add_interview")

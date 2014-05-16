@@ -10,6 +10,7 @@ define(
     tagName: 'article'
     className: 'lim'
     template: _.template(speakerAnswerTpl)
+
     render: ->
       @$el.html(@template(@model.toJSON()))
       @
