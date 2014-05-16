@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\ContentService;
+use Yasoon\Site\Service\CategoryService;
 
 class IndexController {
     /**
-     * @var ContentService
+     * @var CategoryService
      *
-     * @DI\Inject("yasoon.service.content")
+     * @DI\Inject("yasoon.service.category")
      */
     private $service;
 
@@ -33,11 +34,8 @@ class IndexController {
                 'description' => '2',
                 'text' => '3' 
             ]]);
-
-
-        $html = <<<HTML
-
-<!DOCTYPE html>
+        $category = $this->service->getCategoryList();
+        $html = '<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -65,9 +63,10 @@ class IndexController {
             <div class="clearfix"></div>
         </div>
     </footer>
-</body>
-
-HTML;
+    <script>
+        Window.category = '.json_encode($category).'
+    </script>
+</body>';
         return new Response($html);
     }
 

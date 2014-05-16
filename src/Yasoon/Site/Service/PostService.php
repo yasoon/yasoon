@@ -172,6 +172,45 @@ class PostService extends AbstractApiService {
     }
 
     /**
+     * @return array
+     */
+    public function getTimeline($authorId) {
+        $posts_timeline = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\PostsTimelineEntity', 'p')
+            ->where('p.author_id ='.$authorId)
+            ->getQuery()->getResult();
+        $posts_id = array();
+        foreach ($posts_timeline as $post_timeline) {
+            $posts_id[] = $post_timeline->getId();
+        }
+
+
+        $posts = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\PostEntity', 'p')
+            ->where('p.id IN('.implode(',', $posts_id).')')
+            ->getQuery()->getResult();
+
+        foreach($posts as $post)
+        {
+
+            $result[] = [
+                'id'          => $post->getId(),
+                'authorId'    => $post->getAuthorId(),
+                'authorName'  => $post->getAuthor()->getName(),
+                'title'       => $post->getCaption(),
+                'description' => $post->getPreview(),
+                'text'        => $post->getText(),
+                'publishDate' => $post->getDate()->format('d/m/Y'),
+                'post_likes'  => $post->getLikes()
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
      * @param array $post
      * @return array
      */
