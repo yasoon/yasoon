@@ -205,15 +205,18 @@ class PostService extends AbstractApiService {
                     $authorImg = null;
                 }
                 $result[] = [
-                    'id'          => $post->getId(),
-                    'authorId'    => $post->getAuthorId(),
-                    'authorName'  => $post->getAuthor()->getName(),
-                    'authorImg'   => $authorImg,
-                    'title'       => $post->getCaption(),
-                    'description' => $post->getPreview(),
-                    'text'        => $post->getText(),
-                    'publishDate' => $post->getDate()->format('d/m/Y'),
-                    'post_likes'  => $post->getLikes()
+                    'error'       => false,
+                    'result'      => [
+                        'id'          => $post->getId(),
+                        'authorId'    => $post->getAuthorId(),
+                        'authorName'  => $post->getAuthor()->getName(),
+                        'authorImg'   => $authorImg,
+                        'title'       => $post->getCaption(),
+                        'description' => $post->getPreview(),
+                        'text'        => $post->getText(),
+                        'publishDate' => $post->getDate()->format('d/m/Y'),
+                        'post_likes'  => $post->getLikes()
+                    ]
                 ];
             }
         } else {
@@ -222,9 +225,6 @@ class PostService extends AbstractApiService {
                 'result' => "NOT_FOUND"
             ];
         }
-
-
-
         return $result;
     }
 

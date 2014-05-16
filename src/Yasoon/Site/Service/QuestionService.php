@@ -32,29 +32,32 @@ class QuestionService extends AbstractApiService {
     public function add(array $model) {
 
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+/*
         $place =$this->em->getConnection()
             ->executeQuery("select max(place) as place from question where author_id = $authorId and is_in_blank=0")
-            ->fetch()['place'];
+            ->fetch()['place'];*/
 
         $entity = (new QuestionEntity())
-            ->setCaption($model['caption'])
             ->setDate(new \DateTime())
-            ->setIsInBlank(false)
-            ->setAuthorId($model['authorId'])
-            ->setPlace(++$place);
+            ->setText($model['text'])
+            ->setAskAuthorId($model['ask_author_id'])
+            ->setAuthorId($authorId);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
+        $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['ask_author_id']));
 
         $this->em->persist($entity);
         $this->em->flush();
 
         $result = [
-            'id'       => $entity->getId(),
-            'caption'  => $entity->getCaption(),
-            'date'     => $entity->getDate()->format('d/m/Y'),
-            'authorId' => $entity->getAuthorId(),
-            'answer'   => ''
+            'id'        => $entity->getId(),
+            'authorId'  => $entity->getAuthorId(),
+            'ask_author_id'  => $entity->getAskAuthorId(),
+            'date'      => $entity->getDate()->format('d/m/Y'),
+            'text'      => $entity->getText()
         ];
 
         return $result;
