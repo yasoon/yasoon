@@ -6,7 +6,9 @@
       initialize: function(options) {
         this.options = options || {};
         if (this.options.page === 'answers') {
-          this.createQuestionForm();
+          if (this.options.id !== window.userId) {
+            this.createQuestionForm();
+          }
           return this.createSpeakerAnswers();
         } else {
           return this.createSpeakerPosts();

@@ -26,7 +26,8 @@ define(
     initialize: (options) ->
       @options = options || {}
       if @options.page is 'answers'
-        @createQuestionForm()
+        if @options.id isnt window.userId
+          @createQuestionForm()
         @createSpeakerAnswers()
       else
         @createSpeakerPosts()

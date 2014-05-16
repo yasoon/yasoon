@@ -14,7 +14,7 @@
         speakerAnswerView = new SpeakerAnswerView({
           model: answer
         });
-        return this.$('section').append(speakerAnswerView.render().$el);
+        return this.$el.append(speakerAnswerView.render().$el);
       },
       answered: function() {
         return _.where(this.collection.toJSON(), {
