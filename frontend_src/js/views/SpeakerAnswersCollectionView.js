@@ -1,12 +1,6 @@
 (function() {
   define(['views/SpeakerAnswerView', 'backbone'], function(SpeakerAnswerView) {
     return Backbone.View.extend({
-      tagName: 'section',
-      answered: function() {
-        return _.where(this.collection.toJSON(), {
-          hasAnswer: true
-        });
-      },
       render: function() {
         this.collection.each((function(_this) {
           return function(answer) {
@@ -20,7 +14,12 @@
         speakerAnswerView = new SpeakerAnswerView({
           model: answer
         });
-        return this.$el.append(speakerAnswerView.render().$el);
+        return this.$('section').append(speakerAnswerView.render().$el);
+      },
+      answered: function() {
+        return _.where(this.collection.toJSON(), {
+          hasAnswer: true
+        });
       }
     });
   });

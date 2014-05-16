@@ -64,7 +64,10 @@ class IndexController {
         </div>
     </footer>
     <script>
-        Window.category = '.json_encode($category).'
+        Window.config = {
+            category: '.json_encode($category).',
+            userId: 0
+        }
     </script>
 </body>';
         return new Response($html);

@@ -62,14 +62,11 @@ define(
       $('.collapse').collapse()
 
     createCategoryList: ->
-      $.get('/api/category/get_CategoryList'
-      , (data) =>
-        if not @postCategories?
-          @postCategories = new PostCategories({
-            collection: new CategoryCollection(data)
-          })
-        @ui.categories.append(@postCategories.render().$el)
-      , 'json')
+      if not @postCategories?
+        @postCategories = new PostCategories({
+          collection: new CategoryCollection(Window.config.category)
+        })
+      @ui.categories.append(@postCategories.render().$el)
 
     createInterviewsList: ->
       $.get('/api/interview/questions/1'

@@ -60,7 +60,8 @@
           this.speakerContentView = new SpeakerContentView({
             answers: answers,
             posts: posts,
-            page: this.options.page
+            page: this.options.page,
+            id: this.options.id
           });
         } else {
           this.speakerContentView.delegateEvents();

@@ -60,16 +60,12 @@
       };
 
       WritePostPage.prototype.createCategoryList = function() {
-        return $.get('/api/category/get_CategoryList', (function(_this) {
-          return function(data) {
-            if (_this.postCategories == null) {
-              _this.postCategories = new PostCategories({
-                collection: new CategoryCollection(data)
-              });
-            }
-            return _this.ui.categories.append(_this.postCategories.render().$el);
-          };
-        })(this), 'json');
+        if (this.postCategories == null) {
+          this.postCategories = new PostCategories({
+            collection: new CategoryCollection(Window.config.category)
+          });
+        }
+        return this.ui.categories.append(this.postCategories.render().$el);
       };
 
       WritePostPage.prototype.createInterviewsList = function() {
