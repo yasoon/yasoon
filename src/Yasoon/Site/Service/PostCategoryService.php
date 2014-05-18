@@ -90,8 +90,8 @@ class PostCategoryService extends AbstractApiService {
                     $tags[] = $pc->getCategoryId();
                 }
                 $postsDateSort[] = ['id'          => $results_postsDateSort[$i]->getPost()->getId(),
-                            'authorid'    => $results_postsDateSort[$i]->getPost()->getAuthorId(),
-                            'autorName'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
+                            'authorId'    => $results_postsDateSort[$i]->getPost()->getAuthorId(),
+                            'authorName'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
                             'tags'        => $tags,
                             'title'       => $results_postsDateSort[$i]->getPost()->getCaption(),
                             'description' => $results_postsDateSort[$i]->getPost()->getPreview(),
@@ -106,8 +106,8 @@ class PostCategoryService extends AbstractApiService {
                     $tags[] = $pc->getCategoryId();
                 }
                 $postsRateSort[] = ['id'          => $results_postsRateSort[$i]->getPost()->getId(),
-                            'authorid'    => $results_postsRateSort[$i]->getPost()->getAuthorId(),
-                            'autorName'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
+                            'authorId'    => $results_postsRateSort[$i]->getPost()->getAuthorId(),
+                            'authorName'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
                             'tags'        => $tags,
                             'title'       => $results_postsRateSort[$i]->getPost()->getCaption(),
                             'description' => $results_postsRateSort[$i]->getPost()->getPreview(),
