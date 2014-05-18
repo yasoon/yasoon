@@ -77,6 +77,13 @@ class QuestionEntity
     protected $text;
 
     /**
+     * @var int $notified
+     *
+     * @ORM\Column(name="notified", type="integer", nullable=false)
+     */
+    protected $notified;
+
+    /**
      * @param $author
      * @return $this
      */
@@ -256,5 +263,25 @@ class QuestionEntity
     {
         return $this->text;
     }
+
+    /**
+     * @param int $notified
+     * @return $this
+     */
+    public function setNotified($notified)
+    {
+        $this->notified =  $notified;
+        return $notified;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
+    //$notified
 
 }

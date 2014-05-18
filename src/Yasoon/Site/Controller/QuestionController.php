@@ -51,6 +51,28 @@ class QuestionController {
         return $this->service->addAnswer($model);
     }
 
+
+    /**
+     * @Route("/get_new_answers")
+     * @Method({"GET"})
+     *
+     */
+    public function getNewAnswers() {
+        return $this->service->getNewAnswers();
+    }
+
+    /**
+     * @Route("/answer_notified")
+     * @Method({"POST"})
+     */
+    public function answerNotified(Request $request) {
+        $question_ids = $request->request->get('question_ids');
+        if (!is_array($question_ids)) {
+            $question_ids = [$question_ids];
+        }
+        return $this->service->questionAnswerNitified($question_ids);
+    }
+
     /**
      * @Route("/get_answer_timeline")
      * @Method({"GET"})

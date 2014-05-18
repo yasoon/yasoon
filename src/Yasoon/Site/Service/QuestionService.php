@@ -41,7 +41,8 @@ class QuestionService extends AbstractApiService {
             ->setDate(new \DateTime())
             ->setText($model['question'])
             ->setAskAuthorId($model['ask_author_id'])
-            ->setAuthorId($authorId);
+            ->setAuthorId($authorId)
+            ->setNotified(0);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
         $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['ask_author_id']));
@@ -300,6 +301,50 @@ class QuestionService extends AbstractApiService {
                 'result' => 'NOT_FOUND'
             ];
         }
+    }
+
+    public function getNewAnswers() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $result = [];
+
+        $questions = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
+            ->where("p.notified  != 1")
+            ->andWhere("p.answer IS NOT NULL")
+            ->andWhere("p.authorId = :authorId")
+            ->setParameter('authorId',$authorId)
+            ->getQuery()->getResult();
+
+        foreach ($questions as $question) {
+            $result[] = [
+                'id'            => $question->getId(),
+                'text'          => $question->getText(),
+                'answerText'    => $question->getAnswer(),
+                'ask_author_id' => $question->getAskAuthorId(),
+                'date'          => $question->getDate()->format('d/m/Y')
+            ];
+        }
+        return $result;
+    }
+
+    public function questionAnswerNitified($question_ids) {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $qb = $this->em->createQueryBuilder();
+        $q = $qb->update('Yasoon\Site\Entity\QuestionEntity', 'u')
+            ->set('u.notified', 1)
+            ->where('u.id IN('.implode(',', $question_ids).')')
+            ->andWhere('u.authorId = :authorId')
+            ->setParameter('authorId', $authorId)
+            ->getQuery();
+        $p = $q->execute();
+        return ['error' => false, 'errorText' => ''];
     }
 
     public function claerAnswerTimeline() {
