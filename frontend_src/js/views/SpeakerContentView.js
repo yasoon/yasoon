@@ -48,6 +48,8 @@
               answered = _this.speakerAnswersCollectionView.answered();
               if (answered.length > 0) {
                 return _this.$el.append(_this.speakerAnswersCollectionView.render().$el);
+              } else if (_this.options.id === window.userId) {
+                return _this.$el.append(_this.speakerAnswersCollectionView.render().$el);
               } else {
                 _this.emptyView = new EmptyView({
                   message: 'Нет ни одного вопроса!'

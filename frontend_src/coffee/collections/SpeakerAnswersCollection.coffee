@@ -5,7 +5,7 @@ define(
   ]
 (
   HistoryPagePostsModel
-  ) ->
+) ->
   Backbone.Collection.extend({
     model: HistoryPagePostsModel
   })

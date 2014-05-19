@@ -3,6 +3,7 @@ define(
     'text!templates/speakerInfoTpl.htm'
     'views/LoginPopUpView'
     'backbone'
+    'mediator'
   ]
 (
   speakerInfoTpl
@@ -10,11 +11,16 @@ define(
 ) ->
   Backbone.View.extend({
     tagName: 'aside'
+
     className: 'postinfo'
+
     template: _.template(speakerInfoTpl)
+
+    subscriptions:
+      'question:answered': 'updateQuestionCounter'
+
     render: ->
-      @$el
-        .html(@template(@model.toJSON()))
+      @$el.html(@template(@model.toJSON()))
       @
 
     events: ->
@@ -40,6 +46,10 @@ define(
           @loginpopUpView.delegateEvents()
         $('body').append(@loginpopUpView.render().$el)
 
+    updateQuestionCounter: ->
+      oldValue = @model.get('answers_count')
+      @model.set('answers_count', oldValue += 1)
+      @render()
 
   })
 )

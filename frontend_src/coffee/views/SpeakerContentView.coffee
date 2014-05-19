@@ -60,6 +60,8 @@ define(
           answered = @speakerAnswersCollectionView.answered()
           if answered.length > 0
             @$el.append(@speakerAnswersCollectionView.render().$el)
+          else if @options.id is window.userId
+            @$el.append(@speakerAnswersCollectionView.render().$el)
           else
             @emptyView = new EmptyView({
               message: 'Нет ни одного вопроса!'

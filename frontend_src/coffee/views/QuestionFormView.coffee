@@ -23,10 +23,13 @@ define(
 
       setQuestion: (event) ->
         event.preventDefault()
-        $.post('/api/question/add', {
-          model: @model.toJSON()
-        }, (data) ->
-          console.log data
-        )
+        if @model.isValid()
+          $.post('/api/question/add', {
+            model: @model.toJSON()
+          }, (data) ->
+            console.log data
+          )
+        else
+          console.log @model.validationError
     })
 )

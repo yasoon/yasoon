@@ -1,9 +1,12 @@
 (function() {
-  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'backbone'], function(speakerInfoTpl, LoginPopUpView) {
+  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView) {
     return Backbone.View.extend({
       tagName: 'aside',
       className: 'postinfo',
       template: _.template(speakerInfoTpl),
+      subscriptions: {
+        'question:answered': 'updateQuestionCounter'
+      },
       render: function() {
         this.$el.html(this.template(this.model.toJSON()));
         return this;
@@ -36,6 +39,12 @@
           }
           return $('body').append(this.loginpopUpView.render().$el);
         }
+      },
+      updateQuestionCounter: function() {
+        var oldValue;
+        oldValue = this.model.get('answers_count');
+        this.model.set('answers_count', oldValue += 1);
+        return this.render();
       }
     });
   });

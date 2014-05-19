@@ -2,6 +2,7 @@ define(
   [
     'text!templates/speakerInfoTpl.htm'
     'backbone'
+    'mediator'
   ]
 (
   speakerInfoTpl
@@ -12,10 +13,5 @@ define(
     className: 'postinfo'
     
     template: _.template(speakerInfoTpl)
-    
-    render: ->
-      @$el.html(@template(@model.toJSON()))
-      @
-
   })
 )
