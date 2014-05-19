@@ -271,23 +271,23 @@ class QuestionService extends AbstractApiService {
 
     public function getAnswerTimeline() {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        $answers = $this->em->createQueryBuilder()
+        $answersTimeline = $this->em->createQueryBuilder()
             ->select('p')
-            ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
+            ->from('Yasoon\Site\Entity\AnswerTimelineEntity', 'p')
             ->where("p.authorId = :authorId")
             ->setParameter('authorId',$authorId)
             ->getQuery()->getResult();
-        if (count($answers) > 0) {
+        if (count($answersTimeline) > 0) {
             $result = [];
-            foreach($answers as $answer)
+            foreach($answersTimeline as $answerTimeline)
             {
                 $result[] = [
-                    'id'        => $answer->getId(),
-                    'authorId'      => $answer->getAuthorId(),
-                    'ask_author_id'  => $answer->getAskAuthorId(),
-                    'date'      => $answer->getDate()->format('d/m/Y'),
-                    'question'  => $answer->getText(),
-                    'answer'    => $answer->getAnswer()
+                    'id'        => $answerTimeline->getQuestion()->getId(),
+                    'authorId'      => $answerTimeline->getQuestion()->getAuthorId(),
+                    'ask_author_id'  => $answerTimeline->getQuestion()->getAskAuthorId(),
+                    'date'      => $answerTimeline->getQuestion()->getDate()->format('d/m/Y'),
+                    'question'  => $answerTimeline->getQuestion()->getText(),
+                    'answer'    => $answerTimeline->getQuestion()->getAnswer()
                 ];
             }
 
@@ -325,6 +325,7 @@ class QuestionService extends AbstractApiService {
                 'text'          => $question->getText(),
                 'answerText'    => $question->getAnswer(),
                 'ask_author_id' => $question->getAskAuthorId(),
+                'author_id' => $question->getAuthorId(),
                 'date'          => $question->getDate()->format('d/m/Y')
             ];
         }

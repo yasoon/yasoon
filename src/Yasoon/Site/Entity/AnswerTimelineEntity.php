@@ -40,6 +40,14 @@ class AnswerTimelineEntity
     protected $questionId;
 
     /**
+     * @var QuestionEntity
+     *
+     * @ORM\ManyToOne(targetEntity="QuestionEntity")
+     * @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     */
+    protected $question;
+
+    /**
      * @param $id
      * @return $this
      */
@@ -91,6 +99,24 @@ class AnswerTimelineEntity
     public function getAuthorId()
     {
         return $this->authorId;
+    }
+
+    /**
+     * @param $question
+     * @return $this
+     */
+    public function setQuestion($question)
+    {
+        $this->question = $question;
+        return $this;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\QuestionEntity
+     */
+    public function getQuestion()
+    {
+        return $this->question;
     }
 
 
