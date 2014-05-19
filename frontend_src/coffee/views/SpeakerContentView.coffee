@@ -76,7 +76,7 @@ define(
       if not @questionFormView?
         @questionFormView = new QuestionFormView({
           model: new QuestionModel({
-            'ask_author_id': @options.id
+            'author_id': @options.id
           })
         })
       else

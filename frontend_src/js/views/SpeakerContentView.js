@@ -67,7 +67,7 @@
         if (this.questionFormView == null) {
           this.questionFormView = new QuestionFormView({
             model: new QuestionModel({
-              'ask_author_id': this.options.id
+              'author_id': this.options.id
             })
           });
         } else {
