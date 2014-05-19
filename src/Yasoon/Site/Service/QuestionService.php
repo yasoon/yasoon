@@ -315,8 +315,8 @@ class QuestionService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
             ->where("p.notified  != 1")
             ->andWhere("p.answer IS NOT NULL")
-            ->andWhere("p.authorId = :authorId")
-            ->setParameter('authorId',$authorId)
+            ->andWhere("p.ask_authorId = :ask_authorId")
+            ->setParameter('ask_authorId',$authorId)
             ->getQuery()->getResult();
 
         foreach ($questions as $question) {
