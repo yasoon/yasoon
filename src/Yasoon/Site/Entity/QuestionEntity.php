@@ -281,7 +281,4 @@ class QuestionEntity
     {
         return $this->notified;
     }
-
-    //$notified
-
 }

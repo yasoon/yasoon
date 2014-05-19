@@ -36,16 +36,15 @@ class QuestionService extends AbstractApiService {
         if (!is_int($authorId)) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
-
-        $entity = (new QuestionEntity())
-            ->setDate(new \DateTime())
-            ->setText($model['question'])
-            ->setAskAuthorId($model['ask_author_id'])
-            ->setAuthorId($authorId)
-            ->setNotified(0);
+        $entity = new QuestionEntity();
+        $entity->setDate(new \DateTime());
+        $entity->setText($model['question']);
+        $entity->setAskAuthorId($authorId);
+        $entity->setAuthorId($model['author_id']);
+        $entity->setNotified(0);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
-        $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['ask_author_id']));
+        $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['author_id']));
 
         $this->em->persist($entity);
         $this->em->flush();
