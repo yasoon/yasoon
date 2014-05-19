@@ -208,6 +208,7 @@ class QuestionService extends AbstractApiService {
 
         $this->em->remove($question);
         $this->em->flush();
+        return ['error' => false, 'errorText' => ''];
     }
 
     /**
