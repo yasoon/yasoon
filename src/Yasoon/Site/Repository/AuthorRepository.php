@@ -87,7 +87,7 @@ class AuthorRepository extends OAuthUserProvider implements UserProviderInterfac
             ->setParameter('email', $email)
             ->getQuery()->getResult();
         if (count($user) == 0) {
-            $response = new JsonResponse(['error' => 'true', 'errorType' => 'nouser'], 200);
+            $response = new JsonResponse(['error' => true, 'errorType' => 'nouser'], 200);
             $response->send();
             die;
         }
