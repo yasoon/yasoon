@@ -315,8 +315,8 @@ class QuestionService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
             ->where("p.notified  != 1")
             ->andWhere("p.answer IS NOT NULL")
-            ->andWhere("p.authorId = :authorId")
-            ->setParameter('authorId',$authorId)
+            ->andWhere("p.ask_authorId = :ask_authorId")
+            ->setParameter('ask_authorId',$authorId)
             ->getQuery()->getResult();
 
         foreach ($questions as $question) {
@@ -368,6 +368,36 @@ class QuestionService extends AbstractApiService {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         return ['error' => false, 'errorText' => ''];
+    }
+
+    public function getUnansweredQuestions() {
+        try {
+            $authorId = (int)$this->securityContext->getToken()->getUsername();
+            if (!is_int($authorId)) {
+                return ['error' => true, 'errorText' => 'accessDenied'];
+            }
+            $questions = $this->em->createQueryBuilder()
+                ->select('q')
+                ->from('Yasoon\Site\Entity\QuestionEntity', 'q')
+                ->where('q.authorId = :author_id ')
+                ->andWhere('q.answer IS NULL')
+                ->setParameter('author_id', $authorId)
+                ->getQuery()->getResult();
+            $result['error'] = false;
+            $result['result'] = [];
+            foreach ($questions as $question) {
+                $result['result'][] = [
+                    'id'            => $question->getId(),
+                    'text'          => $question->getText(),
+                    'ask_author_id' => $question->getAskAuthorId(),
+                    'date'          => $question->getDate()->format('d/m/Y')
+                ];
+            }
+
+        } catch (\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+        return $result;
     }
 
 }

@@ -124,4 +124,15 @@ class StatisticController {
                 'count_questions' => count($data_questions),
                 'count_questions_answered' => count($data_questions_answered)];
     }
+
+    /**
+     * @Route("/get_user_notification")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function getUserNotifications()
+    {
+
+    }
 }
