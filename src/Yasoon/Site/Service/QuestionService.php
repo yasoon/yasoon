@@ -39,8 +39,8 @@ class QuestionService extends AbstractApiService {
         $entity = new QuestionEntity();
         $entity->setDate(new \DateTime());
         $entity->setText($model['question']);
-        $entity->setAskAuthorId($model['ask_author_id']);
-        $entity->setAuthorId($authorId);
+        $entity->setAskAuthorId($authorId);
+        $entity->setAuthorId($model['ask_author_id']);
         $entity->setNotified(0);
 
         $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
