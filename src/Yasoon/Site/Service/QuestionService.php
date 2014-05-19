@@ -39,12 +39,12 @@ class QuestionService extends AbstractApiService {
         $entity = new QuestionEntity();
         $entity->setDate(new \DateTime());
         $entity->setText($model['question']);
-        $entity->setAskAuthorId($authorId);
-        $entity->setAuthorId($model['author_id']);
+        $entity->setAskAuthorId($model['author_id']);
+        $entity->setAuthorId($authorId);
         $entity->setNotified(0);
 
-        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
-        $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['author_id']));
+        $entity->setAuthorAsk($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
+        $entity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $model['author_id']));
 
         $this->em->persist($entity);
         $this->em->flush();
