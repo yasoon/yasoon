@@ -141,8 +141,12 @@ class QuestionController {
         return $this->service->delete($model);
     }
 
-    public function getAction() {
-
+    /**
+     * @Route("/get_unanswered_question")
+     * @Method({"GET"})
+     */
+    public function getUnansweredQuestionsAction() {
+        return $this->service->getUnansweredQuestions();
     }
 
 }
