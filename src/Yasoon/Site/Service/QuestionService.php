@@ -132,7 +132,7 @@ class QuestionService extends AbstractApiService {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
         try {
-            $question->setAnswer($model['answer']);
+            $question->setAnswer($model['questionAnswerText']);
 
             $this->em->merge($question);
             $this->em->flush();
