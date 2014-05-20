@@ -10,7 +10,7 @@
       },
       initialize: function(options) {
         this.options = options || {};
-        return this.createHistoryPage();
+        return this.createPostContent();
       },
       addLike: function(event) {
         event.preventDefault();
@@ -27,12 +27,16 @@
           };
         })(this));
       },
-      createHistoryPage: function() {
+      createPostContent: function() {
         return $.post("/api/post/getPost", {
           postid: this.options.id
         }, (function(_this) {
           return function(data) {
-            data = data[0];
+            var questionCount;
+            questionCount = $(data[0].text).find('article').prevObject.length;
+            data = _.extend({}, data[0], {
+              questionCount: questionCount
+            });
             if (_this.postPageModelView == null) {
               _this.postPageModelView = new PostPageModelView({
                 model: new PostPageModel(data)
@@ -40,12 +44,12 @@
             } else {
               _this.postPageModelView.delegateEvents();
             }
-            _this.createHistoryAuthor(data.authorId);
+            _this.createPostAuthor(data.authorId);
             return _this.$el.append(_this.postPageModelView.render().$el);
           };
         })(this), 'json');
       },
-      createHistoryAuthor: function(id) {
+      createPostAuthor: function(id) {
         return $.post("/api/author/getAuthorInfo", {
           author_id: id
         }, (function(_this) {

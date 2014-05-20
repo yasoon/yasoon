@@ -55,7 +55,7 @@ define([
     author: (page) ->
       Controller.author(page)
     loadPost: (id) ->
-      @navigate("/post/#{id}", {trigger: yes})
+      @navigate("#/post/#{id}", {trigger: yes})
     undefinedRoute: ->
       Controller.undefinedRoute()
   })

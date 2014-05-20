@@ -23,13 +23,31 @@ define(
 
       setQuestion: (event) ->
         event.preventDefault()
+        @hideErrors()
         if @model.isValid()
           $.post('/api/question/add', {
             model: @model.toJSON()
-          }, (data) ->
-            console.log data
+          }, (data) =>
+            @model.set('savedQuestion', @model.get('question'))
           )
         else
-          console.log @model.validationError
+          @showErrors(@model.validationError)
+
+      hideErrors: ->
+        @$('.form-group')
+          .removeClass('has-error')
+          .addClass('has-success')
+          .find('.help-block')
+          .text('')
+
+      showErrors: (errors) ->
+        _.each( errors, (error) =>
+          @$("##{error.name}")
+            .closest('.form-group')
+            .removeClass('has-success')
+            .addClass('has-error')
+            .find('.help-block')
+            .text(error.message)
+        )
     })
 )

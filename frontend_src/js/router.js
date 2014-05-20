@@ -58,7 +58,7 @@
         return Controller.author(page);
       },
       loadPost: function(id) {
-        return this.navigate("/post/" + id, {
+        return this.navigate("#/post/" + id, {
           trigger: true
         });
       },
