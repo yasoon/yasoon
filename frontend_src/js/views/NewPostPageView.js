@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap'], function(writePostTpl, PostCategories, PostInterviews, CategoryCollection, InterviewCollection) {
+  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap', 'jqueryUi'], function(writePostTpl, PostCategories, PostInterviews, CategoryCollection, InterviewCollection) {
     var WritePostPage;
     return WritePostPage = (function(_super) {
       __extends(WritePostPage, _super);
@@ -34,7 +34,7 @@
       };
 
       WritePostPage.prototype.handler = function() {
-        return this.listenTo(this.model, 'change:postDescription', this.symbolsCounter);
+        return this.listenTo(this.model, 'change:description', this.symbolsCounter);
       };
 
       WritePostPage.prototype.ui = function() {
@@ -77,7 +77,10 @@
               });
             }
             _this.ui.interviews.append(_this.postInterviews.render().$el);
-            return _this.$('.editor').redactor('sync');
+            _this.$('.editor').redactor('sync');
+            return _this.$('.sortable ul').sortable({
+              cancel: '.form-group'
+            });
           };
         })(this), 'json');
       };

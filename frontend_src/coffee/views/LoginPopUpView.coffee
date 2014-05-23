@@ -52,7 +52,6 @@ define(
         menubar=no,
         resizable=yes'
       )
-      window.location = '/register/'
 
     facebookLogin: (event) ->
       event.preventDefault()
@@ -71,7 +70,6 @@ define(
         menubar=no,
         resizable=yes'
       )
-      window.location = '/register/'
 
     registerAction: (event) ->
       @closePopUp()

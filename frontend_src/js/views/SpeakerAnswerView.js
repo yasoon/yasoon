@@ -38,14 +38,12 @@
           model: {
             id: this.model.get('id')
           }
-        }, (function(_this) {
-          return function(data) {
-            if (!data.error) {
-              console.log(data);
-              return $(event.currentTarget).closest('article').remove();
-            }
-          };
-        })(this));
+        }, function(data) {
+          if (!data.error) {
+            console.log(data);
+            return $(event.currentTarget).closest('article').remove();
+          }
+        });
       }
     });
   });

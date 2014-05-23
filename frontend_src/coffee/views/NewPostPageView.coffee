@@ -10,6 +10,7 @@ define(
     'stickit'
     'mediator'
     'bootstrap'
+    'jqueryUi'
   ]
 (
   writePostTpl
@@ -41,7 +42,7 @@ define(
       @handler()
 
     handler: ->
-      @listenTo(@model, 'change:postDescription', @symbolsCounter)
+      @listenTo(@model, 'change:description', @symbolsCounter)
 
     ui: ->
       @.ui =
@@ -77,6 +78,9 @@ define(
           })
         @ui.interviews.append(@postInterviews.render().$el)
         @$('.editor').redactor('sync')
+        @$('.sortable ul').sortable({
+          cancel: '.form-group'
+        })
       , 'json')
 
     showErrors: (errors) ->

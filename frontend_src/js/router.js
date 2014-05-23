@@ -1,15 +1,19 @@
 (function() {
-  define(['controller', 'backbone', 'mediator'], function(Controller) {
+  define(['controller', 'admin/controller', 'backbone', 'mediator'], function(Controller, AdminController) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
       routes: {
         '': 'index',
-        'posts(/:category)(/:sort)(/)': 'posts',
-        'post(/:id)(/:edit)(/)': 'post',
+        'posts/:category/:sort(/)': 'posts',
+        'post/new(/)': 'newPost',
+        'post/:id(/)': 'showPost',
+        'post/:id/edit(/)': 'editPost',
+        'register(/)': 'registerSpeaker',
         'speakers(/:category)(/)': 'speakers',
-        'speaker(/:id)(/:page)(/)': 'speaker',
-        'register(/)': 'register',
-        'author(/:page)(/)': 'author',
+        'speaker/:id/:page(/)': 'showSpeaker',
+        'author/edit(/)': 'editAuthor',
+        'author/:page(/)': 'author',
+        'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
       },
       initialize: function() {
@@ -34,25 +38,29 @@
       posts: function(category, sort) {
         return Controller.posts(category, sort);
       },
-      post: function(id, edit) {
-        if (id === 'new') {
-          return Controller.newPost();
-        } else {
-          if (edit) {
-            return Controller.editPost(id);
-          } else {
-            return Controller.post(id);
-          }
-        }
+      newPost: function() {
+        this.isLogged();
+        return Controller.newPost();
+      },
+      showPost: function(id) {
+        return Controller.post(id);
+      },
+      editPost: function(id) {
+        this.isLogged();
+        return Controller.editPost(id);
       },
       speakers: function(category) {
         return Controller.speakers(category);
       },
-      speaker: function(id, page) {
-        return Controller.speaker(id, page);
-      },
-      register: function() {
+      registerSpeaker: function() {
         return Controller.register();
+      },
+      editAuthor: function() {
+        this.isLogged();
+        return Controller.editAuthor();
+      },
+      showSpeaker: function(id, page) {
+        return Controller.speaker(id, page);
       },
       author: function(page) {
         return Controller.author(page);
@@ -62,8 +70,17 @@
           trigger: true
         });
       },
+      adminMainPage: function() {
+        return AdminController.index();
+      },
       undefinedRoute: function() {
         return Controller.undefinedRoute();
+      },
+      isLogged: function() {
+        if (typeof window.userId === "undefined") {
+          this.navigate('#/404/');
+          return Controller.undefinedRoute();
+        }
       }
     });
     return new AppRouter();
