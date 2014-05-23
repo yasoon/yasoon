@@ -268,7 +268,7 @@ class AuthorController {
      */
     public function register(Request $request)
     {
-        $username = $request->request->get('username');
+        $name = $request->request->get('name');
         $email = $request->request->get('email');
         $password = $request->request->get('password');
         $subscribed = $request->request->get('subscribed');
@@ -279,7 +279,7 @@ class AuthorController {
             $subscribed = true;
         }
         
-        $params = ['name'       => $username,
+        $params = ['name'       => $name,
                    'email'      => $email,
                    'password'   => $password,
                    'subscribed' => $subscribed];
