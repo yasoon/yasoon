@@ -359,4 +359,13 @@ class AuthorController {
 
         return $fileSource;
     }
+
+    /**
+     * @Route("/save")
+     * @Method({"POST"})
+     */
+    public function save(Request $request) {
+        $model = $request->request->get('model');
+        return  $this->service->save($model);
+    }
 }
