@@ -66,7 +66,7 @@ class AnswerTimelineEntity
     }
 
     /**
-     * @param $answerId
+     * @param $questionId
      * @return $this
      */
     public function setQuestionId($questionId)

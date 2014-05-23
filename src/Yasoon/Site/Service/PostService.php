@@ -173,27 +173,23 @@ class PostService extends AbstractApiService {
                 ->where('p.id IN (:posts_id)')
                 ->setParameter('posts_id',$posts_id)
                 ->getQuery()->getResult();
-
-            foreach($posts as $post)
-            {
+            $result['error'] = false;
+            foreach ($posts as $post) {
                 if ($post->getAuthor()->getImg()) {
-                    $authorImg = '/upload/avatar/'.$post->getAuthor()->getImg();
+                    $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
                 } else {
                     $authorImg = null;
                 }
-                $result[] = [
-                    'error'       => false,
-                    'result'      => [
-                        'id'          => $post->getId(),
-                        'authorId'    => $post->getAuthorId(),
-                        'authorName'  => $post->getAuthor()->getName(),
-                        'authorImg'   => $authorImg,
-                        'title'       => $post->getCaption(),
-                        'description' => $post->getPreview(),
-                        'text'        => $post->getText(),
-                        'publishDate' => $post->getDate()->format('d/m/Y'),
-                        'post_likes'  => $post->getLikes()
-                    ]
+                $result['result'][] = [
+                    'id' => $post->getId(),
+                    'authorId' => $post->getAuthorId(),
+                    'authorName' => $post->getAuthor()->getName(),
+                    'authorImg' => $authorImg,
+                    'title' => $post->getCaption(),
+                    'description' => $post->getPreview(),
+                    'text' => $post->getText(),
+                    'publishDate' => $post->getDate()->format('d/m/Y'),
+                    'post_likes' => $post->getLikes()
                 ];
             }
         } else {
