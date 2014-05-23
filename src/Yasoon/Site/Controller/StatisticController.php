@@ -16,6 +16,8 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Yasoon\Site\Entity\AuthorEntity;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Yasoon\Site\Service\PostService;
+use Yasoon\Site\Service\QuestionService;
 
 error_reporting(E_ALL);
 /**
@@ -48,6 +50,20 @@ class StatisticController {
      * @DI\Inject("service_container")
      */
     public $container;
+
+    /**
+     * @var PostService
+     *
+     * @DI\Inject("yasoon.service.post")
+     */
+    private $post_service;
+
+    /**
+     * @var QuestionService
+     *
+     * @DI\Inject("yasoon.service.question")
+     */
+    private $question_service;
     
     /**
      * @Route("/getNewUsers")
@@ -133,6 +149,10 @@ class StatisticController {
      */
     public function getUserNotifications()
     {
+        $result['posts_timeline'] = $this->post_service->getTimeline();
+        $result['answers_timeline'] = $this->question_service->getAnswerTimeline();
+        $result['new_answers'] = $this->question_service->getNewAnswers();
+        return $result;
 
     }
 }

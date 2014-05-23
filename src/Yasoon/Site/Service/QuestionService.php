@@ -321,6 +321,7 @@ class QuestionService extends AbstractApiService {
             ->setParameter('ask_authorId',$authorId)
             ->getQuery()->getResult();
 
+
         foreach ($questions as $question) {
             $result[] = [
                 'id'            => $question->getId(),
@@ -331,7 +332,10 @@ class QuestionService extends AbstractApiService {
                 'date'          => $question->getDate()->format('d/m/Y')
             ];
         }
-        return $result;
+        return [
+            'error'       => false,
+            'result'      => $result
+        ];
     }
 
     public function questionAnswerNitified($question_ids) {
