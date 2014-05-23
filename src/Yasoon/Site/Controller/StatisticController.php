@@ -153,6 +153,19 @@ class StatisticController {
         $result['answers_timeline'] = $this->question_service->getAnswerTimeline();
         $result['new_answers'] = $this->question_service->getNewAnswers();
         return $result;
+    }
 
+    /**
+     * @Route("/get_user_notification_count")
+     * @Method({"GET"})
+     *
+     * @return array
+     */
+    public function getUserNotificationsCount()
+    {
+        $result['posts_timeline_count'] = $this->post_service->getTimelineCount();
+        $result['answers_timeline_count'] = $this->question_service->getAnswerTimelineCount();
+        $result['new_answers_count'] = $this->question_service->getNewAnswersCount();
+        return $result;
     }
 }

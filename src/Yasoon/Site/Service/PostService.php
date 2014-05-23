@@ -202,6 +202,24 @@ class PostService extends AbstractApiService {
     }
 
     /**
+     * @return array
+     */
+    public function getTimelineCount() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $posts_timeline_count = $this->em->createQueryBuilder()
+            ->select('count(pt.id)')
+            ->from('Yasoon\Site\Entity\PostsTimelineEntity', 'pt')
+            ->where('pt.authorId = :author_id ')
+            ->setParameter('author_id',$authorId)
+            ->getQuery()->getSingleScalarResult();
+        return $posts_timeline_count;
+
+    }
+
+    /**
      * @param $post_id
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */

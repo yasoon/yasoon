@@ -273,6 +273,9 @@ class QuestionService extends AbstractApiService {
 
     public function getAnswerTimeline() {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
         $answersTimeline = $this->em->createQueryBuilder()
             ->select('p')
             ->from('Yasoon\Site\Entity\AnswerTimelineEntity', 'p')
@@ -303,6 +306,20 @@ class QuestionService extends AbstractApiService {
                 'result' => 'NOT_FOUND'
             ];
         }
+    }
+
+    public function getAnswerTimelineCount() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $answersTimelineCount = $this->em->createQueryBuilder()
+            ->select('count(p.id)')
+            ->from('Yasoon\Site\Entity\AnswerTimelineEntity', 'p')
+            ->where("p.authorId = :authorId")
+            ->setParameter('authorId',$authorId)
+            ->getQuery()->getSingleScalarResult();
+        return $answersTimelineCount;
     }
 
     public function getNewAnswers() {
@@ -336,6 +353,22 @@ class QuestionService extends AbstractApiService {
             'error'       => false,
             'result'      => $result
         ];
+    }
+
+    public function getNewAnswersCount() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $questions_count = $this->em->createQueryBuilder()
+            ->select('count(p.id)')
+            ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
+            ->where("p.notified  != 1")
+            ->andWhere("p.answer IS NOT NULL")
+            ->andWhere("p.ask_authorId = :ask_authorId")
+            ->setParameter('ask_authorId',$authorId)
+            ->getQuery()->getSingleScalarResult();
+        return $questions_count;
     }
 
     public function questionAnswerNitified($question_ids) {
