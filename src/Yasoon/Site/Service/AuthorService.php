@@ -1459,4 +1459,34 @@ class AuthorService extends AbstractApiService {
             return ['authorData' => false, 'message' => $e->getMessage()];
         }
     }
+
+    /**
+     * @param $post
+     * @return array
+     */
+    public function save($post) {
+        if (isset($post['id'])) {
+            $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($post['id']);
+            isset($post['name'])?$author->setName($post['name']):$author->setName($author->getName());
+            isset($post['email'])?$author->setEmail($post['email']):$author->setEmail($author->getEmail());
+            isset($post['description'])?$author->setDescription($post['description']):$author->setDescription($author->getDescription());
+            isset($post['job'])?$author->setJob($post['job']):$author->setJob($author->getJob());
+            isset($post['dream'])?$author->setDream($post['dream']):$author->setDream($author->getDream());
+            isset($post['password'])?$author->setPassword(md5($post['password'])):$author->setPassword($author->getPassword());
+            isset($post['interest'])?$author->setInterest($post['interest']):$author->setInterest($author->getInterest());
+            $this->em->flush();
+        } else {
+            $author = new AuthorEntity();
+            $author->setName($post['name']);
+            $author->setEmail($post['email']);
+            $author->setDescription($post['description']);
+            $author->setJob($post['job']);
+            $author->setDream($post['dream']);
+            $author->setPassword(md5($post['password']));
+            $author->setInterest($post['interest']);
+            isset($post['role'])?$author->setRole($post['role']):$author->setRole(1);
+            $this->em->persist($author);
+            $this->em->flush();
+        }
+    }
 }
