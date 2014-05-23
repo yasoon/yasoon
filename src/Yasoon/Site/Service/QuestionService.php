@@ -140,12 +140,14 @@ class QuestionService extends AbstractApiService {
             $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
             foreach($friends as $friend)
             {
+                $aa = $question->getId();
                 try {
                     $answerTimelineEntity = (new AnswerTimelineEntity())
                         ->setQuestionId($question->getId())
-                        ->setAuthorId($friend->getId());
+                        ->setAuthorId($friend->getId())
+                        ->setQuestion($question);
 
-                    $this->em->persist($answerTimelineEntity);
+                    $this->em->merge($answerTimelineEntity);
                     $this->em->flush();
                 } catch(Exception $e) {
                     return ['error' => true, 'errorText' => $e->getMessage()];
