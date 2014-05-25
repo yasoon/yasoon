@@ -4,7 +4,10 @@ define(
     'views/ContentRegionView'
     'backbone'
   ]
-(HeaderRegionView, ContentRegionView) ->
+(
+  HeaderRegionView
+  ContentRegionView
+) ->
 
   LayoutView = Backbone.View.extend({
     initialize: ->

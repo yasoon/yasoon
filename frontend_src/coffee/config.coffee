@@ -3,7 +3,6 @@ requirejs.config({
   paths: {
     'backbone':         'vendor/backbone'
     'stickit':          'vendor/backbone.stickit'
-    'epoxy':            'vendor/backbone.epoxy.min'
     'mediator':         'vendor/backbone.mediator'
     'underscore':       'vendor/lodash.underscore'
     'text':             'vendor/text'
@@ -12,7 +11,7 @@ requirejs.config({
     'editor':           'vendor/editor'
     'fileupload':       'vendor/fileupload'
     'bootstrap':        'vendor/bootstrap.min'
-  },
+  }
   shim: {
     'underscore':
       exports: '_'

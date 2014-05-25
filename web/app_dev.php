@@ -4,6 +4,8 @@
  * Date: 5/22/13
  */
 
+umask(0000); // This will let the permissions be 0777
+
 use Symfony\Component\HttpFoundation\Request;
 $loader = require_once __DIR__.'/../app/autoload.php';
 
