@@ -21,7 +21,7 @@ define(
       @
 
     addOne: (answer) ->
-      if @options.id is window.userId
+      if @options.id is Window.config.userId
         answer.set('author', yes)
       speakerAnswerView = new SpeakerAnswerView({model: answer})
       @$el.prepend(speakerAnswerView.render().$el)

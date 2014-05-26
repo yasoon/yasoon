@@ -1,5 +1,5 @@
 (function() {
-  define(['controller', 'admin/controller', 'backbone', 'mediator'], function(Controller, AdminController) {
+  define(['controller', 'admin/controller', 'models/userModel', 'backbone', 'mediator'], function(Controller, AdminController, userModel) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
       routes: {
@@ -39,15 +39,25 @@
         return Controller.posts(category, sort);
       },
       newPost: function() {
-        this.isLogged();
-        return Controller.newPost();
+        if (typeof Window.config.userId !== "undefined") {
+          return Controller.newPost();
+        } else {
+          return this.navigate('#/404');
+        }
       },
       showPost: function(id) {
         return Controller.post(id);
       },
       editPost: function(id) {
-        this.isLogged();
-        return Controller.editPost(id);
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.admin || typeof Window.config.userId !== "undefined") {
+              return Controller.editPost(id);
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       speakers: function(category) {
         return Controller.speakers(category);
@@ -56,8 +66,11 @@
         return Controller.register();
       },
       editAuthor: function() {
-        this.isLogged();
-        return Controller.editAuthor();
+        if (typeof Window.config.userId !== "undefined") {
+          return Controller.editAuthor();
+        } else {
+          return this.navigate('#/404');
+        }
       },
       showSpeaker: function(id, page) {
         return Controller.speaker(id, page);
@@ -71,16 +84,18 @@
         });
       },
       adminMainPage: function() {
-        return AdminController.index();
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.admin) {
+              return AdminController.index();
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();
-      },
-      isLogged: function() {
-        if (typeof window.userId === "undefined") {
-          this.navigate('#/404/');
-          return Controller.undefinedRoute();
-        }
       }
     });
     return new AppRouter();

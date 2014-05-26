@@ -21,7 +21,7 @@ define(
       event.stopPropagation()
       $.post('/logout', {
       }, (data) ->
-        window.userId = no
+        window.config.userId = no
         window.location.reload(true)
       )
 )

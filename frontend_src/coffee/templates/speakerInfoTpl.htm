@@ -1,4 +1,4 @@
-<% var path = (window.userId === id) ? "#/author" : "#/speaker/" + id %>
+<% var path = (Window.config.userId === id) ? "#/author" : "#/speaker/" + id %>
 <div class="fixed-position-aside">
 	<% if(avatarImg === null) { %>
 		<img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="hr"></div>
-			<% if (window.userId !== id) { %>
+			<% if (Window.config.userId !== id) { %>
 				<div class="hdi">
 					<button type="button" class="btn js-follow">Follow</a>
 				</div>

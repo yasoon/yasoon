@@ -17,7 +17,7 @@
       },
       addOne: function(answer) {
         var speakerAnswerView;
-        if (this.options.id === window.userId) {
+        if (this.options.id === Window.config.userId) {
           answer.set('author', true);
         }
         speakerAnswerView = new SpeakerAnswerView({

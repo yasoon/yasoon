@@ -1,6 +1,6 @@
 define(
   [
-    'text!templates/adminTpl.htm'
+    'text!templates/admin/adminTpl.htm'
     'backbone'
   ]
   (
@@ -16,7 +16,6 @@ define(
       })
 
       View = Backbone.View.extend({
-        tagName: 'li'
         template: _.template(adminTpl)
 
         render: ->

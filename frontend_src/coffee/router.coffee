@@ -1,12 +1,14 @@
 define([
     'controller'
     'admin/controller'
+    'models/userModel'
     'backbone'
     'mediator'
   ]
   (
     Controller
     AdminController
+    userModel
   ) ->
     AppRouter = Backbone.Router.extend({
       routes: {
@@ -48,15 +50,22 @@ define([
         Controller.posts(category, sort)
 
       newPost: ->
-        @isLogged()
-        Controller.newPost()
+        if typeof Window.config.userId isnt "undefined"
+          Controller.newPost()
+        else
+          @navigate('#/404')
 
       showPost: (id) ->
         Controller.post(id)
 
       editPost: (id) ->
-        @isLogged()
-        Controller.editPost(id)
+        userModel.deferred.done( =>
+          if Window.config.admin or typeof Window.config.userId isnt
+          "undefined"
+            Controller.editPost(id)
+          else
+            @navigate('#/404')
+        )
 
       speakers: (category) ->
         Controller.speakers(category)
@@ -65,8 +74,10 @@ define([
         Controller.register()
 
       editAuthor: ->
-        @isLogged()
-        Controller.editAuthor()
+        if typeof Window.config.userId isnt "undefined"
+          Controller.editAuthor()
+        else
+          @navigate('#/404')
 
       showSpeaker: (id, page) ->
         Controller.speaker(id, page)
@@ -78,16 +89,16 @@ define([
         @navigate("#/post/#{id}", {trigger: yes})
 
       adminMainPage: ->
-        AdminController.index()
+        userModel.deferred.done( =>
+          if Window.config.admin
+            AdminController.index()
+          else
+            @navigate('#/404')
+        )
 
       undefinedRoute: ->
         Controller.undefinedRoute()
 
-      isLogged: ->
-        if typeof window.userId is "undefined"
-          @navigate('#/404/')
-          Controller.undefinedRoute()
     })
-
     return new AppRouter()
 )
