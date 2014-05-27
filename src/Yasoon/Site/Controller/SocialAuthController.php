@@ -291,7 +291,8 @@ class SocialAuthController {
                 $userCountry = json_decode($response);
                 
                 $url  = str_replace('https:', 'http:', $userCountry->data[0]->pic_big);
-                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$user->getId().'.jpg';
+                $image_name = time().'.jpg';
+                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
                 
                 $ch = curl_init($url);
                 $fp = fopen($path, 'wb');
@@ -301,7 +302,7 @@ class SocialAuthController {
                 curl_close($ch);
                 fclose($fp);
                 
-                $user->setImg($user->getId().'.jpg');
+                $user->setImg($image_name);
                     
                 $this->_em->persist($user);
                 $this->_em->flush();
