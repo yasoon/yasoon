@@ -18,9 +18,9 @@
       },
       followSpeaker: function(event) {
         event.preventDefault();
-        if (typeof window.userId !== "undefined") {
+        if (typeof Window.config.userId !== "undefined") {
           return $.post('/api/author/setFriends', {
-            authorId: window.userId,
+            authorId: Window.config.userId,
             friend: this.model.get('id')
           }, (function(_this) {
             return function(data) {

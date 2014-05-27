@@ -8,7 +8,7 @@
 	</span>
 	<h1>
 		<%= title %>
-		<% if (authorId === window.userId) { %>
+		<% if (authorId === Window.config.userId) { %>
 			<a href="#/post/<%= id %>/edit" class="editable"></a>
 		<% } %>
 		<span class="media-pub">
@@ -30,6 +30,6 @@
 		</span>
 	</span>
 	<span class="q-post">
-		<a href=""><i></i></a> 3 question about this post
+		<a href=""><i></i></a> <%= questionCount %> question about this post
 	</span>
 </div>

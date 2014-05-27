@@ -43,14 +43,12 @@
 
       LoginPopUpView.prototype.vkLogin = function(event) {
         event.preventDefault();
-        window.open('/socauth/vkontakte', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes');
-        return window.location = '/register/';
+        return window.open('/socauth/vkontakte', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes');
       };
 
       LoginPopUpView.prototype.facebookLogin = function(event) {
         event.preventDefault();
-        window.open('/socauth/facebook', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes');
-        return window.location = '/register/';
+        return window.open('/socauth/facebook', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes');
       };
 
       LoginPopUpView.prototype.registerAction = function(event) {
@@ -83,7 +81,7 @@
                   ]);
                 }
               } else {
-                window.userId = data.userData.id;
+                Window.config.userId = data.userData.id;
                 return window.location.reload(true);
               }
             };

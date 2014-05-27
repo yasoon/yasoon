@@ -28,7 +28,7 @@
         event.preventDefault();
         event.stopPropagation();
         return $.post('/logout', {}, function(data) {
-          window.userId = false;
+          window.config.userId = false;
           return window.location.reload(true);
         });
       };

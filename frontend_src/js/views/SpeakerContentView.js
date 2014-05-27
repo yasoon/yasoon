@@ -6,7 +6,7 @@
       initialize: function(options) {
         this.options = options || {};
         if (this.options.page === 'answers') {
-          if (this.options.id !== window.userId) {
+          if (this.options.id !== Window.config.userId) {
             this.createQuestionForm();
           }
           return this.createSpeakerAnswers();
@@ -48,7 +48,7 @@
               answered = _this.speakerAnswersCollectionView.answered();
               if (answered.length > 0) {
                 return _this.$el.append(_this.speakerAnswersCollectionView.render().$el);
-              } else if (_this.options.id === window.userId) {
+              } else if (_this.options.id === Window.config.userId) {
                 return _this.$el.append(_this.speakerAnswersCollectionView.render().$el);
               } else {
                 _this.emptyView = new EmptyView({

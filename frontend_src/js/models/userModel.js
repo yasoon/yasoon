@@ -7,9 +7,12 @@
         this.deferred = $.Deferred();
         return $.get(this.url, (function(_this) {
           return function(data) {
+            var admin;
             _this.set(data.userData);
-            _this.deferred.resolve();
-            return window.userId = _this.get('id');
+            admin = _this.get('roles')[0];
+            Window.config.admin = admin === "ROLE_ADMIN" ? true : false;
+            Window.config.userId = _this.get('id');
+            return _this.deferred.resolve();
           };
         })(this));
       }

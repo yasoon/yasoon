@@ -28,9 +28,9 @@ define(
 
     followSpeaker: (event) ->
       event.preventDefault()
-      if typeof window.userId isnt "undefined"
+      if typeof Window.config.userId isnt "undefined"
         $.post('/api/author/setFriends', {
-          authorId: window.userId
+          authorId: Window.config.userId
           friend: @model.get('id')
         }, (data) =>
           text = if data.type is 'add' then 'Отписаться' else 'Подписаться'

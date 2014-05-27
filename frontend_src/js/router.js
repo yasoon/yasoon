@@ -1,15 +1,19 @@
 (function() {
-  define(['controller', 'backbone', 'mediator'], function(Controller) {
+  define(['controller', 'admin/controller', 'models/userModel', 'backbone', 'mediator'], function(Controller, AdminController, userModel) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
       routes: {
         '': 'index',
-        'posts(/:category)(/:sort)(/)': 'posts',
-        'post(/:id)(/:edit)(/)': 'post',
+        'posts/:category/:sort(/)': 'posts',
+        'post/new(/)': 'newPost',
+        'post/:id(/)': 'showPost',
+        'post/:id/edit(/)': 'editPost',
+        'register(/)': 'registerSpeaker',
         'speakers(/:category)(/)': 'speakers',
-        'speaker(/:id)(/:page)(/)': 'speaker',
-        'register(/)': 'register',
-        'author(/:page)(/)': 'author',
+        'speaker/:id/:page(/)': 'showSpeaker',
+        'author/edit(/)': 'editAuthor',
+        'author/:page(/)': 'author',
+        'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
       },
       initialize: function() {
@@ -34,33 +38,61 @@
       posts: function(category, sort) {
         return Controller.posts(category, sort);
       },
-      post: function(id, edit) {
-        if (id === 'new') {
+      newPost: function() {
+        if (typeof Window.config.userId !== "undefined") {
           return Controller.newPost();
         } else {
-          if (edit) {
-            return Controller.editPost(id);
-          } else {
-            return Controller.post(id);
-          }
+          return this.navigate('#/404');
         }
+      },
+      showPost: function(id) {
+        return Controller.post(id);
+      },
+      editPost: function(id) {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.admin || typeof Window.config.userId !== "undefined") {
+              return Controller.editPost(id);
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       speakers: function(category) {
         return Controller.speakers(category);
       },
-      speaker: function(id, page) {
-        return Controller.speaker(id, page);
-      },
-      register: function() {
+      registerSpeaker: function() {
         return Controller.register();
+      },
+      editAuthor: function() {
+        if (typeof Window.config.userId !== "undefined") {
+          return Controller.editAuthor();
+        } else {
+          return this.navigate('#/404');
+        }
+      },
+      showSpeaker: function(id, page) {
+        return Controller.speaker(id, page);
       },
       author: function(page) {
         return Controller.author(page);
       },
       loadPost: function(id) {
-        return this.navigate("/post/" + id, {
+        return this.navigate("#/post/" + id, {
           trigger: true
         });
+      },
+      adminMainPage: function() {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.admin) {
+              return AdminController.index();
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

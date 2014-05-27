@@ -4,7 +4,6 @@ define(
   ]
 (
 ) ->
-
   UserModel = Backbone.Model.extend({
     url: '/api/author/getShortuserData'
 
@@ -14,10 +13,11 @@ define(
       $.get(@url,
         (data) =>
           @set(data.userData)
+          admin = @get('roles')[0]
+          Window.config.admin = if admin is "ROLE_ADMIN" then yes else no
+          Window.config.userId = @get('id')
           @deferred.resolve()
-          window.userId = @get('id')
       )
-      
   })
   return new UserModel()
 )

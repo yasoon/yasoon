@@ -17,7 +17,7 @@
     <%= title %>
   <% } %>
   </a>
-  <% if (author === window.userId) { %>
+  <% if (author === Window.config.userId) { %>
     <a href="#/post/<%= id %>/edit" class="editable"></a>
   <% } %>
 </h2>

@@ -14,7 +14,7 @@ define(
 ) ->
   Backbone.View.extend({
     tagName: 'section'
-    
+
     className: 'page-layout'
 
     events: ->
@@ -22,7 +22,7 @@ define(
 
     initialize: (options) ->
       @options = options || {}
-      @createHistoryPage()
+      @createPostContent()
 
     addLike: (event) ->
       event.preventDefault()
@@ -36,22 +36,23 @@ define(
           @$el.find('.like-this .counter').text(data.count)
       )
 
-    createHistoryPage: ->
+    createPostContent: ->
       $.post("/api/post/getPost", {
         postid: @options.id
       }, (data) =>
-        data = data[0]
+        questionCount = $(data[0].text).find('article').prevObject.length
+        data = _.extend({}, data[0], {questionCount: questionCount})
         if not @postPageModelView?
           @postPageModelView = new PostPageModelView({
             model: new PostPageModel(data)
           })
         else
           @postPageModelView.delegateEvents()
-        @createHistoryAuthor(data.authorId)
+        @createPostAuthor(data.authorId)
         @$el.append(@postPageModelView.render().$el)
       , 'json')
 
-    createHistoryAuthor: (id) ->
+    createPostAuthor: (id) ->
       $.post("/api/author/getAuthorInfo", {
         author_id: id
       }, (data) =>

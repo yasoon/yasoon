@@ -55,10 +55,10 @@ class PostService extends AbstractApiService {
         if (!is_int($authorId)) {
             throw new AccessDeniedException();
         }
-        
+
         $place = $this->em->createQueryBuilder()->select('max(post.place) as place')
             ->from('Yasoon\Site\Entity\PostEntity', 'post')->where("post.authorId = $authorId")->getQuery()->getSingleResult()['place'];
-            
+
         //echo $post['questionList'][1]['id'];
         //die;
 
@@ -76,9 +76,9 @@ class PostService extends AbstractApiService {
             $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
             $this->em->persist($postEntity);
             $this->em->flush();
-            
+
             $post_id = $postEntity->getId();
-            
+
             if(isset($post['category']) && count($post['category']) > 0)
             {
                 foreach($post['category'] as $category)
@@ -87,12 +87,12 @@ class PostService extends AbstractApiService {
                         ->setPostId($post_id)
                         ->setCategoryId($category*1);
                     $postCategoryEntity->setPost($postEntity);
-                    
+
                     $this->em->persist($postCategoryEntity);
                     $this->em->flush();
                 }
             }
-            
+
             if(isset($post['questionList']) && count($post['questionList']) > 0)
             {
                 foreach($post['questionList'] as $quest)
@@ -103,12 +103,12 @@ class PostService extends AbstractApiService {
                         ->setAnswer($quest['text']);
                     $postAnswerEntity->setPost($postEntity);
                     $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $quest['id']*1));
-                    
+
                     $this->em->persist($postAnswerEntity);
                     $this->em->flush();
                 }
             }
-            
+
             $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
 
 
@@ -125,7 +125,7 @@ class PostService extends AbstractApiService {
                     return ['error' => true, 'errorText' => $e->getMessage()];
                 }
             }
-            
+
             $data = ['id' => 'post_'.$postEntity->getId(),
                      'url' => 'http://'.$_SERVER['HTTP_HOST'].'/#post/'.$postEntity->getId(),
                      'image' => '',
@@ -135,9 +135,9 @@ class PostService extends AbstractApiService {
                      'body' => trim(strip_tags($postEntity->getText())),
                      'date' => date('Y-m-d\TH:i:s', $postEntity->getDate()->getTimestamp()),
                      'title' => trim( strip_tags($postEntity->getCaption()))];
-            
+
             $this->allf->indexistoQueryAdd($data);
-            
+
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
@@ -258,30 +258,30 @@ class PostService extends AbstractApiService {
         }
 
         /** @var PostEntity $post */
-        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($dataPost['postid']);
-        
+        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($dataPost['id']);
+
         if ($post->getAuthorId() != $authorId) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
         try {
-            $post->setCaption($dataPost['postTitle'])
-                ->setPreview($dataPost['postDescription'])
-                ->setText($dataPost['postText'])
+            $post->setCaption($dataPost['title'])
+                ->setPreview($dataPost['description'])
+                ->setText($dataPost['text'])
                 ->setDate(new \DateTime());
-                
+
             $this->em->merge($post);
             $this->em->flush();
-            
+
             $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
                 ->leftJoin('c.post', 'p')
                 ->where('c.post_id = '.$post->getId())
                 ->orderBy('p.date', 'desc')->getQuery()->getResult();
-                
+
             foreach($tags as $tag)
             {
                 $exists_tags[$tag->getCategoryId()] = $tag;
             }
-            
+
             if(isset($dataPost['category']) && count($dataPost['category']) > 0)
             {
                 $saved = [];
@@ -293,17 +293,17 @@ class PostService extends AbstractApiService {
                             ->setPostId($post->getId())
                             ->setCategoryId($category*1);
                         $postCategoryEntity->setPost($post);
-                        
+
                         $this->em->persist($postCategoryEntity);
                         $this->em->flush();
-                        
+
                         $saved[$postCategoryEntity->getCategoryId()] = $postCategoryEntity->getCategoryId();
                     }
                     else
                     {
                         $saved[$category] = $category;
                     }
-                    
+
                 }
                 foreach($exists_tags as $tag)
                 {
@@ -325,7 +325,7 @@ class PostService extends AbstractApiService {
                     }
                 }
             }
-            
+
             //$questions = $post->getAnswer();
             $questions = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->createQueryBuilder('a')
                 ->leftJoin('a.post', 'p')
@@ -349,10 +349,10 @@ class PostService extends AbstractApiService {
                             ->setAnswer($ql['text']);
                         $postAnswerEntity->setPost($post);
                         $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $ql['id']*1));
-                        
+
                         $this->em->persist($postAnswerEntity);
                         $this->em->flush();
-                        
+
                         $saved[$postAnswerEntity->getQuestionId()] = $postAnswerEntity->getQuestionId();
                     }
                     else
@@ -360,10 +360,10 @@ class PostService extends AbstractApiService {
                         $exists_answers[$ql['id']]->setAnswer($ql['text']);
                         $this->em->merge($exists_answers[$ql['id']]);
                         $this->em->flush();
-                        
+
                         $saved[$ql['id']] = $ql['id'];
                     }
-                    
+
                 }
                 foreach($exists_answers as $ans)
                 {
@@ -385,8 +385,8 @@ class PostService extends AbstractApiService {
                     }
                 }
             }
-            
-            
+
+
             $data = ['id' => 'post_'.$post->getId(),
                      'url' => 'http://'.$_SERVER['HTTP_HOST'].'/#post/'.$post->getId(),
                      'image' => '',
@@ -396,15 +396,15 @@ class PostService extends AbstractApiService {
                      'body' => trim(strip_tags($post->getText())),
                      'date' => date('Y-m-d\TH:i:s', $post->getDate()->getTimestamp()),
                      'title' => trim( strip_tags($post->getCaption()))];
-            
+
             $this->allf->indexistoQueryAdd($data);
-            
-            
+
+
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
 
-        return ['error' => false, 'errorText' => ''];
+        return ['error' => false, 'postId' => $dataPost['id']];
 
     }
 
@@ -418,21 +418,21 @@ class PostService extends AbstractApiService {
             if (!is_int($authorId)) {
                 return ['error' => true, 'errorText' => 'accessDenied'];
             }
-    
+
             $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($post_id);
-            
+
             if(!$post)
             {
                 return ['error' => true, 'errorText' => 'notFound'];
             }
-            
+
             if ($post->getAuthorId() != $authorId) {
                 return ['error' => true, 'errorText' => 'accessDenied'];
             }
-            
+
             $this->em->remove($post);
             $this->em->flush();
-            
+
             $categories = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')
                 ->createQueryBuilder('c')
                 ->where('c.post_id = '.$post_id)
@@ -442,7 +442,7 @@ class PostService extends AbstractApiService {
                 $this->em->remove($category);
                 $this->em->flush();
             }
-            
+
             $questions = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')
                 ->createQueryBuilder('a')
                 ->where('a.post_id = '.$post_id)
@@ -452,20 +452,20 @@ class PostService extends AbstractApiService {
                 $this->em->remove($question);
                 $this->em->flush();
             }
-            
+
             $post_like = $this->em->getRepository('Yasoon\Site\Entity\PostLikesEntity')
                 ->createQueryBuilder('l')
                 ->where('l.post_id = '.$post_id)
                 ->getQuery()->getResult();
-            
+
             foreach($post_like as $like)
             {
                 $this->em->remove($like);
                 $this->em->flush();
             }
-            
+
             $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
-            
+
             foreach($friends as $friend)
             {
                 $timeline =  $this->em->createQueryBuilder()
@@ -480,7 +480,7 @@ class PostService extends AbstractApiService {
                         ->setPostsCount('0')
                         ->setQuestionsCount('0')
                         ->setAnswersCount('0');
-                        
+
                     $this->em->persist($timeline);
                     $this->em->flush();
                 }
@@ -494,11 +494,11 @@ class PostService extends AbstractApiService {
                     }
                 }
             }
-            
+
             $data = json_encode(['_id' => 'post_'.$post_id]);
             $batchDataBody = '[' . $data . ']';
             $this->allf->indexistoQueryDelete($batchDataBody);
-            
+
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
@@ -517,7 +517,7 @@ class PostService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\PostEntity', 'p')
             ->where('p.id IN('.implode(',', $postId).')')
             ->getQuery()->getResult();
-            
+
         foreach($posts as $post)
         {
             $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
@@ -548,8 +548,8 @@ class PostService extends AbstractApiService {
 
         return $result;
     }
-    
-    
+
+
 
     /**
      * @param $authorId
@@ -560,7 +560,7 @@ class PostService extends AbstractApiService {
 
         try {
             $time = date('Y-m-d H:i:s', strtotime(str_replace('/', '-', $date)));
-            
+
             $where_arr = [];
             $where_str = '';
             foreach($authorId as $k => $v)
@@ -573,18 +573,18 @@ class PostService extends AbstractApiService {
             //return $where_arr;
 
             /** @var PostEntity $post */
-            
+
             $posts = $this->em->createQueryBuilder()
                 ->select('p')
                 ->from('Yasoon\Site\Entity\PostEntity', 'p')
                 ->where($where_str)
                 ->getQuery()->getResult();
-                
+
             if(count($posts) < 1)
             {
                 return [];
             }
-                
+
             foreach($posts as $post)
             {
                 $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
@@ -614,17 +614,17 @@ class PostService extends AbstractApiService {
         }
         return $result;
     }
-    
-    
+
+
     /**
      * @return array
      */
     public function get_all($page, $items)
     {
         $offset = ($page*$items)-$items;
-        
+
         $adata = [];
-        
+
         /** @var PostEntity $post */
         $posts = $this->em->createQueryBuilder()
             ->select('p')
@@ -632,7 +632,7 @@ class PostService extends AbstractApiService {
             ->setMaxResults($items)
             ->setFirstResult($offset)
             ->getQuery()->getResult();
-            
+
         foreach($posts as $post)
         {
             $post_answers = [];
@@ -647,7 +647,7 @@ class PostService extends AbstractApiService {
                                        'answer' => $answer->getAnswer()];
                 }
             }
-            
+
             $adata[] = ['id' => $post->getId(),
                         'author_id' => $post->getAuthor()->getId(),
                         'author_name' => $post->getAuthor()->getName(),
@@ -661,28 +661,28 @@ class PostService extends AbstractApiService {
 
         return $adata;
     }
-    
-    
+
+
     /**
      * @param $postId
      * @return array
      */
     public function getEditPost($postId) {
         $result = [];
-        
+
         $posts = $this->em->createQueryBuilder()
             ->select('p')
             ->from('Yasoon\Site\Entity\PostEntity', 'p')
             ->where('p.id = '.$postId)
             ->getQuery()->getSingleResult();
-            
+
         $categories = $posts->getCategory();
         $tags = [];
         foreach($categories as $cat)
         {
             $tags[] = $cat->getCategoryId();
         }
-        
+
         $questions = $posts->getAnswer();
         //$tags = [];
         $answers = [];
@@ -692,7 +692,7 @@ class PostService extends AbstractApiService {
                           'question' => $question->getQuestion()->getText(),
                           'text' => $question->getAnswer()];
         }
-        
+
         $result = ['authorId' => $posts->getAuthorId(),
                    'authorName' => $posts->getAuthor()->getName(),
                    'postTitle' => $posts->getCaption(),
@@ -791,7 +791,7 @@ class PostService extends AbstractApiService {
           'autorId'   => $story->getPost()->getAuthor()->getId(),
           'authorName' => $story->getPost()->getAuthor()->getName(),
           'authorDescription' => $story->getPost()->getAuthor()->getDescription(),
-          'authorAvatar' => $story->getPost()->getAuthor()->getImg(), 
+          'authorAvatar' => $story->getPost()->getAuthor()->getImg(),
           'publishDate' => $story->getPost()->getAuthor()->getPublicationDate()->format('d/m/Y'),
           'title' => $story->getPost()->getCaption(),
           'text'    => $story->getPost()->getText(),
@@ -802,7 +802,7 @@ class PostService extends AbstractApiService {
         $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
         $from_date = date('Y-m-d H:i:s', $time);
         $to_date = date('Y-m-d H:i:s', ($time+86400));
-            
+
         try {
             $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
                 ->createQueryBuilder('pd')
@@ -810,7 +810,7 @@ class PostService extends AbstractApiService {
                 ->orderBy('pd.assignedDatetime', 'DESC')
                 ->getQuery()
                 ->getResult();
-            
+
             if(count($dayentity) > 0)
             {
                 $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
@@ -822,7 +822,7 @@ class PostService extends AbstractApiService {
                 {
                     $pcats[] = $tag->getCategoryId();
                 }
-                
+
                 return ['id'          => $dayentity[0]->getPost()->getId(),
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
                         'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
@@ -835,7 +835,7 @@ class PostService extends AbstractApiService {
                         'publishDate' => $dayentity[0]->getPost()->getDate()->format('d/m/Y'),
                         'post_likes'  => $dayentity[0]->getPost()->getLikes()];
             }
-            
+
             return ['error' => 'true', 'errorText' => 'storyNotAssigned'];
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
@@ -856,7 +856,7 @@ class PostService extends AbstractApiService {
             $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
             $from_date = date('Y-m-d H:i:s', $time);
             $to_date = date('Y-m-d H:i:s', ($time+86400));
-            
+
             $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
                 ->createQueryBuilder('pd')
                 ->where("(pd.assignedDatetime > '".$from_date."' AND pd.assignedDatetime < '$to_date') AND pd.postId = $postId")
@@ -866,14 +866,14 @@ class PostService extends AbstractApiService {
             {
                 return ['error' => 'true', 'errorText' => 'storyAssigned'];
             }
-            
+
             $story = (new PostOfTheDayEntity())
                 ->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId))
                 ->setAssignedDatetime(new \DateTime());
-    
+
             $this->em->persist($story);
             $this->em->flush();
-    
+
             return ['error' => 'false', 'postId' => $story->getPost()->getId()];
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
@@ -895,15 +895,15 @@ class PostService extends AbstractApiService {
         {
             $user_ip = '0';
         }
-        
+
         try {
             $post_like = $this->em->getRepository('Yasoon\Site\Entity\PostLikesEntity')
                 ->createQueryBuilder('l')
                 ->where("(l.authorId = ".$authorId." OR l.user_ip = '$user_ip') AND l.post_id = $postId")
                 ->getQuery()
                 ->getResult();
-                
-            
+
+
             if(count($post_like) < 1)
             {
                 /*if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 86400)
@@ -912,21 +912,21 @@ class PostService extends AbstractApiService {
                 }*/
                 $PostLikesEntity = new PostLikesEntity();
                 $PostLikesEntity->setAuthorId($authorId);
-                
+
                 $PostLikesEntity->setUserIp($user_ip);
-                
+
                 $PostLikesEntity->setPostId($postId);
                 $PostLikesEntity->setAuthorId($authorId);
                 $PostLikesEntity->setLastDate(new \DateTime());
                 $PostLikesEntity->setPostId($postId);
                 $PostLikesEntity->setCountLikes(1);
                 $PostLikesEntity->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId));
-                
+
                 $PostLikesEntity->getPost()->setLikes(($PostLikesEntity->getPost()->getLikes()*1) + 1);
-                
+
                 $this->em->persist($PostLikesEntity);
                 $this->em->flush();
-                
+
                 $result_likes = $PostLikesEntity->getPost()->getLikes();
             }
             else
@@ -945,18 +945,18 @@ class PostService extends AbstractApiService {
                 }
                 $post_like[0]->setCountLikes(($post_like[0]->getCountLikes()*1) + 1);
                 $post_like[0]->setLastDate(new \DateTime());
-                
+
                 $post_like[0]->getPost()->setLikes(($post_like[0]->getPost()->getLikes()*1) + 1);
-                
+
                 $this->em->persist($post_like[0]);
                 $this->em->flush();
-                
+
                 $result_likes = $post_like[0]->getPost()->getLikes();
             }
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
-        
+
         return ['count' => $result_likes];
     }
 
@@ -1006,13 +1006,13 @@ class PostService extends AbstractApiService {
 
         return $result;
     }
-    
-    
+
+
     public function getQuestionsByIds($ids)
     {
-        
+
         $aquestions = [];
-        
+
         $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->createQueryBuilder('q')
             ->where('q.id IN('.implode(',', $ids).')')
             ->orderBy('q.date', 'desc')->getQuery()->getResult();

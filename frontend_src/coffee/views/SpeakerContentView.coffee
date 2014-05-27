@@ -26,7 +26,7 @@ define(
     initialize: (options) ->
       @options = options || {}
       if @options.page is 'answers'
-        if @options.id isnt window.userId
+        if @options.id isnt Window.config.userId
           @createQuestionForm()
         @createSpeakerAnswers()
       else
@@ -60,7 +60,7 @@ define(
           answered = @speakerAnswersCollectionView.answered()
           if answered.length > 0
             @$el.append(@speakerAnswersCollectionView.render().$el)
-          else if @options.id is window.userId
+          else if @options.id is Window.config.userId
             @$el.append(@speakerAnswersCollectionView.render().$el)
           else
             @emptyView = new EmptyView({

@@ -52,7 +52,6 @@ define(
         menubar=no,
         resizable=yes'
       )
-      window.location = '/register/'
 
     facebookLogin: (event) ->
       event.preventDefault()
@@ -71,7 +70,6 @@ define(
         menubar=no,
         resizable=yes'
       )
-      window.location = '/register/'
 
     registerAction: (event) ->
       @closePopUp()
@@ -96,7 +94,7 @@ define(
                 message: 'Неверный пароль'
               }])
           else
-            window.userId = data.userData.id
+            Window.config.userId = data.userData.id
             window.location.reload(true)
         , 'json')
       else

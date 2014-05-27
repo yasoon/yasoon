@@ -2,7 +2,7 @@ app/config/test/parameters.yml
 app/config/dev/parameters.yml
 
 #vendors
-vendor/
+/vendor/
 
 #IDE files
 .idea/

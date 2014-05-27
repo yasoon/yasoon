@@ -44,7 +44,7 @@ define(
       $.post('/api/question/delete', {
         model:
           id: @model.get('id')
-      }, (data) =>
+      }, (data) ->
         if not data.error
           console.log data
           $(event.currentTarget).closest('article').remove()
