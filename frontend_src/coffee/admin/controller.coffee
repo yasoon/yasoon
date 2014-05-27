@@ -1,7 +1,7 @@
 define(
   [
     'views/LayoutView'
-    'admin/AdminPageView'
+    'admin/views/AdminPageView'
     'backbone'
   ]
   (

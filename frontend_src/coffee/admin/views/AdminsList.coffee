@@ -1,6 +1,6 @@
 define(
   [
-    'text!templates/admin/adminTpl.htm'
+    'text!admin/templates/adminTpl.htm'
     'backbone'
   ]
   (

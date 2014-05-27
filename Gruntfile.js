@@ -6,7 +6,7 @@ module.exports = function(grunt) {
                 expand: true,
                 flatten: false,
                 cwd: 'frontend_src/coffee',
-                src: ['**/*.coffee'],
+                src: ['**/{,*/}*.coffee'],
                 dest: 'frontend_src/js',
                 ext: '.js'
             }
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 expand: true,
                 flatten: false,
                 cwd: 'frontend_src/coffee/',
-                src: ['templates/**/*', 'vendor/*'],
+                src: ['templates/*', 'admin/templates/*', 'vendor/*'],
                 dest: 'frontend_src/js/'
             },
             css: {
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                 }
             },
             scripts: {
-                files: ['frontend_src/coffee/{,*/}*.coffee', 'frontend_src/coffee/template/*.htm'],
+                files: ['frontend_src/coffee/{,*/}*.coffee', 'frontend_src/coffee/admin/{,*/}*.coffee', 'frontend_src/coffee/templates/*.htm', 'frontend_src/coffee/admin/templates/*.htm'],
                 tasks: ['coffee:app', 'coffeelint', 'copy:js', 'requirejs', 'copy:build']
             },
             css: {
