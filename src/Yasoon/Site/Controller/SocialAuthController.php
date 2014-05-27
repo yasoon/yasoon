@@ -191,7 +191,7 @@ class SocialAuthController {
         {
         ?>
         <script>
-            window.opener.location.href='/#editprofile';
+            window.opener.location.href='/#/author/update/';
             window.opener.$('.barrier').fadeOut(500);
             window.close();
         </script>
@@ -201,7 +201,7 @@ class SocialAuthController {
         {
         ?>
         <script>
-            window.opener.location.href='/#author/<?php echo $user->getId() ?>/posts';
+            window.opener.location.href='/#/author/posts/;
             window.opener.$('.barrier').fadeOut(500);
             window.close();
         </script>
@@ -249,6 +249,7 @@ class SocialAuthController {
         
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
+            $new_user = false;
             $request_url = $URL_GET_ME.'?access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -306,6 +307,7 @@ class SocialAuthController {
                     
                 $this->_em->persist($user);
                 $this->_em->flush();
+                $new_user = true;
             }
             else
             {
@@ -327,7 +329,7 @@ class SocialAuthController {
         {
         ?>
         <script>
-            window.opener.location.href='/#editprofile';
+            window.opener.location.href='/#/author/update/';
             window.opener.$('.barrier').fadeOut(500);
             window.close();
         </script>
@@ -337,7 +339,7 @@ class SocialAuthController {
         {
         ?>
         <script>
-            window.opener.location.href='/#author/<?php echo $user->getId() ?>/posts';
+            window.opener.location.href='/#/author/posts/;
             window.opener.$('.barrier').fadeOut(500);
             window.close();
         </script>
