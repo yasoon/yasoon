@@ -1,7 +1,7 @@
 define(
   [
     'text!admin/templates/adminMainPageTpl.htm'
-    'admin/views/AdminsList'
+#    'admin/views/AdminsList'
     'admin/views/PostsList'
     'admin/views/ContentsList'
     'admin/views/InterviewsList'
@@ -10,7 +10,7 @@ define(
   ]
   (
     adminMainPageTpl
-    AdminsList
+#    AdminsList
     PostsList
     ContentsList
     InterviewsList
