@@ -981,43 +981,43 @@ class AuthorService extends AbstractApiService {
     public function getAuthorsByIds($ids)
     {
         try {
-            $result = [];
-            $authors = $this->em->createQueryBuilder()
-                ->select('a')
-                ->from('Yasoon\Site\Entity\AuthorEntity', 'a')
-                ->where('a.id IN('.implode(',', array_keys($ids)).')')
-                ->getQuery()->getResult();
-    
-            $adata = [];
-            foreach($authors as $author)
-            {
-                $adata[] = ['id' => $author->getId(),
-                            'name' => $author->getName(),
-                            'avatarImg' => $author->getImg(),
-                            'last_publish_date' => $author->getPublicationDate()->format('d/m/Y'),
-                            'interviewCaption' => $author->getInterviewCaption(),
-                            'likes_count' => $ids[$author->getId()]['likes'],
-                            'posts_count' => $ids[$author->getId()]['posts'],
-                            'email' => $author->getEmail()];
-            }
-            //print_r($ids);
-            
-            uasort($adata, function($a, $b) {
-                if($a['likes_count'] == $b['likes_count']){
-                    return 0;
+            $data = [];
+            if (count($ids) > 0) {
+                $authors = $this->em->createQueryBuilder()
+                    ->select('a')
+                    ->from('Yasoon\Site\Entity\AuthorEntity', 'a')
+                    ->where('a.id IN('.implode(',', array_keys($ids)).')')
+                    ->getQuery()->getResult();
+
+                $adata = [];
+                foreach($authors as $author)
+                {
+                    $adata[] = ['id' => $author->getId(),
+                        'name' => $author->getName(),
+                        'avatarImg' => $author->getImg(),
+                        'last_publish_date' => $author->getPublicationDate()->format('d/m/Y'),
+                        'interviewCaption' => $author->getInterviewCaption(),
+                        'likes_count' => $ids[$author->getId()]['likes'],
+                        'posts_count' => $ids[$author->getId()]['posts'],
+                        'email' => $author->getEmail()];
                 }
-                if($a['likes_count'] > $b['likes_count']){
-                    return -1;
+                //print_r($ids);
+
+                uasort($adata, function($a, $b) {
+                    if($a['likes_count'] == $b['likes_count']){
+                        return 0;
+                    }
+                    if($a['likes_count'] > $b['likes_count']){
+                        return -1;
+                    }
+                    return 1;
+                });
+
+                foreach($adata as $ad)
+                {
+                    $data[] = $ad;
                 }
-                return 1;
-            });
-            
-            foreach($adata as $ad)
-            {
-                $data[] = $ad;
             }
-            
-            
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
