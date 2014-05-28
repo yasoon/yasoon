@@ -253,14 +253,10 @@ class PostService extends AbstractApiService {
      */
     public function updatePost(array $dataPost) {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
-        if (!is_int($authorId) && !$this->allf->isAdmin()) {
-            return ['error' => true, 'errorText' => 'accessDenied'];
-        }
-
         /** @var PostEntity $post */
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($dataPost['id']);
 
-        if ($post->getAuthorId() != $authorId) {
+        if ($post->getAuthorId() != $authorId && !$this->allf->isAdmin()) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
         try {
@@ -426,7 +422,7 @@ class PostService extends AbstractApiService {
                 return ['error' => true, 'errorText' => 'notFound'];
             }
 
-            if ($post->getAuthorId() != $authorId) {
+            if ($post->getAuthorId() != $authorId && !$this->allf->isAdmin()) {
                 return ['error' => true, 'errorText' => 'accessDenied'];
             }
 
