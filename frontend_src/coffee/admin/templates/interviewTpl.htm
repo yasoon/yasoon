@@ -1,0 +1,40 @@
+<h2><a href="#" class="openInterview"><%= name %></a></h2>
+<div class="editBlock form-group">
+    <input type="text" value="<%= name %>" placeholder="Введите название интервью" class="form-control interviewName" />
+</div>
+<div class="interview_question_list">
+    <ul class="list-unstyled">
+        <% _.each(questions,function(question,indx){ %>
+        <li data-id="<%= question.id %>" class="input-group">
+            <input type="text" class="interview_question form-control" placeholder="Введите текст вопроса" value="<%= question.text %>" data-id="<%= question.id %>"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default js-deleteQuestion">Удалить</button>
+            </span>
+        </li>
+        <% }); %>
+        <li class="input-group">
+            <input type="text" class="interview_question form-control" placeholder="Введите текст вопроса"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default js-add">Добавить</button>
+            </span>
+        </li>
+    </ul>
+    <article class="text-center">
+        <div class="row">
+            <div class="col-sm-6 text-right">
+                <button type="button" class="btn js-save">Сохранить</button>
+            </div>
+            <div class="col-sm-6 text-left">
+                <button type="button" class="btn js-deleteInterview">Удалить</button>
+            </div>
+        </div>
+        <div class="interviewLink">
+            <p>
+                <b>Ссылка на интервью:</b>
+                <a href="/#/post/new/<%= id %>/" target="_blank">
+                    <%= window.location.origin+'/#/post/new/' + id + '/' %>
+                </a>
+            </p>
+        </div>
+    </article>
+</div>

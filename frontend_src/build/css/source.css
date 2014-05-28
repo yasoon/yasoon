@@ -6766,6 +6766,24 @@ footer nav a {
 aside li {
   list-style-type: none;
 }
+.admin .container {
+  margin-top: 20px;
+}
+.admin #content article {
+  border-bottom: 1px solid #dddddd;
+}
+.admin #content .edit {
+  display: none;
+}
+.admin #interview .input-group {
+  margin-bottom: 10px;
+}
+.admin #interview p {
+  margin-top: 10px;
+}
+.admin #interview article.interview {
+  border-bottom: 1px solid #e2e2e2;
+}
 ul li {
   list-style: none;
   padding: 0;

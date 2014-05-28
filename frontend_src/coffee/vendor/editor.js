@@ -35,7 +35,7 @@ var RLANG = {
 	header3: 'Заголовок 3',
 	header4: 'Заголовок 4',
 	header5: 'Заголовок 5',
-	bold:  'Полужирный',
+	bold:  'Жирный',
 	italic: 'Наклонный',
 	fontcolor: 'Цвет текста',
 	backcolor: 'Заливка текста',
@@ -188,9 +188,8 @@ var RLANG = {
 
 			buttonsCustom: {},
 			buttonsAdd: [],
-			buttons: ['html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-					'image', 'video', 'file', 'table', 'link', '|',
-					'fontcolor', 'backcolor', '|', 'alignment', '|', 'horizontalrule'], // 'underline', 'alignleft', 'aligncenter', 'alignright', 'justify'
+			buttons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', '|',
+					'image', 'video', 'file', 'table', 'link'], // 'html', '|', 'underline',  'outdent', 'indent', 'alignleft', 'aligncenter', 'alignright', 'justify', 'fontcolor', 'backcolor', 'alignment', 'horizontalrule'
 
 			airButtons: ['formatting', '|', 'bold', 'italic', 'deleted', '|', 'unorderedlist', 'orderedlist', 'outdent', 'indent', '|', 'fontcolor', 'backcolor'],
 
@@ -281,11 +280,11 @@ var RLANG = {
 			modal_link: String() +
 				'<div id="redactor_modal_content">' +
 				'<form id="redactorInsertLinkForm" method="post" action="">' +
-					'<div id="redactor_tabs">' +
-						'<a href="javascript:void(null);" class="redactor_tabs_act">URL</a>' +
-						'<a href="javascript:void(null);">Email</a>' +
-						'<a href="javascript:void(null);">' + RLANG.anchor + '</a>' +
-					'</div>' +
+					// '<div id="redactor_tabs">' +
+					// 	'<a href="javascript:void(null);" class="redactor_tabs_act">URL</a>' +
+					// 	'<a href="javascript:void(null);">Email</a>' +
+					// 	'<a href="javascript:void(null);">' + RLANG.anchor + '</a>' +
+					// '</div>' +
 					'<input type="hidden" id="redactor_tab_selected" value="1" />' +
 					'<div class="redactor_tab" id="redactor_tab1">' +
 						'<label>URL</label><input type="text" id="redactor_link_url" class="redactor_input"  />' +
@@ -353,36 +352,36 @@ var RLANG = {
 							title: RLANG.quote,
 							exec: 'formatblock',
 							className: 'redactor_format_blockquote'
-						},
-						pre:
-						{
-							title: RLANG.code,
-							exec: 'formatblock',
-							className: 'redactor_format_pre'
-						},
-						h1:
-						{
-							title: RLANG.header1,
-							exec: 'formatblock',
-							className: 'redactor_format_h1'
-						},
-						h2:
-						{
-							title: RLANG.header2,
-							exec: 'formatblock',
-							className: 'redactor_format_h2'
-						},
-						h3:
-						{
-							title: RLANG.header3,
-							exec: 'formatblock',
-							className: 'redactor_format_h3'
-						},
-						h4:
-						{
-							title: RLANG.header4,
-							exec: 'formatblock',
-							className: 'redactor_format_h4'
+						// },
+						// pre:
+						// {
+						// 	title: RLANG.code,
+						// 	exec: 'formatblock',
+						// 	className: 'redactor_format_pre'
+						// },
+						// h1:
+						// {
+						// 	title: RLANG.header1,
+						// 	exec: 'formatblock',
+						// 	className: 'redactor_format_h1'
+						// },
+						// h2:
+						// {
+						// 	title: RLANG.header2,
+						// 	exec: 'formatblock',
+						// 	className: 'redactor_format_h2'
+						// },
+						// h3:
+						// {
+						// 	title: RLANG.header3,
+						// 	exec: 'formatblock',
+						// 	className: 'redactor_format_h3'
+						// },
+						// h4:
+						// {
+						// 	title: RLANG.header4,
+						// 	exec: 'formatblock',
+						// 	className: 'redactor_format_h4'
 						}
 					}
 				},
@@ -1171,7 +1170,7 @@ var RLANG = {
 		},
 		syncCode: function()
 		{
-			this.$el.val(this.$editor.html()).trigger('change');			
+			this.$el.val(this.$editor.html());
 		},
 
 		// API functions
