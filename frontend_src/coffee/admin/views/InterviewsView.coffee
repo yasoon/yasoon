@@ -8,6 +8,7 @@ define(
   )->
     Backbone.View.extend({
       initialize: ->
+
         @collection.fetch()
         @listenTo(@collection, 'add', @addOne)
 

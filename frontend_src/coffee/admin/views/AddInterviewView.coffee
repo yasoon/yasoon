@@ -46,8 +46,8 @@ define(
       deleteInterview: (event) ->
         event.preventDefault()
         $.post('/api/interview/delete_interviews',{
-          id:"24"
-        }, (data) ->
+            id:"24"
+          }, (data) ->
           if data
             @$el.remove()
         )
@@ -66,8 +66,8 @@ define(
         oldText = button.text()
         button.text('Сохранено').prop('disabled', yes)
         $.post('/api/interview/save_interview', {
-          interview: @model.toJSON()
-        }, ->
+            interview: @model.toJSON()
+          }, ->
           window.setTimeout(->
             button.text(oldText).prop('disabled', no)
           , 3000)
