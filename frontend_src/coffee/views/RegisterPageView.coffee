@@ -115,6 +115,7 @@ define(
         , 'json')
       else
         @showErrors(@model.validationError)
+
     updateAction: (event) ->
       event.preventDefault()
       @hideErrors()

@@ -8,6 +8,7 @@ define(
   )->
     Backbone.View.extend({
       initialize: ->
+        console.log @collection
         @listenTo(@collection, 'add', @addOne)
 
       render: ->
@@ -16,8 +17,9 @@ define(
         )
         @
 
-      addOne: (model) ->
-        interview = new InterviewQuestionView({model: model})
-        @$el.append(interview.render().$el)
+      addOne: (question) ->
+        question = new InterviewQuestionView({model: question})
+        @$el.append(question.render().$el)
+
     })
 )

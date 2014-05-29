@@ -76,7 +76,15 @@
         return Controller.speaker(id, page);
       },
       author: function(page) {
-        return Controller.author(page);
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.userId !== "undefined") {
+              return Controller.author(page);
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       loadPost: function(id) {
         return this.navigate("#/post/" + id, {

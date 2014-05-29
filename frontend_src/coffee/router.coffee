@@ -83,7 +83,12 @@ define([
         Controller.speaker(id, page)
 
       author: (page) ->
-        Controller.author(page)
+        userModel.deferred.done( =>
+          if Window.config.userId isnt "undefined"
+            Controller.author(page)
+          else
+            @navigate('#/404')
+        )
 
       loadPost: (id) ->
         @navigate("#/post/#{id}", {trigger: yes})
