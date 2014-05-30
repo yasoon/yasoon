@@ -1,21 +1,46 @@
 define(
   [
     'admin/views/InterviewsView'
+    'admin/views/InterviewAddFormView'
     'admin/collections/InterviewsCollection'
+    'admin/models/InterviewModel'
     'backbone'
   ]
   (
     InterviewsView
+    InterviewAddFormView
     InterviewsCollection
+    InterviewModel
   )->
     Backbone.View.extend({
       initialize: ->
-        if not @postsList?
-          @postsList = new InterviewsView({
-            collection: new InterviewsCollection()
+        @createInterviewsList()
+        @createInterviewAddForm()
+
+      events: ->
+#        'click .js-add': 'addInterview'
+
+      createInterviewsList: ->
+        @interviewsCollection = new InterviewsCollection()
+        if not @interviewsList?
+          @interviewsList = new InterviewsView({
+            collection: @interviewsCollection
           })
         else
-          @postsList.delegateEvents()
-        @$el.append(@postsList.render().$el)
+          @interviewsList.delegateEvents()
+        @$el.append(@interviewsList.render().$el)
+
+      createInterviewAddForm: ->
+        @interview = new InterviewModel()
+        if not @interviewsAddForm?
+          @interviewsAddForm = new InterviewAddFormView({
+            model: @interview
+          })
+        else
+          @interviewsAddForm.delegateEvents()
+        @$el.append(@interviewsAddForm.render().$el)
+
+      addInterview: ->
+        @interviewsCollection.add()
     })
 )

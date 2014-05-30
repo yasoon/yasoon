@@ -17,32 +17,24 @@ define(
 
       setPostOfTheDay: (event) ->
         event.preventDefault()
-
-        id = $(event.currentTarget).closest('article').data('postId')
-
         $.post("/api/post/set_daystory", {
-            postId: id
-          }, (data) ->
+          postId: @model.get('id')
+        }, (data) ->
           $('.js-postOfTheDay').prop('disable', no)
           $(event.currentTarget).prop('disable', yes)
         , 'json')
 
       deletePost: (event) ->
         event.preventDefault()
-
-        id = $(event.currentTarget).closest('article').data('postId')
-
         $.post("/api/post/deletePost", {
-            post_id: id
-          }, (data) ->
+          post_id: @model.get('id')
+        }, (data) ->
           if data.error is no
             $(event.currentTarget).closest('article').remove()
         , 'json')
 
       render: ->
-        @$el
-        .data('postId', @model.get('id'))
-        .append(@template(@model.toJSON()))
+        @$el.append(@template(@model.toJSON()))
         @
     })
 )

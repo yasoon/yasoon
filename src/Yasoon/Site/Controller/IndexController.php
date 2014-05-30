@@ -66,7 +66,7 @@ class IndexController {
     <script>
         Window.config = {
             category: '.json_encode($category).',
-            userId: 0
+            userId: false
         }
     </script>
 </body>';

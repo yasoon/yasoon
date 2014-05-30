@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'models/UserRegisterModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, UserRegisterModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -82,6 +82,16 @@
         });
         LayoutView.contentRegion.$el.empty().append(this.registerPageView.render().$el);
         this.registerPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.editAuthor = function() {
+        $('body').removeClass().addClass('editAuthor');
+        this.editAuthorPageView = new EditAuthorPageView({
+          model: new UserUpdateModel()
+        });
+        LayoutView.contentRegion.$el.empty().append(this.editAuthorPageView.render().$el);
+        this.editAuthorPageView.delegateEvents();
         return this;
       };
 

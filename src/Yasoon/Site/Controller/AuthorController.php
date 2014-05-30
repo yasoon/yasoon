@@ -126,12 +126,12 @@ class AuthorController {
     }
 
     /**
-     * @Route("/getShortuserData")
+     * @Route("/getShortUserData")
      * @Method({"GET"})
      *
      * @return array
      */
-    public function getShortuserDataAction() {
+    public function getShortUserDataAction() {
         $result = $this->service->getPrivateInfo();
 
         return $result;

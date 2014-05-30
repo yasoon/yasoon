@@ -11,9 +11,6 @@ define(
         @collection.fetch()
         @listenTo(@collection, 'add', @addOne)
 
-      showMore: ->
-        @collection.fetch()
-
       addOne: (model) ->
         interview = new InterviewView({model: model})
         @$el.append(interview.render().$el)

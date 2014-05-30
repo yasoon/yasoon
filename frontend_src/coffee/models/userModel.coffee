@@ -5,18 +5,25 @@ define(
 (
 ) ->
   UserModel = Backbone.Model.extend({
-    url: '/api/author/getShortuserData'
+    url: '/api/author/getShortUserData'
 
     initialize: ->
       @deferred = $.Deferred()
 
       $.get(@url,
         (data) =>
-          @set(data.userData)
-          admin = @get('roles')[0]
-          Window.config.admin = if admin is "ROLE_ADMIN" then yes else no
-          Window.config.userId = @get('id')
-          @deferred.resolve()
+          if data
+            @set(data)
+            admin = @get('roles')[0]
+            Window.config.admin = if admin is "ROLE_ADMIN" then yes else no
+            Window.config.userId = @get('id')
+            Window.config.regFrom = @get('regFrom')
+            @deferred.resolve()
+          else
+            Window.config.admin = no
+            Window.config.userId = no
+            Window.config.regFrom = @get('regFrom')
+            @deferred.resolve()
       )
   })
   return new UserModel()

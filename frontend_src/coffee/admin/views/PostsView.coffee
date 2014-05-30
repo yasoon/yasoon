@@ -1,18 +1,28 @@
 define(
   [
     'admin/views/PostView'
+    'views/EmptyView'
     'backbone'
   ]
   (
     PostView
+    EmptyView
   )->
     Backbone.View.extend({
       initialize: ->
         @collection.fetch()
-        @listenTo(@collection, 'add', @addOne)
+        if @collection.size() > 0
+          @listenTo(@collection, 'add', @addOne)
+        else
+          if not @emptyView?
+            @emptyView = new EmptyView({
+              message: "Постов нет"
+            })
+          else
+            @emptyView.delegateEvents()
+          @$el.append(@emptyView.render().$el)
 
       showMore: ->
-        counter += 1
         @collection.fetch()
 
       addOne: (model) ->
