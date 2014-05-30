@@ -14,7 +14,7 @@ define([
       routes: {
         '': 'index'
         'posts/:category/:sort(/)': 'posts'
-        'post/new(/)': 'newPost'
+        'post/new(/:id)(/)': 'newPost'
         'post/:id(/)': 'showPost'
         'post/:id/edit(/)': 'editPost'
         'register(/)': 'registerSpeaker'
@@ -49,9 +49,9 @@ define([
       posts: (category, sort) ->
         Controller.posts(category, sort)
 
-      newPost: ->
+      newPost: (id) ->
         if typeof Window.config.userId isnt "undefined"
-          Controller.newPost()
+          Controller.newPost(id)
         else
           @navigate('#/404')
 

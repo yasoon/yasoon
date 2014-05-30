@@ -20,7 +20,7 @@
       };
 
       Register.prototype.bindings = {
-        '#description': 'description',
+        '#interviewCaption': 'interviewCaption',
         '#subscribed': 'subscribed',
         '#password': 'password',
         '#interest': 'interest',
@@ -139,7 +139,7 @@
           return $.post('/api/author/editinfo', this.model.toJSON(), function(data) {
             console.log(data);
             if (data.authorData === true) {
-              return window.location = '/#author/';
+              return window.location = '/#author/posts/';
             }
           }, 'json');
         } else {

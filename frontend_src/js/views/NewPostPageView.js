@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap', 'jqueryUi'], function(writePostTpl, PostCategories, PostInterviews, CategoryCollection, InterviewCollection) {
+  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'views/ValidationView', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap', 'jqueryUi'], function(writePostTpl, PostCategories, PostInterviews, ValidationView, CategoryCollection, InterviewCollection) {
     var WritePostPage;
     return WritePostPage = (function(_super) {
       __extends(WritePostPage, _super);
@@ -28,7 +28,8 @@
 
       WritePostPage.prototype.template = _.template(writePostTpl);
 
-      WritePostPage.prototype.initialize = function() {
+      WritePostPage.prototype.initialize = function(options) {
+        this.pageId = options.id || 1;
         this.model.set('maxLength', 255);
         return this.handler();
       };
@@ -52,10 +53,10 @@
       };
 
       WritePostPage.prototype.onRender = function() {
-        this.stickit();
         this.ui();
         this.createCategoryList();
         this.createInterviewsList();
+        this.stickit();
         return $('.collapse').collapse();
       };
 
@@ -69,7 +70,7 @@
       };
 
       WritePostPage.prototype.createInterviewsList = function() {
-        return $.get('/api/interview/questions/1', (function(_this) {
+        return $.get("/api/interview/questions/" + this.pageId, (function(_this) {
           return function(data) {
             if (_this.postInterviews == null) {
               _this.postInterviews = new PostInterviews({
@@ -85,33 +86,11 @@
         })(this), 'json');
       };
 
-      WritePostPage.prototype.showErrors = function(errors) {
-        return _.each(errors, function(error) {
-          return this.$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message);
-        }, this);
-      };
-
-      WritePostPage.prototype.hideErrors = function() {
-        return this.$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('');
-      };
-
-      WritePostPage.prototype.symbolsCounter = function(model, value) {
-        var length;
-        length = model.get('maxLength') - value.length;
-        return this.ui.counter.text(length);
-      };
-
-      WritePostPage.prototype.changeCategoryHeading = function() {
-        var names;
-        names = this.postCategories.checkedCategoriesNames();
-        return this.$('.categoryHeading').text(names);
-      };
-
       WritePostPage.prototype.savePost = function(event) {
         var categories, fullText;
         event.preventDefault();
-        fullText = this.postInterviews.createFullText();
         categories = this.postCategories.checkedCategories();
+        fullText = this.postInterviews.createFullText();
         if (fullText) {
           this.model.set({
             'text': fullText,
@@ -127,7 +106,7 @@
 
       return WritePostPage;
 
-    })(Backbone.View);
+    })(ValidationView);
   });
 
 }).call(this);

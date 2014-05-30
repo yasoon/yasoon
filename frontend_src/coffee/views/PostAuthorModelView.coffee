@@ -10,21 +10,20 @@ define(
   LoginPopUpView
 ) ->
   Backbone.View.extend({
-    tagName: 'aside'
-
-    className: 'postinfo'
-
-    template: _.template(speakerInfoTpl)
-
     subscriptions:
-      'question:answered': 'updateQuestionCounter'
+      'question:answered':  'updateQuestionCounter'
+
+    events: ->
+      'click .js-follow':   'followSpeaker'
+
+    tagName:                'aside'
+    className:              'postinfo'
+
+    template:               _.template(speakerInfoTpl)
 
     render: ->
       @$el.html(@template(@model.toJSON()))
       @
-
-    events: ->
-      'click .js-follow': 'followSpeaker'
 
     followSpeaker: (event) ->
       event.preventDefault()

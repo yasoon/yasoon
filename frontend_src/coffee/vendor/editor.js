@@ -1170,7 +1170,7 @@ var RLANG = {
 		},
 		syncCode: function()
 		{
-			this.$el.val(this.$editor.html());
+			this.$el.val(this.$editor.html()).trigger('change');
 		},
 
 		// API functions

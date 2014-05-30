@@ -20,7 +20,7 @@ define(
         'click .nav':           'goToStep'
 
       bindings:
-        '#description':         'description'
+        '#interviewCaption':    'interviewCaption'
         '#subscribed':          'subscribed'
         '#password':            'password'
         '#interest':            'interest'
@@ -125,7 +125,7 @@ define(
           , (data) ->
             console.log data
             if data.authorData is yes
-              window.location = '/#author/';
+              window.location = '/#author/posts/';
           , 'json')
         else
           @showErrors(@model.validationError)

@@ -33,9 +33,10 @@
         return this;
       };
 
-      Controller.prototype.newPost = function() {
+      Controller.prototype.newPost = function(id) {
         $('body').removeClass().addClass('new-post');
         this.newPostPageView = new NewPostPageView({
+          id: id,
           model: new PostPageModel()
         });
         LayoutView.contentRegion.$el.empty().append(this.newPostPageView.render().$el);

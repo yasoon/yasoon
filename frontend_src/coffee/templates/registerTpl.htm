@@ -14,15 +14,30 @@
             <div class="di form-group">
                 <input type="text" class="form-control" placeholder="Email" id="email" name="email">
                 <span class="help-block"></span>
-                <div class="hhdi">
-                    <input type="checkbox" id="subscribed" name="subscribed">
-                    <label for="subscribed">Подписаться на новости</label>
+                <% if (typeof update === "undefined") { %>
+                    <div class="di form-group">
+                        <div class="hhdi">
+                            <input type="checkbox" id="subscribed" name="subscribed">
+                            <label for="subscribed">Подписаться на новости</label>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+            <% if (typeof update === "undefined") { %>
+                <div class="di form-group">
+                    <input type="password" class="form-control" placeholder="Пароль" id="password" name="password">
+                    <span class="help-block"></span>
                 </div>
-            </div>
-            <div class="di form-group">
-                <input type="password" class="form-control" placeholder="Пароль" id="password" name="password">
-                <span class="help-block"></span>
-            </div>
+            <% } else { %>
+                <div class="di form-group">
+                    <input type="password" class="form-control" placeholder="Старый пароль" id="old_pasword" name="old_pasword">
+                    <span class="help-block"></span>
+                </div>
+                <div class="di form-group">
+                    <input type="password" class="form-control" placeholder="Новый пароль" id="new_pasword" name="new_pasword">
+                    <span class="help-block"></span>
+                </div>
+            <% } %>
             <% if (typeof update === "undefined") { %>
                 <button type="button" class="regbtn di btn js-register" data-count="0">Зарегистрироваться!</button>
             <% } else { %>
@@ -49,7 +64,7 @@
             <span class="help-block"></span>
         </div>
         <div class="di form-group">
-            <textarea placeholder="Короткая биография" maxlength="<%= maxLength %>" class="form-control" id="description" name="description"></textarea>
+            <textarea placeholder="Короткая биография" maxlength="<%= maxLength %>" class="form-control" id="interviewCaption" name="interviewCaption"></textarea>
             <span class="counter"><%= maxLength %></span>
             <span class="help-block"></span>
         </div>

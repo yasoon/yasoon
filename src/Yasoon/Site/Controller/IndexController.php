@@ -76,6 +76,7 @@ class IndexController {
             category: '.json_encode($category).',
             content: '.json_encode($content).',
             userId: false
+        }
     </script>
 </body>';
         return new Response($html);

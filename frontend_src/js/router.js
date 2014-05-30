@@ -5,7 +5,7 @@
       routes: {
         '': 'index',
         'posts/:category/:sort(/)': 'posts',
-        'post/new(/)': 'newPost',
+        'post/new(/:id)(/)': 'newPost',
         'post/:id(/)': 'showPost',
         'post/:id/edit(/)': 'editPost',
         'register(/)': 'registerSpeaker',
@@ -38,9 +38,9 @@
       posts: function(category, sort) {
         return Controller.posts(category, sort);
       },
-      newPost: function() {
+      newPost: function(id) {
         if (typeof Window.config.userId !== "undefined") {
-          return Controller.newPost();
+          return Controller.newPost(id);
         } else {
           return this.navigate('#/404');
         }

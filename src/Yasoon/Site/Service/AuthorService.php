@@ -413,7 +413,7 @@ class AuthorService extends AbstractApiService {
         //echo $authorId; die;
 
         if (!(int)$authorId) {
-            $response = new JsonResponse(['userData' => false], 200);
+            $response = new JsonResponse(false, 200);
             $response->send();
             die;
         }

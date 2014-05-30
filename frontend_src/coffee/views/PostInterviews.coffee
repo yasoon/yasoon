@@ -5,47 +5,47 @@ define(
     'backbone'
     'stickit'
   ]
-(
-  postInterviewTpl
-  InterviewView
-) ->
-  Backbone.View.extend({
-    tagName: 'ul'
+  (
+    postInterviewTpl
+    InterviewView
+  ) ->
+    Backbone.View.extend({
+      tagName: 'ul'
 
-    className: 'list-unstyled'
+      className: 'list-unstyled'
 
-    template: _.template(postInterviewTpl)
+      template: _.template(postInterviewTpl)
 
-    render: ->
-      @collection.each( (interview, iterator) =>
-        interview.set('id', iterator)
-        @addOne(interview)
-      )
-      @
+      render: ->
+        @collection.each( (interview, iterator) =>
+          interview.set('id', iterator)
+          @addOne(interview)
+        )
+        @
 
-    addOne: (interview) ->
-      interview = new InterviewView({model: interview})
-      @$el.append(interview.render().$el)
+      addOne: (interview) ->
+        interview = new InterviewView({model: interview})
+        @$el.append(interview.render().$el)
 
-    createFullText: ->
-      fullTextContainer = $('<div></div>')
-      @hideErrors()
-      @hasErrors = no
-      _.each(@collection.models, (model, iterator) =>
-        if not model.isValid()
-          @hasErrors = yes
-          data = _.extend(model.validationError[0], {id: iterator})
-          @showErrors(data)
+      createFullText: ->
+        fullTextContainer = $('<div></div>')
+        @hideErrors()
+        @hasErrors = no
+        _.each(@collection.models, (model, iterator) =>
+          if not model.isValid()
+            @hasErrors = yes
+            data = _.extend(model.validationError[0], {id: iterator})
+            @showErrors(data)
+          else
+            fullTextContainer.append(@template(model.toJSON()))
+        )
+        if not @hasErrors
+          fullTextContainer.html()
         else
-          fullTextContainer.append(@template(model.toJSON()))
-      )
-      if not @hasErrors
-        fullTextContainer.html()
-      else
-        not @hasErrors
+          not @hasErrors
 
-    showErrors: (error) ->
-      @$('.redactor_box')
+      showErrors: (error) ->
+        @$('.redactor_box')
         .eq(error.id)
         .closest('.form-group')
         .removeClass('has-success')
@@ -53,12 +53,12 @@ define(
         .find('.help-block')
         .text(error.message)
 
-    hideErrors: ->
-      @$('.form-group')
+      hideErrors: ->
+        @$('.form-group')
         .removeClass('has-error')
         .addClass('has-success')
         .find('.help-block')
         .text('')
 
-  })
+    })
 )

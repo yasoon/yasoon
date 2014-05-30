@@ -1,20 +1,20 @@
 (function() {
   define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView) {
     return Backbone.View.extend({
-      tagName: 'aside',
-      className: 'postinfo',
-      template: _.template(speakerInfoTpl),
       subscriptions: {
         'question:answered': 'updateQuestionCounter'
-      },
-      render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
-        return this;
       },
       events: function() {
         return {
           'click .js-follow': 'followSpeaker'
         };
+      },
+      tagName: 'aside',
+      className: 'postinfo',
+      template: _.template(speakerInfoTpl),
+      render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+        return this;
       },
       followSpeaker: function(event) {
         event.preventDefault();

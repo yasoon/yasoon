@@ -65,9 +65,10 @@ define(
         @postPageView.delegateEvents()
         @
 
-      newPost: ->
+      newPost: (id) ->
         $('body').removeClass().addClass('new-post')
         @newPostPageView = new NewPostPageView({
+          id: id
           model: new PostPageModel()
         })
         LayoutView.contentRegion.$el.empty().append(@newPostPageView.render().$el)

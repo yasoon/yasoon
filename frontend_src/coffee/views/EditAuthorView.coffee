@@ -20,4 +20,17 @@ define(
       events: ->
         'click .js-update':     'updateAction'
         'click .nav':           'goToStep'
+
+      bindings:
+        '#interviewCaption':    'interviewCaption'
+        '#old_pasword':         'old_pasword'
+        '#new_pasword':         'new_pasword'
+        '#subscribed':          'subscribed'
+        '#interest':            'interest'
+        '#homepage':            'homepage'
+        '#email':               'email'
+        '#dream':               'dream'
+        '#name':                'name'
+        '#img':                 'img'
+        '#job':                 'job'
 )
