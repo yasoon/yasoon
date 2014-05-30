@@ -60,8 +60,7 @@ define([
 
       editPost: (id) ->
         userModel.deferred.done( =>
-          if Window.config.admin or typeof Window.config.userId isnt
-          "undefined"
+          if Window.config.admin or typeof Window.config.userId isnt "undefined"
             Controller.editPost(id)
           else
             @navigate('#/404')
@@ -83,7 +82,12 @@ define([
         Controller.speaker(id, page)
 
       author: (page) ->
-        Controller.author(page)
+        userModel.deferred.done( =>
+          if Window.config.userId isnt "undefined"
+            Controller.author(page)
+          else
+            @navigate('#/404')
+        )
 
       loadPost: (id) ->
         @navigate("#/post/#{id}", {trigger: yes})

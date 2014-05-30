@@ -32,6 +32,9 @@ define(
         @
 
       onRender: ->
+        @createInterviewsList()
+
+      createInterviewsList: ->
         if not @interviewsQuestionView?
           @interviewsQuestionView = new InterviewsQuestionsView({
             collection: @model.questions
@@ -40,7 +43,14 @@ define(
           @interviewsQuestionView.delegateEvents()
         @$('#questionList').append(@interviewsQuestionView.render().$el)
 
-      deleteInterview: ->
+      deleteInterview: (event) ->
+        event.preventDefault()
+        $.post('/api/interview/delete_interviews',{
+          id: @model.get('id')
+        }, (data) ->
+          if data
+            @$el.remove()
+        )
 
       addQuestion: (event) ->
         event.preventDefault()
@@ -52,12 +62,15 @@ define(
 
       saveInterview: (event) ->
         event.preventDefault()
+        button = $(event.currentTarget)
+        oldText = button.text()
+        button.text('Сохранено').prop('disabled', yes)
         $.post('/api/interview/save_interview', {
-          interview: @model.toJSON()
-        }, (data) ->
-          console.log(event, @model, data)
+            interview: @model.toJSON()
+          }, ->
+          window.setTimeout(->
+            button.text(oldText).prop('disabled', no)
+          , 3000)
         , 'json')
-
-
     })
 )

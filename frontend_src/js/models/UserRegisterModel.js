@@ -15,8 +15,8 @@
         var emailTest, errors, passwordMaxLength, passwordTest, textTest;
         UserRegisterModel.__super__.validate.apply(this, arguments);
         errors = [];
-        emailTest = /^[\.\w_\-\+]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/;
-        passwordTest = /^[\.\w_\-\+]{2,}$/;
+        emailTest = /^[\.\w_]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/;
+        passwordTest = /^[\.\w_]{2,}$/;
         textTest = /^\S+$/ig;
         passwordMaxLength = 10;
         if (!attrs.email) {
@@ -46,14 +46,14 @@
             message: 'Слишком длинный пароль'
           });
         }
-        if (!attrs.username) {
+        if (!attrs.name) {
           errors.push({
-            name: 'username',
+            name: 'name',
             message: 'Поле не может быть пустым'
           });
-        } else if (!textTest.test(attrs.username)) {
+        } else if (!textTest.test(attrs.name)) {
           errors.push({
-            name: 'username',
+            name: 'name',
             message: 'Неверный формат имени'
           });
         }

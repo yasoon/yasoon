@@ -69,7 +69,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['frontend_src/coffee/{,*/}*.coffee', 'frontend_src/coffee/admin/{,*/}*.coffee', 'frontend_src/coffee/templates/*.htm', 'frontend_src/coffee/admin/templates/*.htm'],
-                tasks: ['coffee:app', 'coffeelint', 'copy:js', 'requirejs', 'copy:build']
+                tasks: ['coffee:app', 'copy:js', 'requirejs', 'copy:build']
             },
             css: {
                 files: ['frontend_src/less/{,*/}*.less'],

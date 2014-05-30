@@ -10,8 +10,8 @@ define(
     validate: (attrs) ->
       super
       errors = []
-      emailTest = /^[\.\w_\-\+]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/
-      passwordTest = /^[\.\w_\-\+]{2,}$/
+      emailTest = /^[\.\w_]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/
+      passwordTest = /^[\.\w_]{2,}$/
       textTest = /^\S+$/ig
       passwordMaxLength = 10
 
@@ -42,14 +42,14 @@ define(
           message: 'Слишком длинный пароль'
         )
 
-      if not attrs.username
+      if not attrs.name
         errors.push(
-          name: 'username'
+          name: 'name'
           message: 'Поле не может быть пустым'
         )
-      else if not textTest.test(attrs.username)
+      else if not textTest.test(attrs.name)
         errors.push(
-          name: 'username'
+          name: 'name'
           message: 'Неверный формат имени'
         )
 

@@ -1,28 +1,30 @@
 define(
   [
-    'models/UserRegisterModel'
-    'backbone'
+    "models/UserRegisterModel"
+    "backbone"
   ]
-(
-  UserRegisterModel
-) ->
-  class UserUpdateModel extends UserRegisterModel
-    validate: (attrs) ->
-      super
-      errors = []
-      textTest = /^\S+$/ig
+  (
+    UserRegisterModel
+  ) ->
+    class UserUpdateModel extends UserRegisterModel
+      url: '/api/author/getShortUserData'
 
-      if not attrs.job
-        errors.push(
-          name: 'job'
-          message: 'Поле не может быть пустым'
-        )
-      else if not textTest.test(attrs.job)
-        errors.push(
-          name: 'job'
-          message: 'Неверный формат текста'
-        )
+      validate: (attrs) ->
+        super
+        errors = []
+        textTest = /^\S+$/ig
+
+        if not attrs.job
+          errors.push(
+            name: 'job'
+            message: 'Поле не может быть пустым'
+          )
+        else if not textTest.test(attrs.job)
+          errors.push(
+            name: 'job'
+            message: 'Неверный формат текста'
+          )
 
 
-      if errors.length > 0 then errors else false
+        if errors.length > 0 then errors else false
 )

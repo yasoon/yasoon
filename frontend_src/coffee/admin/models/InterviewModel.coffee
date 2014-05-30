@@ -12,6 +12,8 @@ define(
         ret = Backbone.Model.prototype.set.call(@, attributes, options)
         if attributes.questions
           questions = new InterviewsQuestionsCollection(@get('questions'))
-          @questions = @nestCollection('questions', questions)
+        else
+          questions = new InterviewsQuestionsCollection()
+        @questions = @nestCollection('questions', questions)
         ret
 )

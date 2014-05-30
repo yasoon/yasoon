@@ -1,90 +1,106 @@
+<% var reg = (typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0) ? true : false; %>
 <form role="form" class="register-form">
-  <fieldset>
-    <div class="page-header">
-      <h3>Регистрация<br />
-        <small>Создайте свой профиль и пишите свои собственные истории</small>
-      </h3>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Имя" id="username" name="username">
-      <span class="help-block"></span>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Email" id="email" name="email">
-      <span class="help-block"></span>
-      <div class="hhdi">
-        <input type="checkbox" id="subscribed" name="subscribed">
-        <label for="subscribed">Подписаться на новости</label>
-      </div>
-    </div>
-    <div class="di form-group">
-      <input type="password" class="form-control" placeholder="Пароль" id="password" name="password">
-      <span class="help-block"></span>
-    </div>
-    <button type="button" class="regbtn di btn" id="register" data-count="0">Зарегистрироваться!</button>
-  </fieldset>
-  <fieldset>
-    <div class="page-header">
-      <h3>Регистрация<br />
-        <small>Здесь вы можете выбрать вашу профессию, интересы и мечты о будущей работе</small>
-      </h3>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Ваша работа" id="job" name="job">
-      <span class="help-block"></span>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Интересы" id="interest" name="interest">
-      <span class="help-block"></span>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Мечты" id="dream" name="dream">
-      <span class="help-block"></span>
-    </div>
-    <div class="di form-group">
-      <textarea placeholder="Короткая биография" maxlength="<%= maxLength %>" class="form-control" id="description" name="description"></textarea>
-      <span class="counter"><%= maxLength %></span>
-      <span class="help-block"></span>
-    </div>
-    <div class="hr di"></div>
-    <div class="row">
-      <div class="col-sm-6">
-        <button type="button" class="regbtn di btn nav prev" data-count="1">Вернуться назад</button>
-      </div>
-      <div class="col-sm-6">
-        <button type="button" class="regbtn di btn nav next" data-count="1">Вперед</button>
-      </div>
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="page-header">
-      <h3>Регистрация<br />
-        <small>Здесь вы можете добавить фото и личную страницу</small>
-      </h3>
-    </div>
-    <div class="di form-group">
-      <input type="text" class="form-control" placeholder="Домашняя страница" id="homepage" name="homepage">
-    </div>
-    <div class="di form-group file_upload_block">
-      <div class="row">
-        <div class="col-sm-6">
-          <label class="btn di btn_upload_img" id="upload" for="file">Загрузить фото</label>
+    <% if (reg) { %>
+        <fieldset>
+            <div class="page-header">
+                <h3>Регистрация<br />
+                    <small>Создайте свой профиль и пишите свои собственные истории</small>
+                </h3>
+            </div>
+            <div class="di form-group">
+                <input type="text" class="form-control" placeholder="Имя" id="name" name="name">
+                <span class="help-block"></span>
+            </div>
+            <div class="di form-group">
+                <input type="text" class="form-control" placeholder="Email" id="email" name="email">
+                <span class="help-block"></span>
+                <div class="hhdi">
+                    <input type="checkbox" id="subscribed" name="subscribed">
+                    <label for="subscribed">Подписаться на новости</label>
+                </div>
+            </div>
+            <div class="di form-group">
+                <input type="password" class="form-control" placeholder="Пароль" id="password" name="password">
+                <span class="help-block"></span>
+            </div>
+            <% if (typeof update === "undefined") { %>
+                <button type="button" class="regbtn di btn js-register" data-count="0">Зарегистрироваться!</button>
+            <% } else { %>
+                <button type="button" class="regbtn di btn nav next" data-count="0">Вперед</button>
+            <% } %>
+        </fieldset>
+    <% } %>
+    <fieldset>
+        <div class="page-header">
+            <h3>Регистрация<br />
+                <small>Здесь вы можете выбрать вашу профессию, интересы и мечты о будущей работе</small>
+            </h3>
         </div>
-        <div class="col-sm-6">
-          <div class="output text-right">
-            <img src="/frontend/img/noAvatar.jpg" width="150" alt="">
-          </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Ваша работа" id="job" name="job">
+            <span class="help-block"></span>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <button type="button" class="regbtn di btn nav prev" data-count="2">Вернуться назад</button>
-      </div>
-      <div class="col-sm-6">
-        <button type="button" class="regbtn di btn" id="update" data-count="2">В профиль</button>
-      </div>
-    </div>
-  </fieldset>
-
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Интересы" id="interest" name="interest">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Мечты" id="dream" name="dream">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <textarea placeholder="Короткая биография" maxlength="<%= maxLength %>" class="form-control" id="description" name="description"></textarea>
+            <span class="counter"><%= maxLength %></span>
+            <span class="help-block"></span>
+        </div>
+        <div class="hr di"></div>
+        <% if (reg) { %>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="regbtn di btn nav prev" data-count="1">Вернуться назад</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="regbtn di btn nav next" data-count="1">Вперед</button>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="regbtn di btn js-update" data-count="1">Сохранить</button>
+                </div>
+            </div>
+        <% } %>
+    </fieldset>
+    <% if (reg) { %>
+        <fieldset>
+            <div class="page-header">
+                <h3>Регистрация<br />
+                    <small>Здесь вы можете добавить фото и личную страницу</small>
+                </h3>
+            </div>
+            <div class="di form-group">
+                <input type="text" class="form-control" placeholder="Домашняя страница" id="homepage" name="homepage">
+            </div>
+            <div class="di form-group file_upload_block">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="btn di btn_upload_img" id="upload" for="file">Загрузить фото</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="output text-right">
+                            <img src="/frontend/img/noAvatar.jpg" width="150" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="regbtn di btn nav prev" data-count="2">Вернуться назад</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="regbtn di btn js-update" data-count="2">В профиль</button>
+                </div>
+            </div>
+        </fieldset>
+    <% } %>
 </form>

@@ -471,14 +471,15 @@ class AuthorService extends AbstractApiService {
             'ask_questions' => $ask_questions,
             'friends' => $friends,
             'timeline' => $timeline,
-            'roles' => $data->getRoles()
+            'roles' => $data->getRoles(),
+            'regFrom' => $data->getRegFrom()
         ];
 
 //        $access = $this->getAccessLevel($authorId);
 //
 //        return ['access' => $access, 'data' => $result];
 
-        return ['userData' => $result];
+        return $result;
     }
 
     /**

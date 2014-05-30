@@ -1,53 +1,71 @@
 (function() {
-  define(['text!templates/registerTpl.htm', 'models/UserUpdateModel', 'fileupload', 'backbone', 'stickit', 'mediator'], function(registerTpl, UserUpdateModel) {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-    /* TODO:separate separate this big view to smaller views */
-    return Backbone.View.extend({
-      events: function() {
+  define(['text!templates/registerTpl.htm', 'models/UserUpdateModel', 'views/ValidationView', 'fileupload', 'backbone', 'stickit', 'mediator'], function(registerTpl, UserUpdateModel, ValidationView) {
+    var Register;
+    return Register = (function(_super) {
+      __extends(Register, _super);
+
+      function Register() {
+        return Register.__super__.constructor.apply(this, arguments);
+      }
+
+      Register.prototype.events = function() {
         return {
-          'click #register': 'registerAction',
-          'click #update': 'updateAction',
+          'click .js-register': 'registerAction',
+          'click .js-update': 'updateAction',
           'click .nav': 'goToStep'
         };
-      },
-      bindings: {
+      };
+
+      Register.prototype.bindings = {
         '#description': 'description',
         '#subscribed': 'subscribed',
         '#password': 'password',
-        '#username': 'username',
         '#interest': 'interest',
         '#homepage': 'homepage',
         '#email': 'email',
         '#dream': 'dream',
+        '#name': 'name',
         '#img': 'img',
         '#job': 'job'
-      },
-      className: 'page-layout m-page',
-      tagName: 'section',
-      template: _.template(registerTpl),
-      initialize: function() {
+      };
+
+      Register.prototype.className = 'page-layout m-page';
+
+      Register.prototype.tagName = 'section';
+
+      Register.prototype.template = _.template(registerTpl);
+
+      Register.prototype.initialize = function() {
         this.handler();
         return this.model.set('maxLength', 290);
-      },
-      handler: function() {
+      };
+
+      Register.prototype.handler = function() {
         return this.listenTo(this.model, 'change:description', this.symbolsCounter);
-      },
-      ui: function() {
+      };
+
+      Register.prototype.ui = function() {
         return this.ui = {
           counter: this.$('.counter')
         };
-      },
-      setModels: function() {
+      };
+
+      Register.prototype.setModels = function() {
         this.model = new UserUpdateModel(this.model.toJSON());
         this.stickit();
         return this.handler();
-      },
-      render: function() {
+      };
+
+      Register.prototype.render = function() {
         this.$el.empty().append(this.template(this.model.toJSON()));
         this.onRender();
         return this;
-      },
-      onRender: function() {
+      };
+
+      Register.prototype.onRender = function() {
         var count, steps;
         steps = this.$el.find('fieldset');
         count = steps.size();
@@ -71,8 +89,9 @@
         });
         this.showStep(0);
         return this.stickit();
-      },
-      goToStep: function(event) {
+      };
+
+      Register.prototype.goToStep = function(event) {
         var $this, step;
         $this = $(event.currentTarget);
         step = $this.data('count');
@@ -81,11 +100,13 @@
         } else {
           return this.showStep(step - 1);
         }
-      },
-      showStep: function(step) {
+      };
+
+      Register.prototype.showStep = function(step) {
         return this.$el.find("#step" + step).show().siblings().hide();
-      },
-      registerAction: function(event) {
+      };
+
+      Register.prototype.registerAction = function(event) {
         event.preventDefault();
         this.hideErrors();
         if (this.model.isValid()) {
@@ -109,8 +130,9 @@
         } else {
           return this.showErrors(this.model.validationError);
         }
-      },
-      updateAction: function(event) {
+      };
+
+      Register.prototype.updateAction = function(event) {
         event.preventDefault();
         this.hideErrors();
         if (this.model.isValid()) {
@@ -124,21 +146,11 @@
           this.showErrors(this.model.validationError);
           return this.showStep(1);
         }
-      },
-      showErrors: function(errors) {
-        return _.each(errors, function(error) {
-          return this.$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message);
-        }, this);
-      },
-      hideErrors: function() {
-        return this.$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('');
-      },
-      symbolsCounter: function(model, value) {
-        var length;
-        length = model.get('maxLength') - value.length;
-        return this.ui.counter.text(length);
-      }
-    });
+      };
+
+      return Register;
+
+    })(ValidationView);
   });
 
 }).call(this);
