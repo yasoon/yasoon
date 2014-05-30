@@ -2,14 +2,14 @@ define(
   [
     'text!templates/headerTpl.htm'
     'views/HeaderLoginView'
-    'views/HeaderLogedView'
+    'views/HeaderLoggedView'
     'models/userModel'
     'backbone'
   ]
 (
   headerTpl
   HeaderLoginView
-  HeaderLogedView
+  HeaderLoggedView
   userModel
 ) ->
   class HeaderRegionView extends Backbone.View
@@ -23,7 +23,7 @@ define(
       userModel.deferred.done( =>
         if typeof userModel?.get('id') is 'number'
           if not @headerLogedView?
-            @headerLogedView = new HeaderLogedView({
+            @headerLogedView = new HeaderLoggedView({
               model: userModel
               el: @userNav
             })

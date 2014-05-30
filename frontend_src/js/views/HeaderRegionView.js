@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLogedView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLogedView, userModel) {
+  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLoggedView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLoggedView, userModel) {
     var HeaderRegionView;
     return HeaderRegionView = (function(_super) {
       __extends(HeaderRegionView, _super);
@@ -22,7 +22,7 @@
           return function() {
             if (typeof (userModel != null ? userModel.get('id') : void 0) === 'number') {
               if (_this.headerLogedView == null) {
-                _this.headerLogedView = new HeaderLogedView({
+                _this.headerLogedView = new HeaderLoggedView({
                   model: userModel,
                   el: _this.userNav
                 });
