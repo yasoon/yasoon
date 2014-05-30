@@ -19,7 +19,14 @@ class IndexController {
      *
      * @DI\Inject("yasoon.service.category")
      */
-    private $service;
+    private $category_service;
+
+    /**
+     * @var ContentService
+     *
+     * @DI\Inject("yasoon.service.content")
+     */
+    private $content_service;
 
     /**
      * @Route("/")
@@ -29,12 +36,13 @@ class IndexController {
     public function indexAction() {
 
         //$content = str_replace("\\n", "\\\\n", json_encode($this->service->getAllContent()));
-        $content =  json_encode([[
+        /*$content =  json_encode([[
                 'id' => '1',
                 'description' => '2',
                 'text' => '3' 
-            ]]);
-        $category = $this->service->getCategoryList();
+            ]]);*/
+        $category = $this->category_service->getCategoryList();
+        $content = $this->content_service->getAllContent(0);
         $html = '<!DOCTYPE html>
 <html>
 <head>
@@ -66,8 +74,8 @@ class IndexController {
     <script>
         Window.config = {
             category: '.json_encode($category).',
+            content: '.json_encode($content).',
             userId: false
-        }
     </script>
 </body>';
         return new Response($html);
