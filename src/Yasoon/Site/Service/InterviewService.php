@@ -199,7 +199,7 @@ class InterviewService extends AbstractApiService {
             $this->em->remove($interview);
             $this->em->flush();
             
-            return ['id' => $id];
+            return ['error' => false, 'id' => $id];
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }

@@ -74,7 +74,16 @@ class InterviewController {
                                  ]
                 ];*/
         $result = $this->service->saveInterview($data);
-
         return  $result;
+    }
+
+    /**
+     * @Route("/delete_interviews")
+     * @Method({"POST"})
+     */
+    public function delete_interview(Request $request) {
+        $interview_id = $request->request->get('id');
+        $result = $this->service->deleteInterview($interview_id);
+        return $result;
     }
 }
