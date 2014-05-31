@@ -4,8 +4,10 @@
       className: 'mainPage-intro',
       template: _.template(mainPageHeadingTpl),
       render: function() {
+        var image;
+        image = _.getContent(12);
         this.$el.html(this.template()).css({
-          'background-image': 'url(frontend/img/i6.jpg)'
+          'background-image': "url(frontend/" + image + ")"
         });
         return this;
       }

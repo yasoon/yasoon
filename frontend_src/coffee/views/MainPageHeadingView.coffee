@@ -10,10 +10,11 @@ define(
     className: 'mainPage-intro'
     template: _.template(mainPageHeadingTpl)
     render: ->
+      image = _.getContent(12)
       @$el
         .html(@template())
         .css({
-          'background-image': 'url(frontend/img/i6.jpg)'
+          'background-image': "url(frontend/#{image})"
         })
       @
   })

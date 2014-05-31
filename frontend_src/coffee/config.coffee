@@ -4,7 +4,7 @@ requirejs.config({
     'backbone':         'vendor/backbone'
     'stickit':          'vendor/backbone.stickit'
     'mediator':         'vendor/backbone.mediator'
-    'underscore':       'vendor/lodash.underscore'
+    'underscore':       'underscore'
     'text':             'vendor/text'
     'jquery':           'vendor/jquery-1.11.0'
     'jqueryUi':         'vendor/jquery-ui-1.10.4.custom.min'
@@ -13,8 +13,6 @@ requirejs.config({
     'bootstrap':        'vendor/bootstrap.min'
   }
   shim: {
-    'underscore':
-      exports: '_'
     'backbone':
       deps: ['jquery', 'underscore']
     'bootstrap':
@@ -23,7 +21,7 @@ requirejs.config({
 })
 
 requirejs([
-  'app'
-],
+    'app'
+  ],
 (App) ->
 )
