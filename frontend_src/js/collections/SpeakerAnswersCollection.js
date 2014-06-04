@@ -1,7 +1,7 @@
 (function() {
-  define(['models/HistoryPagePostsModel', 'backbone'], function(HistoryPagePostsModel) {
+  define(['models/AnswerModel', 'backbone'], function(AnswerModel) {
     return Backbone.Collection.extend({
-      model: HistoryPagePostsModel
+      model: AnswerModel
     });
   });
 

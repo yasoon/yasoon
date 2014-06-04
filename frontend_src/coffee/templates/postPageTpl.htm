@@ -12,7 +12,7 @@
 			<a href="#/post/<%= id %>/edit" class="editable"></a>
 		<% } %>
 		<span class="media-pub">
-			опубликовано <%= publishDate %>
+			опубликовано <%= _.getDateText(publishDate) %>
 		</span>
 	</h1>
 </div>

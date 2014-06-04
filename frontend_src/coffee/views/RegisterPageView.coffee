@@ -123,9 +123,9 @@ define(
         if @model.isValid()
           $.post('/api/author/editinfo', @model.toJSON()
           , (data) ->
-            console.log data
             if data.authorData is yes
-              window.location = '/#author/posts/';
+              window.location = '/#/author/posts/'
+              window.location.reload(yes)
           , 'json')
         else
           @showErrors(@model.validationError)

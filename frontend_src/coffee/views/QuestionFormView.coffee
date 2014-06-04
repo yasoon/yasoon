@@ -1,13 +1,15 @@
 define(
   [
     'text!templates/answersListTpl.htm'
+    'views/ValidationView'
     'backbone'
     'stickit'
   ]
   (
     answersListTpl
+    ValidationView
   ) ->
-    Backbone.View.extend({
+    class QuestionFormView extends ValidationView
       template: _.template(answersListTpl)
 
       events: ->
@@ -29,25 +31,8 @@ define(
             model: @model.toJSON()
           }, (data) =>
             @model.set('savedQuestion', @model.get('question'))
+            @$(event.currentTarget).val('')
           )
         else
           @showErrors(@model.validationError)
-
-      hideErrors: ->
-        @$('.form-group')
-          .removeClass('has-error')
-          .addClass('has-success')
-          .find('.help-block')
-          .text('')
-
-      showErrors: (errors) ->
-        _.each( errors, (error) =>
-          @$("##{error.name}")
-            .closest('.form-group')
-            .removeClass('has-success')
-            .addClass('has-error')
-            .find('.help-block')
-            .text(error.message)
-        )
-    })
 )

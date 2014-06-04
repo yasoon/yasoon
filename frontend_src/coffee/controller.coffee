@@ -12,6 +12,7 @@ define(
     'views/AuthorPageView'
     'views/ErrorPageView'
     'views/EditAuthorView'
+    'views/TimelinePageView'
     'models/UserRegisterModel'
     'models/UserUpdateModel'
     'models/userModel'
@@ -31,6 +32,7 @@ define(
     AuthorPageView
     ErrorPageView
     EditAuthorPageView
+    TimelinePageView
     UserRegisterModel
     UserUpdateModel
     userModel
@@ -120,6 +122,13 @@ define(
         })
         LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
         @editAuthorPageView.delegateEvents()
+        @
+
+      timeline: ->
+        $('body').removeClass().addClass('timeline')
+        @timelinePageView = new TimelinePageView()
+        LayoutView.contentRegion.$el.empty().append(@timelinePageView.render().$el)
+        @timelinePageView.delegateEvents()
         @
 
       author: (page) ->

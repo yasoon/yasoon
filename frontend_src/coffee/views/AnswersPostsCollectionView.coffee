@@ -19,12 +19,13 @@ define(
       data = _.extend(@options, @options.description)
       @$el.empty().append(@template(data))
 
-      @collection.each( (model) =>
-        @$el.append(new HistoryPageStoryView({
-          model: model
-        }).render().$el)
+      @collection.each( (story) =>
+        @addOne(story)
       )
       @
 
+    addOne: (story) ->
+      history = new HistoryPageStoryView({model: story})
+      @$el.append(history.render().$el)
   })
 )

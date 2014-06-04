@@ -1,26 +1,27 @@
 define(
   [
     'text!templates/speakerAnswerTpl.htm'
+    'views/ValidationView'
     'backbone'
     'mediator'
     'stickit'
   ]
 (
   speakerAnswerTpl
+  ValidationView
 ) ->
-  Backbone.View.extend({
-    tagName: 'article'
+  class SpeakerAnswerView extends ValidationView
+    tagName:                      'article'
+    className:                    'lim'
 
-    className: 'lim'
-
-    template: _.template(speakerAnswerTpl)
+    template:                     _.template(speakerAnswerTpl)
 
     bindings:
-      '#questionAnswerText': 'questionAnswerText'
+      '#questionAnswerText':      'questionAnswerText'
 
     events: ->
-      'submit form': 'addQuestionAnswer'
-      'click .js-delete': 'deleteQuestion'
+      'submit form':              'addQuestionAnswer'
+      'click .js-delete':         'deleteQuestion'
 
     render: ->
       @$el.html(@template(@model.toJSON()))
@@ -29,18 +30,21 @@ define(
 
     addQuestionAnswer: (event) ->
       event.preventDefault()
-      $.post('/api/question/addAnswer', {
-        model: @model.toJSON()
-      }, (data) =>
-        if not data.error
-          @model.set('hasAnswer', yes)
-          Backbone.Mediator.publish('question:answered', @model)
-          $(event.currentTarget).closest('article').remove()
-      )
+      @hideErrors
+      if @model.isValid()
+        $.post('/api/question/addAnswer', {
+          model: @model.toJSON()
+        }, (data) =>
+          if not data.error
+            @model.set('hasAnswer', yes)
+            Backbone.Mediator.publish('question:answered', @model)
+            $(event.currentTarget).closest('article').remove()
+        )
+      else
+        @showErrors(@model.validationError)
 
     deleteQuestion: (event) ->
       event.preventDefault()
-
       $.post('/api/question/delete', {
         model:
           id: @model.get('id')
@@ -49,5 +53,4 @@ define(
           console.log data
           $(event.currentTarget).closest('article').remove()
       )
-  })
 )

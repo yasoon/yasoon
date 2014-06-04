@@ -184,7 +184,7 @@ class PostService extends AbstractApiService {
                     'id' => $post->getId(),
                     'authorId' => $post->getAuthorId(),
                     'authorName' => $post->getAuthor()->getName(),
-                    'authorImg' => $authorImg,
+                    'avatarImg' => $authorImg,
                     'title' => $post->getCaption(),
                     'description' => $post->getPreview(),
                     'text' => $post->getText(),

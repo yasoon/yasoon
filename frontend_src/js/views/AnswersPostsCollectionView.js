@@ -11,13 +11,18 @@
         data = _.extend(this.options, this.options.description);
         this.$el.empty().append(this.template(data));
         this.collection.each((function(_this) {
-          return function(model) {
-            return _this.$el.append(new HistoryPageStoryView({
-              model: model
-            }).render().$el);
+          return function(story) {
+            return _this.addOne(story);
           };
         })(this));
         return this;
+      },
+      addOne: function(story) {
+        var history;
+        history = new HistoryPageStoryView({
+          model: story
+        });
+        return this.$el.append(history.render().$el);
       }
     });
   });

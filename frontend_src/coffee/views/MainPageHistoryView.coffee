@@ -11,8 +11,7 @@ define(
     className: 'main-layout'
     template: _.template(MainPageHistoryTpl)
     render: ->
-      @$el
-        .html(@template(@model.toJSON()))
+      @$el.html(@template(@model.toJSON()))
       @
 
   })

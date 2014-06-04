@@ -4,41 +4,52 @@ define(
     'backbone'
     'stickit'
   ]
-(
-  headerLoggedTpl
-) ->
-  class HeaderLogedView extends Backbone.View
-    template: _.template(headerLoggedTpl)
+  (
+    headerLoggedTpl
+  ) ->
+    class HeaderLoggedView extends Backbone.View
+      bindings:
+        '#counter':             'timeline'
+        '#answers':             'timeline_answers'
+        '#posts':               'timeline_posts'
 
-    bindings:
-      '#counter': 'timeline'
-      '#answers': 'timeline_answers'
-      '#posts': 'timeline_posts'
+      events: ->
+        'click #js-logout':     'logout'
 
-    initialize: ->
-      $.get('/statistic/get_user_notification_count',
-      (data) =>
-        @model.set({
-          'timeline': parseInt(data.answers_timeline_count) + parseInt(data.new_answers_count) + parseInt(data.posts_timeline_count),
-          'timeline_answers': parseInt(data.answers_timeline_count) + parseInt(data.new_answers_count),
-          'timeline_posts': parseInt(data.posts_timeline_count)
-        })
-      )
+      template:                 _.template(headerLoggedTpl)
 
-    render: ->
-      @$el.append(@template(@model.toJSON()))
-      @stickit()
-      @
+      initialize: ->
+        @getTimelineData()
+        window.setInterval(=>
+          @getTimelineData()
+        , 1000 * 60 * 3
+        )
 
-    events: ->
-      'click #js-logout': 'logout'
+      getTimelineData: ->
+        $.when($.get('/api/question/get_unanswered_question'), $.get('/statistic/get_user_notification_count'))
+        .done((questions, timeline)=>
+          followedAnswers = parseInt(timeline[0].answers_timeline_count)
+          noFollowedAnswers = parseInt(timeline[0].new_answers_count)
+          followedPosts = parseInt(timeline[0].posts_timeline_count)
+          newQuestions = parseInt(questions[0].result.length)
+          timeline = followedAnswers + noFollowedAnswers + followedPosts
+          @model.set({
+            'timeline': timeline + newQuestions,
+            'timeline_answers': newQuestions,
+            'timeline_posts': timeline
+          })
+        )
 
-    logout: (event) ->
-      event.preventDefault()
-      event.stopPropagation()
-      $.post('/logout', {
-      }, (data) ->
-        Window.config.userId = no
-        window.location.reload(true)
-      )
+      render: ->
+        @$el.append(@template(@model.toJSON()))
+        @stickit()
+        @
+
+      logout: (event) ->
+        event.preventDefault()
+        event.stopPropagation()
+        $.post('/logout', ->
+          Window.config.userId = no
+          window.location.reload(true)
+        )
 )

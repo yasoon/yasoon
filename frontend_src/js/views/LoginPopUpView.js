@@ -56,7 +56,10 @@
       };
 
       LoginPopUpView.prototype.loginAction = function(event) {
+        var button;
         event.preventDefault();
+        button = this.$('button[type="submit"]');
+        button.prop('disabled', true);
         this.hideErrors();
         if (this.model.isValid()) {
           return $.post('/login_check', {
@@ -65,6 +68,7 @@
           }, (function(_this) {
             return function(data) {
               if (data.error === true) {
+                button.prop('disabled', true);
                 if (data.errorType === 'nouser') {
                   return _this.showErrors([
                     {

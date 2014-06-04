@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -93,6 +93,14 @@
         });
         LayoutView.contentRegion.$el.empty().append(this.editAuthorPageView.render().$el);
         this.editAuthorPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.timeline = function() {
+        $('body').removeClass().addClass('timeline');
+        this.timelinePageView = new TimelinePageView();
+        LayoutView.contentRegion.$el.empty().append(this.timelinePageView.render().$el);
+        this.timelinePageView.delegateEvents();
         return this;
       };
 

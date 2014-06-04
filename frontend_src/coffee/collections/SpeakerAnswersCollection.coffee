@@ -1,12 +1,12 @@
 define(
   [
-    'models/HistoryPagePostsModel'
+    'models/AnswerModel'
     'backbone'
   ]
 (
-  HistoryPagePostsModel
+  AnswerModel
 ) ->
   Backbone.Collection.extend({
-    model: HistoryPagePostsModel
+    model: AnswerModel
   })
 )

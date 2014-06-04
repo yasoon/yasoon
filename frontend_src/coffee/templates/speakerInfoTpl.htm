@@ -1,5 +1,12 @@
 <% var check = (Window.config.userId === id) ? false : true  %>
 <% var path = (check) ? "#/author" : "#/speaker/" + id %>
+<% if (typeof self_link === 'string' && self_link.match(/facebook.com/g)){
+    var linkClass = 'wf'
+} else if (typeof self_link === 'string' && self_link.match(/vk.com/g)) {
+    var linkClass = 'wb'
+} else {
+    var linkClass = 'ws'
+}%>
 <div class="fixed-position-aside">
     <% if(avatarImg === null) { %>
         <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
@@ -62,7 +69,11 @@
             <div class="social">
                 <div class="hr"></div>
                 <div class="social-links">
-                    <a href="<%= self_link %>" class="ws"></a>
+                    <% if (typeof self_link !== "undefined" && self_link.substr(0, 4) === 'http') { %>
+                    <a href="<%= self_link %>" class="<%= linkClass %>"></a>
+                    <% } else { %>
+                    <a href="http://<%= self_link %>" class="<%= linkClass %>"></a>
+                    <% } %>
                     <div class="clearfix"></div>
                 </div>
             </div>

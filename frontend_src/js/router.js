@@ -13,6 +13,7 @@
         'speaker/:id/:page(/)': 'showSpeaker',
         'author/edit(/)': 'editAuthor',
         'author/:page(/)': 'author',
+        'timeline(/)': 'timeline',
         'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
       },
@@ -66,11 +67,15 @@
         return Controller.register();
       },
       editAuthor: function() {
-        if (typeof Window.config.userId !== "undefined") {
-          return Controller.editAuthor();
-        } else {
-          return this.navigate('#/404');
-        }
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (typeof Window.config.userId === "number") {
+              return Controller.editAuthor();
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       showSpeaker: function(id, page) {
         return Controller.speaker(id, page);
@@ -78,7 +83,7 @@
       author: function(page) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.userId !== "undefined") {
+            if (typeof Window.config.userId === "number") {
               return Controller.author(page);
             } else {
               return _this.navigate('#/404');
@@ -102,7 +107,19 @@
           };
         })(this));
       },
+      timeline: function() {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (Window.config.userId !== "undefined") {
+              return Controller.timeline();
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
+      },
       undefinedRoute: function() {
+        console.log("undefined route");
         return Controller.undefinedRoute();
       }
     });

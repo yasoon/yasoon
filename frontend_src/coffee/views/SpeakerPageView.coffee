@@ -13,8 +13,8 @@ define(
     PostAuthorModel
   ) ->
     class SpeakerPage extends Backbone.View
-      tagName: 'section'
-      className: 'page-layout'
+      tagName:        'section'
+      className:      'page-layout'
 
       initialize: (options) ->
         @options = {

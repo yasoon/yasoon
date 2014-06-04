@@ -22,6 +22,7 @@ define([
         'speaker/:id/:page(/)': 'showSpeaker'
         'author/edit(/)': 'editAuthor'
         'author/:page(/)': 'author'
+        'timeline(/)': 'timeline'
         'admin(/)': 'adminMainPage'
         '*other': 'undefinedRoute'
       }
@@ -73,17 +74,19 @@ define([
         Controller.register()
 
       editAuthor: ->
-        if typeof Window.config.userId isnt "undefined"
-          Controller.editAuthor()
-        else
-          @navigate('#/404')
+        userModel.deferred.done( =>
+          if typeof Window.config.userId is "number"
+            Controller.editAuthor()
+          else
+            @navigate('#/404')
+        )
 
       showSpeaker: (id, page) ->
         Controller.speaker(id, page)
 
       author: (page) ->
         userModel.deferred.done( =>
-          if Window.config.userId isnt "undefined"
+          if typeof Window.config.userId is "number"
             Controller.author(page)
           else
             @navigate('#/404')
@@ -100,7 +103,16 @@ define([
             @navigate('#/404')
         )
 
+      timeline: ->
+        userModel.deferred.done( =>
+          if Window.config.userId isnt "undefined"
+            Controller.timeline()
+          else
+            @navigate('#/404')
+        )
+
       undefinedRoute: ->
+        console.log("undefined route")
         Controller.undefinedRoute()
 
     })

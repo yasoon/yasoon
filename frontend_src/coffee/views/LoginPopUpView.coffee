@@ -76,6 +76,8 @@ define(
 
     loginAction: (event) ->
       event.preventDefault()
+      button = @$('button[type="submit"]')
+      button.prop('disabled', yes)
       @hideErrors()
       if @model.isValid()
         $.post('/login_check', {
@@ -83,6 +85,7 @@ define(
           password: @model.get('password')
         }, (data) =>
           if data.error is yes
+            button.prop('disabled', yes)
             if data.errorType is 'nouser'
               @showErrors([{
                 name: 'email'

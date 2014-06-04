@@ -1,35 +1,33 @@
 <% var author = (typeof(authorId) !== "undefined") ? authorId : authorid %>
 <div class="p-label">
-  <a href="#/speaker/<%= author %>/posts">
-
-  <% if (typeof(authorName) !== "undefined") { %>
-		<%= authorName %>
-  <% } else { %>
-    <%= autorName %>
-  <% } %>
-	</a>
+    <a href="#/speaker/<%= author %>/posts">
+        <% if (typeof(authorName) !== "undefined") { %>
+        <%= authorName %>
+        <% } else { %>
+        <%= autorName %>
+        <% } %>
+    </a>
 </div>
 <h2>
-	<a href="#/post/<%= id %>">
-  <% if (typeof(caption) !== "undefined") { %>
-    <%= caption %>
-  <% } else { %>
-    <%= title %>
-  <% } %>
-  </a>
-  <% if (author === Window.config.userId) { %>
+    <a href="#/post/<%= id %>">
+        <% if (typeof(caption) !== "undefined") { %>
+        <%= caption %>
+        <% } else { %>
+        <%= title %>
+        <% } %>
+    </a>
+    <% if (author === Window.config.userId) { %>
     <a href="#/post/<%= id %>/edit" class="editable"></a>
-  <% } %>
+    <% } %>
 </h2>
 <div class="content">
-	<p>
+    <p>
+        <% if (typeof(preview) !== "undefined") { %>
+        <%= preview %>
+        <% } else { %>
+        <%= description %>
+        <% } %>
 
-  <% if (typeof(preview) !== "undefined") { %>
-		<%= preview %>
-  <% } else { %>
-    <%= description %>
-  <% } %>
-  
-	</p>
+    </p>
 </div>
 <div class="hr"></div>

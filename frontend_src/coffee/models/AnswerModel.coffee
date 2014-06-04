@@ -6,14 +6,14 @@ define(
   (
     ValidateModel
   ) ->
-    class UserLoginModel extends ValidateModel
+    class AnswerModel extends ValidateModel
       validate: (attrs) ->
         super
         errors = []
 
         if not attrs.questionAnswerText
           errors.push(
-            name: 'email'
+            name: 'questionAnswerText'
             message: 'Поле не может быть пустым'
           )
 

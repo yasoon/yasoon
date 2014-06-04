@@ -137,9 +137,9 @@
         this.hideErrors();
         if (this.model.isValid()) {
           return $.post('/api/author/editinfo', this.model.toJSON(), function(data) {
-            console.log(data);
             if (data.authorData === true) {
-              return window.location = '/#author/posts/';
+              window.location = '/#/author/posts/';
+              return window.location.reload(true);
             }
           }, 'json');
         } else {
