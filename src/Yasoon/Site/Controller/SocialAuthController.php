@@ -246,10 +246,9 @@ class SocialAuthController {
         curl_close($curl);
         $tokenInfo = null;
         parse_str($response, $tokenInfo);
-        
+        $new_user = false;
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
-            $new_user = false;
             $request_url = $URL_GET_ME.'?access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
