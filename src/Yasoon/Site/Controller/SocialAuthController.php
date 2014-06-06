@@ -113,7 +113,7 @@ class SocialAuthController {
         
         $code = $_GET['code'];
         
-        /** Выполняем запрос к серверу авторизации **/
+        /** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ **/
         $request_url = 'https://oauth.vk.com/access_token?client_id='.$APP_ID.'&client_secret='.$APP_SECRET.'&code='.$code.'&redirect_uri='.$REDIRECT_URI;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -221,8 +221,8 @@ class SocialAuthController {
     {
         $URL_OAUTH = 'https://www.facebook.com/dialog/oauth';
         $URL_ACCESS_TOKEN = 'https://graph.facebook.com/oauth/access_token';
-        $APP_ID = 589499367792551;
-        $APP_SECRET = '5acc9a9066680b897b5a4aedc3de575a';
+        $APP_ID = 543703062406358;
+        $APP_SECRET = '642bc47242649e3fdd90ed25137986f3';
         $URL_CALLBACK = 'http://yasoon.mnb-t.com/socauth/facebook';
         $URL_GET_ME = 'https://graph.facebook.com/me';
 
