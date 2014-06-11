@@ -11,6 +11,7 @@ define(
   ) ->
     class QuestionFormView extends ValidationView
       template: _.template(answersListTpl)
+      className: 'question-form'
 
       events: ->
         'submit form': 'setQuestion'
@@ -31,7 +32,7 @@ define(
             model: @model.toJSON()
           }, (data) =>
             @model.set('savedQuestion', @model.get('question'))
-            @$(event.currentTarget).val('')
+            @$(event.currentTarget).find('textarea').val('').closest('section').find('.answers').text(_.getContent(66))
           )
         else
           @showErrors(@model.validationError)

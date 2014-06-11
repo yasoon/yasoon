@@ -65,11 +65,11 @@
                     </a>
                 </div>
             </div>
-            <div class="clearfix"></div>
+            <% if (self_link) { %>
             <div class="social">
                 <div class="hr"></div>
                 <div class="social-links">
-                    <% if (typeof self_link !== "undefined" && self_link.substr(0, 4) === 'http') { %>
+                    <% if (self_link.substr(0, 4) === 'http') { %>
                     <a href="<%= self_link %>" class="<%= linkClass %>"></a>
                     <% } else { %>
                     <a href="http://<%= self_link %>" class="<%= linkClass %>"></a>
@@ -77,6 +77,8 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+            <% } %>
+            <div class="clearfix"></div>
             <div class="hr"></div>
             <% if (Window.config.userId !== id) { %>
                 <div class="hdi">

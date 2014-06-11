@@ -40,11 +40,15 @@
         return Controller.posts(category, sort);
       },
       newPost: function(id) {
-        if (typeof Window.config.userId !== "undefined") {
-          return Controller.newPost(id);
-        } else {
-          return this.navigate('#/404');
-        }
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (typeof Window.config.userId === "number") {
+              return Controller.newPost(id);
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
       },
       showPost: function(id) {
         return Controller.post(id);
@@ -52,7 +56,7 @@
       editPost: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.admin || typeof Window.config.userId !== "undefined") {
+            if (Window.config.admin || typeof Window.config.userId === "number") {
               return Controller.editPost(id);
             } else {
               return _this.navigate('#/404');
@@ -110,7 +114,7 @@
       timeline: function() {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.userId !== "undefined") {
+            if (Window.config.userId === "number") {
               return Controller.timeline();
             } else {
               return _this.navigate('#/404');

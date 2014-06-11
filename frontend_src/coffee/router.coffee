@@ -51,17 +51,18 @@ define([
         Controller.posts(category, sort)
 
       newPost: (id) ->
-        if typeof Window.config.userId isnt "undefined"
-          Controller.newPost(id)
-        else
-          @navigate('#/404')
-
+        userModel.deferred.done( =>
+          if typeof Window.config.userId is "number"
+              Controller.newPost(id)
+            else
+              @navigate('#/404')
+        )
       showPost: (id) ->
         Controller.post(id)
 
       editPost: (id) ->
         userModel.deferred.done( =>
-          if Window.config.admin or typeof Window.config.userId isnt "undefined"
+          if Window.config.admin or typeof Window.config.userId is "number"
             Controller.editPost(id)
           else
             @navigate('#/404')
@@ -105,7 +106,7 @@ define([
 
       timeline: ->
         userModel.deferred.done( =>
-          if Window.config.userId isnt "undefined"
+          if Window.config.userId is "number"
             Controller.timeline()
           else
             @navigate('#/404')
