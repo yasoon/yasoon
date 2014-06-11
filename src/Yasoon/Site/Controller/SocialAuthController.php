@@ -189,6 +189,10 @@ class SocialAuthController {
         header('Content-type: text/html');
         if($new_user)
         {
+            return ['new_user' => true];
+        }
+        return ['new_user' => false];
+            /*
         ?>
         <script>
             window.opener.location.href='/#/author/update/';
@@ -207,7 +211,7 @@ class SocialAuthController {
         </script>
         <?php
         }
-        exit;
+        exit;*/
     }
     
     
@@ -326,7 +330,11 @@ class SocialAuthController {
         header('Content-type: text/html');
         if($new_user)
         {
-        ?>
+            return ['new_user' => true];
+        }
+        return ['new_user' => false];
+        /*
+            ?>
         <script>
             window.opener.location.href='/#/author/update/';
             window.opener.$('.barrier').fadeOut(500);
@@ -344,7 +352,7 @@ class SocialAuthController {
         </script>
         <?php
         }
-        exit;
+        exit;*/
     }
     
     public function sendRequest($method, $parameters = array(), $token = false)
