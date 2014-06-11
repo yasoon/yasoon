@@ -27,12 +27,19 @@ define(
       setQuestion: (event) ->
         event.preventDefault()
         @hideErrors()
+        target = @$(event.currentTarget)
+        target.find('button').prop('disabled', yes)
         if @model.isValid()
           $.post('/api/question/add', {
             model: @model.toJSON()
-          }, (data) =>
+          }, () =>
+            newMessageText = _.getContent(64)
+            newMessageFrag = $("<p>#{newMessageText}</p>")
             @model.set('savedQuestion', @model.get('question'))
-            @$(event.currentTarget).find('textarea').val('').closest('section').find('.answers').text(_.getContent(66))
+            target.find('textarea').val('').closest('section').find('.answers').append(newMessageFrag)
+            window.setTimeout(->
+              target.find('button').prop('disabled', no).closest('section').find('.answers').empty()
+            , 3000)
           )
         else
           @showErrors(@model.validationError)

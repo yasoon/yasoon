@@ -6324,6 +6324,20 @@ footer nav {
 .page-layout .navigate.fixed {
   max-width: 830px;
 }
+.question-form {
+  border: solid #e2e2e2;
+  border-width: 0 0 1px 1px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.question-form section p {
+  padding-top: 20px;
+}
+.question-form textarea {
+  height: 50%;
+  width: 75%;
+}
 .navigate.fixed,
 .left-side.fixed,
 .postinfo.fixed {
