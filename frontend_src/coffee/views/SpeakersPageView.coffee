@@ -24,7 +24,7 @@ define(
       }
       @description = {
         name: 'THE GLASS BICYCLE',
-        description: 'Your digestive tract is probably'
+        description: _.getContent(65)
       }
       @createCategoryFilter()
 
