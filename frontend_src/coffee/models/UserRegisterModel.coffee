@@ -12,7 +12,7 @@ define(
       errors = []
       emailTest = /^[\.\w_]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/
       passwordTest = /^[\.\w_]{2,}$/
-      textTest = /^\S+$/ig
+#      textTest = /^\S+$/ig
       passwordMaxLength = 10
 
       if not attrs.email
@@ -47,11 +47,11 @@ define(
           name: 'name'
           message: 'Поле не может быть пустым'
         )
-      else if not textTest.test(attrs.name)
-        errors.push(
-          name: 'name'
-          message: 'Неверный формат имени'
-        )
+#      else if not textTest.test(attrs.name)
+#        errors.push(
+#          name: 'name'
+#          message: 'Неверный формат имени'
+#        )
 
       if errors.length > 0 then errors else false
 )

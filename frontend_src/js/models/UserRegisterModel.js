@@ -12,12 +12,11 @@
       }
 
       UserRegisterModel.prototype.validate = function(attrs) {
-        var emailTest, errors, passwordMaxLength, passwordTest, textTest;
+        var emailTest, errors, passwordMaxLength, passwordTest;
         UserRegisterModel.__super__.validate.apply(this, arguments);
         errors = [];
         emailTest = /^[\.\w_]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/;
         passwordTest = /^[\.\w_]{2,}$/;
-        textTest = /^\S+$/ig;
         passwordMaxLength = 10;
         if (!attrs.email) {
           errors.push({
@@ -50,11 +49,6 @@
           errors.push({
             name: 'name',
             message: 'Поле не может быть пустым'
-          });
-        } else if (!textTest.test(attrs.name)) {
-          errors.push({
-            name: 'name',
-            message: 'Неверный формат имени'
           });
         }
         if (errors.length > 0) {
