@@ -2,12 +2,14 @@ define(
   [
     'text!templates/speakerInfoTpl.htm'
     'views/LoginPopUpView'
+    'models/PostAuthorModel'
     'backbone'
     'mediator'
   ]
 (
   speakerInfoTpl
   LoginPopUpView
+  PostAuthorModel
 ) ->
   Backbone.View.extend({
     subscriptions:
@@ -27,7 +29,7 @@ define(
 
     followSpeaker: (event) ->
       event.preventDefault()
-      if typeof Window.config.userId isnt "undefined"
+      if typeof Window.config.userId is "number"
         $.post('/api/author/setFriends', {
           authorId: Window.config.userId
           friend: @model.get('id')
@@ -39,7 +41,7 @@ define(
       else
         if not @loginpopUpView?
           @loginpopUpView = new LoginPopUpView({
-            model: @model
+            model: new PostAuthorModel()
           })
         else
           @loginpopUpView.delegateEvents()

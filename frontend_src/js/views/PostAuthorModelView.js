@@ -1,5 +1,5 @@
 (function() {
-  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView) {
+  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'models/PostAuthorModel', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView, PostAuthorModel) {
     return Backbone.View.extend({
       subscriptions: {
         'question:answered': 'updateQuestionCounter'
@@ -18,7 +18,7 @@
       },
       followSpeaker: function(event) {
         event.preventDefault();
-        if (typeof Window.config.userId !== "undefined") {
+        if (typeof Window.config.userId === "number") {
           return $.post('/api/author/setFriends', {
             authorId: Window.config.userId,
             friend: this.model.get('id')
@@ -32,7 +32,7 @@
         } else {
           if (this.loginpopUpView == null) {
             this.loginpopUpView = new LoginPopUpView({
-              model: this.model
+              model: new PostAuthorModel()
             });
           } else {
             this.loginpopUpView.delegateEvents();
