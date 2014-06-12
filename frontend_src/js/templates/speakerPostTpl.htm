@@ -4,25 +4,23 @@
 		<span class="counter">
       <%= post_likes %>
     </span>
-		<span>
-      лайков
-    </span>
+	<span>вдохновились</span>
 	</span>
-	<h2>
-		<a href="#/post/<%= id %>">
-      <%= title %>
-      <% if (authorId === Window.config.userId) { %>
-        <a href="#/post/<%= id %>/edit" class="editable"></a>
-      <% } %>
-    </a>
+    <h2>
+        <a href="#/post/<%= id %>">
+            <%= title %>
+            <% if (authorId === Window.config.userId) { %>
+            <a href="#/post/<%= id %>/edit" class="editable"></a>
+            <% } %>
+        </a>
 		<span class="post-date">
       <%= publishDate %>
     </span>
-	</h2>
+    </h2>
 </div>
 <div class="content">
-  <p>
-    <%= description %>
-  </p>
+    <p>
+        <%= description %>
+    </p>
 </div>
 <div class="hr"></div>
