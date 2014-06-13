@@ -11,8 +11,8 @@ define(
     className: 'lim'
     template: _.template(postPageTpl)
     render: ->
-      @$el
-        .html(@template(@model.toJSON()))
+      console.log @model.toJSON()
+      @$el.html(@template(@model.toJSON()))
       @
 
   })

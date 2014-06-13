@@ -6,42 +6,43 @@ define(
     'models/userModel'
     'backbone'
   ]
-(
-  headerTpl
-  HeaderLoginView
-  HeaderLoggedView
-  userModel
-) ->
-  class HeaderRegionView extends Backbone.View
-    template: _.template(headerTpl)
-    
-    className: 'inside'
-    
-    render: ->
-      @$el.html(@template())
-      @userNav = @$('.my-nav')
-      userModel.deferred.done( =>
-        if typeof userModel?.get('id') is 'number'
-          if not @headerLogedView?
-            @headerLogedView = new HeaderLoggedView({
-              model: userModel
-              el: @userNav
-            })
+  (
+    headerTpl
+    HeaderLoginView
+    HeaderLoggedView
+    userModel
+  ) ->
+    class HeaderRegionView extends Backbone.View
+      template: _.template(headerTpl)
+
+      className: 'inside'
+
+      render: ->
+        @$el.empty().append(@template())
+        @userNav = @$('.my-nav')
+        userModel.deferred.done( =>
+          if typeof userModel?.get('id') is 'number'
+            @createLoginHeader()
           else
-            @headerLogedView.delegateEvents()
-          @userNav
-            .addClass('log')
-            .empty()
-            .append(@headerLogedView.render().$el)
+            @createLogedHeader()
+        )
+        @
+
+      createLoginHeader: () ->
+        if not @headerLogedView?
+          @headerLogedView = new HeaderLoggedView({
+            model: userModel
+            el: @userNav
+          })
         else
-          if not @headerLoginView?
-            @headerLoginView = new HeaderLoginView()
-          else
-            @headerLoginView.delegateEvents()
-          @userNav
-            .removeClass()
-            .empty()
-            .append(@headerLoginView.render().$el)
-      )
-      @
+          @headerLogedView.delegateEvents()
+        @userNav.addClass('log').empty().append(@headerLogedView.render().$el)
+
+      createLogedHeader: () ->
+        if not @headerLoginView?
+          @headerLoginView = new HeaderLoginView()
+        else
+          @headerLoginView.delegateEvents()
+        @userNav.removeClass().empty().append(@headerLoginView.render().$el)
+
 )

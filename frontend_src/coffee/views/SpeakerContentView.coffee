@@ -64,13 +64,13 @@ define(
             @$el.append(@speakerAnswersCollectionView.render().$el)
           else
             @emptyView = new EmptyView({
-              message: 'Нет ни одного вопроса!'
+              message: _.getContent(66)
             })
             @$el.append(@emptyView.render().$el)
         , 'json')
       else
         @emptyView = new EmptyView({
-          message: 'Нет ни одного вопроса!'
+          message: _.getContent(66)
         })
         @$el.append(@emptyView.render().$el)
 

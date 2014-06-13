@@ -52,7 +52,7 @@
                 return _this.$el.append(_this.speakerAnswersCollectionView.render().$el);
               } else {
                 _this.emptyView = new EmptyView({
-                  message: 'Нет ни одного вопроса!'
+                  message: _.getContent(66)
                 });
                 return _this.$el.append(_this.emptyView.render().$el);
               }
@@ -60,7 +60,7 @@
           })(this), 'json');
         } else {
           this.emptyView = new EmptyView({
-            message: 'Нет ни одного вопроса!'
+            message: _.getContent(66)
           });
           return this.$el.append(this.emptyView.render().$el);
         }

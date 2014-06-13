@@ -1,4 +1,5 @@
 @import "bootstrap/mixins";
+@import "bootstrap/variables";
 
 html {
   height: 100%;
@@ -32,14 +33,14 @@ a {
   color: #333;
   text-decoration: none;
 
-/* non-standart feature */
+  /* non-standart feature */
 
-//  -webkit-touch-callout: none;
-//  -webkit-user-select: none;
-//  -khtml-user-select: none;
-//  -moz-user-select: none;
-//  -ms-user-select: none;
-//  user-select: none;
+  //  -webkit-touch-callout: none;
+  //  -webkit-user-select: none;
+  //  -khtml-user-select: none;
+  //  -moz-user-select: none;
+  //  -ms-user-select: none;
+  //  user-select: none;
 
   &:hover{
     text-decoration: none;
@@ -130,8 +131,93 @@ header#header {
     background: #F5F5F5;
     border-bottom: 1px solid #ddd;
     line-height: 28px;
-    .inside{
+    .inside {
+      display: table;
+      width: 100%;
+      height: 55px;
+      line-height: 55px;
+      z-index: 9;
       position: relative;
+      & > .logo,
+      & > .my-nav,
+      & > nav {
+        display: table-cell;
+        vertical-align: middle;
+      }
+      & > nav {
+        width: 100%;
+        text-align: center;
+        a {
+          font: 14px 'MuseoSansCyrl-100', Arial;
+          text-transform: uppercase;
+          border: 2px solid transparent;
+          border-radius: 15px;
+          padding: 5px 10px;
+          text-decoration: none;
+          .speakers &.speakers, .posts &.posts {
+            border-color: black;
+          }
+        }
+      }
+
+      .my-nav {
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-top: -15px;
+        height: 30px;
+        z-index: 9;
+        &.log {
+          background: #2c8b00;
+        }
+        & > a:hover + nav,
+        &:hover > a + nav,
+        &.active > a + nav {
+          display: block;
+        }
+        & > nav {
+          background: #f7f7f7;
+          display: none;
+          border: solid #ddd;
+          border-width: 0 1px 1px;
+          margin-left: -30px;
+          & > a {
+            display: block;
+            padding: 2px 10px;
+            border-top: 1px solid #ddd;
+            line-height: 30px;
+            color: #333;
+            text-shadow: none;
+            font-family: 'MuseoSansCyrl-100', Arial;
+            &:hover {
+              color: #238c00;
+              border-top: 1px solid #ddd;
+            }
+          }
+        }
+        & > a {
+          font-family: 'MuseoSansCyrl-100', Arial;
+          font-size: 14px;
+          display: block;
+          text-align: right;
+          line-height: 30px;
+          color: #fff;
+          position: relative;
+          & img {
+            width: 30px;
+            height: 30px;
+            display: block;
+            position: absolute;
+            z-index: 2;
+            left: -30px;
+          }
+          & span {
+            color: #fff;
+            padding: 10px;
+          }
+        }
+      }
     }
     .logo{
       padding-right: 25px;
@@ -148,95 +234,6 @@ header#header {
     }
   }
 
-  .inside {
-    display: table;
-    width: 100%;
-    height: 55px;
-    line-height: 55px;
-    z-index: 9;
-    & > .logo,
-    & > .my-nav,
-    & > nav {
-      display: table-cell;
-      vertical-align: middle;
-    }
-    //
-    //		& > .logo {
-    //			position: absolute;
-    //		}
-
-    & > nav {
-      width: 100%;
-      text-align: center;
-      a {
-        font-family: 'MuseoSansCyrl-100', Arial;
-        font-size: 14px;
-        text-transform: uppercase;
-        border: 2px solid transparent;
-        border-radius: 15px;
-        padding: 5px 10px;
-      }
-    }
-
-    .my-nav {
-      display: block;
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      margin-top: -15px;
-      height: 30px;
-      z-index: 9;
-      &.log {
-        background: #2c8b00;
-      }
-      & > a:hover + nav,
-      &:hover > a + nav,
-      &.active > a + nav {
-        display: block;
-      }
-      & > nav {
-        background: #f7f7f7;
-        display: none;
-        border: solid #ddd;
-        border-width: 0 1px 1px;
-        margin-left: -30px;
-        & > a {
-          display: block;
-          padding: 2px 10px;
-          border-top: 1px solid #ddd;
-          line-height: 30px;
-          color: #333;
-          text-shadow: none;
-          font-family: 'MuseoSansCyrl-100', Arial;
-          &:hover {
-            color: #238c00;
-            border-top: 1px solid #ddd;
-          }
-        }
-      }
-      & > a {
-        font-family: 'MuseoSansCyrl-100', Arial;
-        font-size: 14px;
-        display: block;
-        text-align: right;
-        line-height: 30px;
-        color: #fff;
-        position: relative;
-        & img {
-          width: 30px;
-          height: 30px;
-          display: block;
-          position: absolute;
-          z-index: 2;
-          left: -30px;
-        }
-        & span {
-          color: #fff;
-          padding: 10px;
-        }
-      }
-    }
-  }
 
 
   .index & {
@@ -581,7 +578,7 @@ a.editable {
 .like-this {
   position: absolute;
   top: 15px;
-  right: 50px;
+  right: 210px;
   height: 38px;
   display: block;
   padding-left: 55px;
@@ -596,24 +593,31 @@ a.editable {
   padding-left: 55px;
   padding-top: 10px;
   color: #238C00;
-}
-.like-this i,
-.q-post  i{
-  background: url(../img/spr_x2.png) no-repeat 0 0;
-  background-size: 115px auto;
-  width: 49px;
-  height: 48px;
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin-top: -24px;
+  width: 440px;
+  height: 33px;
+  padding-top: 8px;
+  font-size: 16px;
+  i {
+    background-position: -49px 0;
+  }
 }
 
-.like-this span,
-.q-post span{
-  display: block;
-  color: #ddd;
+.like-this, .q-post {
+  & i {
+    background: url(../img/spr_x2.png) no-repeat 0 0;
+    background-size: 115px auto;
+    width: 49px;
+    height: 48px;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -24px;
+  }
+  & span {
+    display: block;
+    color: #ddd;
+  }
 }
 
 .main-layout{
@@ -623,14 +627,6 @@ a.editable {
   }
 }
 
-.q-post {
-  height: 33px;
-  padding-top: 15px;
-  font-size: 16px;
-  i {
-    background-position: -49px 0;
-  }
-}
 
 .social-links a {
   display: block;

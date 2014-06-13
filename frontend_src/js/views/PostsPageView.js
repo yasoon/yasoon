@@ -7,7 +7,7 @@
         this.category = options.category || 0;
         this.sort = options.sort || 'dateSort';
         this.description = {
-          name: 'THE GLASS BICYCLE',
+          name: 'все отрасли',
           description: 'Your digestive tract is probably'
         };
         return this.createsCategoryFilter();

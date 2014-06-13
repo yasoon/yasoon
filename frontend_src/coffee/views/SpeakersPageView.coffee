@@ -23,7 +23,7 @@ define(
         category: options.category || 0
       }
       @description = {
-        name: 'THE GLASS BICYCLE',
+        name: 'все отрасли',
         description: _.getContent(65)
       }
       @createCategoryFilter()

@@ -16,31 +16,39 @@
       HeaderRegionView.prototype.className = 'inside';
 
       HeaderRegionView.prototype.render = function() {
-        this.$el.html(this.template());
+        this.$el.empty().append(this.template());
         this.userNav = this.$('.my-nav');
         userModel.deferred.done((function(_this) {
           return function() {
             if (typeof (userModel != null ? userModel.get('id') : void 0) === 'number') {
-              if (_this.headerLogedView == null) {
-                _this.headerLogedView = new HeaderLoggedView({
-                  model: userModel,
-                  el: _this.userNav
-                });
-              } else {
-                _this.headerLogedView.delegateEvents();
-              }
-              return _this.userNav.addClass('log').empty().append(_this.headerLogedView.render().$el);
+              return _this.createLoginHeader();
             } else {
-              if (_this.headerLoginView == null) {
-                _this.headerLoginView = new HeaderLoginView();
-              } else {
-                _this.headerLoginView.delegateEvents();
-              }
-              return _this.userNav.removeClass().empty().append(_this.headerLoginView.render().$el);
+              return _this.createLogedHeader();
             }
           };
         })(this));
         return this;
+      };
+
+      HeaderRegionView.prototype.createLoginHeader = function() {
+        if (this.headerLogedView == null) {
+          this.headerLogedView = new HeaderLoggedView({
+            model: userModel,
+            el: this.userNav
+          });
+        } else {
+          this.headerLogedView.delegateEvents();
+        }
+        return this.userNav.addClass('log').empty().append(this.headerLogedView.render().$el);
+      };
+
+      HeaderRegionView.prototype.createLogedHeader = function() {
+        if (this.headerLoginView == null) {
+          this.headerLoginView = new HeaderLoginView();
+        } else {
+          this.headerLoginView.delegateEvents();
+        }
+        return this.userNav.removeClass().empty().append(this.headerLoginView.render().$el);
       };
 
       return HeaderRegionView;

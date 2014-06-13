@@ -8,7 +8,7 @@
     var linkClass = 'ws'
 }%>
 <div class="fixed-position-aside">
-    <% if(avatarImg === null) { %>
+    <% if(avatarImg === null) { %>ОБНОВЛЕНО
         <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
     <% } else { %>
         <img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
@@ -35,17 +35,17 @@
 
     <div class="media-hidden">
         <div class="inner">
-            <div class="b-indent">Job:<br>
+            <div class="b-indent">Деятельность:<br>
                 <a href="#" class="t-under c-black">
                     <%= job %>
                 </a>
             </div>
-            <div class="b-indent">Interest:<br>
+            <div class="b-indent">Профессия, которая восхищает:<br>
                 <a href="#" class="t-under c-black">
                     <%= interest %>
                 </a>
             </div>
-            <div class="b-indent">Dream:<br>
+            <div class="b-indent">Детская мечта:<br>
                 <a href="#" class="t-under c-black">
                     <%= dream %>
                 </a>
@@ -53,13 +53,13 @@
             <div class="hr"></div>
             <div class="d-box">
                 <div>
-                    <p class="p-label">posts</p>
+                    <p class="p-label">историй</p>
                     <a href="<%= path %>/posts/">
                         <%= posts.length %>
                     </a>
                 </div>
                 <div>
-                    <p class="p-label">answers</p>
+                    <p class="p-label">ответов</p>
                     <a href="<%= path %>/answers/">
                         <%= answers_count %>
                     </a>

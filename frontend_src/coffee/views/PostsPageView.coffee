@@ -24,7 +24,7 @@ define(
       @category = options.category || 0
       @sort = options.sort || 'dateSort'
       @description = {
-        name: 'THE GLASS BICYCLE',
+        name: 'все отрасли',
         description: 'Your digestive tract is probably'
       }
       @createsCategoryFilter()
