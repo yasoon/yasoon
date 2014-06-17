@@ -82,13 +82,14 @@ define(
 
       savePost: (event) ->
         event.preventDefault()
-        categories = @postCategories.checkedCategories()
-        fullText = @postInterviews.createFullText()
-        if fullText
-          @model.set({
-            'text': fullText
-            'category': categories
-          })
+        @hideErrors()
+        @model.set({
+          'text': @postInterviews.createFullText()
+          'category': @postCategories.checkedCategories()
+        })
+        if not @model.isValid()
+          @showErrors(@model.validationError)
+        else
           $.post('/api/post/savePost', {
               postData: @model.toJSON()
             }, (data) ->

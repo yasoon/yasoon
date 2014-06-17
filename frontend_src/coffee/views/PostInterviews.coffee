@@ -2,14 +2,16 @@ define(
   [
     'text!templates/postInterviewTpl.htm'
     'views/InterviewView'
+    'views/ValidationView'
     'backbone'
     'stickit'
   ]
   (
     postInterviewTpl
     InterviewView
+    ValidationView
   ) ->
-    Backbone.View.extend({
+    class PostInterviews extends ValidationView
       tagName: 'ul'
 
       className: 'list-unstyled'
@@ -43,22 +45,4 @@ define(
           fullTextContainer.html()
         else
           not @hasErrors
-
-      showErrors: (error) ->
-        @$('.redactor_box')
-        .eq(error.id)
-        .closest('.form-group')
-        .removeClass('has-success')
-        .addClass('has-error')
-        .find('.help-block')
-        .text(error.message)
-
-      hideErrors: ->
-        @$('.form-group')
-        .removeClass('has-error')
-        .addClass('has-success')
-        .find('.help-block')
-        .text('')
-
-    })
 )

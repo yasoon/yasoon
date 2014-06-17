@@ -29,11 +29,6 @@ define(
       @$el.html(@template(@model.toJSON()))
       @
 
-    initialize: ->
-      userModel.deferred.done( =>
-        console.log(userModel.toJSON())
-      )
-
     followSpeaker: (event) ->
       event.preventDefault()
       if typeof Window.config.userId is "number"

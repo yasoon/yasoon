@@ -1,54 +1,55 @@
 <form role="form">
-	<div class="post-edit">
-		<article>
-			<h3 class="t-center">
-				Напишите свою историю
-			</h3>
-			<div class="hr"></div>
-		</article>
-		
-		<div class="di form-group">
-			<input type="text" class="form-control" name="title" id="title" placeholder="Заголовок истории">
-			<p class="help-block"></p>
-		</div>
-		
-		<div class="di panel-group" id="collapse">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#collapse" href="#categoryList">
-							Категории: <span class="categoryHeading"></span>
-						</a>
-					</h4>
-				</div>
-				<div id="categoryList" class="panel-collapse collapse">
-					<!-- categoryList -->
-				</div>
-			</div>
-		</div>
+    <div class="post-edit">
+        <article>
+            <h3 class="t-center">
+                Напишите свою историю
+            </h3>
+            <div class="hr"></div>
+        </article>
 
-		<div class="di form-group">
-			<textarea class="description"  name="description" id="description" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
-			<p class="help-block"></p>
+        <div class="di form-group">
+            <input type="text" class="form-control" name="title" id="title" placeholder="Заголовок истории">
+            <p class="help-block"></p>
+        </div>
+
+        <div class="di panel-group" id="collapse">
+            <div class="panel panel-default">
+                <a data-toggle="collapse" data-parent="#collapse" href="#categoryList">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Отрасли:
+                        </h4>
+                    </div>
+                </a>
+
+                <div id="categoryList" class="panel-collapse collapse">
+                    <!-- categoryList -->
+                </div>
+            </div>
+        </div>
+
+        <div class="di form-group">
+            <textarea class="description form-control"  name="description" id="description" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
+            <p class="help-block"></p>
 			<span class="counter">
 				<%= maxLength %>
 			</span>
-		</div>
+        </div>
 
-		<div id="questionsList" class="sortable"></div>
-		
-		<div class="di t-center buttons_area">
-			<div class="row">
-				<div class="col-sm-6 text-right">
-					<button type="submit" class="btn">Опубликовать</a>
-				</div>
-				<div class="col-sm-6 text-left">
-					<button type="button" class="btn js-delete">Удалить</a>
-				</div>
-				<div class="col-sm-6 text-left">
-					<button type="reset" class="btn">Отмена</a>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div id="questionsList" class="sortable"></div>
+
+        <div class="di t-center buttons_area">
+            <div class="row">
+                <div class="col-sm-6 text-right">
+                    <button type="submit" class="btn">Опубликовать</a>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <button type="button" class="btn color-red js-delete">Удалить</a>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <button type="reset" class="btn color-red">Отмена</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

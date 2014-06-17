@@ -82,7 +82,6 @@ var linkClass = 'ws'
             <div class="hr"></div>
             <% if (Window.config.userId !== id) { %>
             <div class="hdi">
-                <% console.log(Window.config.friends, id, _.find(Window.config.friends, {id: id})) %>
                 <% if (typeof _.find(Window.config.friends, {id: id}) !== "undefined") { %>
                 <button type="button" class="btn js-follow color-red">Отписаться</button>
                 <% } else { %>

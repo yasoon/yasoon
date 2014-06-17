@@ -6783,6 +6783,27 @@ aside li {
 .admin #interview article.interview {
   border-bottom: 1px solid #e2e2e2;
 }
+.post-edit .panel label {
+  font-weight: normal;
+  font-size: 18px;
+}
+.post-edit .form-control {
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+.post-edit .a-quertion {
+  font-family: Arial;
+}
+.post-edit textarea {
+  min-height: 80px;
+  display: inline-block;
+}
+.post-edit .redactor_editor ol li {
+  list-style-type: decimal;
+}
+.post-edit .redactor_editor ul li {
+  list-style-type: disc;
+}
 ul li {
   list-style: none;
   padding: 0;

@@ -87,15 +87,15 @@
       };
 
       WritePostPage.prototype.savePost = function(event) {
-        var categories, fullText;
         event.preventDefault();
-        categories = this.postCategories.checkedCategories();
-        fullText = this.postInterviews.createFullText();
-        if (fullText) {
-          this.model.set({
-            'text': fullText,
-            'category': categories
-          });
+        this.hideErrors();
+        this.model.set({
+          'text': this.postInterviews.createFullText(),
+          'category': this.postCategories.checkedCategories()
+        });
+        if (!this.model.isValid()) {
+          return this.showErrors(this.model.validationError);
+        } else {
           return $.post('/api/post/savePost', {
             postData: this.model.toJSON()
           }, function(data) {

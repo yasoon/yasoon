@@ -16,13 +16,6 @@
         this.$el.html(this.template(this.model.toJSON()));
         return this;
       },
-      initialize: function() {
-        return userModel.deferred.done((function(_this) {
-          return function() {
-            return console.log(userModel.toJSON());
-          };
-        })(this));
-      },
       followSpeaker: function(event) {
         event.preventDefault();
         if (typeof Window.config.userId === "number") {
