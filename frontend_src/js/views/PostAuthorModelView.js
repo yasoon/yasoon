@@ -1,5 +1,5 @@
 (function() {
-  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'models/PostAuthorModel', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView, PostAuthorModel) {
+  define(['text!templates/speakerInfoTpl.htm', 'views/LoginPopUpView', 'models/userModel', 'models/PostAuthorModel', 'backbone', 'mediator'], function(speakerInfoTpl, LoginPopUpView, userModel, PostAuthorModel) {
     return Backbone.View.extend({
       subscriptions: {
         'question:answered': 'updateQuestionCounter'
@@ -16,6 +16,13 @@
         this.$el.html(this.template(this.model.toJSON()));
         return this;
       },
+      initialize: function() {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            return console.log(userModel.toJSON());
+          };
+        })(this));
+      },
       followSpeaker: function(event) {
         event.preventDefault();
         if (typeof Window.config.userId === "number") {
@@ -24,9 +31,15 @@
             friend: this.model.get('id')
           }, (function(_this) {
             return function(data) {
-              var text;
+              var target, text;
               text = data.type === 'add' ? 'Отписаться' : 'Подписаться';
-              return _this.$(event.currentTarget).text(text);
+              target = _this.$(event.currentTarget);
+              target.text(text);
+              if (data.type === 'add') {
+                return target.addClass('color-red');
+              } else {
+                return target.removeClass('color-red');
+              }
             };
           })(this), 'json');
         } else {

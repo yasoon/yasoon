@@ -14,6 +14,7 @@
               Window.config.admin = admin === "ROLE_ADMIN" ? true : false;
               Window.config.userId = _this.get('id');
               Window.config.regFrom = _this.get('regFrom');
+              Window.config.friends = _this.get('friends');
               return _this.deferred.resolve();
             } else {
               Window.config.admin = false;

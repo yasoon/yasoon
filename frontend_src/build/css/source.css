@@ -6049,8 +6049,7 @@ header#header .inside > nav {
   text-align: center;
 }
 header#header .inside > nav a {
-  font-family: 'MuseoSansCyrl-100', Arial;
-  font-size: 14px;
+  font: 14px 'MuseoSansCyrl-100', Arial;
   text-transform: uppercase;
   border: 2px solid transparent;
   border-radius: 15px;
@@ -6240,7 +6239,7 @@ header#header nav a:hover {
   text-transform: lowercase;
   font-size: 22px;
 }
-.close-question {
+.color-red {
   color: red!important;
 }
 footer nav {
@@ -6445,7 +6444,7 @@ a.editable {
   box-sizing: border-box;
 }
 .like-title .like-this {
-  top: 0px;
+  top: 28px;
 }
 .like-this {
   position: absolute;
@@ -6461,9 +6460,7 @@ a.editable {
 .q-post {
   position: relative;
   display: block;
-  height: 38px;
   padding-left: 55px;
-  padding-top: 10px;
   color: #238C00;
   width: 440px;
   height: 33px;
