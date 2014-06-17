@@ -2,6 +2,7 @@ define(
   [
     'text!templates/speakerInfoTpl.htm'
     'views/LoginPopUpView'
+    'models/userModel'
     'models/PostAuthorModel'
     'backbone'
     'mediator'
@@ -9,6 +10,7 @@ define(
 (
   speakerInfoTpl
   LoginPopUpView
+  userModel
   PostAuthorModel
 ) ->
   Backbone.View.extend({
@@ -27,6 +29,11 @@ define(
       @$el.html(@template(@model.toJSON()))
       @
 
+    initialize: ->
+      userModel.deferred.done( =>
+        console.log(userModel.toJSON())
+      )
+
     followSpeaker: (event) ->
       event.preventDefault()
       if typeof Window.config.userId is "number"
@@ -35,8 +42,9 @@ define(
           friend: @model.get('id')
         }, (data) =>
           text = if data.type is 'add' then 'Отписаться' else 'Подписаться'
-          @$(event.currentTarget)
-            .text(text)
+          target = @$(event.currentTarget)
+          target.text(text)
+          if data.type is 'add' then target.addClass('color-red') else target.removeClass('color-red')
         , 'json')
       else
         if not @loginpopUpView?

@@ -1,26 +1,26 @@
 <% var check = (Window.config.userId === id) ? false : true  %>
 <% var path = (check) ? "#/author" : "#/speaker/" + id %>
 <% if (typeof self_link === 'string' && self_link.match(/facebook.com/g)){
-    var linkClass = 'wf'
+var linkClass = 'wf'
 } else if (typeof self_link === 'string' && self_link.match(/vk.com/g)) {
-    var linkClass = 'wb'
+var linkClass = 'wb'
 } else {
-    var linkClass = 'ws'
+var linkClass = 'ws'
 }%>
 <div class="fixed-position-aside">
-    <% if(avatarImg === null) { %>ОБНОВЛЕНО
-        <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
+    <% if(avatarImg === null) { %>
+    <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
     <% } else { %>
-        <img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
+    <img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
     <% } %>
     <h4>
         <% if (check) { %>
-            <a href="<%= path %>/posts/" class="usr-name">
-                <%= name %>
-            </a>
-        <% } else { %>
+        <a href="<%= path %>/posts/" class="usr-name">
             <%= name %>
-            <a href="#/author/edit/" class="editable"></a>
+        </a>
+        <% } else { %>
+        <%= name %>
+        <a href="#/author/edit/" class="editable"></a>
         <% } %>
     </h4>
     <p class="u-description">
@@ -29,7 +29,7 @@
     <div class="hr"></div>
     <div class="pub">
         <h4 class="p-label">Последние обновления</h4>
-            <%= _.getDateText(last_publish_date) %>
+        <%= _.getDateText(last_publish_date) %>
         <div class="hr"></div>
     </div>
 
@@ -81,9 +81,14 @@
             <div class="clearfix"></div>
             <div class="hr"></div>
             <% if (Window.config.userId !== id) { %>
-                <div class="hdi">
-                    <button type="button" class="btn js-follow">Follow</button>
-                </div>
+            <div class="hdi">
+                <% console.log(Window.config.friends, id, _.find(Window.config.friends, {id: id})) %>
+                <% if (typeof _.find(Window.config.friends, {id: id}) !== "undefined") { %>
+                <button type="button" class="btn js-follow color-red">Отписаться</button>
+                <% } else { %>
+                <button type="button" class="btn js-follow">Подписаться</button>
+                <% } %>
+            </div>
             <% } %>
         </div>
     </div>
