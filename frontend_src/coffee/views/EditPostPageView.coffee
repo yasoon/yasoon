@@ -69,7 +69,9 @@ define(
           collection: new InterviewCollection(data)
         })
       @ui.interviews.append(@postInterviews.render().$el)
-      @$('.editor').redactor('sync')
+      @$('.editor').redactor({
+        imageUpload: '/api/post/upload_image',
+      }, 'sync')
 
     deletePost: (event) ->
       event.preventDefault()

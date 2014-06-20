@@ -6001,6 +6001,10 @@ a.dd,
 .posts .items-list article {
   padding-left: 20px;
   border-left: 1px solid #ccc;
+  padding-top: 20px;
+}
+.posts .items-list article .content {
+  padding: 0;
 }
 .posts .items-list article .hr {
   margin-left: -20px;
@@ -6589,9 +6593,6 @@ article.cat-title h3,
 article.cat-title h4 {
   text-transform: uppercase;
 }
-article.cat-title:after {
-  padding-top: 20px;
-}
 .main-layout article {
   padding-left: 0;
 }
@@ -6601,12 +6602,9 @@ article.cat-title:after {
 .content {
   font-size: 1.3em;
   line-height: 1.6em;
-  padding-top: 1em;
+  padding-bottom: 1em;
   -webkit-transition: margin 0.5s ease;
   transition: margin 0.5s ease;
-}
-.content p {
-  padding-bottom: 1em;
 }
 .content img {
   width: 100%;
@@ -6803,6 +6801,13 @@ aside li {
 }
 .post-edit .redactor_editor ul li {
   list-style-type: disc;
+}
+.like-title h1 {
+  font-weight: bold;
+}
+h2 {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 ul li {
   list-style: none;
@@ -7777,6 +7782,14 @@ body .redactor_toolbar li a.redactor_btn_alignment {
 }
 .redactor_editor p {
   margin-bottom: 2px !important;
+}
+.redactor_editor iframe,
+.redactor_editor object,
+.redactor_editor embed,
+.redactor_editor video,
+.redactor_editor img {
+  display: block;
+  margin: 0 auto;
 }
 @media screen and (max-width: 1060px) {
   #bg-main .main-w {

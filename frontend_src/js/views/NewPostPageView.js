@@ -78,7 +78,9 @@
               });
             }
             _this.ui.interviews.append(_this.postInterviews.render().$el);
-            _this.$('.editor').redactor('sync');
+            _this.$('.editor').redactor({
+              imageUpload: '/api/post/upload_image'
+            }, 'sync');
             return _this.$('.sortable ul').sortable({
               cancel: '.form-group'
             });

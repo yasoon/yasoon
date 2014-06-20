@@ -101,6 +101,10 @@ a.dd,
     article {
       padding-left: 20px;
       border-left: 1px solid #ccc;
+      padding-top: 20px;
+      .content {
+        padding: 0;
+      }
       .hr {
         margin-left: -20px;
       }
@@ -704,9 +708,9 @@ article {
     h1, h2, h3, h4 {
       text-transform: uppercase;
     }
-    &:after {
-      padding-top: 20px;
-    }
+//    &:after {
+//      padding-top: 20px;
+//    }
   }
 
 
@@ -723,11 +727,8 @@ article {
 .content{
   font-size: 1.3em;
   line-height: 1.6em;
-  padding-top: 1em;
+  padding-bottom: 1em;
   .transition(margin .5s ease);
-  p{
-    padding-bottom:  1em;
-  }
   img{
     width: 100%;
   }
@@ -946,4 +947,13 @@ aside li {
       list-style-type: disc;
     }
   }
+}
+
+.like-title h1 {
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
