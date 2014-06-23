@@ -9,6 +9,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\CategoryEntity;
 use Yasoon\Site\Entity\PostCategoryEntity;
@@ -194,17 +195,20 @@ class PostCategoryService extends AbstractApiService {
                     ->leftJoin('c.post', 'p')
                     ->getQuery()
                     ->getResult();
-                foreach($category as $cat)
-                {
-                    if(!array_key_exists($cat->getPost()->getAuthorId(), $authors))
-                    {
-                        $authors[$cat->getPost()->getAuthorId()]['likes'] = 0;
-                        $authors[$cat->getPost()->getAuthorId()]['posts'] = 0;
+                foreach ($category as $cat) {
+                    try {
+                        $post_author = $cat->getPost()->getAuthorId();
+                        if (!array_key_exists($post_author, $authors)) {
+                            $authors[$post_author]['likes'] = 0;
+                            $authors[$post_author]['posts'] = 0;
+                        }
+
+                        $authors[$post_author]['posts'] = $authors[$post_author]['posts'] += 1;
+                        $authors[$post_author]['likes'] = $authors[$post_author]['likes'] += ($cat->getPost()->getLikes() * 1);
+
+                    } catch (\Exception $e) {
+
                     }
-                    
-                    
-                    $authors[$cat->getPost()->getAuthorId()]['posts'] = $authors[$cat->getPost()->getAuthorId()]['posts'] += 1;
-                    $authors[$cat->getPost()->getAuthorId()]['likes'] = $authors[$cat->getPost()->getAuthorId()]['likes'] += ($cat->getPost()->getLikes()*1);
                 }
             }
             arsort($authors);
