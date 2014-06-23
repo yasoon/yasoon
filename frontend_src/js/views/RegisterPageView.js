@@ -44,7 +44,7 @@
       };
 
       Register.prototype.handler = function() {
-        return this.listenTo(this.model, 'change:description', this.symbolsCounter);
+        return this.listenTo(this.model, 'change:interviewCaption', this.symbolsCounter);
       };
 
       Register.prototype.ui = function() {
@@ -109,6 +109,7 @@
       Register.prototype.registerAction = function(event) {
         event.preventDefault();
         this.hideErrors();
+        this.$(event.currentTarget).prop('disabled', true);
         if (this.model.isValid()) {
           return $.post('/api/author/register', this.model.toJSON(), (function(_this) {
             return function(data) {
@@ -117,6 +118,7 @@
                 return _this.setModels();
               } else {
                 if (data.errorType === 'emailExist') {
+                  _this.$(event.currentTarget).prop('disabled', false);
                   return _this.showErrors([
                     {
                       name: 'email',
@@ -128,6 +130,7 @@
             };
           })(this), 'json');
         } else {
+          this.$(event.currentTarget).prop('disabled', false);
           return this.showErrors(this.model.validationError);
         }
       };
@@ -135,6 +138,7 @@
       Register.prototype.updateAction = function(event) {
         event.preventDefault();
         this.hideErrors();
+        this.$(event.currentTarget).prop('disabled', true);
         if (this.model.isValid()) {
           return $.post('/api/author/editinfo', this.model.toJSON(), function(data) {
             if (data.authorData === true) {
@@ -144,7 +148,8 @@
           }, 'json');
         } else {
           this.showErrors(this.model.validationError);
-          return this.showStep(1);
+          this.showStep(1);
+          return this.$(event.currentTarget).prop('disabled', false);
         }
       };
 

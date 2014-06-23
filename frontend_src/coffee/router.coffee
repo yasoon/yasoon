@@ -72,7 +72,12 @@ define([
         Controller.speakers(category)
 
       registerSpeaker: ->
-        Controller.register()
+        userModel.deferred.done( =>
+          if typeof Window.config.userId is "number"
+            @navigate('#/404')
+          else
+            Controller.register()
+        )
 
       editAuthor: ->
         userModel.deferred.done( =>
@@ -106,7 +111,7 @@ define([
 
       timeline: ->
         userModel.deferred.done( =>
-          if Window.config.userId is "number"
+          if typeof Window.config.userId is "number"
             Controller.timeline()
           else
             @navigate('#/404')

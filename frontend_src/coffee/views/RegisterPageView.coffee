@@ -41,7 +41,7 @@ define(
         @model.set('maxLength', 290)
 
       handler: ->
-        @listenTo(@model, 'change:description', @symbolsCounter)
+        @listenTo(@model, 'change:interviewCaption', @symbolsCounter)
 
       ui: ->
         @.ui =
@@ -100,6 +100,7 @@ define(
       registerAction: (event) ->
         event.preventDefault()
         @hideErrors()
+        @$(event.currentTarget).prop('disabled', yes)
         if @model.isValid()
           $.post('/api/author/register', @model.toJSON()
           , (data) =>
@@ -108,17 +109,20 @@ define(
               @setModels()
             else
               if data.errorType is 'emailExist'
+                @$(event.currentTarget).prop('disabled', no)
                 @showErrors([{
                   name: 'email'
                   message: 'Пользователь с таким email уже есть'
                 }])
           , 'json')
         else
+          @$(event.currentTarget).prop('disabled', no)
           @showErrors(@model.validationError)
 
       updateAction: (event) ->
         event.preventDefault()
         @hideErrors()
+        @$(event.currentTarget).prop('disabled', yes)
 
         if @model.isValid()
           $.post('/api/author/editinfo', @model.toJSON()
@@ -130,4 +134,5 @@ define(
         else
           @showErrors(@model.validationError)
           @showStep(1)
+          @$(event.currentTarget).prop('disabled', no)
 )

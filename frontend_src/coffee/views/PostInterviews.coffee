@@ -31,18 +31,8 @@ define(
 
       createFullText: ->
         fullTextContainer = $('<div></div>')
-        @hideErrors()
-        @hasErrors = no
-        _.each(@collection.models, (model, iterator) =>
-          if not model.isValid()
-            @hasErrors = yes
-            data = _.extend(model.validationError[0], {id: iterator})
-            @showErrors(data)
-          else
-            fullTextContainer.append(@template(model.toJSON()))
+        _.each(@collection.models, (model) =>
+          fullTextContainer.append(@template(model.toJSON()))
         )
-        if not @hasErrors
-          fullTextContainer.html()
-        else
-          not @hasErrors
+        fullTextContainer.html()
 )

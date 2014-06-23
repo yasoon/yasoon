@@ -6303,7 +6303,7 @@ footer nav {
   width: 212px;
   float: left;
 }
-.page-layout > aside + section {
+.page-layout > aside ~ section {
   margin-left: 212px;
 }
 .page-layout .post-edit .navigate.fixed {
@@ -6802,12 +6802,25 @@ aside li {
 .post-edit .redactor_editor ul li {
   list-style-type: disc;
 }
+.register textarea.form-control {
+  border-color: transparent;
+}
+.has-success .register textarea.form-control {
+  border-color: green;
+}
+.a-quertion.active {
+  color: green;
+  font-weight: bold;
+}
 .like-title h1 {
   font-weight: bold;
 }
 h2 {
   margin-top: 5px;
   margin-bottom: 10px;
+}
+.form-control:not(textarea) {
+  height: 38px;
 }
 ul li {
   list-style: none;

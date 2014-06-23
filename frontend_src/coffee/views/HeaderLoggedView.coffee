@@ -50,6 +50,6 @@ define(
         event.stopPropagation()
         $.post('/logout', ->
           Window.config.userId = no
-          window.location.reload(true)
+          window.location = '/'
         )
 )

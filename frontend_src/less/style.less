@@ -423,7 +423,7 @@ footer nav{
     background: #fff;
     width: 212px;
     float: left;
-    & + section {
+    & ~ section {
       margin-left: 212px;
     }
   }
@@ -948,6 +948,19 @@ aside li {
     }
   }
 }
+.register {
+  textarea.form-control {
+    border-color: transparent;
+    .has-success & {
+      border-color: green;
+    }
+  }
+}
+
+.a-quertion.active {
+  color: green;
+  font-weight: bold;
+}
 
 .like-title h1 {
   font-weight: bold;
@@ -956,4 +969,8 @@ aside li {
 h2 {
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.form-control:not(textarea) {
+  height: 38px;
 }

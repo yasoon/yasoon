@@ -68,7 +68,15 @@
         return Controller.speakers(category);
       },
       registerSpeaker: function() {
-        return Controller.register();
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (typeof Window.config.userId === "number") {
+              return _this.navigate('#/404');
+            } else {
+              return Controller.register();
+            }
+          };
+        })(this));
       },
       editAuthor: function() {
         return userModel.deferred.done((function(_this) {
@@ -114,7 +122,7 @@
       timeline: function() {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.userId === "number") {
+            if (typeof Window.config.userId === "number") {
               return Controller.timeline();
             } else {
               return _this.navigate('#/404');

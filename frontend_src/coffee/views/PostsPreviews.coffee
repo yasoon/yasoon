@@ -13,8 +13,6 @@ define(
   class PostsPreviewsCollection extends PaginationView
     tagName: 'section'
     
-    className: 'main-layout m-page'
-    
     template: _.template(postPreviewsTpl)
 
     addOne: (item) ->
