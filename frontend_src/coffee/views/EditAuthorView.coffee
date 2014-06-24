@@ -1,6 +1,6 @@
 define(
   [
-    'text!templates/registerTpl.htm'
+    'text!templates/editProfileTpl.htm'
     'views/RegisterPageView'
     'fileupload'
     'backbone'
@@ -8,14 +8,29 @@ define(
     'mediator'
   ]
   (
-    registerTpl
+    editProfileTpl
     RegisterPageView
   ) ->
-    class Register extends RegisterPageView
+    class UpdateProfile extends RegisterPageView
+      template:                 _.template(editProfileTpl)
+
       initialize: ->
-        super
-        @model.fetch()
-        @model.set('update', yes)
+        _.bindAll(@, 'render');
+        @handler()
+        @model.on('change', @render)
+#        @listenTo(@model, 'change', @render)
+        $.get('/api/author/getShortUserData', (data) => @model.set(_.extend({}, data, {'maxLength': 290})))
+
+      render: ->
+        console.log(@, @$el)
+        @$el.empty().append(@template(@model.toJSON()))
+        @onRender()
+        @
+
+      onRender: ->
+        @setImageUploader()
+        @stickit()
+        @ui()
 
       events: ->
         'click .js-update':     'updateAction'

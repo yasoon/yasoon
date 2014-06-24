@@ -14,7 +14,8 @@ define(
       @$el
         .html(@template())
         .css({
-          'background-image': "url(frontend/#{image})"
+          'background-image': "url(frontend#{image})",
+          'background-size': "cover"
         })
       @
   })

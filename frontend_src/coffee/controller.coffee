@@ -119,8 +119,9 @@ define(
         $('body').removeClass().addClass('editAuthor')
         @editAuthorPageView = new EditAuthorPageView({
           model: new UserUpdateModel()
+          el: LayoutView.contentRegion.$el
         })
-        LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
+#        LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
         @editAuthorPageView.delegateEvents()
         @
 

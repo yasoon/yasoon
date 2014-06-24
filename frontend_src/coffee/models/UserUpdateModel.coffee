@@ -7,8 +7,6 @@ define(
     UserRegisterModel
   ) ->
     class UserUpdateModel extends UserRegisterModel
-      url: '/api/author/getShortUserData'
-
       validate: (attrs) ->
         super
         errors = []
@@ -24,7 +22,6 @@ define(
             name: 'job'
             message: 'Неверный формат текста'
           )
-
 
         if errors.length > 0 then errors else false
 )

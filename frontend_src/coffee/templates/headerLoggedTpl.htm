@@ -7,6 +7,9 @@
 	<span id="counter"></span>
 </a>
 <nav>
+    <% if (roles[0] === "ROLE_ADMIN") { %>
+    <a href="#/admin/">Админ</a>
+    <% } %>
 	<a href="#/author/posts/">Профиль</a>
 	<a href="#/author/answers/">Вопросы (<span id="answers"></span>)</a>
 	<a href="#/timeline/">Лента (<span id="posts"></span>)</a>

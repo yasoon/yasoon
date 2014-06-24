@@ -11,8 +11,6 @@
         return UserUpdateModel.__super__.constructor.apply(this, arguments);
       }
 
-      UserUpdateModel.prototype.url = '/api/author/getShortUserData';
-
       UserUpdateModel.prototype.validate = function(attrs) {
         var errors, textTest;
         UserUpdateModel.__super__.validate.apply(this, arguments);

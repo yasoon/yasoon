@@ -29,6 +29,7 @@ define(
 
       symbolsCounter: (model, value) ->
         length = model.get('maxLength') - value.length
-        @ui.counter.text(length)
+        if @ui.counter?
+          @ui.counter.text(length)
     })
 )

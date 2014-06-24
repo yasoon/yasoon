@@ -70,7 +70,16 @@
         steps = this.$el.find('fieldset');
         count = steps.size();
         this.ui();
-        new AjaxUpload(this.$('#upload')[0], {
+        this.setImageUploader();
+        steps.each(function(step) {
+          return steps.eq(step).wrap('<div id="step' + step + '"></div>');
+        });
+        this.showStep(0);
+        return this.stickit();
+      };
+
+      Register.prototype.setImageUploader = function() {
+        return new AjaxUpload(this.$('#upload')[0], {
           action: '/api/author/upload_user_image',
           name: 'files[]',
           id: 'upload',
@@ -84,11 +93,6 @@
             }
           }
         });
-        steps.each(function(step) {
-          return steps.eq(step).wrap('<div id="step' + step + '"></div>');
-        });
-        this.showStep(0);
-        return this.stickit();
       };
 
       Register.prototype.goToStep = function(event) {

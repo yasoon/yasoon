@@ -62,6 +62,17 @@ define(
         count = steps.size()
         @ui()
 
+        @setImageUploader()
+
+        steps.each( (step) ->
+          steps
+          .eq(step)
+          .wrap('<div id="step' + step + '"></div>')
+        )
+        @showStep(0)
+        @stickit()
+
+      setImageUploader: ->
         new AjaxUpload(
           @$('#upload')[0],
           action: '/api/author/upload_user_image'
@@ -74,14 +85,6 @@ define(
             if data.dir?
               @model.set('img', image)
         )
-
-        steps.each( (step) ->
-          steps
-          .eq(step)
-          .wrap('<div id="step' + step + '"></div>')
-        )
-        @showStep(0)
-        @stickit()
 
       goToStep: (event) ->
         $this = $(event.currentTarget)

@@ -7,7 +7,8 @@
         var image;
         image = _.getContent(12);
         this.$el.html(this.template()).css({
-          'background-image': "url(frontend/" + image + ")"
+          'background-image': "url(frontend" + image + ")",
+          'background-size': "cover"
         });
         return this;
       }

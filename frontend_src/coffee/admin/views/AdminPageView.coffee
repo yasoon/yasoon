@@ -19,7 +19,7 @@ define(
       template: _.template(adminMainPageTpl)
 
       events: ->
-        'click a[data-toggle="tab"]': 'changeTab'
+        'click a[data-change="tab"]': 'changeTab'
 
       render: ->
         @$el.empty().append(@template())
@@ -58,5 +58,8 @@ define(
 
       changeTab: (event) ->
         event.preventDefault()
-        $(event.currentTarget).tab('show')
+        self = @$(event.currentTarget)
+        self.parent().addClass('active').siblings().removeClass('active')
+        target = self.data('target')
+        @$(target).addClass('active').siblings().removeClass('active')
 )

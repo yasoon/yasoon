@@ -1,0 +1,78 @@
+<% var reg = (typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0) ? true : false; %>
+<form role="form" class="register-form">
+    <% if (reg) { %>
+        <div class="page-header">
+            <h3>Редактировать профиль<br />
+                <small>Обновите свой профиль и пишите свои собственные истории</small>
+            </h3>
+        </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Имя" id="name" name="name">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Email" id="email" name="email">
+            <span class="help-block"></span>
+            <% if (typeof update === "undefined") { %>
+            <div class="di form-group">
+                <div class="hhdi">
+                    <input type="checkbox" id="subscribed" name="subscribed">
+                    <label for="subscribed">Подписаться на новости</label>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <div class="di form-group">
+            <input type="password" class="form-control" placeholder="Старый пароль" id="old_pasword" name="old_pasword">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <input type="password" class="form-control" placeholder="Новый пароль" id="new_pasword" name="new_pasword">
+            <span class="help-block"></span>
+        </div>
+    <% } %>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Ваша работа" id="job" name="job">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Интересы" id="interest" name="interest">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Мечты" id="dream" name="dream">
+            <span class="help-block"></span>
+        </div>
+        <div class="di form-group">
+            <textarea placeholder="Короткая биография" maxlength="<%= maxLength %>" class="form-control" id="interviewCaption" name="interviewCaption"></textarea>
+            <span class="counter"><%= maxLength %></span>
+            <span class="help-block"></span>
+        </div>
+        <div class="hr di"></div>
+    <% if (reg) { %>
+        <div class="di form-group">
+            <input type="text" class="form-control" placeholder="Домашняя страница" id="homepage" name="homepage">
+        </div>
+        <div class="di form-group file_upload_block">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="btn di btn_upload_img" id="upload" for="file">Загрузить фото</label>
+                </div>
+                <div class="col-sm-6">
+                    <div class="output text-right">
+                        <% if(avatarImg === null) { %>
+                        <img src="/frontend/img/noAvatar.jpg" alt="">
+                        <% } else { %>
+                        <img src="/upload/avatar/<%= avatarImg %>" alt="">
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <button type="button" class="regbtn di btn js-update" data-count="2">В профиль</button>
+            </div>
+        </div>
+    <% } %>
+</form>

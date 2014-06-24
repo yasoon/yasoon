@@ -89,9 +89,9 @@
       Controller.prototype.editAuthor = function() {
         $('body').removeClass().addClass('editAuthor');
         this.editAuthorPageView = new EditAuthorPageView({
-          model: new UserUpdateModel()
+          model: new UserUpdateModel(),
+          el: LayoutView.contentRegion.$el
         });
-        LayoutView.contentRegion.$el.empty().append(this.editAuthorPageView.render().$el);
         this.editAuthorPageView.delegateEvents();
         return this;
       };
