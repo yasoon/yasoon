@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -28,8 +28,16 @@
         this.postPageView = new PostPageView({
           id: id
         });
-        LayoutView.contentRegion.$el.empty().append(this.postPageView.render().$el);
+        LayoutView.contentRegion.$el.empty().append(this.postPageView.$el);
         this.postPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.about = function() {
+        $('body').removeClass().addClass('about');
+        this.aboutPageView = new AboutPageView();
+        LayoutView.contentRegion.$el.empty().append(this.aboutPageView.render().$el);
+        this.aboutPageView.delegateEvents();
         return this;
       };
 
@@ -37,9 +45,9 @@
         $('body').removeClass().addClass('new-post');
         this.newPostPageView = new NewPostPageView({
           id: id,
-          model: new PostPageModel()
+          model: new PostPageModel(),
+          el: LayoutView.contentRegion.$el
         });
-        LayoutView.contentRegion.$el.empty().append(this.newPostPageView.render().$el);
         this.newPostPageView.delegateEvents();
         return this;
       };

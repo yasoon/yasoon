@@ -10,9 +10,12 @@ define(
   )->
     Backbone.View.extend({
       initialize: ->
+        @listenTo(@collection, 'add', @addAll)
         @collection.fetch()
+
+      addAll: ->
         if @collection.size() > 0
-          @listenTo(@collection, 'add', @addOne)
+          @collection.each((post) => @addOne(post))
         else
           if not @emptyView?
             @emptyView = new EmptyView({

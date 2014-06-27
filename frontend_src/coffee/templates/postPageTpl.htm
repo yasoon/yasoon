@@ -11,6 +11,7 @@
 		<% if (authorId === Window.config.userId) { %>
 			<a href="#/post/<%= id %>/edit" class="editable"></a>
 		<% } %>
+        <br/>
 		<span class="media-pub">
 			опубликовано <%= _.getDateText(publishDate) %>
 		</span>
@@ -30,6 +31,6 @@
 		</span>
 	</span>
 	<span class="q-post">
-		<a href="/#/speaker/<%= authorId %>/answers"><i></i></a> <%= questionCount %> question about this post
+		<a href="/#/speaker/<%= authorId %>/answers"><i></i></a> <%= questionCount %> вопросов этому автору
 	</span>
 </div>

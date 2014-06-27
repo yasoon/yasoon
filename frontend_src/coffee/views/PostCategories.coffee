@@ -16,10 +16,7 @@ define(
       'category:checked': 'checkedCategories'
 
     render: ->
-      @collection.each( (category) =>
-        @addOne(category)
-      )
-
+      @collection.each((category) => @addOne(category))
       @
 
     addOne: (category) ->
@@ -27,20 +24,13 @@ define(
       @$el.append(category.render().$el)
 
     checkedCategories: ->
-      checked = @collection.where({'checked': yes})
-      categories = _.map(checked, (model) ->
-        model.get('id')
-      )
-
-      blocked = if categories.length > 2 then yes else no
-      @$('input:checkbox:not(:checked)').prop('disabled', blocked)
+      categories = _.map(@collection.where({'checked': yes}), (model) -> model.get('id'))
+      block = if categories.length > 2 then on else off
+      @$('input:checkbox:not(:checked)').prop('disabled', block)
       categories
 
     checkedCategoriesNames: ->
-      checked = @collection.where({'checked': yes})
-      namesList = _.map(checked, (model) ->
-        model.get('name')
-      )
+      namesList = _.map(@collection.where({'checked': yes}), (model) -> model.get('name'))
       namesList.join(', ')
 
 )

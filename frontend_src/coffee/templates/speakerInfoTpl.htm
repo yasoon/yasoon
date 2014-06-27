@@ -1,12 +1,13 @@
 <% var check = (Window.config.userId === id) ? false : true  %>
 <% var path = (check) ? "#/author" : "#/speaker/" + id %>
-<% if (typeof self_link === 'string' && self_link.match(/facebook.com/g)){
+<% if (typeof homepage === 'string' && homepage.match(/facebook.com/g)){
 var linkClass = 'wf'
-} else if (typeof self_link === 'string' && self_link.match(/vk.com/g)) {
+} else if (typeof homepage === 'string' && homepage.match(/vk.com/g)) {
 var linkClass = 'wb'
 } else {
 var linkClass = 'ws'
 }%>
+
 <div class="fixed-position-aside">
     <% if(avatarImg === null) { %>
     <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
@@ -51,7 +52,7 @@ var linkClass = 'ws'
                 </a>
             </div>
             <div class="hr"></div>
-            <div class="d-box">
+            <div class="d-box clearfix">
                 <div>
                     <p class="p-label">историй</p>
                     <a href="<%= path %>/posts/">
@@ -65,20 +66,19 @@ var linkClass = 'ws'
                     </a>
                 </div>
             </div>
-            <% if (self_link) { %>
-            <div class="social">
-                <div class="hr"></div>
+            <% if (homepage) { %>
+            <div class="hr"></div>
+            <div class="social clearfix">
                 <div class="social-links">
-                    <% if (self_link.substr(0, 4) === 'http') { %>
-                    <a href="<%= self_link %>" class="<%= linkClass %>"></a>
+                    <% if (homepage.substr(0, 4) === 'http') { %>
+                    <a href="<%= homepage %>" class="<%= linkClass %>"></a>
                     <% } else { %>
-                    <a href="http://<%= self_link %>" class="<%= linkClass %>"></a>
+                    <a href="http://<%= homepage %>" class="<%= linkClass %>"></a>
                     <% } %>
-                    <div class="clearfix"></div>
                 </div>
             </div>
             <% } %>
-            <div class="clearfix"></div>
+
             <div class="hr"></div>
             <% if (Window.config.userId !== id) { %>
             <div class="hdi">

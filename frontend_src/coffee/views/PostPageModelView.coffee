@@ -8,7 +8,7 @@ define(
 ) ->
   Backbone.View.extend({
     tagName: 'article'
-    className: 'lim'
+    className: 'col-md-9'
     template: _.template(postPageTpl)
     render: ->
       console.log @model.toJSON()

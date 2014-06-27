@@ -13,6 +13,7 @@
         'speaker/:id/:page(/)': 'showSpeaker',
         'author/edit(/)': 'editAuthor',
         'author/:page(/)': 'author',
+        'about(/)': 'about',
         'timeline(/)': 'timeline',
         'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
@@ -118,6 +119,9 @@
             }
           };
         })(this));
+      },
+      about: function() {
+        return Controller.about();
       },
       timeline: function() {
         return userModel.deferred.done((function(_this) {

@@ -58,7 +58,7 @@ class IndexController {
 <body>
     <header id="header"></header>
     <div class="wrap">
-        <div class="main_block">
+        <div class="main_block container">
             <section class="page_content"></section>
         </div>
     </div>
@@ -66,8 +66,8 @@ class IndexController {
         <div class="inside">
             <div class="left aus">© 2013 yasoon</div>
             <nav>
-                <a href="/about">О нас</a>
-                <a href="/digest">Дайджест</a>
+                <a href="/#/about">О нас</a>
+                <a href="/#/digest">Дайджест</a>
             </nav>
             <div class="clearfix"></div>
         </div>

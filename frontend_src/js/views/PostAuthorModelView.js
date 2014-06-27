@@ -10,7 +10,7 @@
         };
       },
       tagName: 'aside',
-      className: 'postinfo',
+      className: 'postinfo col-md-3',
       template: _.template(speakerInfoTpl),
       render: function() {
         this.$el.html(this.template(this.model.toJSON()));

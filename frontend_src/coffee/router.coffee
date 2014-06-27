@@ -22,6 +22,7 @@ define([
         'speaker/:id/:page(/)': 'showSpeaker'
         'author/edit(/)': 'editAuthor'
         'author/:page(/)': 'author'
+        'about(/)': 'about'
         'timeline(/)': 'timeline'
         'admin(/)': 'adminMainPage'
         '*other': 'undefinedRoute'
@@ -108,6 +109,9 @@ define([
           else
             @navigate('#/404')
         )
+
+      about: ->
+        Controller.about()
 
       timeline: ->
         userModel.deferred.done( =>

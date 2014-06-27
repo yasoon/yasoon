@@ -4,6 +4,7 @@ define(
     'views/MainPageView'
     'views/PostsPageView'
     'views/PostPageView'
+    'views/AboutPageView'
     'views/NewPostPageView'
     'views/EditPostPageView'
     'views/SpeakersPageView'
@@ -24,6 +25,7 @@ define(
     MainPageView
     PostsPageView
     PostPageView
+    AboutPageView
     NewPostPageView
     EditPostPageView
     SpeakersPageView
@@ -63,8 +65,15 @@ define(
         @postPageView = new PostPageView({
           id: id
         })
-        LayoutView.contentRegion.$el.empty().append(@postPageView.render().$el)
+        LayoutView.contentRegion.$el.empty().append(@postPageView.$el)
         @postPageView.delegateEvents()
+        @
+
+      about: ->
+        $('body').removeClass().addClass('about')
+        @aboutPageView = new AboutPageView()
+        LayoutView.contentRegion.$el.empty().append(@aboutPageView.render().$el)
+        @aboutPageView.delegateEvents()
         @
 
       newPost: (id) ->
@@ -72,8 +81,8 @@ define(
         @newPostPageView = new NewPostPageView({
           id: id
           model: new PostPageModel()
+          el: LayoutView.contentRegion.$el
         })
-        LayoutView.contentRegion.$el.empty().append(@newPostPageView.render().$el)
         @newPostPageView.delegateEvents()
         @
 

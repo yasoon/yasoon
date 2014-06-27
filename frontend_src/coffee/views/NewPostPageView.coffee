@@ -36,16 +36,19 @@ define(
       initialize: (options) ->
         @pageId = options.id or 1
         @model.set('maxLength', 255)
+        @getInterviewQuestions()
         @handler()
 
       handler: ->
         @listenTo(@model, 'change:description', @symbolsCounter)
+        @listenTo(@model, 'change:interviewQuestions', @render)
 
       ui: ->
         @.ui =
           counter:      @$('.counter')
           categories:   @$('#categoryList')
           interviews:   @$('#questionsList')
+          collapse:     @$('.collapse')
 
       render: ->
         @$el.empty().append(@template(@model.toJSON()))
@@ -56,8 +59,6 @@ define(
         @ui()
         @createCategoryList()
         @createInterviewsList()
-        @stickit()
-        $('.collapse').collapse()
 
       createCategoryList: ->
         if not @postCategories?
@@ -66,21 +67,27 @@ define(
           })
         @ui.categories.append(@postCategories.render().$el)
 
+      getInterviewQuestions: ->
+        $.get("/api/interview/questions/#{@pageId}", (data) => @model.set('interviewQuestions', data))
+
       createInterviewsList: ->
-        $.get("/api/interview/questions/#{@pageId}"
-        , (data) =>
-          if not @postInterviews?
-            @postInterviews = new PostInterviews({
-              collection: new InterviewCollection(data)
-            })
-          @ui.interviews.append(@postInterviews.render().$el)
-          @$('.editor').redactor({
-            imageUpload: '/api/post/upload_image',
-          }, 'sync')
-          @$('.sortable ul').sortable({
-            cancel: '.form-group'
+        if not @postInterviews?
+          @postInterviews = new PostInterviews({
+            collection: new InterviewCollection(@model.get('interviewQuestions'))
           })
-        , 'json')
+        @ui.interviews.append(@postInterviews.render().$el)
+
+        @afterRender()
+
+      afterRender: ->
+        @$('.editor').redactor({
+          imageUpload: '/api/post/upload_image',
+        })
+        @$('.sortable ul').sortable({
+          cancel: '.form-group'
+        })
+        @stickit()
+        @ui.collapse.collapse('hide')
 
       savePost: (event) ->
         event.preventDefault()

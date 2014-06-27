@@ -31,18 +31,21 @@
       WritePostPage.prototype.initialize = function(options) {
         this.pageId = options.id || 1;
         this.model.set('maxLength', 255);
+        this.getInterviewQuestions();
         return this.handler();
       };
 
       WritePostPage.prototype.handler = function() {
-        return this.listenTo(this.model, 'change:description', this.symbolsCounter);
+        this.listenTo(this.model, 'change:description', this.symbolsCounter);
+        return this.listenTo(this.model, 'change:interviewQuestions', this.render);
       };
 
       WritePostPage.prototype.ui = function() {
         return this.ui = {
           counter: this.$('.counter'),
           categories: this.$('#categoryList'),
-          interviews: this.$('#questionsList')
+          interviews: this.$('#questionsList'),
+          collapse: this.$('.collapse')
         };
       };
 
@@ -55,9 +58,7 @@
       WritePostPage.prototype.onRender = function() {
         this.ui();
         this.createCategoryList();
-        this.createInterviewsList();
-        this.stickit();
-        return $('.collapse').collapse();
+        return this.createInterviewsList();
       };
 
       WritePostPage.prototype.createCategoryList = function() {
@@ -69,23 +70,33 @@
         return this.ui.categories.append(this.postCategories.render().$el);
       };
 
-      WritePostPage.prototype.createInterviewsList = function() {
+      WritePostPage.prototype.getInterviewQuestions = function() {
         return $.get("/api/interview/questions/" + this.pageId, (function(_this) {
           return function(data) {
-            if (_this.postInterviews == null) {
-              _this.postInterviews = new PostInterviews({
-                collection: new InterviewCollection(data)
-              });
-            }
-            _this.ui.interviews.append(_this.postInterviews.render().$el);
-            _this.$('.editor').redactor({
-              imageUpload: '/api/post/upload_image'
-            }, 'sync');
-            return _this.$('.sortable ul').sortable({
-              cancel: '.form-group'
-            });
+            return _this.model.set('interviewQuestions', data);
           };
-        })(this), 'json');
+        })(this));
+      };
+
+      WritePostPage.prototype.createInterviewsList = function() {
+        if (this.postInterviews == null) {
+          this.postInterviews = new PostInterviews({
+            collection: new InterviewCollection(this.model.get('interviewQuestions'))
+          });
+        }
+        this.ui.interviews.append(this.postInterviews.render().$el);
+        return this.afterRender();
+      };
+
+      WritePostPage.prototype.afterRender = function() {
+        this.$('.editor').redactor({
+          imageUpload: '/api/post/upload_image'
+        });
+        this.$('.sortable ul').sortable({
+          cancel: '.form-group'
+        });
+        this.stickit();
+        return this.ui.collapse.collapse('hide');
       };
 
       WritePostPage.prototype.savePost = function(event) {
