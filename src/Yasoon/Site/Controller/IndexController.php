@@ -58,7 +58,7 @@ class IndexController {
 <body>
     <header id="header"></header>
     <div class="wrap">
-        <div class="main_block container">
+        <div class="main_block">
             <section class="page_content"></section>
         </div>
     </div>

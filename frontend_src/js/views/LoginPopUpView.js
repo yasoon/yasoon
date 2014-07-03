@@ -15,7 +15,7 @@
         return _.extend({}, LoginPopUpView.__super__.events.apply(this, arguments), {
           'click #vk-login': 'vkLogin',
           'click #fb-login': 'facebookLogin',
-          'click #register': 'registerAction',
+          'click #js-register': 'registerAction',
           'submit form': 'loginAction'
         });
       };

@@ -14,7 +14,7 @@ define(
       _.extend {}, super,
         'click #vk-login': 'vkLogin'
         'click #fb-login': 'facebookLogin'
-        'click #register': 'registerAction'
+        'click #js-register': 'registerAction'
         'submit form': 'loginAction'
 
     bindings:

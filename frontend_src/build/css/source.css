@@ -6334,7 +6334,6 @@ footer nav {
   border: solid #e2e2e2;
   border-width: 0 0 1px 1px;
   padding: 20px;
-  margin-bottom: 20px;
   background: #fff;
 }
 .question-form section p {
@@ -6438,6 +6437,16 @@ a.editable {
   font-family: 'MuseoSansCyrl-100', Arial;
   font-weight: normal;
   margin-top: 10px;
+}
+blockquote {
+  margin-left: 3em !important;
+  border-left: 2px solid #238C00;
+  padding: 3px 15px;
+  font-family: 'MuseoSansCyrl-100Italic', Arial;
+  margin-bottom: 1em;
+}
+.has-error .form-control {
+  border: 1px solid red;
 }
 .like-title {
   position: relative;
@@ -7197,7 +7206,6 @@ body .redactor_box_fullscreen {
 .redactor_editor blockquote {
   margin-left: 3em !important;
   border-left: 2px solid #238C00;
-  margin-bottom: 0 !important;
   padding: 3px 15px;
   font-family: 'MuseoSansCyrl-100Italic', Arial;
   margin-bottom: 1em;
