@@ -24,7 +24,8 @@
       SpeakerAnswerView.prototype.events = function() {
         return {
           'submit form': 'addQuestionAnswer',
-          'click .js-delete': 'deleteQuestion'
+          'click .js-delete': 'deleteQuestion',
+          'click .js-open': 'openQuestion'
         };
       };
 
@@ -52,6 +53,11 @@
         } else {
           return this.showErrors(this.model.validationError);
         }
+      };
+
+      SpeakerAnswerView.prototype.openQuestion = function(event) {
+        event.preventDefault();
+        return this.$('.content').slideToggle();
       };
 
       SpeakerAnswerView.prototype.deleteQuestion = function(event) {

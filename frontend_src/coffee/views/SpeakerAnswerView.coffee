@@ -22,6 +22,7 @@ define(
     events: ->
       'submit form':              'addQuestionAnswer'
       'click .js-delete':         'deleteQuestion'
+      'click .js-open':           'openQuestion'
 
     render: ->
       @$el.html(@template(@model.toJSON()))
@@ -42,6 +43,10 @@ define(
         )
       else
         @showErrors(@model.validationError)
+
+    openQuestion: (event) ->
+      event.preventDefault()
+      @$('.content').slideToggle()
 
     deleteQuestion: (event) ->
       event.preventDefault()

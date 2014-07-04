@@ -17,9 +17,6 @@ define(
         @createInterviewsList()
         @createInterviewAddForm()
 
-      events: ->
-#        'click .js-add': 'addInterview'
-
       createInterviewsList: ->
         @interviewsCollection = new InterviewsCollection()
         if not @interviewsList?
@@ -39,8 +36,5 @@ define(
         else
           @interviewsAddForm.delegateEvents()
         @$el.append(@interviewsAddForm.render().$el)
-
-      addInterview: ->
-        @interviewsCollection.add()
     })
 )

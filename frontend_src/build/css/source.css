@@ -6181,7 +6181,6 @@ header#header nav a:hover {
 }
 .main-w span {
   display: block;
-  font-size: 16px;
   text-transform: lowercase;
 }
 .main-w button,
@@ -6833,6 +6832,21 @@ h2 {
 }
 .form-control:not(textarea) {
   height: 38px;
+}
+.nav-tabs {
+  font-family: 'MuseoSansCyrl-700', Arial;
+  font-size: 14px;
+  line-height: 14px;
+  text-transform: uppercase;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.nav-tabs a {
+  border: none !important;
+}
+.nav-tabs .active a {
+  color: #238c00 !important;
+  border-bottom: 1px solid !important;
 }
 ul li {
   list-style: none;
