@@ -105,6 +105,15 @@ define(
         @speakersPageView.delegateEvents()
         @
 
+      register: ->
+        $('body').removeClass().addClass('register')
+        @registerPageView = new RegisterPageView({
+          model: new UserRegisterModel()
+        })
+        LayoutView.contentRegion.$el.empty().append(@registerPageView.render().$el)
+        @registerPageView.delegateEvents()
+        @
+
       speaker: (id, page) ->
         $('body').removeClass().addClass('speaker')
         @speakerPageView = new SpeakerPageView({
@@ -115,22 +124,13 @@ define(
         @speakerPageView.delegateEvents()
         @
 
-      register: ->
-        $('body').removeClass().addClass('register')
-        @registerPageView = new RegisterPageView({
-          model: new UserRegisterModel()
-        })
-        LayoutView.contentRegion.$el.empty().append(@registerPageView.render().$el)
-        @registerPageView.delegateEvents()
-        @
-
-      editAuthor: ->
+      editSpeaker: (id) ->
         $('body').removeClass().addClass('editAuthor')
-        @editAuthorPageView = new EditAuthorPageView({
+        @editAuthorPageView = new EditSpeakerPageView({
           model: new UserUpdateModel()
           el: LayoutView.contentRegion.$el
         })
-#        LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
+        #        LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
         @editAuthorPageView.delegateEvents()
         @
 
@@ -139,16 +139,6 @@ define(
         @timelinePageView = new TimelinePageView()
         LayoutView.contentRegion.$el.empty().append(@timelinePageView.render().$el)
         @timelinePageView.delegateEvents()
-        @
-
-      author: (page) ->
-        $('body').removeClass().addClass('author')
-        @authorPageView = new AuthorPageView({
-          page: page
-          model: userModel
-        })
-        LayoutView.contentRegion.$el.empty().append(@authorPageView.render().$el)
-        @authorPageView.delegateEvents()
         @
 
       undefinedRoute: ->

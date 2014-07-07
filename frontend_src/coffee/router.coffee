@@ -19,11 +19,10 @@ define([
         'post/:id/edit(/)': 'editPost'
         'register(/)': 'registerSpeaker'
         'speakers(/:category)(/)': 'speakers'
+        'speaker/:id/edit(/)': 'editSpeaker'
         'speaker/:id/:page(/)': 'showSpeaker'
-        'author/edit(/)': 'editAuthor'
-        'author/:page(/)': 'author'
-        'about(/)': 'about'
         'timeline(/)': 'timeline'
+        'about(/)': 'about'
         'admin(/)': 'adminMainPage'
         '*other': 'undefinedRoute'
       }
@@ -80,27 +79,27 @@ define([
             Controller.register()
         )
 
-      editAuthor: ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-            Controller.editAuthor()
-          else
-            @navigate('#/404')
-        )
-
       showSpeaker: (id, page) ->
         Controller.speaker(id, page)
 
-      author: (page) ->
+      editSpeaker: (id) ->
         userModel.deferred.done( =>
           if typeof Window.config.userId is "number"
-            Controller.author(page)
+            Controller.editAuthor(id)
           else
             @navigate('#/404')
         )
 
-      loadPost: (id) ->
-        @navigate("#/post/#{id}", {trigger: yes})
+      timeline: ->
+        userModel.deferred.done( =>
+          if typeof Window.config.userId is "number"
+            Controller.timeline()
+          else
+            @navigate('#/404')
+        )
+
+      about: ->
+        Controller.about()
 
       adminMainPage: ->
         userModel.deferred.done( =>
@@ -110,16 +109,8 @@ define([
             @navigate('#/404')
         )
 
-      about: ->
-        Controller.about()
-
-      timeline: ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-            Controller.timeline()
-          else
-            @navigate('#/404')
-        )
+      loadPost: (id) ->
+        @navigate("#/post/#{id}", {trigger: yes})
 
       undefinedRoute: ->
         console.log("undefined route")
