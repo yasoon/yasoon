@@ -5,16 +5,12 @@
       routes: {
         '': 'index',
         'posts/:category/:sort(/)': 'posts',
-        'post/new(/:id)(/)': 'newPost',
-        'post/:id(/)': 'showPost',
-        'post/:id/edit(/)': 'editPost',
         'register(/)': 'registerSpeaker',
         'speakers(/:category)(/)': 'speakers',
+        'speaker/:id/edit(/)': 'editSpeaker',
         'speaker/:id/:page(/)': 'showSpeaker',
-        'author/edit(/)': 'editAuthor',
-        'author/:page(/)': 'author',
-        'about(/)': 'about',
         'timeline(/)': 'timeline',
+        'about(/)': 'about',
         'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
       },
@@ -79,35 +75,33 @@
           };
         })(this));
       },
-      editAuthor: function() {
-        return userModel.deferred.done((function(_this) {
-          return function() {
-            if (typeof Window.config.userId === "number") {
-              return Controller.editAuthor();
-            } else {
-              return _this.navigate('#/404');
-            }
-          };
-        })(this));
-      },
       showSpeaker: function(id, page) {
         return Controller.speaker(id, page);
       },
-      author: function(page) {
+      editSpeaker: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
             if (typeof Window.config.userId === "number") {
-              return Controller.author(page);
+              return Controller.editAuthor(id);
             } else {
               return _this.navigate('#/404');
             }
           };
         })(this));
       },
-      loadPost: function(id) {
-        return this.navigate("#/post/" + id, {
-          trigger: true
-        });
+      timeline: function() {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (typeof Window.config.userId === "number") {
+              return Controller.timeline();
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
+      },
+      about: function() {
+        return Controller.about();
       },
       adminMainPage: function() {
         return userModel.deferred.done((function(_this) {
@@ -120,19 +114,10 @@
           };
         })(this));
       },
-      about: function() {
-        return Controller.about();
-      },
-      timeline: function() {
-        return userModel.deferred.done((function(_this) {
-          return function() {
-            if (typeof Window.config.userId === "number") {
-              return Controller.timeline();
-            } else {
-              return _this.navigate('#/404');
-            }
-          };
-        })(this));
+      loadPost: function(id) {
+        return this.navigate("#/post/" + id, {
+          trigger: true
+        });
       },
       undefinedRoute: function() {
         console.log("undefined route");

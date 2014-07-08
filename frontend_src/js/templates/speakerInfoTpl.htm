@@ -1,5 +1,4 @@
 <% var check = (Window.config.userId === id) ? false : true  %>
-<% var path = (check) ? "#/author" : "#/speaker/" + id %>
 <% if (typeof homepage === 'string' && homepage.match(/facebook.com/g)){
 var linkClass = 'wf'
 } else if (typeof homepage === 'string' && homepage.match(/vk.com/g)) {
@@ -16,12 +15,12 @@ var linkClass = 'ws'
     <% } %>
     <h4>
         <% if (check) { %>
-        <a href="<%= path %>/posts/" class="usr-name">
+        <a href="#/speaker/<%= id %>/posts/" class="usr-name">
             <%= name %>
         </a>
         <% } else { %>
         <%= name %>
-        <a href="#/author/edit/" class="editable"></a>
+        <a href="#/speaker/<%= id %>/edit/" class="editable"></a>
         <% } %>
     </h4>
     <p class="u-description">
@@ -55,13 +54,13 @@ var linkClass = 'ws'
             <div class="d-box clearfix">
                 <div>
                     <p class="p-label">историй</p>
-                    <a href="<%= path %>/posts/">
+                    <a href="#/speaker/<%= id %>/posts/">
                         <%= posts.length %>
                     </a>
                 </div>
                 <div>
                     <p class="p-label">ответов</p>
-                    <a href="<%= path %>/answers/">
+                    <a href="#/speaker/<%= id %>/answers/">
                         <%= answers_count %>
                     </a>
                 </div>

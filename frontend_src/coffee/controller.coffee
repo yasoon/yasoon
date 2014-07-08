@@ -10,7 +10,6 @@ define(
     'views/SpeakersPageView'
     'views/SpeakerPageView'
     'views/RegisterPageView'
-    'views/AuthorPageView'
     'views/ErrorPageView'
     'views/EditAuthorView'
     'views/TimelinePageView'
@@ -31,7 +30,6 @@ define(
     SpeakersPageView
     SpeakerPageView
     RegisterPageView
-    AuthorPageView
     ErrorPageView
     EditAuthorPageView
     TimelinePageView

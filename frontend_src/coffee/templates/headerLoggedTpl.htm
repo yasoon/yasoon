@@ -1,4 +1,4 @@
-<a href="#/author/<%= id %>">
+<a href="#/speaker/<%= id %>/posts/">
 	<% if(avatarImg === null) { %>
 		<img src="/frontend/img/noAvatar.jpg" alt="">
 	<% } else { %>
@@ -10,8 +10,8 @@
     <% if (roles[0] === "ROLE_ADMIN") { %>
     <a href="#/admin/">Админ</a>
     <% } %>
-	<a href="#/author/posts/">Профиль</a>
-	<a href="#/author/answers/">Вопросы (<span id="answers"></span>)</a>
+	<a href="#/speaker/<%= id %>/posts/">Профиль</a>
+	<a href="#/speaker/<%= id %>/answers/">Вопросы (<span id="answers"></span>)</a>
 	<a href="#/timeline/">Лента (<span id="posts"></span>)</a>
 	<a href="#/logout/" id="js-logout">Выход</a>
 </nav>

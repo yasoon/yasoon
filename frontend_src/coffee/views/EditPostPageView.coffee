@@ -78,7 +78,8 @@ define(
       $.post('/api/post/deletePost', {
         post_id: @options.id
       }, (data) ->
-        window.location = '/#/author/posts/'
+        console.log(@model.toJSON())
+        window.location = "/#/speaker/#{@model.get('authorId')}/posts/"
       )
 
     updatePost: (event) ->

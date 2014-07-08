@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/AuthorPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, AuthorPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -73,6 +73,16 @@
         return this;
       };
 
+      Controller.prototype.register = function() {
+        $('body').removeClass().addClass('register');
+        this.registerPageView = new RegisterPageView({
+          model: new UserRegisterModel()
+        });
+        LayoutView.contentRegion.$el.empty().append(this.registerPageView.render().$el);
+        this.registerPageView.delegateEvents();
+        return this;
+      };
+
       Controller.prototype.speaker = function(id, page) {
         $('body').removeClass().addClass('speaker');
         this.speakerPageView = new SpeakerPageView({
@@ -84,19 +94,9 @@
         return this;
       };
 
-      Controller.prototype.register = function() {
-        $('body').removeClass().addClass('register');
-        this.registerPageView = new RegisterPageView({
-          model: new UserRegisterModel()
-        });
-        LayoutView.contentRegion.$el.empty().append(this.registerPageView.render().$el);
-        this.registerPageView.delegateEvents();
-        return this;
-      };
-
-      Controller.prototype.editAuthor = function() {
+      Controller.prototype.editSpeaker = function(id) {
         $('body').removeClass().addClass('editAuthor');
-        this.editAuthorPageView = new EditAuthorPageView({
+        this.editAuthorPageView = new EditSpeakerPageView({
           model: new UserUpdateModel(),
           el: LayoutView.contentRegion.$el
         });
@@ -109,17 +109,6 @@
         this.timelinePageView = new TimelinePageView();
         LayoutView.contentRegion.$el.empty().append(this.timelinePageView.render().$el);
         this.timelinePageView.delegateEvents();
-        return this;
-      };
-
-      Controller.prototype.author = function(page) {
-        $('body').removeClass().addClass('author');
-        this.authorPageView = new AuthorPageView({
-          page: page,
-          model: userModel
-        });
-        LayoutView.contentRegion.$el.empty().append(this.authorPageView.render().$el);
-        this.authorPageView.delegateEvents();
         return this;
       };
 
