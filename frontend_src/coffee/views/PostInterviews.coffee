@@ -19,6 +19,7 @@ define(
       template: _.template(postInterviewTpl)
 
       render: ->
+        console.log(@collection.toJSON())
         @collection.each(
           (interview, iterator) =>
             interview.set('id', iterator)
@@ -32,9 +33,6 @@ define(
 
       createFullText: ->
         fullTextContainer = $('<div></div>')
-        _.each(@collection.models, (model) =>
-          if model.get('text')?
-            fullTextContainer.append(@template(model.toJSON()))
-        )
+        _.each(@collection.models, (model) => if model.get('text')? then fullTextContainer.append(@template(model.toJSON())))
         fullTextContainer.html()
 )

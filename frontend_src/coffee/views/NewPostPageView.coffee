@@ -34,60 +34,43 @@ define(
       template:                     _.template(writePostTpl)
 
       initialize: (options) ->
-        @pageId = options.id or 1
-        @model.set('maxLength', 255)
-        @getInterviewQuestions()
+        @getInterviewQuestions(options.id)
         @handler()
 
       handler: ->
         @listenTo(@model, 'change:description', @symbolsCounter)
+        @listenTo(@model, 'change:categoriesList', @createInterviewsList)
         @listenTo(@model, 'change:interviewQuestions', @render)
 
-      ui: ->
-        @.ui =
-          counter:      @$('.counter')
-          categories:   @$('#categoryList')
-          interviews:   @$('#questionsList')
-          collapse:     @$('.collapse')
-
       render: ->
-        @$el.empty().append(@template(@model.toJSON()))
+        @$el.empty().append(@template({'maxLength': 255}))
         @onRender()
         @
 
       onRender: ->
-        @ui()
         @createCategoryList()
-        @createInterviewsList()
 
       createCategoryList: ->
+        @model.set('categoriesList', Window.config.category)
         if not @postCategories?
-          @postCategories = new PostCategories({
-            collection: new CategoryCollection(Window.config.category)
-          })
-        @ui.categories.append(@postCategories.render().$el)
+          @postCategories = new PostCategories({collection: new CategoryCollection(@model.get('categoriesList'))})
+        @$('#categoryList').append(@postCategories.render().$el)
 
-      getInterviewQuestions: ->
-        $.get("/api/interview/questions/#{@pageId}", (data) => @model.set('interviewQuestions', data))
+      getInterviewQuestions: (id) ->
+        $.get("/api/interview/questions/#{id}", (data) => @model.set('interviewQuestions', data))
 
       createInterviewsList: ->
         if not @postInterviews?
-          @postInterviews = new PostInterviews({
-            collection: new InterviewCollection(@model.get('interviewQuestions'))
-          })
-        @ui.interviews.append(@postInterviews.render().$el)
+          @postInterviews = new PostInterviews({collection: new InterviewCollection(@model.get('interviewQuestions'))})
+        @$('#questionsList').append(@postInterviews.render().$el)
 
         @afterRender()
 
       afterRender: ->
-        @$('.editor').redactor({
-          imageUpload: '/api/post/upload_image',
-        })
-        @$('.sortable ul').sortable({
-          cancel: '.form-group'
-        })
+        @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
+        @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
-        @ui.collapse.collapse('hide')
+        @$('.collapse').collapse('hide')
 
       savePost: (event) ->
         event.preventDefault()
@@ -99,9 +82,5 @@ define(
         if not @model.isValid()
           @showErrors(@model.validationError)
         else
-          $.post('/api/post/savePost', {
-              postData: @model.toJSON()
-            }, (data) ->
-            Backbone.Mediator.publish('post:submitted', data.postId)
-          )
+          $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
 )

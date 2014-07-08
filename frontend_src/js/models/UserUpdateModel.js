@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["models/UserRegisterModel", "backbone"], function(UserRegisterModel) {
+  define(['models/ValidateModel', "backbone"], function(ValidateModel) {
     var UserUpdateModel;
     return UserUpdateModel = (function(_super) {
       __extends(UserUpdateModel, _super);
@@ -12,19 +12,38 @@
       }
 
       UserUpdateModel.prototype.validate = function(attrs) {
-        var errors, textTest;
-        UserUpdateModel.__super__.validate.apply(this, arguments);
+        var emailTest, errors, passwordMaxLength, passwordTest, _ref;
         errors = [];
-        textTest = /^\S+$/ig;
+        emailTest = /^[\.\w_]{2,}[@][\w_\-]{2,}[.][\w_\-]{0,4}$/;
+        passwordTest = /^[\.\w_]{2,}$/;
+        passwordMaxLength = 10;
+        if (!attrs.name) {
+          errors.push({
+            name: 'name',
+            message: 'Поле не может быть пустым'
+          });
+        }
+        if (!attrs.email) {
+          errors.push({
+            name: 'email',
+            message: 'Поле не может быть пустым'
+          });
+        } else if (!emailTest.test(attrs.email)) {
+          errors.push({
+            name: 'email',
+            message: 'Неверный формат email'
+          });
+        }
+        if (!((_ref = attrs.password) != null ? _ref.length : void 0) > passwordMaxLength) {
+          errors.push({
+            name: 'password',
+            message: 'Слишком длинный пароль'
+          });
+        }
         if (!attrs.job) {
           errors.push({
             name: 'job',
             message: 'Поле не может быть пустым'
-          });
-        } else if (!textTest.test(attrs.job)) {
-          errors.push({
-            name: 'job',
-            message: 'Неверный формат текста'
           });
         }
         if (errors.length > 0) {
@@ -36,7 +55,7 @@
 
       return UserUpdateModel;
 
-    })(UserRegisterModel);
+    })(ValidateModel);
   });
 
 }).call(this);

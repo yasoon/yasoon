@@ -14,6 +14,9 @@ define([
       routes: {
         '': 'index'
         'posts/:category/:sort(/)': 'posts'
+        'post/new(/:id)(/)': 'newPost'
+        'post/:id(/)': 'showPost'
+        'post/:id/edit(/)': 'editPost'
         'register(/)': 'registerSpeaker'
         'speakers(/:category)(/)': 'speakers'
         'speaker/:id/edit(/)': 'editSpeaker'
@@ -82,7 +85,7 @@ define([
       editSpeaker: (id) ->
         userModel.deferred.done( =>
           if typeof Window.config.userId is "number"
-            Controller.editAuthor(id)
+            Controller.editSpeaker(id)
           else
             @navigate('#/404')
         )

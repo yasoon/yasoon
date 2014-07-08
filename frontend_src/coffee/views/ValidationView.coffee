@@ -5,10 +5,6 @@ define(
   (
   ) ->
     Backbone.View.extend({
-      ui: ->
-        @.ui =
-          counter: @$('.counter')
-
       showErrors: (errors) ->
         _.each(errors, (error) ->
           @$el
@@ -29,7 +25,7 @@ define(
 
       symbolsCounter: (model, value) ->
         length = model.get('maxLength') - value.length
-        if @ui.counter?
-          @ui.counter.text(length)
+        if @$('.counter')?
+          @$('.counter').text(length)
     })
 )

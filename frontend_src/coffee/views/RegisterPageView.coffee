@@ -41,6 +41,7 @@ define(
         @model.set('maxLength', 290)
 
       handler: ->
+        @listenTo(@model, 'change:img', @changeImage)
         @listenTo(@model, 'change:interviewCaption', @symbolsCounter)
 
       ui: ->
@@ -54,37 +55,38 @@ define(
 
       render: ->
         @$el.empty().append(@template(@model.toJSON()))
-        @onRender()
+        @createSteps()
         @
 
       onRender: ->
-        steps = @$el.find('fieldset')
-        count = steps.size()
         @ui()
-
-        @setImageUploader()
-
-        steps.each( (step) ->
-          steps
-          .eq(step)
-          .wrap('<div id="step' + step + '"></div>')
-        )
+        @setImageUploader(@model)
         @showStep(0)
         @stickit()
 
-      setImageUploader: ->
+      createSteps: ->
+        steps = @$el.find('fieldset')
+        steps.each( (step) ->
+          steps.eq(step).wrap('<div id="step' + step + '"></div>')
+        )
+        @onRender()
+
+      setImageUploader: (model) ->
         new AjaxUpload(
-          @$('#upload')[0],
+          @$('#uploadImage')[0],
           action: '/api/author/upload_user_image'
           name: 'files[]'
           id: 'upload'
           createInput: ->
           onComplete: (file, data) ->
-            name = file.substr(0, file.indexOf('.'))
-            image = data.dir + data.file_name
-            if data.dir?
-              @model.set('img', image)
+            ret = JSON.parse($(data).text())
+            if ret.file_name?
+              model.set('img', ret.file_name)
         )
+
+      changeImage: ->
+        path = "/upload/avatar/#{@model.get('img')}"
+        $('.file_upload_block, header').find('img').attr('src', path)
 
       goToStep: (event) ->
         $this = $(event.currentTarget)
@@ -95,32 +97,29 @@ define(
           @showStep(step - 1)
 
       showStep: (step) ->
-        @$el.find("#step" + step)
-        .show()
-        .siblings()
-        .hide()
+        @$el.find("#step" + step).show().siblings().hide()
 
       registerAction: (event) ->
         event.preventDefault()
         @hideErrors()
         @$(event.currentTarget).prop('disabled', yes)
         if @model.isValid()
-          $.post('/api/author/register', @model.toJSON()
-          , (data) =>
-            if data.error is no
-              @showStep(1)
-              @setModels()
-            else
-              if data.errorType is 'emailExist'
-                @$(event.currentTarget).prop('disabled', no)
-                @showErrors([{
-                  name: 'email'
-                  message: 'Пользователь с таким email уже есть'
-                }])
-          , 'json')
+          $.post('/api/author/register', @model.toJSON(), (data) => if data.error is no then @registered() else @existedEmail(data))
         else
           @$(event.currentTarget).prop('disabled', no)
           @showErrors(@model.validationError)
+
+      registered: ->
+        @showStep(1)
+        @setModels()
+
+      existedEmail: (data) ->
+        if data.errorType is 'emailExist'
+          @$(event.currentTarget).prop('disabled', no)
+          @showErrors([{
+            name: 'email'
+            message: 'Пользователь с таким email уже есть'
+          }])
 
       updateAction: (event) ->
         event.preventDefault()
@@ -128,14 +127,13 @@ define(
         @$(event.currentTarget).prop('disabled', yes)
 
         if @model.isValid()
-          $.post('/api/author/editinfo', @model.toJSON()
-          , (data) ->
-            if data.authorData is yes
-              window.location = '/#/author/posts/'
-              window.location.reload(yes)
-          , 'json')
+          $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
         else
           @showErrors(@model.validationError)
           @showStep(1)
           @$(event.currentTarget).prop('disabled', no)
+
+      loadUser: ->
+        window.location = "/#/speaker/#{@model.get('id')}/posts/"
+        window.location.reload(yes)
 )

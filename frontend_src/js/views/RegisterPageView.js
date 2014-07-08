@@ -44,6 +44,7 @@
       };
 
       Register.prototype.handler = function() {
+        this.listenTo(this.model, 'change:img', this.changeImage);
         return this.listenTo(this.model, 'change:interviewCaption', this.symbolsCounter);
       };
 
@@ -61,38 +62,46 @@
 
       Register.prototype.render = function() {
         this.$el.empty().append(this.template(this.model.toJSON()));
-        this.onRender();
+        this.createSteps();
         return this;
       };
 
       Register.prototype.onRender = function() {
-        var count, steps;
-        steps = this.$el.find('fieldset');
-        count = steps.size();
         this.ui();
-        this.setImageUploader();
-        steps.each(function(step) {
-          return steps.eq(step).wrap('<div id="step' + step + '"></div>');
-        });
+        this.setImageUploader(this.model);
         this.showStep(0);
         return this.stickit();
       };
 
-      Register.prototype.setImageUploader = function() {
-        return new AjaxUpload(this.$('#upload')[0], {
+      Register.prototype.createSteps = function() {
+        var steps;
+        steps = this.$el.find('fieldset');
+        steps.each(function(step) {
+          return steps.eq(step).wrap('<div id="step' + step + '"></div>');
+        });
+        return this.onRender();
+      };
+
+      Register.prototype.setImageUploader = function(model) {
+        return new AjaxUpload(this.$('#uploadImage')[0], {
           action: '/api/author/upload_user_image',
           name: 'files[]',
           id: 'upload',
           createInput: function() {},
           onComplete: function(file, data) {
-            var image, name;
-            name = file.substr(0, file.indexOf('.'));
-            image = data.dir + data.file_name;
-            if (data.dir != null) {
-              return this.model.set('img', image);
+            var ret;
+            ret = JSON.parse($(data).text());
+            if (ret.file_name != null) {
+              return model.set('img', ret.file_name);
             }
           }
         });
+      };
+
+      Register.prototype.changeImage = function() {
+        var path;
+        path = "/upload/avatar/" + (this.model.get('img'));
+        return $('.file_upload_block, header').find('img').attr('src', path);
       };
 
       Register.prototype.goToStep = function(event) {
@@ -118,24 +127,32 @@
           return $.post('/api/author/register', this.model.toJSON(), (function(_this) {
             return function(data) {
               if (data.error === false) {
-                _this.showStep(1);
-                return _this.setModels();
+                return _this.registered();
               } else {
-                if (data.errorType === 'emailExist') {
-                  _this.$(event.currentTarget).prop('disabled', false);
-                  return _this.showErrors([
-                    {
-                      name: 'email',
-                      message: 'Пользователь с таким email уже есть'
-                    }
-                  ]);
-                }
+                return _this.existedEmail(data);
               }
             };
-          })(this), 'json');
+          })(this));
         } else {
           this.$(event.currentTarget).prop('disabled', false);
           return this.showErrors(this.model.validationError);
+        }
+      };
+
+      Register.prototype.registered = function() {
+        this.showStep(1);
+        return this.setModels();
+      };
+
+      Register.prototype.existedEmail = function(data) {
+        if (data.errorType === 'emailExist') {
+          this.$(event.currentTarget).prop('disabled', false);
+          return this.showErrors([
+            {
+              name: 'email',
+              message: 'Пользователь с таким email уже есть'
+            }
+          ]);
         }
       };
 
@@ -144,17 +161,23 @@
         this.hideErrors();
         this.$(event.currentTarget).prop('disabled', true);
         if (this.model.isValid()) {
-          return $.post('/api/author/editinfo', this.model.toJSON(), function(data) {
-            if (data.authorData === true) {
-              window.location = '/#/author/posts/';
-              return window.location.reload(true);
-            }
-          }, 'json');
+          return $.post('/api/author/editinfo', this.model.toJSON(), (function(_this) {
+            return function(data) {
+              if (data.authorData === true) {
+                return _this.loadUser();
+              }
+            };
+          })(this));
         } else {
           this.showErrors(this.model.validationError);
           this.showStep(1);
           return this.$(event.currentTarget).prop('disabled', false);
         }
+      };
+
+      Register.prototype.loadUser = function() {
+        window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
+        return window.location.reload(true);
       };
 
       return Register;

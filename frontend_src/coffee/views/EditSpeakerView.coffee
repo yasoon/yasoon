@@ -17,20 +17,21 @@ define(
       initialize: ->
         _.bindAll(@, 'render');
         @handler()
-        @model.on('change', @render)
-#        @listenTo(@model, 'change', @render)
         $.get('/api/author/getShortUserData', (data) => @model.set(_.extend({}, data, {'maxLength': 290})))
 
       render: ->
-        console.log(@, @$el)
         @$el.empty().append(@template(@model.toJSON()))
         @onRender()
         @
 
+      handler: ->
+        super
+        @listenTo(@model, 'change:id', @render)
+
       onRender: ->
-        @setImageUploader()
         @stickit()
         @ui()
+        @setImageUploader(@model)
 
       events: ->
         'click .js-update':     'updateAction'
@@ -48,4 +49,21 @@ define(
         '#name':                'name'
         '#img':                 'img'
         '#job':                 'job'
+
+
+      updateAction: (event) ->
+        event.preventDefault()
+        @hideErrors()
+        @$(event.currentTarget).prop('disabled', yes)
+
+        if @model.isValid()
+          $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
+        else
+          @showErrors(@model.validationError)
+          @$(event.currentTarget).prop('disabled', no)
+
+      loadUser: ->
+        window.location = "/#/speaker/#{@model.get('id')}/posts/"
+        window.location.reload(yes)
+
 )

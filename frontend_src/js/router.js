@@ -5,6 +5,9 @@
       routes: {
         '': 'index',
         'posts/:category/:sort(/)': 'posts',
+        'post/new(/:id)(/)': 'newPost',
+        'post/:id(/)': 'showPost',
+        'post/:id/edit(/)': 'editPost',
         'register(/)': 'registerSpeaker',
         'speakers(/:category)(/)': 'speakers',
         'speaker/:id/edit(/)': 'editSpeaker',
@@ -82,7 +85,7 @@
         return userModel.deferred.done((function(_this) {
           return function() {
             if (typeof Window.config.userId === "number") {
-              return Controller.editAuthor(id);
+              return Controller.editSpeaker(id);
             } else {
               return _this.navigate('#/404');
             }

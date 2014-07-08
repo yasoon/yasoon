@@ -11,7 +11,7 @@ define(
     'views/SpeakerPageView'
     'views/RegisterPageView'
     'views/ErrorPageView'
-    'views/EditAuthorView'
+    'views/EditSpeakerView'
     'views/TimelinePageView'
     'models/UserRegisterModel'
     'models/UserUpdateModel'
@@ -31,7 +31,7 @@ define(
     SpeakerPageView
     RegisterPageView
     ErrorPageView
-    EditAuthorPageView
+    EditSpeakerView
     TimelinePageView
     UserRegisterModel
     UserUpdateModel
@@ -88,9 +88,9 @@ define(
         $('body').removeClass().addClass('edit-post')
         @editPostPageView = new EditPostPageView({
           id: id
+          el: LayoutView.contentRegion.$el
           model: new PostPageModel()
         })
-        LayoutView.contentRegion.$el.empty().append(@editPostPageView.render().$el)
         @editPostPageView.delegateEvents()
         @
 
@@ -124,7 +124,7 @@ define(
 
       editSpeaker: (id) ->
         $('body').removeClass().addClass('editAuthor')
-        @editAuthorPageView = new EditSpeakerPageView({
+        @editAuthorPageView = new EditSpeakerView({
           model: new UserUpdateModel()
           el: LayoutView.contentRegion.$el
         })

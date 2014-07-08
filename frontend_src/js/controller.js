@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditAuthorView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditAuthorPageView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -56,9 +56,9 @@
         $('body').removeClass().addClass('edit-post');
         this.editPostPageView = new EditPostPageView({
           id: id,
+          el: LayoutView.contentRegion.$el,
           model: new PostPageModel()
         });
-        LayoutView.contentRegion.$el.empty().append(this.editPostPageView.render().$el);
         this.editPostPageView.delegateEvents();
         return this;
       };
@@ -96,7 +96,7 @@
 
       Controller.prototype.editSpeaker = function(id) {
         $('body').removeClass().addClass('editAuthor');
-        this.editAuthorPageView = new EditSpeakerPageView({
+        this.editAuthorPageView = new EditSpeakerView({
           model: new UserUpdateModel(),
           el: LayoutView.contentRegion.$el
         });
