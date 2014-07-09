@@ -18,9 +18,7 @@ define(
           @collection.each((post) => @addOne(post))
         else
           if not @emptyView?
-            @emptyView = new EmptyView({
-              message: "Постов нет"
-            })
+            @emptyView = new EmptyView({message: "Постов нет"})
           else
             @emptyView.delegateEvents()
           @$el.append(@emptyView.render().$el)

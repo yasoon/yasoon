@@ -6,20 +6,15 @@ define(
   (
     InterviewQuestionView
   )->
-    Backbone.View.extend({
+    class InterviewsQuestionsView extends Backbone.View
       initialize: ->
-        console.log @collection
         @listenTo(@collection, 'add', @addOne)
 
       render: ->
-        @collection.each( (question) =>
-          @addOne(question)
-        )
+        @collection.each( (question) => @addOne(question))
         @
 
       addOne: (question) ->
         question = new InterviewQuestionView({model: question})
         @$el.append(question.render().$el)
-
-    })
 )

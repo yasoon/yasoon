@@ -12,7 +12,7 @@ define(
     InterviewsCollection
     InterviewModel
   )->
-    Backbone.View.extend({
+    class InterviewsList extends Backbone.View
       initialize: ->
         @createInterviewsList()
         @createInterviewAddForm()
@@ -20,9 +20,7 @@ define(
       createInterviewsList: ->
         @interviewsCollection = new InterviewsCollection()
         if not @interviewsList?
-          @interviewsList = new InterviewsView({
-            collection: @interviewsCollection
-          })
+          @interviewsList = new InterviewsView({collection: @interviewsCollection})
         else
           @interviewsList.delegateEvents()
         @$el.append(@interviewsList.render().$el)
@@ -30,11 +28,8 @@ define(
       createInterviewAddForm: ->
         @interview = new InterviewModel()
         if not @interviewsAddForm?
-          @interviewsAddForm = new InterviewAddFormView({
-            model: @interview
-          })
+          @interviewsAddForm = new InterviewAddFormView({model: @interview})
         else
           @interviewsAddForm.delegateEvents()
         @$el.append(@interviewsAddForm.render().$el)
-    })
 )

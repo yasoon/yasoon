@@ -7,7 +7,7 @@ define(
   (
     contentTpl
   )->
-    Backbone.View.extend({
+    class ContentView extends Backbone.View
       tagName: 'article'
 
       template: _.template(contentTpl)
@@ -24,13 +24,13 @@ define(
         '.text': 'text'
 
       render: ->
-        @$el
-          .data('contentId', @model.get('id'))
-          .append(@template(@model.toJSON()))
-
+        @$el.data('contentId', @model.get('id')).append(@template(@model.toJSON()))
         @stickit()
-
         @
+
+      saveContent: (event) ->
+        event.preventDefault()
+        $.post('/api/content/edit', {model: @model.toJSON()}, (data) => if data then @hideEdit(event))
 
       showEdit: (event) ->
         event.preventDefault()
@@ -39,15 +39,4 @@ define(
       hideEdit: (event) ->
         event.preventDefault()
         @$('.content').show().siblings().hide()
-
-      saveContent: (event) ->
-        event.preventDefault()
-        $.post('/api/content/edit', {
-          model: @model.toJSON()
-        }, (data) =>
-          if data
-            @hideEdit(event)
-        , 'json')
-
-    })
 )

@@ -8,7 +8,7 @@ define(
   (
     interviewQuestionTpl
   )->
-    Backbone.View.extend({
+    class InterviewQuestionView extends Backbone.View
       tagName: 'li'
 
       className: 'input-group'
@@ -30,5 +30,4 @@ define(
         event.preventDefault()
         Backbone.Mediator.publish('question:removed', @model)
         @$el.remove()
-    })
 )

@@ -11,9 +11,7 @@ define(
     Backbone.View.extend({
       initialize: ->
         if not @postsList?
-          @postsList = new PostsView({
-            collection: new PostsCollection()
-          })
+          @postsList = new PostsView({collection: new PostsCollection()})
         else
           @postsList.delegateEvents()
         @$el.append(@postsList.render().$el)
