@@ -13,7 +13,7 @@
 
       WritePostPage.prototype.events = function() {
         return {
-          'click button:submit': 'savePost'
+          'click :submit': 'savePost'
         };
       };
 
@@ -29,7 +29,9 @@
       WritePostPage.prototype.template = _.template(writePostTpl);
 
       WritePostPage.prototype.initialize = function(options) {
-        this.getInterviewQuestions(options.id);
+        var interviewId;
+        interviewId = options.id || 1;
+        this.getInterviewQuestions(interviewId);
         return this.handler();
       };
 
@@ -58,7 +60,7 @@
             collection: new CategoryCollection(this.model.get('categoriesList'))
           });
         }
-        return this.$('#categoryList').append(this.postCategories.render().$el);
+        return this.$('#categories').append(this.postCategories.render().$el);
       };
 
       WritePostPage.prototype.getInterviewQuestions = function(id) {
@@ -86,8 +88,7 @@
         this.$('.sortable ul').sortable({
           cancel: '.form-group'
         });
-        this.stickit();
-        return this.$('.collapse').collapse('hide');
+        return this.stickit();
       };
 
       WritePostPage.prototype.savePost = function(event) {
@@ -97,6 +98,7 @@
           'text': this.postInterviews.createFullText(),
           'category': this.postCategories.checkedCategories()
         });
+        console.log(this.model.isValid(), this.model.validationError);
         if (!this.model.isValid()) {
           return this.showErrors(this.model.validationError);
         } else {
@@ -106,6 +108,18 @@
             return Backbone.Mediator.publish('post:submitted', data.postId);
           });
         }
+      };
+
+      WritePostPage.prototype.showErrors = function(errors) {
+        return _.each(errors, (function(_this) {
+          return function(error) {
+            return _this.$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error');
+          };
+        })(this));
+      };
+
+      WritePostPage.prototype.hideErrors = function() {
+        return this.$('.di').removeClass('has-error').addClass('has-success');
       };
 
       return WritePostPage;

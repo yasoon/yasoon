@@ -61,7 +61,6 @@ define(
         _.each(@model.get('tags'), (item) => @$('input:checkbox').eq(item).prop('checked', yes))
 
       createInterviewsList: ->
-        console.log(@model.get('formattedText'))
         if not @postInterviews?
           @postInterviews = new PostInterviews({collection: new InterviewCollection(@model.get('formattedText'))})
         $('#questionsList').html(@postInterviews.render().$el)

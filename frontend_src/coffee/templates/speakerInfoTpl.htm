@@ -1,4 +1,3 @@
-<% var check = (Window.config.userId === id) ? false : true  %>
 <% if (typeof homepage === 'string' && homepage.match(/facebook.com/g)){
 var linkClass = 'wf'
 } else if (typeof homepage === 'string' && homepage.match(/vk.com/g)) {
@@ -14,14 +13,10 @@ var linkClass = 'ws'
     <img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
     <% } %>
     <h4>
-        <% if (check) { %>
         <a href="#/speaker/<%= id %>/posts/" class="usr-name">
             <%= name %>
         </a>
-        <% } else { %>
-        <%= name %>
         <a href="#/speaker/<%= id %>/edit/" class="editable"></a>
-        <% } %>
     </h4>
     <p class="u-description">
         <%= interviewCaption %>

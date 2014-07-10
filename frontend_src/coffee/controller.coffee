@@ -114,9 +114,11 @@ define(
 
       speaker: (id, page) ->
         $('body').removeClass().addClass('speaker')
+        model = Backbone.Model.extend()
         @speakerPageView = new SpeakerPageView({
           id: id
           page: page
+          model: new model()
         })
         LayoutView.contentRegion.$el.empty().append(@speakerPageView.render().$el)
         @speakerPageView.delegateEvents()

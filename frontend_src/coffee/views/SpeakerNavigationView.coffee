@@ -6,7 +6,7 @@ define(
 (
   speakerPageTpl
 ) ->
-  Backbone.View.extend({
+  class SpeakerNavigationView extends Backbone.View
     tagName: 'section'
     
     className: 'lim'
@@ -19,6 +19,4 @@ define(
     render: ->
       @$el.append(@template(@options))
       @
-
-  })
 )

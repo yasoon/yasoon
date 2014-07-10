@@ -23,7 +23,7 @@ define(
   ) ->
     class WritePostPage extends ValidationView
       events: ->
-        'click button:submit':      'savePost'
+        'click :submit':            'savePost'
       bindings:
         '#description':             'description'
         '#title':                   'title'
@@ -34,7 +34,8 @@ define(
       template:                     _.template(writePostTpl)
 
       initialize: (options) ->
-        @getInterviewQuestions(options.id)
+        interviewId = options.id or 1
+        @getInterviewQuestions(interviewId)
         @handler()
 
       handler: ->
@@ -54,7 +55,7 @@ define(
         @model.set('categoriesList', Window.config.category)
         if not @postCategories?
           @postCategories = new PostCategories({collection: new CategoryCollection(@model.get('categoriesList'))})
-        @$('#categoryList').append(@postCategories.render().$el)
+        @$('#categories').append(@postCategories.render().$el)
 
       getInterviewQuestions: (id) ->
         $.get("/api/interview/questions/#{id}", (data) => @model.set('interviewQuestions', data))
@@ -70,7 +71,6 @@ define(
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
-        @$('.collapse').collapse('hide')
 
       savePost: (event) ->
         event.preventDefault()
@@ -79,8 +79,17 @@ define(
           'text': @postInterviews.createFullText()
           'category': @postCategories.checkedCategories()
         })
+        console.log(@model.isValid(), @model.validationError)
         if not @model.isValid()
           @showErrors(@model.validationError)
         else
           $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
+
+      showErrors: (errors) ->
+        _.each(errors, (error) =>
+          @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error')
+        )
+
+      hideErrors: ->
+        @$('.di').removeClass('has-error').addClass('has-success')
 )

@@ -22,11 +22,11 @@ define(
           message: 'Поле не может быть пустым'
         )
 
-      if not attrs.description
-        errors.push(
-          name: 'description'
-          message: 'Поле не может быть пустым'
-        )
+#      if not attrs.description
+#        errors.push(
+#          name: 'description'
+#          message: 'Поле не может быть пустым'
+#        )
 
       if errors.length > 0 then errors else false
   })

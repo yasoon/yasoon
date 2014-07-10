@@ -9,12 +9,11 @@
 
         <div class="di form-group">
             <input type="text" class="form-control" name="title" id="title" placeholder="Заголовок истории">
-            <p class="help-block"></p>
         </div>
 
         <div class="di panel-group" id="collapse">
             <div class="panel panel-default">
-                <a data-toggle="collapse" data-parent="#collapse" href="#categoryList">
+                <a data-toggle="collapse" data-parent="#collapse" href="#categories">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             Отрасли:
@@ -22,15 +21,14 @@
                     </div>
                 </a>
 
-                <div id="categoryList" class="panel-collapse collapse">
-                    <!-- categoryList -->
+                <div id="categories" class="panel-collapse collapse">
+                    <!-- categories -->
                 </div>
             </div>
         </div>
 
         <div class="di form-group">
             <textarea class="description form-control"  name="description" id="description" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
-            <p class="help-block"></p>
 			<span class="counter">
 				<%= maxLength %>
 			</span>

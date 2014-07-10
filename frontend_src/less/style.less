@@ -435,7 +435,7 @@ footer nav{
   padding: 0!important
 }
 
-.navigate {
+.navigate, .write-post-button {
   height: 45px;
   line-height: 45px;
   border: solid #e2e2e2;
@@ -452,6 +452,12 @@ footer nav{
       max-width: 830px;
     }
   }
+}
+
+.write-post-button {
+  height: auto;
+  line-height: auto;
+  padding: 10px 0 5px 20px;
 }
 
 .question-form {
@@ -1003,5 +1009,24 @@ h2 {
   .active a {
     color: #238c00 !important;
     border-bottom: 1px solid !important;
+  }
+}
+
+.new-post {
+  .form-control, .panel-default, .panel {
+    border: 1px solid transparent;
+    .box-shadow(~"none");
+    padding: 0;
+    &:hover, &:focus {
+      border: 1px solid transparent;
+      .box-shadow(~"none");
+      padding: 0;
+    }
+  }
+  .panel-heading {
+    padding: 0;
+  }
+  .di.has-error {
+      border: 1px solid red;
   }
 }

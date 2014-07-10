@@ -84,10 +84,13 @@
       };
 
       Controller.prototype.speaker = function(id, page) {
+        var model;
         $('body').removeClass().addClass('speaker');
+        model = Backbone.Model.extend();
         this.speakerPageView = new SpeakerPageView({
           id: id,
-          page: page
+          page: page,
+          model: new model()
         });
         LayoutView.contentRegion.$el.empty().append(this.speakerPageView.render().$el);
         this.speakerPageView.delegateEvents();

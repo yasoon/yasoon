@@ -69,7 +69,9 @@ define([
         )
 
       speakers: (category) ->
-        Controller.speakers(category)
+        userModel.deferred.done( =>
+          Controller.speakers(category)
+        )
 
       registerSpeaker: ->
         userModel.deferred.done( =>
@@ -80,7 +82,9 @@ define([
         )
 
       showSpeaker: (id, page) ->
-        Controller.speaker(id, page)
+        userModel.deferred.done( =>
+          Controller.speaker(id, page)
+        )
 
       editSpeaker: (id) ->
         userModel.deferred.done( =>

@@ -19,12 +19,6 @@
             message: 'Поле не может быть пустым'
           });
         }
-        if (!attrs.description) {
-          errors.push({
-            name: 'description',
-            message: 'Поле не может быть пустым'
-          });
-        }
         if (errors.length > 0) {
           return errors;
         } else {

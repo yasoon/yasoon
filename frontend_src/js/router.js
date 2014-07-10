@@ -65,7 +65,11 @@
         })(this));
       },
       speakers: function(category) {
-        return Controller.speakers(category);
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            return Controller.speakers(category);
+          };
+        })(this));
       },
       registerSpeaker: function() {
         return userModel.deferred.done((function(_this) {
@@ -79,7 +83,11 @@
         })(this));
       },
       showSpeaker: function(id, page) {
-        return Controller.speaker(id, page);
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            return Controller.speaker(id, page);
+          };
+        })(this));
       },
       editSpeaker: function(id) {
         return userModel.deferred.done((function(_this) {

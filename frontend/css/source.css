@@ -6311,7 +6311,8 @@ footer nav {
   left: 50%;
   padding: 0 !important;
 }
-.navigate {
+.navigate,
+.write-post-button {
   height: 45px;
   line-height: 45px;
   border: solid #e2e2e2;
@@ -6319,15 +6320,23 @@ footer nav {
   padding-left: 20px;
   background: #fff;
 }
-.navigate.fixed {
+.navigate.fixed,
+.write-post-button.fixed {
   width: 100%;
   box-shadow: 0 6px 5px -4px rgba(0, 0, 0, 0.1);
 }
-.main-layout .navigate.fixed {
+.main-layout .navigate.fixed,
+.main-layout .write-post-button.fixed {
   max-width: 845px;
 }
-.page-layout .navigate.fixed {
+.page-layout .navigate.fixed,
+.page-layout .write-post-button.fixed {
   max-width: 830px;
+}
+.write-post-button {
+  height: auto;
+  line-height: auto;
+  padding: 10px 0 5px 20px;
 }
 .question-form {
   border: solid #e2e2e2;
@@ -6847,6 +6856,31 @@ h2 {
 .nav-tabs .active a {
   color: #238c00 !important;
   border-bottom: 1px solid !important;
+}
+.new-post .form-control,
+.new-post .panel-default,
+.new-post .panel {
+  border: 1px solid transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+}
+.new-post .form-control:hover,
+.new-post .panel-default:hover,
+.new-post .panel:hover,
+.new-post .form-control:focus,
+.new-post .panel-default:focus,
+.new-post .panel:focus {
+  border: 1px solid transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 0;
+}
+.new-post .panel-heading {
+  padding: 0;
+}
+.new-post .di.has-error {
+  border: 1px solid red;
 }
 ul li {
   list-style: none;

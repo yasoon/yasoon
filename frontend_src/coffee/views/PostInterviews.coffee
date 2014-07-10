@@ -19,13 +19,12 @@ define(
       template: _.template(postInterviewTpl)
 
       render: ->
-        console.log(@collection.toJSON())
-        @collection.each(
-          (interview, iterator) =>
-            interview.set('id', iterator)
-            @addOne(interview)
-        )
+        @collection.each((interview, iterator) => @addInterview(interview, iterator))
         @
+
+      addInterview: (interview, iterator) ->
+        interview.set('id', iterator)
+        @addOne(interview)
 
       addOne: (interview) ->
         interview = new InterviewView({model: interview})
