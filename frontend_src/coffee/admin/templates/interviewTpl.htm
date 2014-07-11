@@ -2,8 +2,12 @@
 <div class="editBlock form-group">
     <input type="text" id="name" placeholder="Введите название интервью" class="form-control interviewName" />
 </div>
-<div id="questionList"></div>
 <form role="form">
+    <div class="questions">
+        <% _.each(questions, function(question) { %>
+        <%= questionTpl(question) %>
+        <% }); %>
+    </div>
     <div class="input-group">
         <input type="text" id="add" class="interview_question form-control" placeholder="Введите текст вопроса"/>
         <span class="input-group-btn">

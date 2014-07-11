@@ -18,17 +18,15 @@ define(
         @createInterviewAddForm()
 
       createInterviewsList: ->
-        @interviewsCollection = new InterviewsCollection()
         if not @interviewsList?
-          @interviewsList = new InterviewsView({collection: @interviewsCollection})
+          @interviewsList = new InterviewsView({collection: new InterviewsCollection()})
         else
           @interviewsList.delegateEvents()
         @$el.append(@interviewsList.render().$el)
 
       createInterviewAddForm: ->
-        @interview = new InterviewModel()
         if not @interviewsAddForm?
-          @interviewsAddForm = new InterviewAddFormView({model: @interview})
+          @interviewsAddForm = new InterviewAddFormView({model: new InterviewModel()})
         else
           @interviewsAddForm.delegateEvents()
         @$el.append(@interviewsAddForm.render().$el)

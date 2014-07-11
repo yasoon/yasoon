@@ -11,9 +11,7 @@ define(
     Backbone.View.extend({
       initialize: ->
         if not @contentList?
-          @contentList= new ContentsView({
-            collection: new ContentsCollection()
-          })
+          @contentList= new ContentsView({collection: new ContentsCollection()})
         else
           @contentList.delegateEvents()
         @$el.append(@contentList.render().$el)

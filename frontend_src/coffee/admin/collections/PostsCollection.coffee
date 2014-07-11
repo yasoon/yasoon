@@ -6,10 +6,9 @@ define(
   (
     PostModel
   )->
-    Backbone.Collection.extend({
+    class PostsCollection extends Backbone.Collection
       model: PostModel
       url: ->
         counter = @size() % 10 + 1
-        "/admin/get_posts/#{counter}/10"
-    })
+        "/api/post/get_categoryPosts/0/#{counter}/10"
 )

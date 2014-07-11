@@ -9,17 +9,13 @@ define(
     interviewQuestionTpl
   )->
     class InterviewQuestionView extends Backbone.View
-      tagName: 'li'
-
-      className: 'input-group'
-
-      template: _.template(interviewQuestionTpl)
-
+      tagName:                  'li'
+      className:                'input-group'
+      template:                 _.template(interviewQuestionTpl)
       bindings:
-        '#text': 'text'
-
+        '#text':                'text'
       events:
-        'click .js-delete': 'deleteQuestion'
+        'click .js-delete':     'deleteQuestion'
 
       render: ->
         @$el.append(@template(@model.toJSON()))
@@ -28,6 +24,6 @@ define(
 
       deleteQuestion: (event) ->
         event.preventDefault()
-        Backbone.Mediator.publish('question:removed', @model)
+        @model.collection.remove(@model)
         @$el.remove()
 )

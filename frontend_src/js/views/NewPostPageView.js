@@ -29,16 +29,28 @@
       WritePostPage.prototype.template = _.template(writePostTpl);
 
       WritePostPage.prototype.initialize = function(options) {
-        var interviewId;
-        interviewId = options.id || 1;
-        this.getInterviewQuestions(interviewId);
+        this.getDefaultInterview(options.id);
         return this.handler();
+      };
+
+      WritePostPage.prototype.getDefaultInterview = function(id) {
+        return $.get("/api/interview/get_interviews", (function(_this) {
+          return function(data) {
+            var array, interview;
+            array = _.where(data, {
+              id: parseInt(id)
+            });
+            interview = array.length > 0 ? id : data[0]['id'];
+            return _this.model.set('interviewId', interview);
+          };
+        })(this));
       };
 
       WritePostPage.prototype.handler = function() {
         this.listenTo(this.model, 'change:description', this.symbolsCounter);
         this.listenTo(this.model, 'change:categoriesList', this.createInterviewsList);
-        return this.listenTo(this.model, 'change:interviewQuestions', this.render);
+        this.listenTo(this.model, 'change:interviewQuestions', this.render);
+        return this.listenTo(this.model, 'change:interviewId', this.getInterviewQuestions);
       };
 
       WritePostPage.prototype.render = function() {
@@ -63,8 +75,8 @@
         return this.$('#categories').append(this.postCategories.render().$el);
       };
 
-      WritePostPage.prototype.getInterviewQuestions = function(id) {
-        return $.get("/api/interview/questions/" + id, (function(_this) {
+      WritePostPage.prototype.getInterviewQuestions = function() {
+        return $.get("/api/interview/questions/" + (this.model.get('interviewId')), (function(_this) {
           return function(data) {
             return _this.model.set('interviewQuestions', data);
           };

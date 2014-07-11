@@ -2,17 +2,20 @@ define(
   [
     'admin/views/InterviewView'
     'backbone'
+    'mediator'
   ]
   (
     InterviewView
   )->
-    Backbone.View.extend({
+    class InterviewsView extends Backbone.View
       initialize: ->
-        @collection.fetch()
         @listenTo(@collection, 'add', @addOne)
+        @getInterviewsList()
 
-      addOne: (model) ->
-        interview = new InterviewView({model: model})
+      getInterviewsList: ->
+        $.get(@collection.url, (data) => @collection.set(data))
+
+      addOne: (interview) ->
+        interview = new InterviewView({model: interview})
         @$el.append(interview.render().$el)
-    })
 )

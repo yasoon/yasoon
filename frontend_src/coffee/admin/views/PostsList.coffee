@@ -1,19 +1,22 @@
 define(
   [
+    'text!admin/templates/postsListTpl.htm'
     'admin/views/PostsView'
     'admin/collections/PostsCollection'
     'backbone'
   ]
   (
+    postsListTpl
     PostsView
     PostsCollection
   )->
-    Backbone.View.extend({
+    class PostsList extends Backbone.View
+      template: _.template(postsListTpl)
       initialize: ->
+        @$el.append(@template())
         if not @postsList?
           @postsList = new PostsView({collection: new PostsCollection()})
         else
           @postsList.delegateEvents()
-        @$el.append(@postsList.render().$el)
-    })
+        @$('.postsList').append(@postsList.render().$el)
 )

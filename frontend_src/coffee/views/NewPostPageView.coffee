@@ -34,14 +34,21 @@ define(
       template:                     _.template(writePostTpl)
 
       initialize: (options) ->
-        interviewId = options.id or 1
-        @getInterviewQuestions(interviewId)
+        @getDefaultInterview(options.id)
         @handler()
+
+      getDefaultInterview: (id) ->
+        $.get("/api/interview/get_interviews", (data) =>
+          array = _.where(data, {id: parseInt(id)})
+          interview = if array.length > 0 then id else data[0]['id']
+          @model.set('interviewId', interview)
+        )
 
       handler: ->
         @listenTo(@model, 'change:description', @symbolsCounter)
         @listenTo(@model, 'change:categoriesList', @createInterviewsList)
         @listenTo(@model, 'change:interviewQuestions', @render)
+        @listenTo(@model, 'change:interviewId', @getInterviewQuestions)
 
       render: ->
         @$el.empty().append(@template({'maxLength': 255}))
@@ -57,8 +64,8 @@ define(
           @postCategories = new PostCategories({collection: new CategoryCollection(@model.get('categoriesList'))})
         @$('#categories').append(@postCategories.render().$el)
 
-      getInterviewQuestions: (id) ->
-        $.get("/api/interview/questions/#{id}", (data) => @model.set('interviewQuestions', data))
+      getInterviewQuestions: ->
+        $.get("/api/interview/questions/#{@model.get('interviewId')}", (data) => @model.set('interviewQuestions', data))
 
       createInterviewsList: ->
         if not @postInterviews?

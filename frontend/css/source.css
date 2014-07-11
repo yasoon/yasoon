@@ -6882,6 +6882,20 @@ h2 {
 .new-post .di.has-error {
   border: 1px solid red;
 }
+.index .main-layout .lim {
+  margin-left: 180px;
+  width: auto;
+}
+.index .main-layout .lim .content,
+.index .main-layout .lim .like-title {
+  padding-left: 1em;
+}
+.index .postinfo {
+  position: absolute;
+}
+.index .postinfo.fixed {
+  top: 140px;
+}
 ul li {
   list-style: none;
   padding: 0;

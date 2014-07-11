@@ -55,8 +55,7 @@ define(
         category: @category
         sort: @sort
       }
-      $.get("/api/post/get_categoryPosts/#{@category}/1/10",
-      (data) =>
+      $.get("/api/post/get_categoryPosts/#{@category}/1/10", (data) =>
         data = data[@sort]
         if data.length > 0
           @createPostsDescription(options)

@@ -6,8 +6,7 @@ define(
   (
     ContentModel
   )->
-    Backbone.Collection.extend({
+    class ContentsCollection extends Backbone.Collection
       model: ContentModel
       url: "/api/content/get_all"
-    })
 )
