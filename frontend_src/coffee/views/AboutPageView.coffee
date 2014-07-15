@@ -10,10 +10,7 @@ define(
       tagName: 'section'
       className: 'row'
       template: _.template(aboutPageTpl)
-
       render: ->
-        data = _.extend({}, {'heading': _.getContent(2)}, {'text': _.getContent(3)})
-        @$el.empty().append(@template(data))
-        console.log(@template(data))
+        @$el.empty().append(@template(_.extend({}, {'heading': _.getContent(2)}, {'text': _.getContent(3)})))
         @
 )

@@ -1,7 +1,1 @@
-define(
-  [
-    'backbone'
-  ]
-(mainContentTpl) ->
-  Backbone.View.extend()
-)
+define(['backbone'], (mainContentTpl) -> Backbone.View.extend())

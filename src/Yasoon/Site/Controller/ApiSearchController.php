@@ -139,6 +139,7 @@ class ApiSearchController {
                 <head>
                 </head>
                 <body>
+                    <script type="text/javascript" src="/frontend/js/vendor/require.js" data-main="/frontend/js/main.min.js"></script>
                     <script async="true" type="text/javascript" src="http://servant.indexisto.com/files/searchbox/searchbox.nocache.js?type=edit"></script>
                     <input autocomplete="off"  autocorrect="off" id="indx_srchbox_52f4b86e273ed3396a6c05fb" placeholder="Start typing" style="outline-color: transparent; box-sizing: content-box; outline: none;background: #FFF url(http://servant.indexisto.com/files/searchbox/search_icon_21px.png) no-repeat scroll 6px center;border: 2px solid rgb(255, 151, 18);border-radius: 5px;width: 202px;padding: 0 0 0 31px;height: 32px;line-height: 23px;color: #abaaaa;font-family: Arial;font-size: 18px;" type="text" />
                 </body>

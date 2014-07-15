@@ -6858,28 +6858,39 @@ h2 {
   border-bottom: 1px solid !important;
 }
 .new-post .form-control,
+.edit-post .form-control,
 .new-post .panel-default,
-.new-post .panel {
+.edit-post .panel-default,
+.new-post .panel,
+.edit-post .panel {
   border: 1px solid transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0;
 }
 .new-post .form-control:hover,
+.edit-post .form-control:hover,
 .new-post .panel-default:hover,
+.edit-post .panel-default:hover,
 .new-post .panel:hover,
+.edit-post .panel:hover,
 .new-post .form-control:focus,
+.edit-post .form-control:focus,
 .new-post .panel-default:focus,
-.new-post .panel:focus {
+.edit-post .panel-default:focus,
+.new-post .panel:focus,
+.edit-post .panel:focus {
   border: 1px solid transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0;
 }
-.new-post .panel-heading {
+.new-post .panel-heading,
+.edit-post .panel-heading {
   padding: 0;
 }
-.new-post .di.has-error {
+.new-post .di.has-error,
+.edit-post .di.has-error {
   border: 1px solid red;
 }
 .index .main-layout .lim {

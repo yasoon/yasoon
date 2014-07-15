@@ -16,12 +16,8 @@ define(
       @options = options || {}
       
     render: ->
-      data = _.extend(@options, @options.description)
-      @$el.empty().append(@template(data))
-
-      @collection.each( (story) =>
-        @addOne(story)
-      )
+      @$el.empty().append(@template(_.extend(@options, @options.description)))
+      @collection.each( (story) => @addOne(story))
       @
 
     addOne: (story) ->

@@ -5,11 +5,10 @@
       className: 'left-side',
       template: _.template(categoriesListTpl),
       initialize: function(options) {
-        this.options = options || {};
         return this.data = {
-          page: this.options.page,
-          sort: this.options.sort,
-          category: this.options.category
+          page: options.page,
+          sort: options.sort,
+          category: options.category
         };
       },
       render: function() {

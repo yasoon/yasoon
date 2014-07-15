@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -16,7 +16,8 @@
         $('body').removeClass().addClass('posts');
         this.postsPageView = new PostsPageView({
           category: category,
-          sort: sort
+          sort: sort,
+          model: new PostsPageModel()
         });
         LayoutView.contentRegion.$el.empty().append(this.postsPageView.render().$el);
         this.postsPageView.delegateEvents();
@@ -66,7 +67,8 @@
       Controller.prototype.speakers = function(category) {
         $('body').removeClass().addClass('speakers');
         this.speakersPageView = new SpeakersPageView({
-          category: category
+          category: category,
+          model: new SpeakersPageModel()
         });
         LayoutView.contentRegion.$el.empty().append(this.speakersPageView.render().$el);
         this.speakersPageView.delegateEvents();

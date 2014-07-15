@@ -77,5 +77,4 @@ define(
           'category': @postCategories.checkedCategories()
         })
         $.post('/api/post/update', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
-
 )

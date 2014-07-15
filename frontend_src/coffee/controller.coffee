@@ -17,6 +17,8 @@ define(
     'models/UserUpdateModel'
     'models/userModel'
     'models/PostPageModel'
+    'models/PostsPageModel'
+    'models/SpeakersPageModel'
     'backbone'
   ]
   (
@@ -37,6 +39,8 @@ define(
     UserUpdateModel
     userModel
     PostPageModel
+    PostsPageModel
+    SpeakersPageModel
   ) ->
     class Controller
       constructor: () ->
@@ -51,8 +55,9 @@ define(
       posts: (category, sort) ->
         $('body').removeClass().addClass('posts')
         @postsPageView = new PostsPageView({
-          category: category,
+          category: category
           sort: sort
+          model: new PostsPageModel()
         })
         LayoutView.contentRegion.$el.empty().append(@postsPageView.render().$el)
         @postsPageView.delegateEvents()
@@ -98,6 +103,7 @@ define(
         $('body').removeClass().addClass('speakers')
         @speakersPageView = new SpeakersPageView({
           category: category
+          model: new SpeakersPageModel()
         })
         LayoutView.contentRegion.$el.empty().append(@speakersPageView.render().$el)
         @speakersPageView.delegateEvents()
@@ -130,7 +136,6 @@ define(
           model: new UserUpdateModel()
           el: LayoutView.contentRegion.$el
         })
-        #        LayoutView.contentRegion.$el.empty().append(@editAuthorPageView.render().$el)
         @editAuthorPageView.delegateEvents()
         @
 

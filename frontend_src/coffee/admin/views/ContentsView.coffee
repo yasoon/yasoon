@@ -11,9 +11,6 @@ define(
         @collection.fetch()
         @listenTo(@collection, 'add', @addOne)
 
-      showMore: ->
-        @collection.fetch()
-
       addOne: (model) ->
         content = new ContentView({model: model})
         @$el.append(content.render().$el)

@@ -8,85 +8,66 @@ define(
     'collections/PostsPreviewsList'
     'backbone'
   ]
-(
-  CategoriesListView
-  PostsPreviews
-  PostsDescriptionView
-  EmptyView
-  CategoryCollection
-  PostsPreviewsList
-) ->
-  Backbone.View.extend({
-    tagName: 'section'
-    className: 'page-layout'
+  (
+    CategoriesListView
+    PostsPreviews
+    PostsDescriptionView
+    EmptyView
+    CategoryCollection
+    PostsPreviewsList
+  ) ->
+    class PostsPageView extends Backbone.View
+      tagName: 'section'
+      className: 'page-layout'
 
-    initialize: (options) ->
-      @category = options.category || 0
-      @sort = options.sort || 'dateSort'
-      @description = {
-        name: 'все отрасли',
-        description: 'Your digestive tract is probably'
-      }
-      @createsCategoryFilter()
+      initialize: (options) ->
+        @model.set({'category': options.category, 'sort': options.sort || 'dateSort'})
+        @setListeners()
+        @getCategoryList()
 
-    createsCategoryFilter: ->
-      category = @category
-      sort = @sort
-      $.get("/api/category/get_CategoryList",
-      (data) =>
-        if not @categoriesListView?
-          @categoriesListView = new CategoriesListView({
-            category: category
-            sort: sort
-            page: 'posts'
-            collection: new CategoryCollection(data)
-          })
-        else
-          @categoriesListView.delegateEvents()
-        @$el.append(@categoriesListView.render().$el)
-        if parseInt(category) > 0
-          @description = _.where(data, id: parseInt(category))[0]
-        @createPostsList()
-      , 'json')
+      setListeners: ->
+        @listenTo(@model, 'change:postsList', @createPostsList)
+        @listenTo(@model, 'change:description', @createPostsDescription)
+        @listenTo(@model, 'change:categoryList', @createsCategoryFilter)
 
-    createPostsList: ->
-      options = {
-        description: @description
-        category: @category
-        sort: @sort
-      }
-      $.get("/api/post/get_categoryPosts/#{@category}/1/10", (data) =>
-        data = data[@sort]
-        if data.length > 0
-          @createPostsDescription(options)
-          @createPosts(data, @sort, @category)
-        else
-          if not @emptyView?
-            @emptyView = new EmptyView({
-              message: 'В этой категории нет постов!'
-            })
-          else
-            @emptyView.delegateEvents()
-          @$el.append(@emptyView.render().$el)
-      ,'json')
+      getCategoryList: ->
+        @model.set('categoryList', Window.config.category)
 
-    createPostsDescription: (options) ->
-      if not @postsDescriptionView?
-        @postsDescriptionView = new PostsDescriptionView(options)
-      else
-        @postsDescriptionView.delegateEvents()
-      @$el.append(@postsDescriptionView.render().$el)
+      createsCategoryFilter: ->
+        if not @categoryListView? then @categoryList() else @categoryListView.delegateEvents()
+        @$el.append(@categoryListView.render().$el)
+        @setDescription()
 
-    createPosts: (data, sort, category) ->
-      if not @postsPreviews?
-        @postsPreviews = new PostsPreviews({
-          category: category
-          sort: sort
-          collection: new PostsPreviewsList(data)
-        })
-      else
-        @postsPreviews.delegateEvents()
-      @$el.append(@postsPreviews.render().$el)
+      getPostsList: ->
+        $.get("/api/post/get_categoryPosts/#{@model.get('category')}/1/10", (data) => @model.set('postsList', data[@model.get('sort')]))
 
-  })
+      createPostsList: ->
+        if @model.get('postsList').length > 0 then @createPosts() else @emptyPosts()
+
+      emptyPosts: ->
+        if not @emptyView? then @emptyView = new EmptyView({message: _.getContent(34)}) else @emptyView.delegateEvents()
+        @$el.append(@emptyView.render().$el)
+
+      setDescription: ->
+        description = if parseInt(@model.get('category')) is 0 then {'name': 'все отрасли'} else _.where(@model.get('categoryList'), id: parseInt(@model.get('category')))[0]
+        @model.set('description', description)
+
+      createPostsDescription: ->
+        if not @postsDescriptionView? then @postsDescription() else @postsDescriptionView.delegateEvents()
+        @$el.append(@postsDescriptionView.render().$el)
+        @getPostsList()
+
+      createPosts: ->
+        if not @postsPreviews? then @posts() else @postsPreviews.delegateEvents()
+        @$el.append(@postsPreviews.render().$el)
+
+      categoryList: ->
+        categoryCollection = new CategoryCollection(@model.get('categoryList'))
+        @categoryListView = new CategoriesListView({category: @model.get('category'), sort: @model.get('sort'), page: 'posts', collection: categoryCollection})
+
+      postsDescription: ->
+        @postsDescriptionView = new PostsDescriptionView({description: @model.get('description'), category: @model.get('category'), sort: @model.get('sort')})
+
+      posts: ->
+        @postsPreviews = new PostsPreviews({category: @model.get('category'), sort: @model.get('sort'), collection: new PostsPreviewsList(@model.get('postsList'))})
 )

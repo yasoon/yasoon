@@ -18,12 +18,7 @@ define(
       )
 
     createNavigation: () ->
-      if not @authorNavigationView?
-        @authorNavigationView = new AuthorNavigationView({
-          page: @options.page
-        })
-      else
-        @authorNavigationView.delegateEvents()
-      @$el.append(@authorNavigationView.render().$el)
-
+      authorNavigation = new AuthorNavigationView({page: @options.page})
+      if not @authorNavigation? then @authorNavigation = authorNavigation else @authorNavigation.delegateEvents()
+      @$el.append(@authorNavigation.render().$el)
 )

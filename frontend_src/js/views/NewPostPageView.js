@@ -110,7 +110,6 @@
           'text': this.postInterviews.createFullText(),
           'category': this.postCategories.checkedCategories()
         });
-        console.log(this.model.isValid(), this.model.validationError);
         if (!this.model.isValid()) {
           return this.showErrors(this.model.validationError);
         } else {

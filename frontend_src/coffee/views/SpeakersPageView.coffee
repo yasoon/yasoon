@@ -7,69 +7,59 @@ define(
     'collections/SpeakersCollection'
     'backbone'
   ]
-(
-  CategoriesListView
-  SpeakersCollectionView
-  EmptyView
-  CategoryCollection
-  SpeakersCollection
-) ->
-  Backbone.View.extend({
-    tagName: 'section'
-    className: 'page-layout'
+  (
+    CategoriesListView
+    SpeakersCollectionView
+    EmptyView
+    CategoryCollection
+    SpeakersCollection
+  ) ->
+    class SpeakersPageView extends Backbone.View
+      tagName: 'section'
+      className: 'page-layout'
 
-    initialize: (options) ->
-      @options = {
-        category: options.category || 0
-      }
-      @description = {
-        name: 'все отрасли',
-        description: _.getContent(65)
-      }
-      @createCategoryFilter()
+      initialize: (options) ->
+        @model.set({'category': options.category})
+        @setListeners()
+        @getCategoryList()
 
-    createCategoryFilter: ->
-      category = @options.category
-      $.get("/api/category/get_CategoryList",
-      (data) =>
-        if not @categoriesListView?
-          @categoriesListView = new CategoriesListView({
-            category: category
-            page: 'speakers'
-            collection: new CategoryCollection(data)
-          })
-        else
-          @categoriesListView.delegateEvents()
+      setListeners: ->
+        @listenTo(@model, 'change:categoryList', @createCategoryFilter)
+        @listenTo(@model, 'change:description', @getSpeakersList)
+        @listenTo(@model, 'change:speakersList', @createSpeakersList)
+
+      getCategoryList: ->
+        @model.set('categoryList', Window.config.category)
+
+      createCategoryFilter: ->
+        if not @categoriesListView? then @categories() else @categoriesListView.delegateEvents()
         @$el.append(@categoriesListView.render().$el)
-        if parseInt(category) > 0
-          @description = _.where(data, id: parseInt(category))[0]
-        @createSpeakersPageStories()
-      , 'json')
+        @setDescription()
 
-    createSpeakersPageStories: ->
-      category = @options.category
-      description = @description
-      $.get("/api/post/get_categoryPeople/#{category}/1/10",
-      (data) =>
-        data = data['peoples']
-        if data.error is true
-          if not @emptyView?
-            @emptyView = new EmptyView({
-              message: data.errorText
-            })
-          else
-            @emptyView.delegateEvents()
-          @$el.append(@emptyView.render().$el)
-        else
-          if not @SpeakersCollectionView?
-            @SpeakersCollectionView = new SpeakersCollectionView({
-              category: category
-              description: description
-              collection: new SpeakersCollection(data)
-            })
-          else
-            @SpeakersCollectionView.delegateEvents()
-          @$el.append(@SpeakersCollectionView.render().$el)
-      ,'json')
-  })
+      setDescription: ->
+        description = if parseInt(@model.get('category')) is 0 then {'name': 'все отрасли'} else _.where(@model.get('categoryList'), id: parseInt(@model.get('category')))[0]
+        @model.set('description', description)
+
+      categories: ->
+        categoryCollection = new CategoryCollection(@model.get('categoryList'))
+        @categoriesListView = new CategoriesListView({category: @model.get('category'), page: 'speakers', collection: categoryCollection})
+
+      getSpeakersList: ->
+        $.get("/api/post/get_categoryPeople/#{@model.get('category')}/1/10", (data) => @model.set('speakersList', data['peoples']))
+
+      createSpeakersList: ->
+        data = @model.get('speakersList')
+        if data.length > 0 then @speakersList() else @emptyList()
+
+      speakersList: ->
+        if not @speakersCollectionView? then @speakers() else @speakersCollectionView.delegateEvents()
+        @$el.append(@speakersCollectionView.render().$el)
+
+      speakers: ->
+        speakersCollection = new SpeakersCollection(@model.get('speakersList'))
+        @speakersCollectionView = new SpeakersCollectionView({category: @model.get('category'), description: @model.get('description'), collection: speakersCollection})
+
+      emptyList: ->
+        if not @emptyView? then @emptyView = new EmptyView({message: _.getContent(33)}) else @emptyView.delegateEvents()
+        @$el.append(@emptyView.render().$el)
 )

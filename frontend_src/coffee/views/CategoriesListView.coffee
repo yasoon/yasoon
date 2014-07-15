@@ -14,11 +14,10 @@ define(
     template: _.template(categoriesListTpl)
 
     initialize: (options) ->
-      @options = options || {}
       @data = {
-        page: @options.page
-        sort: @options.sort
-        category: @options.category
+        page: options.page
+        sort: options.sort
+        category: options.category
       }
       
     render: ->

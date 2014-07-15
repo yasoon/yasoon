@@ -8,11 +8,9 @@ define(
   ) ->
     _.mixin({
       'getContent': (id) ->
-        id = id - 1
-        if Window.config.content[id]
-          Window.config.content[id].text
-        else
-          "Контента с id: #{id} нет!"
+        content = _.where(Window.config.content, {id: id})
+        text = if content.length > 0 then content[0].text else "Контента с id: #{id} нет!"
+        text
     })
 
     Date.prototype.getMonthName = ->

@@ -24,14 +24,16 @@
       };
 
       AuthorPage.prototype.createNavigation = function() {
-        if (this.authorNavigationView == null) {
-          this.authorNavigationView = new AuthorNavigationView({
-            page: this.options.page
-          });
+        var authorNavigation;
+        authorNavigation = new AuthorNavigationView({
+          page: this.options.page
+        });
+        if (this.authorNavigation == null) {
+          this.authorNavigation = authorNavigation;
         } else {
-          this.authorNavigationView.delegateEvents();
+          this.authorNavigation.delegateEvents();
         }
-        return this.$el.append(this.authorNavigationView.render().$el);
+        return this.$el.append(this.authorNavigation.render().$el);
       };
 
       return AuthorPage;

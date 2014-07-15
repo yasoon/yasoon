@@ -71,7 +71,6 @@ define(
         if not @postInterviews?
           @postInterviews = new PostInterviews({collection: new InterviewCollection(@model.get('interviewQuestions'))})
         @$('#questionsList').append(@postInterviews.render().$el)
-
         @afterRender()
 
       afterRender: ->
@@ -86,16 +85,13 @@ define(
           'text': @postInterviews.createFullText()
           'category': @postCategories.checkedCategories()
         })
-        console.log(@model.isValid(), @model.validationError)
         if not @model.isValid()
           @showErrors(@model.validationError)
         else
           $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
 
       showErrors: (errors) ->
-        _.each(errors, (error) =>
-          @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error')
-        )
+        _.each(errors, (error) => @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error'))
 
       hideErrors: ->
         @$('.di').removeClass('has-error').addClass('has-success')

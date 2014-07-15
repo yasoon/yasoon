@@ -8,7 +8,7 @@
         </article>
 
         <div class="di form-group">
-            <input type="text" class="form-control" name="title" id="title" placeholder="Заголовок истории">
+            <input type="text" class="form-control" name="title" id="title" placeholder="<%=  _.getContent(38) %>">
             <!--<p class="help-block"></p>-->
         </div>
 
@@ -17,7 +17,7 @@
                 <a data-toggle="collapse" data-parent="#collapse" href="#categories">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Отрасли:
+                            <%=  _.getContent(39) %>
                         </h4>
                     </div>
                 </a>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="di form-group">
-            <textarea class="description form-control"  name="description" id="description" placeholder="Краткое описание истории" maxlength="<%= maxLength %>"></textarea>
+            <textarea class="description form-control"  name="description" id="description" placeholder="<%=  _.getContent(40) %>" maxlength="<%= maxLength %>"></textarea>
             <!--<p class="help-block"></p>-->
 			<span class="counter">
 				<%= maxLength %>
@@ -41,13 +41,13 @@
         <div class="di t-center buttons_area">
             <div class="row">
                 <div class="col-sm-6 text-right">
-                    <button type="submit" class="btn">Опубликовать</a>
+                    <button type="submit" class="btn">Опубликовать</button>
                 </div>
                 <div class="col-sm-6 text-left">
-                    <button type="button" class="btn color-red js-delete">Удалить</a>
+                    <button type="button" class="btn color-red js-delete">Удалить</button>
                 </div>
                 <div class="col-sm-6 text-left">
-                    <button type="reset" class="btn color-red">Отмена</a>
+                    <button type="reset" class="btn color-red">Отмена</button>
                 </div>
             </div>
         </div>
