@@ -1,53 +1,21 @@
-<% if (hasAnswer) { %>
-	<div class="p-label small">
-		<b>
-			<span class="green">
-				<a href="#/speaker/<%= ask_authorId %>/posts">
-					<%= ask_authorName %>, <%= ask_authorProf %>
-				</a>
-			</span> спросил(а)
-		</b>
-	</div>
-	<h3>
-		<%= questionText %>
-		<span class="post-date">
-            <%= _.getDateText(publishDate) %>
-        </span>
-	</h3>
-	<div class="content">
-		<p>
-            <%= questionAnswerText %>
-        </p>
-	</div>
-	<div class="hr"></div>
-<% } else if (typeof author !== "undefined") { %>
-    <div class="p-label small">
-        <b>
-            <span class="green">
-                <a href="#/speaker/<%= ask_authorId %>/posts">
-                    <%= ask_authorName %>, <%= ask_authorProf %>
-                </a>
-            </span> спросил(а)
-        </b>
-    </div>
-    <h3>
-        <%= questionText %>
-        <span class="post-date">
-            <%= _.getDateText(publishDate) %>
-        </span>
-        <a class="js-open" href="#">ответить</a>
-    </h3>
-    <div class="content" style="display: none;">
-        <form role="form">
-            <div class="form-group">
-                <textarea class="form-control" name="questionAnswerText" id="questionAnswerText" rows="3"></textarea>
-                <p class="help-block"></p>
-            </div>
-            <button class="btn" type="submit">Ответить</button>
-            <button class="btn js-delete color-red" type="button">Удалить</button>
-        </form>
-    </div>
-    <div class="hr"></div>
-<% } else { %>
-	<div style="margin-top: -20px;"></div>
-<% } %>
+<div class="p-label small">
+    <b>
+        <span class="green">
+            <a href="#/speaker/<%= ask_authorId %>/posts">
+                <%= ask_authorName %>, <%= ask_authorProf %>
+            </a>
+        </span> спросил(а)
+    </b>
+</div>
+<h3>
+    <%= questionText %>
+    <span class="post-date">
+        <%= _.getDateText(publishDate) %>
+    </span>
+</h3>
+<div class="content">
+    <p>
+        <%= questionAnswerText %>
+    </p>
+</div>
+<div class="hr"></div>

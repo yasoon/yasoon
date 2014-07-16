@@ -1,33 +1,37 @@
 define(
   [
     'views/SpeakerAnswerView'
+    'views/SpeakerAskedView'
     'backbone'
     'mediator'
   ]
-(
-  SpeakerAnswerView
-) ->
-  Backbone.View.extend({
-    initialize: (options) ->
-      @options = options or {}
+  (
+    SpeakerAnswerView
+    SpeakerAskedView
+  ) ->
+    class SpeakerAnswersCollectionView extends Backbone.View
+      subscriptions:
+        'question:answered': 'addOneAnswer'
 
-    subscriptions:
-      'question:answered': 'addOne'
+      renderQuestion: ->
+        _.each(@asked(), (question) => @addOneQuestion(question))
+        @
 
-    render: ->
-      @collection.each( (answer) =>
-        @addOne(answer)
-      )
-      @
+      asked: ->
+        @collection.where({hasAnswer: no})
 
-    addOne: (answer) ->
-      if @options.id is Window.config.userId
-        answer.set('author', yes)
-      speakerAnswerView = new SpeakerAnswerView({model: answer})
-      @$el.prepend(speakerAnswerView.render().$el)
+      addOneQuestion: (question) ->
+        speakerAskedView = new SpeakerAskedView({model: question})
+        @$el.prepend(speakerAskedView.render().$el)
 
-    answered: ->
-      _.where(@collection.toJSON(), {hasAnswer: true})
+      renderAnswer: ->
+        _.each(@answered(), (answer) => @addOneAnswer(answer))
+        @
 
-  })
+      answered: ->
+        @collection.where({hasAnswer: yes})
+
+      addOneAnswer: (answer) ->
+        speakerAnswerView = new SpeakerAnswerView({model: answer})
+        @$el.prepend(speakerAnswerView.render().$el)
 )

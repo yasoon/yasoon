@@ -8,7 +8,7 @@ var linkClass = 'ws'
 
 <div class="fixed-position-aside">
     <% if(avatarImg === null) { %>
-    <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
+    <img src="<%= _.getContent(18) %>" alt="<%= name %>">
     <% } else { %>
     <img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
     <% } %>
@@ -16,7 +16,9 @@ var linkClass = 'ws'
         <a href="#/speaker/<%= id %>/posts/" class="usr-name">
             <%= name %>
         </a>
+        <% if (isAuthor) { %>
         <a href="#/speaker/<%= id %>/edit/" class="editable"></a>
+        <% } %>
     </h4>
     <p class="u-description">
         <%= interviewCaption %>
@@ -74,7 +76,7 @@ var linkClass = 'ws'
             <% } %>
 
             <div class="hr"></div>
-            <% if (Window.config.userId !== id) { %>
+            <% if (!isAuthor) { %>
             <div class="hdi">
                 <% if (typeof _.find(Window.config.friends, {id: id}) !== "undefined") { %>
                 <button type="button" class="btn js-follow color-red">Отписаться</button>

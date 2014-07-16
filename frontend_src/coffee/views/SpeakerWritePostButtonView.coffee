@@ -8,11 +8,7 @@ define(
   ) ->
     class SpeakerWritePostButtonView extends Backbone.View
       tagName: 'section'
-
-      className: 'lim'
-
       template: _.template(speakerPageTpl)
-
       render: ->
         @$el.append(@template())
         @

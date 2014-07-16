@@ -3,72 +3,51 @@ define(
     'views/PostAuthorModelView'
     'views/SpeakerNavigationView'
     'views/SpeakerContentView'
-    'views/SpeakerWritePostButtonView'
     'models/PostAuthorModel'
+    'models/SpeakerContentModel'
     'backbone'
   ]
   (
     PostAuthorModelView
     SpeakerNavigationView
     SpeakerContentView
-    SpeakerWritePostButtonView
     PostAuthorModel
+    SpeakerContentModel
   ) ->
     class SpeakerPage extends Backbone.View
       tagName:        'section'
       className:      'page-layout'
 
       initialize: (options) ->
-        @model.set({
-          id: options.id
-          page: options.page
-        })
-        @listenTo(@model, 'change:authorData', @createSpeakerInfo)
+        @model.set({id: options.id, page: options.page})
+        @setListeners()
         @getSpeakerInfo()
+
+      setListeners: ->
+        @listenTo(@model, 'change:authorData', @createSpeakerInfo)
 
       getSpeakerInfo: ->
         $.post("/api/author/getAuthorInfo", {author_id: @model.get('id')}, (data) => @model.set('authorData', data[0]))
 
       createSpeakerInfo: ->
-        if not @postAuthorModelView?
-          @postAuthorModelView = new PostAuthorModelView({model: new PostAuthorModel(@model.get('authorData'))})
-        else
-          @postAuthorModelView.delegateEvents()
-        @$el.append(@postAuthorModelView.render().$el)
+        postAuthor = new PostAuthorModel(@model.get('authorData'))
+        if not @authorModel? then @authorModel = new PostAuthorModelView({model: postAuthor}) else @authorModel.delegateEvents()
+        @$el.append(@authorModel.render().$el)
         @createNavigation()
 
       createNavigation: ->
-        if not @speakerNavigationView?
-          @speakerNavigationView = new SpeakerNavigationView({
-            id: @model.get('id')
-            page: @model.get('page')
-          })
-        else
-          @speakerNavigationView.delegateEvents()
+        if not @speakerNavigationView? then @speakerNavigation() else @speakerNavigationView.delegateEvents()
         @$el.append(@speakerNavigationView.render().$el)
-        @createWritePostButton()
-
-      createWritePostButton: ->
-        if Window.config.userId is parseInt(@model.get('id')) and @model.get('page') is 'posts' then @renderButton()
         @createSpeakerContent()
 
-      renderButton: ->
-        if not @speakerWritePostButtonView?
-          @speakerWritePostButtonView = new SpeakerWritePostButtonView()
-        else
-          @speakerWritePostButtonView.delegateEvents()
-        @$el.append(@speakerWritePostButtonView.render().$el)
+      speakerNavigation: ->
+        @speakerNavigationView = new SpeakerNavigationView({id: @model.get('id'), page: @model.get('page')})
 
       createSpeakerContent: ->
-        author = @model.get('authorData')
-        if not @speakerContentView?
-          @speakerContentView = new SpeakerContentView({
-            answers: author.answers
-            posts: author.posts
-            page: @model.get('page')
-            id: @model.get('id')
-          })
-        else
-          @speakerContentView.delegateEvents()
+        if not @speakerContentView? then @speakerContent() else @speakerContentView.delegateEvents()
         @$el.append(@speakerContentView.render().$el)
+
+      speakerContent: ->
+        speakerContent = new SpeakerContentModel()
+        @speakerContentView = new SpeakerContentView({model: speakerContent, author: @model.get('authorData'), page: @model.get('page'), id: @model.get('id')})
 )

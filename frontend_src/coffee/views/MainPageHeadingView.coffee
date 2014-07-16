@@ -3,20 +3,13 @@ define(
     'text!templates/mainPageHeadingTpl.htm'
     'backbone'
   ]
-(
-  mainPageHeadingTpl
-) ->
-  Backbone.View.extend({
-    className: 'mainPage-intro'
-    template: _.template(mainPageHeadingTpl)
-    render: ->
-      image = _.getContent(12)
-      @$el
-        .html(@template())
-        .css({
-          'background-image': "url(frontend#{image})",
-          'background-size': "cover"
-        })
-      @
-  })
+  (
+    mainPageHeadingTpl
+  ) ->
+    class MainPageHeadingView extends Backbone.View
+      className: 'mainPage-intro'
+      template: _.template(mainPageHeadingTpl)
+      render: ->
+        @$el.html(@template()).css({'background-image': "url(frontend#{_.getContent(13)})", 'background-size': "cover"})
+        @
 )

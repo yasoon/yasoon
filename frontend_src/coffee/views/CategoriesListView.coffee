@@ -8,7 +8,7 @@ define(
   categoriesListTpl
   CategoryView
 ) ->
-  Backbone.View.extend({
+  class CategoriesListView extends Backbone.View
     tagName: 'aside'
     className: 'left-side'
     template: _.template(categoriesListTpl)
@@ -35,6 +35,4 @@ define(
     addOne: (category) ->
       category = new CategoryView({model: category})
       @categoriesList.append(category.render().$el)
-
-  })
 )

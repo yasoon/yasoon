@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['views/PostAuthorModelView', 'views/SpeakerNavigationView', 'views/SpeakerContentView', 'views/SpeakerWritePostButtonView', 'models/PostAuthorModel', 'backbone'], function(PostAuthorModelView, SpeakerNavigationView, SpeakerContentView, SpeakerWritePostButtonView, PostAuthorModel) {
+  define(['views/PostAuthorModelView', 'views/SpeakerNavigationView', 'views/SpeakerContentView', 'models/PostAuthorModel', 'models/SpeakerContentModel', 'backbone'], function(PostAuthorModelView, SpeakerNavigationView, SpeakerContentView, PostAuthorModel, SpeakerContentModel) {
     var SpeakerPage;
     return SpeakerPage = (function(_super) {
       __extends(SpeakerPage, _super);
@@ -20,8 +20,12 @@
           id: options.id,
           page: options.page
         });
-        this.listenTo(this.model, 'change:authorData', this.createSpeakerInfo);
+        this.setListeners();
         return this.getSpeakerInfo();
+      };
+
+      SpeakerPage.prototype.setListeners = function() {
+        return this.listenTo(this.model, 'change:authorData', this.createSpeakerInfo);
       };
 
       SpeakerPage.prototype.getSpeakerInfo = function() {
@@ -35,60 +39,54 @@
       };
 
       SpeakerPage.prototype.createSpeakerInfo = function() {
-        if (this.postAuthorModelView == null) {
-          this.postAuthorModelView = new PostAuthorModelView({
-            model: new PostAuthorModel(this.model.get('authorData'))
+        var postAuthor;
+        postAuthor = new PostAuthorModel(this.model.get('authorData'));
+        if (this.authorModel == null) {
+          this.authorModel = new PostAuthorModelView({
+            model: postAuthor
           });
         } else {
-          this.postAuthorModelView.delegateEvents();
+          this.authorModel.delegateEvents();
         }
-        this.$el.append(this.postAuthorModelView.render().$el);
+        this.$el.append(this.authorModel.render().$el);
         return this.createNavigation();
       };
 
       SpeakerPage.prototype.createNavigation = function() {
         if (this.speakerNavigationView == null) {
-          this.speakerNavigationView = new SpeakerNavigationView({
-            id: this.model.get('id'),
-            page: this.model.get('page')
-          });
+          this.speakerNavigation();
         } else {
           this.speakerNavigationView.delegateEvents();
         }
         this.$el.append(this.speakerNavigationView.render().$el);
-        return this.createWritePostButton();
-      };
-
-      SpeakerPage.prototype.createWritePostButton = function() {
-        if (Window.config.userId === parseInt(this.model.get('id')) && this.model.get('page') === 'posts') {
-          this.renderButton();
-        }
         return this.createSpeakerContent();
       };
 
-      SpeakerPage.prototype.renderButton = function() {
-        if (this.speakerWritePostButtonView == null) {
-          this.speakerWritePostButtonView = new SpeakerWritePostButtonView();
-        } else {
-          this.speakerWritePostButtonView.delegateEvents();
-        }
-        return this.$el.append(this.speakerWritePostButtonView.render().$el);
+      SpeakerPage.prototype.speakerNavigation = function() {
+        return this.speakerNavigationView = new SpeakerNavigationView({
+          id: this.model.get('id'),
+          page: this.model.get('page')
+        });
       };
 
       SpeakerPage.prototype.createSpeakerContent = function() {
-        var author;
-        author = this.model.get('authorData');
         if (this.speakerContentView == null) {
-          this.speakerContentView = new SpeakerContentView({
-            answers: author.answers,
-            posts: author.posts,
-            page: this.model.get('page'),
-            id: this.model.get('id')
-          });
+          this.speakerContent();
         } else {
           this.speakerContentView.delegateEvents();
         }
         return this.$el.append(this.speakerContentView.render().$el);
+      };
+
+      SpeakerPage.prototype.speakerContent = function() {
+        var speakerContent;
+        speakerContent = new SpeakerContentModel();
+        return this.speakerContentView = new SpeakerContentView({
+          model: speakerContent,
+          author: this.model.get('authorData'),
+          page: this.model.get('page'),
+          id: this.model.get('id')
+        });
       };
 
       return SpeakerPage;

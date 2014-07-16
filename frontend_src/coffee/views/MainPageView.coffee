@@ -8,7 +8,7 @@ define(
   MainPageHeadingView
   MainPageContentView
 ) ->
-  Backbone.View.extend({
+  class MainPageView extends Backbone.View
     tagName: 'section'
 
     initialize: ->
@@ -17,13 +17,10 @@ define(
       @
 
     createMainPageHeading: ->
-      if not @mainPageHeadingView?
-        @mainPageHeadingView = new MainPageHeadingView()
+      if not @mainPageHeadingView? then @mainPageHeadingView = new MainPageHeadingView()
       @$el.append(@mainPageHeadingView.render().$el)
 
     createMainPageContent: ->
-      if not @mainPageContentView?
-        @mainPageContentView = new MainPageContentView()
+      if not @mainPageContentView? then @mainPageContentView = new MainPageContentView()
       @$el.append(@mainPageContentView.render().$el)
-  })
 )
