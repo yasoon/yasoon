@@ -61,20 +61,17 @@ define(
         _.each(@model.get('tags'), (item) => @$('input:checkbox').eq(item).prop('checked', yes))
 
       createInterviewsList: ->
-        if not @postInterviews?
-          @postInterviews = new PostInterviews({collection: new InterviewCollection(@model.get('formattedText'))})
+        interviews = new InterviewCollection(@model.get('formattedText'))
+        if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         $('#questionsList').html(@postInterviews.render().$el)
         @afterRender()
 
       deletePost: (event) ->
         event.preventDefault()
-        $.post('/api/post/deletePost', {post_id: @options.id}, (data) => window.location = "/#/speaker/#{@model.get('authorId')}/posts/")
+        $.post('/api/post/deletePost', {post_id: @options.id}, () => window.location = "/#/speaker/#{@model.get('authorId')}/posts/")
 
       updatePost: (event) ->
         event.preventDefault()
-        @model.set({
-          'text': @postInterviews.createFullText()
-          'category': @postCategories.checkedCategories()
-        })
+        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories()})
         $.post('/api/post/update', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
 )

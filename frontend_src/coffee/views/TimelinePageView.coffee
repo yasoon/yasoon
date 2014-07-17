@@ -22,66 +22,61 @@ define(
       template: _.template(timelinePageTpl)
 
       initialize: ->
-        @deferred = $.Deferred()
-        $.get('/statistic/get_user_notification', (data) =>
-          answers_timeline = if typeof data.answers_timeline.result isnt 'string' then data.answers_timeline.result else {}
-          new_answers = if typeof data.new_answers.result isnt 'string' then data.new_answers.result else {}
-          @answers = _.extend({}, answers_timeline, new_answers)
-          @posts = data.posts_timeline.result
-          @deferred.resolve()
-        )
+        @setHandlers()
+        @getData()
+
+      getData: ->
+        $.get('/statistic/get_user_notification', (data) => @setModel(data))
+
+      setModel: (data) ->
+        @model.set({'answers': _.extend({}, @isString(data.answers_timeline), @isString(data.new_answers)), 'posts': @isString(data.posts_timeline)})
+        @clearTimelineCounters()
+
+      clearTimelineCounters: ->
         $.get('/api/post/clearTimeline')
+        $.get('/api/question/clear_answer_timeline')
+
+      isString: (obj) ->
+        if typeof obj.result isnt 'string' then obj.result else {}
+
+      setHandlers: ->
+        @listenTo(@model, 'change:answers', @createAnswersList)
+        @listenTo(@model, 'change:posts', @createPostsList)
 
       events: ->
         'click a[data-change="tab"]': 'changeTab'
 
       render: ->
         @$el.empty().append(@template())
-        @createPostsList()
-        @createAnswersList()
         @
 
       createPostsList: ->
-        @deferred.done( =>
-          if @posts.lentgh > 0
-            @postsList = new TimelinePostsCollection(@posts)
-            if not @timelinePostsList?
-              @timelinePostsList = new TimelinePostsList({
-                collection: @postsList
-              })
-            else
-              @timelinePostsList.delegateEvents()
-            @$('#posts').append(@timelinePostsList.$el)
-          else
-            if not @postsEmptyView?
-              @postsEmptyView = new EmptyView({message: _.getContent(56)})
-            else
-              @postsEmptyView.delegateEvents()
-            @$('#posts').append(@postsEmptyView.render().$el)
-        )
+        if _.size(@model.get('posts')) then @createPosts() else @emptyPosts()
+
+      createPosts: ->
+        @postsList = new TimelinePostsCollection(@model.get('posts'))
+        if not @timelinePosts? then @timelinePosts = new TimelinePostsList({collection: @postsList}) else @timelinePosts.delegateEvents()
+        @$('#posts').append(@timelinePosts.$el)
+
+      emptyPosts: ->
+        if not @postsEmptyView? then @postsEmptyView = new EmptyView({message: _.getContent(56)}) else @postsEmptyView.delegateEvents()
+        @$('#posts').append(@postsEmptyView.render().$el)
 
       createAnswersList: ->
-        @deferred.done(=>
-          if _.size(@answers) > 0
-            @answersList = new TimelineAnswersCollection(@answers)
-            if not @timelineAnswersList?
-              @timelineAnswersList = new TimelineAnswersList({collection: @answersList})
-            else
-              @timelineAnswersList.delegateEvents()
-            @$('#questions').append(@timelineAnswersList.$el)
-          else
-            if not @answersEmptyView?
-              @answersEmptyView = new EmptyView({message: _.getContent(66)})
-            else
-              @answersEmptyView.delegateEvents()
-            @$('#questions').append(@answersEmptyView.render().$el)
-        )
+        if _.size(@model.get('answers')) then @createAnswers() else @emptyAnswers()
+
+      createAnswers: ->
+        @answersList = new TimelineAnswersCollection(@model.get('answers'))
+        if not @timelineAnswers? then @timelineAnswers = new TimelineAnswersList({collection: @answersList}) else @timelineAnswers.delegateEvents()
+        @$('#questions').append(@timelineAnswers.$el)
+
+      emptyAnswers: ->
+        if not @answersEmptyView? then @answersEmptyView = new EmptyView({message: _.getContent(66)}) else @answersEmptyView.delegateEvents()
+        @$('#questions').append(@answersEmptyView.render().$el)
 
       changeTab: (event) ->
         event.preventDefault()
         self = @$(event.currentTarget)
         self.parent().addClass('active').siblings().removeClass('active')
-        target = self.data('target')
-        @$(target).addClass('active').siblings().removeClass('active')
-        $.get('/api/post/clearTimeline')
+        @$(self.data('target')).addClass('active').siblings().removeClass('active')
 )

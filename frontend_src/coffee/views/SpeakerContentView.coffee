@@ -65,8 +65,14 @@ define(
         @showList()
 
       showList: ->
-        if @isAuthor() and @speakerAnswers.asked().length then @askedQuestions() else if not @speakerAnswers.answered().length then @emptyQuestions(48) else @emptyQuestions(50)
-        if @speakerAnswers.answered().length then @answeredQuestions()
+        if @isAuthor() then @createAskedList() else @createAnsweredList()
+
+      createAnsweredList: ->
+        if @speakerAnswers.answered().length then @answeredQuestions() else @emptyQuestions(47)
+
+      createAskedList: ->
+        if @speakerAnswers.asked().length then @askedQuestions() else @emptyQuestions(48)
+        if @speakerAnswers.answered().length then @answeredQuestions() else if not @speakerAnswers.asked().length then @emptyQuestions(50)
 
       askedQuestions: ->
         @$el.prepend(@speakerAnswers.renderQuestion().$el)

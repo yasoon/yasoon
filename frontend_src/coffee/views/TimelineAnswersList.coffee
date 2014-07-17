@@ -12,11 +12,7 @@ define(
       tagName: 'section'
 
       initialize: ->
-        console.log(@collection)
-        @collection.each((post)=>
-          @addOne(post)
-        )
-        $.get("/api/question/clear_answer_timeline")
+        @collection.each((post)=> @addOne(post))
 
       addOne: (post) ->
         post = new TimelineAnswerView({model: post})

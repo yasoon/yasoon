@@ -1,7 +1,1 @@
-define(
-  [
-    'backbone'
-  ]
-() ->
-  Backbone.Model.extend()
-)
+define(['backbone'], () -> Backbone.Model.extend())

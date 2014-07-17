@@ -1,30 +1,51 @@
 (function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
   define(['views/PostPageModelView', 'views/PostAuthorModelView', 'models/PostPageModel', 'models/PostAuthorModel', 'models/PostViewModel', 'backbone'], function(PostPageModelView, PostAuthorModelView, PostPageModel, PostAuthorModel, PostViewModel) {
-    return Backbone.View.extend({
-      tagName: 'section',
-      className: 'page-layout row',
-      events: function() {
+    var PostPageView;
+    return PostPageView = (function(_super) {
+      __extends(PostPageView, _super);
+
+      function PostPageView() {
+        return PostPageView.__super__.constructor.apply(this, arguments);
+      }
+
+      PostPageView.prototype.tagName = 'section';
+
+      PostPageView.prototype.className = 'page-layout row';
+
+      PostPageView.prototype.events = function() {
         return {
           'click .like-this': 'addLike'
         };
-      },
-      initialize: function(options) {
-        this.options = options || {};
+      };
+
+      PostPageView.prototype.initialize = function(options) {
         this.model = new PostViewModel();
-        this.listenTo(this.model, 'change:postData', this.getAuthorData);
-        this.listenTo(this.model, 'change:userData', this.createPostAuthor);
+        this.model.set({
+          'postId': options.id
+        });
+        this.setHandlers();
         return this.getPostData();
-      },
-      getPostData: function() {
+      };
+
+      PostPageView.prototype.setHandlers = function() {
+        this.listenTo(this.model, 'change:postData', this.getAuthorData);
+        return this.listenTo(this.model, 'change:userData', this.createPostAuthor);
+      };
+
+      PostPageView.prototype.getPostData = function() {
         return $.post("/api/post/getPost", {
-          postid: this.options.id
+          postid: this.model.get('postId')
         }, (function(_this) {
           return function(data) {
             return _this.model.set('postData', data[0]);
           };
         })(this));
-      },
-      getAuthorData: function() {
+      };
+
+      PostPageView.prototype.getAuthorData = function() {
         var author;
         author = this.model.get('postData');
         return $.post("/api/author/getAuthorInfo", {
@@ -34,51 +55,74 @@
             return _this.model.set('userData', data[0]);
           };
         })(this));
-      },
-      createPostContent: function() {
-        var data, questions;
-        questions = this.model.get('userData');
-        data = _.extend({}, this.model.get('postData'), {
-          'questionCount': questions.answers_count
-        });
-        if (this.postPageModelView == null) {
-          this.postPageModelView = new PostPageModelView({
-            model: new PostPageModel(data)
+      };
+
+      PostPageView.prototype.createPostAuthor = function() {
+        var authorModel;
+        authorModel = new PostAuthorModel(this.model.get('userData'));
+        if (this.postAuthor == null) {
+          this.postAuthor = new PostAuthorModelView({
+            model: authorModel
           });
         } else {
-          this.postPageModelView.delegateEvents();
+          this.postAuthor.delegateEvents();
         }
-        return this.$el.append(this.postPageModelView.render().$el);
-      },
-      createPostAuthor: function() {
-        if (this.postAuthorModelView == null) {
-          this.postAuthorModelView = new PostAuthorModelView({
-            model: new PostAuthorModel(this.model.get('userData'))
-          });
-        } else {
-          this.postAuthorModelView.delegateEvents();
-        }
-        this.$el.append(this.postAuthorModelView.render().$el);
+        this.$el.append(this.postAuthor.render().$el);
         return this.createPostContent();
-      },
-      addLike: function(event) {
-        var data;
-        event.preventDefault();
-        data = _.extend({}, {
-          postId: this.options.id,
-          type: 'add'
+      };
+
+      PostPageView.prototype.createPostContent = function() {
+        var postModel;
+        postModel = new PostPageModel(this.setPostModel());
+        if (this.postPage == null) {
+          this.postPage = new PostPageModelView({
+            model: postModel
+          });
+        } else {
+          this.postPage.delegateEvents();
+        }
+        return this.$el.append(this.postPage.render().$el);
+      };
+
+      PostPageView.prototype.setPostModel = function() {
+        this.model.set('text', this.changePostText());
+        return _.extend({}, this.model.get('postData'), {
+          'questionCount': this.model.get('userData').answers_count
         });
+      };
+
+      PostPageView.prototype.changePostText = function() {
+        var article;
+        return article = $(this.model.get('text')).find('article');
+      };
+
+      PostPageView.prototype.addLike = function(event) {
+        event.preventDefault();
         return $.post('/api/post/add_likes', {
-          'postlike': data
+          'postlike': this.likeData()
         }, (function(_this) {
           return function(data) {
-            if (!data.error && data.count) {
-              return _this.$el.find('.like-this .counter').text(data.count);
-            }
+            return _this.changeLikeCount(data);
           };
         })(this));
-      }
-    });
+      };
+
+      PostPageView.prototype.likeData = function() {
+        return _.extend({}, {
+          postId: this.model.get('postId'),
+          type: 'add'
+        });
+      };
+
+      PostPageView.prototype.changeLikeCount = function(data) {
+        if (!data.error && data.count) {
+          return this.$el.find('.like-this .counter').text(data.count);
+        }
+      };
+
+      return PostPageView;
+
+    })(Backbone.View);
   });
 
 }).call(this);

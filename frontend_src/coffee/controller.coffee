@@ -19,6 +19,7 @@ define(
     'models/PostPageModel'
     'models/PostsPageModel'
     'models/SpeakersPageModel'
+    'models/TimelinePageModel'
     'backbone'
   ]
   (
@@ -41,6 +42,7 @@ define(
     PostPageModel
     PostsPageModel
     SpeakersPageModel
+    TimelinePageModel
   ) ->
     class Controller
       constructor: () ->
@@ -141,7 +143,7 @@ define(
 
       timeline: ->
         $('body').removeClass().addClass('timeline')
-        @timelinePageView = new TimelinePageView()
+        @timelinePageView = new TimelinePageView({model: new TimelinePageModel()})
         LayoutView.contentRegion.$el.empty().append(@timelinePageView.render().$el)
         @timelinePageView.delegateEvents()
         @

@@ -35,13 +35,13 @@ define(
 
       initialize: (options) ->
         @getDefaultInterview(options.id)
+        @model.set({'maxLength': 255})
         @handler()
 
       getDefaultInterview: (id) ->
         $.get("/api/interview/get_interviews", (data) =>
           array = _.where(data, {id: parseInt(id)})
-          interview = if array.length > 0 then id else data[0]['id']
-          @model.set('interviewId', interview)
+          @model.set('interviewId', if array.length then id else data[0]['id'])
         )
 
       handler: ->
@@ -51,7 +51,7 @@ define(
         @listenTo(@model, 'change:interviewId', @getInterviewQuestions)
 
       render: ->
-        @$el.empty().append(@template({'maxLength': 255}))
+        @$el.empty().append(@template(@model.toJSON()))
         @onRender()
         @
 
@@ -60,16 +60,16 @@ define(
 
       createCategoryList: ->
         @model.set('categoriesList', Window.config.category)
-        if not @postCategories?
-          @postCategories = new PostCategories({collection: new CategoryCollection(@model.get('categoriesList'))})
+        category = new CategoryCollection(@model.get('categoriesList'))
+        if not @postCategories? then @postCategories = new PostCategories({collection: category})
         @$('#categories').append(@postCategories.render().$el)
 
       getInterviewQuestions: ->
         $.get("/api/interview/questions/#{@model.get('interviewId')}", (data) => @model.set('interviewQuestions', data))
 
       createInterviewsList: ->
-        if not @postInterviews?
-          @postInterviews = new PostInterviews({collection: new InterviewCollection(@model.get('interviewQuestions'))})
+        interviews = new InterviewCollection(@model.get('interviewQuestions'))
+        if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         @$('#questionsList').append(@postInterviews.render().$el)
         @afterRender()
 
@@ -81,14 +81,11 @@ define(
       savePost: (event) ->
         event.preventDefault()
         @hideErrors()
-        @model.set({
-          'text': @postInterviews.createFullText()
-          'category': @postCategories.checkedCategories()
-        })
-        if not @model.isValid()
-          @showErrors(@model.validationError)
-        else
-          $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
+        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories()})
+        if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
+
+      sendPostData: ->
+        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
 
       showErrors: (errors) ->
         _.each(errors, (error) => @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error'))

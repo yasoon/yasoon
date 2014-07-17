@@ -1,7 +1,1 @@
-define(
-  [
-    'backbone'
-  ]
-  () ->
-    class TimelinePost extends Backbone.Model
-)
+define(['backbone'], () -> Backbone.Model.extend())

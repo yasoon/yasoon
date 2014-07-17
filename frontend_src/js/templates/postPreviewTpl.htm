@@ -1,11 +1,6 @@
-<% var author = (typeof(authorId) !== "undefined") ? authorId : authorid %>
 <div class="p-label">
-    <a href="#/speaker/<%= author %>/posts">
-        <% if (typeof(authorName) !== "undefined") { %>
+    <a href="#/speaker/<%= authorId %>/posts">
         <%= authorName %>
-        <% } else { %>
-        <%= autorName %>
-        <% } %>
     </a>
 </div>
 <h2>
@@ -27,7 +22,6 @@
         <% } else { %>
         <%= description %>
         <% } %>
-
     </p>
 </div>
 <div class="hr"></div>

@@ -30,18 +30,20 @@
 
       WritePostPage.prototype.initialize = function(options) {
         this.getDefaultInterview(options.id);
+        this.model.set({
+          'maxLength': 255
+        });
         return this.handler();
       };
 
       WritePostPage.prototype.getDefaultInterview = function(id) {
         return $.get("/api/interview/get_interviews", (function(_this) {
           return function(data) {
-            var array, interview;
+            var array;
             array = _.where(data, {
               id: parseInt(id)
             });
-            interview = array.length > 0 ? id : data[0]['id'];
-            return _this.model.set('interviewId', interview);
+            return _this.model.set('interviewId', array.length ? id : data[0]['id']);
           };
         })(this));
       };
@@ -54,9 +56,7 @@
       };
 
       WritePostPage.prototype.render = function() {
-        this.$el.empty().append(this.template({
-          'maxLength': 255
-        }));
+        this.$el.empty().append(this.template(this.model.toJSON()));
         this.onRender();
         return this;
       };
@@ -66,10 +66,12 @@
       };
 
       WritePostPage.prototype.createCategoryList = function() {
+        var category;
         this.model.set('categoriesList', Window.config.category);
+        category = new CategoryCollection(this.model.get('categoriesList'));
         if (this.postCategories == null) {
           this.postCategories = new PostCategories({
-            collection: new CategoryCollection(this.model.get('categoriesList'))
+            collection: category
           });
         }
         return this.$('#categories').append(this.postCategories.render().$el);
@@ -84,9 +86,11 @@
       };
 
       WritePostPage.prototype.createInterviewsList = function() {
+        var interviews;
+        interviews = new InterviewCollection(this.model.get('interviewQuestions'));
         if (this.postInterviews == null) {
           this.postInterviews = new PostInterviews({
-            collection: new InterviewCollection(this.model.get('interviewQuestions'))
+            collection: interviews
           });
         }
         this.$('#questionsList').append(this.postInterviews.render().$el);
@@ -110,15 +114,19 @@
           'text': this.postInterviews.createFullText(),
           'category': this.postCategories.checkedCategories()
         });
-        if (!this.model.isValid()) {
-          return this.showErrors(this.model.validationError);
+        if (this.model.isValid()) {
+          return this.sendPostData();
         } else {
-          return $.post('/api/post/savePost', {
-            postData: this.model.toJSON()
-          }, function(data) {
-            return Backbone.Mediator.publish('post:submitted', data.postId);
-          });
+          return this.showErrors(this.model.validationError);
         }
+      };
+
+      WritePostPage.prototype.sendPostData = function() {
+        return $.post('/api/post/savePost', {
+          postData: this.model.toJSON()
+        }, function(data) {
+          return Backbone.Mediator.publish('post:submitted', data.postId);
+        });
       };
 
       WritePostPage.prototype.showErrors = function(errors) {
