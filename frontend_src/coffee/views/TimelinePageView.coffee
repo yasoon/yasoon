@@ -30,7 +30,6 @@ define(
           @posts = data.posts_timeline.result
           @deferred.resolve()
         )
-
         $.get('/api/post/clearTimeline')
 
       events: ->
@@ -55,9 +54,7 @@ define(
             @$('#posts').append(@timelinePostsList.$el)
           else
             if not @postsEmptyView?
-              @postsEmptyView = new EmptyView({
-                message: 'Новых постов нет!'
-              })
+              @postsEmptyView = new EmptyView({message: _.getContent(56)})
             else
               @postsEmptyView.delegateEvents()
             @$('#posts').append(@postsEmptyView.render().$el)
@@ -68,17 +65,13 @@ define(
           if _.size(@answers) > 0
             @answersList = new TimelineAnswersCollection(@answers)
             if not @timelineAnswersList?
-              @timelineAnswersList = new TimelineAnswersList({
-                collection: @answersList
-              })
+              @timelineAnswersList = new TimelineAnswersList({collection: @answersList})
             else
               @timelineAnswersList.delegateEvents()
             @$('#questions').append(@timelineAnswersList.$el)
           else
             if not @answersEmptyView?
-              @answersEmptyView = new EmptyView({
-                message: _.getContent(66)
-              })
+              @answersEmptyView = new EmptyView({message: _.getContent(66)})
             else
               @answersEmptyView.delegateEvents()
             @$('#questions').append(@answersEmptyView.render().$el)

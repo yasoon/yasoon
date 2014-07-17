@@ -31,7 +31,7 @@ define(
 
       answersPage: ->
         if not @isAuthor() then @createQuestionForm()
-        if @model.get('answers').length then @getAnswers() else @emptyQuestions(47)
+        @getAnswers()
 
       setHandlers: ->
         @listenTo(@model, 'change:speakerPosts', @createPosts)
@@ -65,8 +65,8 @@ define(
         @showList()
 
       showList: ->
-        if @isAuthor() and @answersCollection.length then @askedQuestions()
-        if @speakerAnswers.answered().length then @answeredQuestions() else @emptyQuestions(50)
+        if @isAuthor() and @speakerAnswers.asked().length then @askedQuestions() else if not @speakerAnswers.answered().length then @emptyQuestions(48) else @emptyQuestions(50)
+        if @speakerAnswers.answered().length then @answeredQuestions()
 
       askedQuestions: ->
         @$el.prepend(@speakerAnswers.renderQuestion().$el)

@@ -66,9 +66,7 @@ define(
 
       createSteps: ->
         steps = @$el.find('fieldset')
-        steps.each( (step) ->
-          steps.eq(step).wrap('<div id="step' + step + '"></div>')
-        )
+        steps.each( (step) -> steps.eq(step).wrap('<div id="step' + step + '"></div>'))
         @onRender()
 
       setImageUploader: (model) ->
@@ -80,21 +78,16 @@ define(
           createInput: ->
           onComplete: (file, data) ->
             ret = JSON.parse($(data).text())
-            if ret.file_name?
-              model.set('img', ret.file_name)
+            if ret.file_name? then model.set('img', ret.file_name)
         )
 
       changeImage: ->
-        path = "/upload/avatar/#{@model.get('img')}"
-        $('.file_upload_block, header').find('img').attr('src', path)
+        $('.file_upload_block, header').find('img').attr('src', "/upload/avatar/#{@model.get('img')}")
 
       goToStep: (event) ->
         $this = $(event.currentTarget)
         step = $this.data('count')
-        if $this.hasClass('next')
-          @showStep(step + 1)
-        else
-          @showStep(step - 1)
+        if $this.hasClass('next') then @showStep(step + 1) else @showStep(step - 1)
 
       showStep: (step) ->
         @$el.find("#step" + step).show().siblings().hide()
@@ -103,11 +96,14 @@ define(
         event.preventDefault()
         @hideErrors()
         @$(event.currentTarget).prop('disabled', yes)
-        if @model.isValid()
-          $.post('/api/author/register', @model.toJSON(), (data) => if data.error is no then @registered() else @existedEmail(data))
-        else
-          @$(event.currentTarget).prop('disabled', no)
-          @showErrors(@model.validationError)
+        if @model.isValid() then @register() else @returnToRegister(event)
+
+      returnToRegister: (event) ->
+        @$(event.currentTarget).prop('disabled', no)
+        @showErrors(@model.validationError)
+
+      register: ->
+        $.post('/api/author/register', @model.toJSON(), (data) => if data.error is no then @registered() else @existedEmail(data))
 
       registered: ->
         @showStep(1)
@@ -116,22 +112,21 @@ define(
       existedEmail: (data) ->
         if data.errorType is 'emailExist'
           @$(event.currentTarget).prop('disabled', no)
-          @showErrors([{
-            name: 'email'
-            message: 'Пользователь с таким email уже есть'
-          }])
+          @showErrors([{name: 'email', message: 'Пользователь с таким email уже есть'}])
 
       updateAction: (event) ->
         event.preventDefault()
         @hideErrors()
         @$(event.currentTarget).prop('disabled', yes)
+        if @model.isValid() then @updateProfile() else @returnToUpdate()
 
-        if @model.isValid()
-          $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
-        else
-          @showErrors(@model.validationError)
-          @showStep(1)
-          @$(event.currentTarget).prop('disabled', no)
+      returnToUpdate: ->
+        @showErrors(@model.validationError)
+        @showStep(1)
+        @$(event.currentTarget).prop('disabled', no)
+
+      updateProfile: ->
+        $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
 
       loadUser: ->
         window.location = "/#/speaker/#{@model.get('id')}/posts/"

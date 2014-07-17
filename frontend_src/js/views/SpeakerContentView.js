@@ -34,11 +34,7 @@
         if (!this.isAuthor()) {
           this.createQuestionForm();
         }
-        if (this.model.get('answers').length) {
-          return this.getAnswers();
-        } else {
-          return this.emptyQuestions(47);
-        }
+        return this.getAnswers();
       };
 
       SpeakerContentView.prototype.setHandlers = function() {
@@ -113,13 +109,15 @@
       };
 
       SpeakerContentView.prototype.showList = function() {
-        if (this.isAuthor() && this.answersCollection.length) {
+        if (this.isAuthor() && this.speakerAnswers.asked().length) {
           this.askedQuestions();
+        } else if (!this.speakerAnswers.answered().length) {
+          this.emptyQuestions(48);
+        } else {
+          this.emptyQuestions(50);
         }
         if (this.speakerAnswers.answered().length) {
           return this.answeredQuestions();
-        } else {
-          return this.emptyQuestions(50);
         }
       };
 
