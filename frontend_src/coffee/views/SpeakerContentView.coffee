@@ -71,8 +71,8 @@ define(
         if @speakerAnswers.answered().length then @answeredQuestions() else @emptyQuestions(47)
 
       createAskedList: ->
-        if @speakerAnswers.asked().length then @askedQuestions() else @emptyQuestions(48)
-        if @speakerAnswers.answered().length then @answeredQuestions() else if not @speakerAnswers.asked().length then @emptyQuestions(50)
+        if @speakerAnswers.asked().length then @askedQuestions()
+        if @speakerAnswers.answered().length then @answeredQuestions() else if @model.get('posts').length then @emptyQuestions(50) else @emptyQuestions(48)
 
       askedQuestions: ->
         @$el.prepend(@speakerAnswers.renderQuestion().$el)

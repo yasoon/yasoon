@@ -81,8 +81,13 @@ define(
       savePost: (event) ->
         event.preventDefault()
         @hideErrors()
-        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories()})
+        description = @getDescription()
+        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories(), 'description': description})
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
+
+      getDescription: ->
+        console.log(@model)
+        if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
         $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))

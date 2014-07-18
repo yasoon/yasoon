@@ -108,16 +108,28 @@
       };
 
       WritePostPage.prototype.savePost = function(event) {
+        var description;
         event.preventDefault();
         this.hideErrors();
+        description = this.getDescription();
         this.model.set({
           'text': this.postInterviews.createFullText(),
-          'category': this.postCategories.checkedCategories()
+          'category': this.postCategories.checkedCategories(),
+          'description': description
         });
         if (this.model.isValid()) {
           return this.sendPostData();
         } else {
           return this.showErrors(this.model.validationError);
+        }
+      };
+
+      WritePostPage.prototype.getDescription = function() {
+        console.log(this.model);
+        if (this.model.get('description') != null) {
+          return this.model.get('description');
+        } else {
+          return '';
         }
       };
 

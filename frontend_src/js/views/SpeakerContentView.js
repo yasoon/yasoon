@@ -127,13 +127,13 @@
       SpeakerContentView.prototype.createAskedList = function() {
         if (this.speakerAnswers.asked().length) {
           this.askedQuestions();
-        } else {
-          this.emptyQuestions(48);
         }
         if (this.speakerAnswers.answered().length) {
           return this.answeredQuestions();
-        } else if (!this.speakerAnswers.asked().length) {
+        } else if (this.model.get('posts').length) {
           return this.emptyQuestions(50);
+        } else {
+          return this.emptyQuestions(48);
         }
       };
 
