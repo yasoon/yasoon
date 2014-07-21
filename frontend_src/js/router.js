@@ -131,7 +131,6 @@
         });
       },
       undefinedRoute: function() {
-        console.log("undefined route");
         return Controller.undefinedRoute();
       }
     });

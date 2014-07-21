@@ -125,7 +125,6 @@
       };
 
       WritePostPage.prototype.getDescription = function() {
-        console.log(this.model);
         if (this.model.get('description') != null) {
           return this.model.get('description');
         } else {

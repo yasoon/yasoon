@@ -492,7 +492,7 @@ footer nav{
 .lim .q-box{
   padding-left: 20px;
   margin-left: -20px;
-  min-height: 48px;
+  min-height: 68px;
   .main-layout & {
     margin-left: 0;
     padding-left: 0;
@@ -1013,10 +1013,23 @@ h2 {
 }
 
 .new-post, .edit-post {
+  .panel-title {
+    font-size: 1.2em;
+  }
   .form-control, .panel-default, .panel {
+    @input-color-placeholder: black;
     border: 1px solid transparent;
+    color:  @input-color-placeholder;
     .box-shadow(~"none");
     padding: 0;
+    &#title {
+      font-size: 3.2em;
+      height: 58px;
+    }
+    &#description {
+      font-size: 1.2em;
+    }
+    .placeholder(@color: @input-color-placeholder);
     &:hover, &:focus {
       border: 1px solid transparent;
       .box-shadow(~"none");
@@ -1045,4 +1058,8 @@ h2 {
       top: 140px;
     }
   }
+}
+
+.mainPage-intro {
+  background: #F75E5E;
 }

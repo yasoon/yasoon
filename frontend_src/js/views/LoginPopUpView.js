@@ -51,54 +51,74 @@
         return window.open('/socauth/facebook', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes');
       };
 
-      LoginPopUpView.prototype.registerAction = function(event) {
+      LoginPopUpView.prototype.registerAction = function() {
         return this.closePopUp();
       };
 
       LoginPopUpView.prototype.loginAction = function(event) {
-        var button;
         event.preventDefault();
-        button = this.$('button[type="submit"]');
-        button.prop('disabled', true);
+        this.toggleButton(true);
         this.hideErrors();
         if (this.model.isValid()) {
-          return $.post('/login_check', {
-            email: this.model.get('email'),
-            password: this.model.get('password')
-          }, (function(_this) {
-            return function(data) {
-              if (data.error === true) {
-                button.prop('disabled', true);
-                if (data.errorType === 'nouser') {
-                  return _this.showErrors([
-                    {
-                      name: 'email',
-                      message: 'Пользователя с таким email нет'
-                    }
-                  ]);
-                } else if (data.errorType === 'invalidPassword') {
-                  return _this.showErrors([
-                    {
-                      name: 'password',
-                      message: 'Неверный пароль'
-                    }
-                  ]);
-                }
-              } else {
-                Window.config.userId = data.userData.id;
-                return window.location.reload(true);
-              }
-            };
-          })(this), 'json');
+          return this.checkUser();
         } else {
           return this.showErrors(this.model.validationError);
         }
       };
 
+      LoginPopUpView.prototype.toggleButton = function(mode) {
+        return this.$('button[type="submit"]').prop('disabled', mode);
+      };
+
+      LoginPopUpView.prototype.checkUser = function() {
+        return $.post('/login_check', {
+          email: this.model.get('email'),
+          password: this.model.get('password')
+        }, (function(_this) {
+          return function(data) {
+            return _this.showAnswer(data);
+          };
+        })(this));
+      };
+
+      LoginPopUpView.prototype.showAnswer = function(data) {
+        if (data.error === true) {
+          return this.checkError(data.errorType);
+        } else {
+          return this.changeLocation(data.userData);
+        }
+      };
+
+      LoginPopUpView.prototype.checkError = function(data) {
+        this.toggleButton(false);
+        if (data === 'nouser') {
+          return this.showErrors([
+            {
+              name: 'email',
+              message: 'Пользователя с таким email нет'
+            }
+          ]);
+        } else if (data === 'invalidPassword') {
+          return this.showErrors([
+            {
+              name: 'password',
+              message: 'Неверный пароль'
+            }
+          ]);
+        }
+      };
+
+      LoginPopUpView.prototype.changeLocation = function(data) {
+        Window.config.userId = data.id;
+        return window.location.reload(true);
+      };
+
       LoginPopUpView.prototype.showErrors = function(errors) {
-        return _.each(errors, function(error) {
-          return this.$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message);
-        }, this);
+        return _.each(errors, (function(_this) {
+          return function(error) {
+            return _this.$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message);
+          };
+        })(this));
       };
 
       LoginPopUpView.prototype.hideErrors = function() {

@@ -86,7 +86,6 @@ define(
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
 
       getDescription: ->
-        console.log(@model)
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->

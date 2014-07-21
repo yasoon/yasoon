@@ -5799,6 +5799,23 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-size: 13px;
+  font-family: 'MuseoSansCyrl-100', Arial, sans-serif;
+  line-height: normal;
+  -webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3,
+h4,
 .main-w {
   -webkit-transition: font-size 0.5s ease;
   -moz-transition: font-size 0.5s ease;
@@ -5809,6 +5826,7 @@ h1 {
 }
 h2 {
   font-size: 3.2em;
+  font-weight: bold;
 }
 h3 {
   font-size: 2em;
@@ -6366,7 +6384,7 @@ footer nav {
 .lim .q-box {
   padding-left: 20px;
   margin-left: -20px;
-  min-height: 48px;
+  min-height: 68px;
 }
 .main-layout .lim .q-box {
   margin-left: 0;
@@ -6857,6 +6875,10 @@ h2 {
   color: #238c00 !important;
   border-bottom: 1px solid !important;
 }
+.new-post .panel-title,
+.edit-post .panel-title {
+  font-size: 1.2em;
+}
 .new-post .form-control,
 .edit-post .form-control,
 .new-post .panel-default,
@@ -6864,9 +6886,52 @@ h2 {
 .new-post .panel,
 .edit-post .panel {
   border: 1px solid transparent;
+  color: #000000;
   -webkit-box-shadow: none;
   box-shadow: none;
   padding: 0;
+}
+.new-post .form-control#title,
+.edit-post .form-control#title,
+.new-post .panel-default#title,
+.edit-post .panel-default#title,
+.new-post .panel#title,
+.edit-post .panel#title {
+  font-size: 3.2em;
+  height: 58px;
+}
+.new-post .form-control#description,
+.edit-post .form-control#description,
+.new-post .panel-default#description,
+.edit-post .panel-default#description,
+.new-post .panel#description,
+.edit-post .panel#description {
+  font-size: 1.2em;
+}
+.new-post .form-control::-moz-placeholder,
+.edit-post .form-control::-moz-placeholder,
+.new-post .panel-default::-moz-placeholder,
+.edit-post .panel-default::-moz-placeholder,
+.new-post .panel::-moz-placeholder,
+.edit-post .panel::-moz-placeholder {
+  color: #000000;
+  opacity: 1;
+}
+.new-post .form-control:-ms-input-placeholder,
+.edit-post .form-control:-ms-input-placeholder,
+.new-post .panel-default:-ms-input-placeholder,
+.edit-post .panel-default:-ms-input-placeholder,
+.new-post .panel:-ms-input-placeholder,
+.edit-post .panel:-ms-input-placeholder {
+  color: #000000;
+}
+.new-post .form-control::-webkit-input-placeholder,
+.edit-post .form-control::-webkit-input-placeholder,
+.new-post .panel-default::-webkit-input-placeholder,
+.edit-post .panel-default::-webkit-input-placeholder,
+.new-post .panel::-webkit-input-placeholder,
+.edit-post .panel::-webkit-input-placeholder {
+  color: #000000;
 }
 .new-post .form-control:hover,
 .edit-post .form-control:hover,
@@ -6906,6 +6971,9 @@ h2 {
 }
 .index .postinfo.fixed {
   top: 140px;
+}
+.mainPage-intro {
+  background: #F75E5E;
 }
 ul li {
   list-style: none;

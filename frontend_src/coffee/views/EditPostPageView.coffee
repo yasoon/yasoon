@@ -44,13 +44,7 @@ define(
       setPostData: (data) ->
         @model.set(data)
         text = []
-        $(@model.get('text')).each( (iterator) ->
-          value = []
-          value['id'] = iterator
-          value['text'] = $(@).find('.question_content').text()
-          value['question'] = $(@).find('.questionTitle').text()
-          text.push(value)
-        )
+        $(@model.get('text')).each( (iterator) -> text.push({'id': iterator, 'text': $(@).find('.question_content').html(), 'question': $(@).find('.questionTitle').html()}))
         @model.set('formattedText', text)
 
       createCategoryList: ->
@@ -58,13 +52,18 @@ define(
         @checkCategories()
 
       checkCategories: ->
-        _.each(@model.get('tags'), (item) => @$('input:checkbox').eq(item).prop('checked', yes))
+        _.each(@model.get('tags'), (item) => @$('input:checkbox').eq(item - 1).prop('checked', yes))
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('formattedText'))
         if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         $('#questionsList').html(@postInterviews.render().$el)
         @afterRender()
+
+      afterRender: ->
+        @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
+        @$('.sortable ul').sortable({cancel: '.form-group'})
+        @stickit()
 
       deletePost: (event) ->
         event.preventDefault()

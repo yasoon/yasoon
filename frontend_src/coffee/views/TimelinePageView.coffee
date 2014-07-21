@@ -71,7 +71,7 @@ define(
         @$('#questions').append(@timelineAnswers.$el)
 
       emptyAnswers: ->
-        if not @answersEmptyView? then @answersEmptyView = new EmptyView({message: _.getContent(66)}) else @answersEmptyView.delegateEvents()
+        if not @answersEmptyView? then @answersEmptyView = new EmptyView({message: _.getContent(56)}) else @answersEmptyView.delegateEvents()
         @$('#questions').append(@answersEmptyView.render().$el)
 
       changeTab: (event) ->

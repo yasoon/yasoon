@@ -117,7 +117,6 @@ define([
         @navigate("#/post/#{id}", {trigger: yes})
 
       undefinedRoute: ->
-        console.log("undefined route")
         Controller.undefinedRoute()
 
     })
