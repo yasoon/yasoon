@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/writePostFormTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'views/ValidationView', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap', 'jqueryUi'], function(writePostTpl, PostCategories, PostInterviews, ValidationView, CategoryCollection, InterviewCollection) {
+  define(['text!templates/writePostFormTpl.htm', 'text!templates/postInterviewTpl.htm', 'views/PostCategories', 'views/PostInterviews', 'views/ValidationView', 'collections/CategoryCollection', 'collections/InterviewCollection', 'editor', 'backbone', 'stickit', 'mediator', 'bootstrap', 'jqueryUi'], function(writePostTpl, postInterviewTpl, PostCategories, PostInterviews, ValidationView, CategoryCollection, InterviewCollection) {
     var WritePostPage;
     return WritePostPage = (function(_super) {
       __extends(WritePostPage, _super);
@@ -27,6 +27,8 @@
       WritePostPage.prototype.tagName = 'section';
 
       WritePostPage.prototype.template = _.template(writePostTpl);
+
+      WritePostPage.prototype.interviewsTemplate = _.template(postInterviewTpl);
 
       WritePostPage.prototype.initialize = function(options) {
         this.getDefaultInterview(options.id);
@@ -113,7 +115,7 @@
         this.hideErrors();
         description = this.getDescription();
         this.model.set({
-          'text': this.postInterviews.createFullText(),
+          'text': this.createFullText(),
           'category': this.postCategories.checkedCategories(),
           'description': description
         });
@@ -122,6 +124,27 @@
         } else {
           return this.showErrors(this.model.validationError);
         }
+      };
+
+      WritePostPage.prototype.createFullText = function() {
+        var fullTextContainer;
+        fullTextContainer = $('<div></div>');
+        $('#questionsList > .ui-sortable > li').each((function(_this) {
+          return function(iterator, item) {
+            return fullTextContainer.append(_this.getText(iterator, item));
+          };
+        })(this));
+        return fullTextContainer.html();
+      };
+
+      WritePostPage.prototype.getText = function(iterator, item) {
+        var text;
+        text = $(item).find('.redactor_editor').text().length ? $(item).find('.redactor_editor').html() : 'Пользователь не ответил на этот вопрос';
+        return this.interviewsTemplate({
+          'id': iterator,
+          'text': text,
+          'question': $(item).find('.a-quertion').html()
+        });
       };
 
       WritePostPage.prototype.getDescription = function() {
@@ -135,9 +158,16 @@
       WritePostPage.prototype.sendPostData = function() {
         return $.post('/api/post/savePost', {
           postData: this.model.toJSON()
-        }, function(data) {
-          return Backbone.Mediator.publish('post:submitted', data.postId);
-        });
+        }, (function(_this) {
+          return function(data) {
+            return _this.changeLocation(data);
+          };
+        })(this));
+      };
+
+      WritePostPage.prototype.changeLocation = function(data) {
+        window.location = "#/post/" + data.postId + "/";
+        return window.location.reload(true);
       };
 
       WritePostPage.prototype.showErrors = function(errors) {

@@ -23,7 +23,7 @@
             if (typeof (userModel != null ? userModel.get('id') : void 0) === 'number') {
               return _this.createLoginHeader();
             } else {
-              return _this.createLogedHeader();
+              return _this.createLoggedHeader();
             }
           };
         })(this));
@@ -31,20 +31,24 @@
       };
 
       HeaderRegionView.prototype.createLoginHeader = function() {
+        var headerLogged;
+        headerLogged = new HeaderLoggedView({
+          model: userModel,
+          el: this.userNav
+        });
         if (this.headerLogedView == null) {
-          this.headerLogedView = new HeaderLoggedView({
-            model: userModel,
-            el: this.userNav
-          });
+          this.headerLogedView = headerLogged;
         } else {
           this.headerLogedView.delegateEvents();
         }
         return this.userNav.addClass('log').empty().append(this.headerLogedView.render().$el);
       };
 
-      HeaderRegionView.prototype.createLogedHeader = function() {
+      HeaderRegionView.prototype.createLoggedHeader = function() {
+        var headerLogin;
+        headerLogin = new HeaderLoginView();
         if (this.headerLoginView == null) {
-          this.headerLoginView = new HeaderLoginView();
+          this.headerLoginView = headerLogin;
         } else {
           this.headerLoginView.delegateEvents();
         }

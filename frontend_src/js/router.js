@@ -18,20 +18,26 @@
         '*other': 'undefinedRoute'
       },
       initialize: function() {
-        Backbone.history.start({});
-        Backbone.Mediator.subscribe('post:submitted', this.loadPost, this);
+        Backbone.history.start();
+        return this.setHandlers();
+      },
+      setHandlers: function() {
         return $(document).on('click', 'a[href^="/"]', (function(_this) {
           return function(event) {
-            var url;
-            if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
-              event.preventDefault();
-              url = $(event.currentTarget).attr('href').replace(/^\//, '');
-              return _this.navigate(url, {
-                trigger: true
-              });
-            }
+            return _this.isClicked(event);
           };
         })(this));
+      },
+      isClicked: function(event) {
+        if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+          return this.linkClicked(event);
+        }
+      },
+      linkClicked: function(event) {
+        event.preventDefault();
+        return this.navigate($(event.currentTarget).attr('href').replace(/^\//, ''), {
+          trigger: true
+        });
       },
       index: function() {
         return Controller.index();
@@ -42,7 +48,7 @@
       newPost: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (typeof Window.config.userId === "number") {
+            if (_this.isUser()) {
               return Controller.newPost(id);
             } else {
               return _this.navigate('#/404');
@@ -56,7 +62,7 @@
       editPost: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.admin || typeof Window.config.userId === "number") {
+            if (Window.config.admin || _this.isUser()) {
               return Controller.editPost(id);
             } else {
               return _this.navigate('#/404');
@@ -74,10 +80,10 @@
       registerSpeaker: function() {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (typeof Window.config.userId === "number") {
-              return _this.navigate('#/404');
-            } else {
+            if (!_this.isUser()) {
               return Controller.register();
+            } else {
+              return _this.navigate('#/404');
             }
           };
         })(this));
@@ -92,7 +98,7 @@
       editSpeaker: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (typeof Window.config.userId === "number") {
+            if (_this.isUser()) {
               return Controller.editSpeaker(id);
             } else {
               return _this.navigate('#/404');
@@ -103,7 +109,7 @@
       timeline: function() {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (typeof Window.config.userId === "number") {
+            if (_this.isUser()) {
               return Controller.timeline();
             } else {
               return _this.navigate('#/404');
@@ -125,10 +131,8 @@
           };
         })(this));
       },
-      loadPost: function(id) {
-        return this.navigate("#/post/" + id, {
-          trigger: true
-        });
+      isUser: function() {
+        return typeof Window.config.userId === "number";
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

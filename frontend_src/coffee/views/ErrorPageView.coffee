@@ -3,17 +3,15 @@ define(
     'text!templates/errorPageTpl.htm'
     'backbone'
   ]
-(
-  errorPageTpl
-) ->
-  Backbone.View.extend({
-    tagName: 'section'
+  (
+    errorPageTpl
+  ) ->
+    class ErrorPageView extends Backbone.View
+      tagName: 'section'
 
-    template: _.template(errorPageTpl)
-      
-    render: ->
-      @$el.append(@template())
-      @
+      template: _.template(errorPageTpl)
 
-  })
+      render: ->
+        @$el.append(@template())
+        @
 )

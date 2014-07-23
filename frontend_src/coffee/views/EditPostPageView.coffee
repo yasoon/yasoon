@@ -71,6 +71,10 @@ define(
 
       updatePost: (event) ->
         event.preventDefault()
-        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories()})
-        $.post('/api/post/update', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
+        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories()})
+        $.post('/api/post/update', {postData: @model.toJSON()}, (data) =>  @changeLocation(data))
+
+      changeLocation: (data) ->
+        window.location = "#/post/#{data.postId}/"
+        window.location.reload(true)
 )

@@ -64,7 +64,7 @@ class IndexController {
     </div>
     <footer>
         <div class="inside">
-            <div class="left aus">© 2013 yasoon</div>
+            <div class="left aus">© 2013-2015 yasoon</div>
             <nav>
                 <a href="/#/about">О нас</a>
                 <a href="/#/digest">Дайджест</a>

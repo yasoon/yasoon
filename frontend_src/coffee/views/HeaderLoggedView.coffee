@@ -33,11 +33,7 @@ define(
           followedPosts = parseInt(timeline[0].posts_timeline_count)
           newQuestions = parseInt(questions[0].result.length)
           timeline = followedAnswers + noFollowedAnswers + followedPosts
-          @model.set({
-            'timeline': timeline + newQuestions,
-            'timeline_answers': newQuestions,
-            'timeline_posts': timeline
-          })
+          @model.set({'timeline': timeline + newQuestions, 'timeline_answers': newQuestions, 'timeline_posts': timeline})
         )
 
       render: ->

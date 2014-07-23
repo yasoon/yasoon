@@ -21,28 +21,17 @@ define(
         @$el.empty().append(@template())
         @userNav = @$('.my-nav')
         userModel.deferred.done( =>
-          if typeof userModel?.get('id') is 'number'
-            @createLoginHeader()
-          else
-            @createLogedHeader()
+          if typeof userModel?.get('id') is 'number' then @createLoginHeader() else @createLoggedHeader()
         )
         @
 
       createLoginHeader: () ->
-        if not @headerLogedView?
-          @headerLogedView = new HeaderLoggedView({
-            model: userModel
-            el: @userNav
-          })
-        else
-          @headerLogedView.delegateEvents()
+        headerLogged = new HeaderLoggedView({model: userModel, el: @userNav})
+        if not @headerLogedView? then @headerLogedView = headerLogged else @headerLogedView.delegateEvents()
         @userNav.addClass('log').empty().append(@headerLogedView.render().$el)
 
-      createLogedHeader: () ->
-        if not @headerLoginView?
-          @headerLoginView = new HeaderLoginView()
-        else
-          @headerLoginView.delegateEvents()
+      createLoggedHeader: () ->
+        headerLogin= new HeaderLoginView()
+        if not @headerLoginView? then @headerLoginView = headerLogin else @headerLoginView.delegateEvents()
         @userNav.removeClass().empty().append(@headerLoginView.render().$el)
-
 )

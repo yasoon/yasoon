@@ -65,5 +65,4 @@ define(
       loadUser: ->
         window.location = "/#/speaker/#{@model.get('id')}/posts/"
         window.location.reload(yes)
-
 )

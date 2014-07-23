@@ -1,13 +1,11 @@
 define(
   [
-    'text!templates/postInterviewTpl.htm'
     'views/InterviewView'
     'views/ValidationView'
     'backbone'
     'stickit'
   ]
   (
-    postInterviewTpl
     InterviewView
     ValidationView
   ) ->
@@ -15,8 +13,6 @@ define(
       tagName: 'ul'
 
       className: 'list-unstyled'
-
-      template: _.template(postInterviewTpl)
 
       render: ->
         @collection.each((interview, iterator) => @addInterview(interview, iterator))
@@ -29,9 +25,4 @@ define(
       addOne: (interview) ->
         interview = new InterviewView({model: interview})
         @$el.append(interview.render().$el)
-
-      createFullText: ->
-        fullTextContainer = $('<div></div>')
-        _.each(@collection.models, (model) => if model.get('text')? then fullTextContainer.append(@template(model.toJSON())))
-        fullTextContainer.html()
 )

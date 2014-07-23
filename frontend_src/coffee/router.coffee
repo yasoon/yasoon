@@ -28,21 +28,18 @@ define([
       }
 
       initialize: ->
-        Backbone.history.start({
-        # pushState: true
-        })
+        Backbone.history.start()
+        @setHandlers()
 
-        Backbone.Mediator.subscribe('post:submitted', this.loadPost, this)
+      setHandlers: ->
+        $(document).on('click', 'a[href^="/"]', (event) => @isClicked(event))
 
-        $(document).on('click', 'a[href^="/"]', (event) =>
-          if not event.altKey and
-          not event.ctrlKey and
-          not event.metaKey and
-          not event.shiftKey
-            event.preventDefault()
-            url = $(event.currentTarget).attr('href').replace(/^\//, '')
-            @navigate(url, {trigger: yes})
-        )
+      isClicked: (event) ->
+        if not event.altKey and not event.ctrlKey and not event.metaKey and not event.shiftKey then @linkClicked(event)
+
+      linkClicked: (event) ->
+        event.preventDefault()
+        @navigate($(event.currentTarget).attr('href').replace(/^\//, ''), {trigger: yes})
 
       index: ->
         Controller.index()
@@ -51,74 +48,40 @@ define([
         Controller.posts(category, sort)
 
       newPost: (id) ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-              Controller.newPost(id)
-            else
-              @navigate('#/404')
-        )
+        userModel.deferred.done( => if @isUser() then Controller.newPost(id) else @navigate('#/404'))
+
       showPost: (id) ->
         Controller.post(id)
 
       editPost: (id) ->
-        userModel.deferred.done( =>
-          if Window.config.admin or typeof Window.config.userId is "number"
-            Controller.editPost(id)
-          else
-            @navigate('#/404')
-        )
+        userModel.deferred.done( => if Window.config.admin or @isUser() then Controller.editPost(id) else @navigate('#/404'))
 
       speakers: (category) ->
-        userModel.deferred.done( =>
-          Controller.speakers(category)
-        )
+        userModel.deferred.done( => Controller.speakers(category))
 
       registerSpeaker: ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-            @navigate('#/404')
-          else
-            Controller.register()
-        )
+        userModel.deferred.done( => if not @isUser() then Controller.register() else @navigate('#/404'))
 
       showSpeaker: (id, page) ->
-        userModel.deferred.done( =>
-          Controller.speaker(id, page)
-        )
+        userModel.deferred.done( => Controller.speaker(id, page))
 
       editSpeaker: (id) ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-            Controller.editSpeaker(id)
-          else
-            @navigate('#/404')
-        )
+        userModel.deferred.done( => if @isUser() then Controller.editSpeaker(id) else @navigate('#/404'))
 
       timeline: ->
-        userModel.deferred.done( =>
-          if typeof Window.config.userId is "number"
-            Controller.timeline()
-          else
-            @navigate('#/404')
-        )
+        userModel.deferred.done( => if @isUser() then Controller.timeline() else @navigate('#/404'))
 
       about: ->
         Controller.about()
 
       adminMainPage: ->
-        userModel.deferred.done( =>
-          if Window.config.admin
-            AdminController.index()
-          else
-            @navigate('#/404')
-        )
+        userModel.deferred.done( => if Window.config.admin then AdminController.index() else @navigate('#/404'))
 
-      loadPost: (id) ->
-        @navigate("#/post/#{id}", {trigger: yes})
+      isUser: ->
+        typeof Window.config.userId is "number"
 
       undefinedRoute: ->
         Controller.undefinedRoute()
-
     })
     return new AppRouter()
 )

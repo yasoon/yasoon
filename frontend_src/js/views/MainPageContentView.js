@@ -1,20 +1,35 @@
 (function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
   define(['text!templates/mainPageNavTpl.htm', 'views/MainPageHistoryView', 'views/EmptyView', 'views/PostsPreviews', 'models/MainPageHistoryModel', 'collections/PostsPreviewsList', 'backbone'], function(mainPageNavTpl, MainPageHistoryView, EmptyView, PostsPreviews, MainPageHistoryModel, PostsPreviewsList) {
-    return Backbone.View.extend({
-      className: 'main-layout',
-      tagName: 'section',
-      events: function() {
+    var MainPageContentView;
+    return MainPageContentView = (function(_super) {
+      __extends(MainPageContentView, _super);
+
+      function MainPageContentView() {
+        return MainPageContentView.__super__.constructor.apply(this, arguments);
+      }
+
+      MainPageContentView.prototype.className = 'main-layout';
+
+      MainPageContentView.prototype.tagName = 'section';
+
+      MainPageContentView.prototype.events = function() {
         return {
           'click nav.navigate a': 'changeMainPageView'
         };
-      },
-      template: _.template(mainPageNavTpl),
-      initialize: function() {
+      };
+
+      MainPageContentView.prototype.template = _.template(mainPageNavTpl);
+
+      MainPageContentView.prototype.initialize = function() {
         this.createMainPageHistory();
-        $(window).off('scroll.app:main').on('scroll.app:main', this.fixedPostionOnScroll);
+        $(window).off('scroll.app:main').on('scroll.app:main', this.fixedPositionOnScroll);
         return this;
-      },
-      fixedPostionOnScroll: function(event) {
+      };
+
+      MainPageContentView.prototype.fixedPositionOnScroll = function(event) {
         var layoutOffsetTop, pageOffsetTop;
         pageOffsetTop = $(event.currentTarget).scrollTop();
         layoutOffsetTop = $('.main-layout, .page-layout').offset().top;
@@ -23,48 +38,69 @@
         } else {
           return $('.navigate, .postinfo').removeClass('fixed');
         }
-      },
-      createMainPageHistory: function() {
+      };
+
+      MainPageContentView.prototype.createMainPageHistory = function() {
         return $.get('/api/post/get_daystory', (function(_this) {
           return function(data) {
             if (data.error === 'true') {
-              if (_this.mainPageHistoryView == null) {
-                _this.emptyView = new EmptyView({
-                  message: data.errorText
-                });
-              } else {
-                _this.emptyView.delegateEvents();
-              }
-              return _this.$el.find('.mainPage-content').append(_this.emptyView.render().$el);
+              return _this.emptyDayStory(data);
             } else {
-              if (_this.emptyView == null) {
-                _this.mainPageHistoryView = new MainPageHistoryView({
-                  model: new MainPageHistoryModel(data)
-                });
-              } else {
-                _this.mainPageHistoryView.delegateEvents();
-              }
-              return _this.$el.find('.mainPage-content').append(_this.mainPageHistoryView.render().$el);
+              return _this.dayStory(data);
             }
           };
-        })(this), 'json');
-      },
-      createMainPageStories: function() {
+        })(this));
+      };
+
+      MainPageContentView.prototype.emptyDayStory = function(data) {
+        var emptyView;
+        emptyView = new EmptyView({
+          message: data.errorText
+        });
+        if (this.mainPageHistoryView == null) {
+          this.emptyView = emptyView;
+        } else {
+          this.emptyView.delegateEvents();
+        }
+        return this.$el.find('.mainPage-content').append(this.emptyView.render().$el);
+      };
+
+      MainPageContentView.prototype.dayStory = function(data) {
+        var dayStory;
+        dayStory = new MainPageHistoryView({
+          model: new MainPageHistoryModel(data)
+        });
+        if (this.mainPageHistoryView == null) {
+          this.mainPageHistoryView = dayStory;
+        } else {
+          this.mainPageHistoryView.delegateEvents();
+        }
+        return this.$el.find('.mainPage-content').append(this.mainPageHistoryView.render().$el);
+      };
+
+      MainPageContentView.prototype.createMainPageStories = function() {
         return $.get('/api/post/get_best_posts', (function(_this) {
           return function(data) {
-            if (_this.postsPreviews == null) {
-              _this.postsPreviews = new PostsPreviews({
-                collection: new PostsPreviewsList(data)
-              });
-            } else {
-              _this.postsPreviews.delegateEvents();
-            }
-            return _this.$el.find('.mainPage-content').append(_this.postsPreviews.render().$el);
+            return _this.postPreviews(data);
           };
-        })(this), 'json');
-      },
-      changeMainPageView: function(event) {
-        var $mainLayout, $this, tab;
+        })(this));
+      };
+
+      MainPageContentView.prototype.postPreviews = function(data) {
+        var postPreviews;
+        postPreviews = new PostsPreviews({
+          collection: new PostsPreviewsList(data)
+        });
+        if (this.postsPreviews == null) {
+          postPreviews;
+        } else {
+          this.postsPreviews.delegateEvents();
+        }
+        return this.$el.find('.mainPage-content').append(this.postsPreviews.render().$el);
+      };
+
+      MainPageContentView.prototype.changeMainPageView = function(event) {
+        var $mainLayout, $this;
         event.preventDefault();
         $this = $(event.currentTarget);
         $mainLayout = $('.main-layout');
@@ -74,15 +110,18 @@
         if (!$this.hasClass('active')) {
           $this.addClass('active').siblings().removeClass('active');
           this.$el.find('.mainPage-content').empty();
-          tab = $this.attr('href').replace('#', '');
-          return this[tab].call(this);
+          return this[$this.attr('href').replace('#', '')].call(this);
         }
-      },
-      render: function() {
+      };
+
+      MainPageContentView.prototype.render = function() {
         this.$el.empty().append(this.template());
         return this;
-      }
-    });
+      };
+
+      return MainPageContentView;
+
+    })(Backbone.View);
   });
 
 }).call(this);

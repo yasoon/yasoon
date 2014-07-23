@@ -1,6 +1,7 @@
 define(
   [
     'text!templates/writePostFormTpl.htm'
+    'text!templates/postInterviewTpl.htm'
     'views/PostCategories'
     'views/PostInterviews'
     'views/ValidationView'
@@ -15,6 +16,7 @@ define(
   ]
   (
     writePostTpl
+    postInterviewTpl
     PostCategories
     PostInterviews
     ValidationView
@@ -32,6 +34,8 @@ define(
       tagName:                      'section'
 
       template:                     _.template(writePostTpl)
+
+      interviewsTemplate:           _.template(postInterviewTpl)
 
       initialize: (options) ->
         @getDefaultInterview(options.id)
@@ -82,14 +86,27 @@ define(
         event.preventDefault()
         @hideErrors()
         description = @getDescription()
-        @model.set({'text': @postInterviews.createFullText(), 'category': @postCategories.checkedCategories(), 'description': description})
+        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories(), 'description': description})
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
+
+      createFullText: ->
+        fullTextContainer = $('<div></div>')
+        $('#questionsList > .ui-sortable > li').each((iterator, item) => fullTextContainer.append(@getText(iterator, item)))
+        fullTextContainer.html()
+
+      getText: (iterator, item) ->
+        text = if $(item).find('.redactor_editor').text().length then $(item).find('.redactor_editor').html() else 'Пользователь не ответил на этот вопрос'
+        @interviewsTemplate({'id': iterator, 'text': text, 'question': $(item).find('.a-quertion').html()})
 
       getDescription: ->
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
-        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) -> Backbone.Mediator.publish('post:submitted', data.postId))
+        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
+
+      changeLocation: (data) ->
+        window.location = "#/post/#{data.postId}/"
+        window.location.reload(true)
 
       showErrors: (errors) ->
         _.each(errors, (error) => @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error'))

@@ -8,93 +8,69 @@ define(
     'collections/PostsPreviewsList'
     'backbone'
   ]
-(
-  mainPageNavTpl
-  MainPageHistoryView
-  EmptyView
-  PostsPreviews
-  MainPageHistoryModel
-  PostsPreviewsList
-) ->
-  Backbone.View.extend({
-    className: 'main-layout'
+  (
+    mainPageNavTpl
+    MainPageHistoryView
+    EmptyView
+    PostsPreviews
+    MainPageHistoryModel
+    PostsPreviewsList
+  ) ->
+    class MainPageContentView extends Backbone.View
+      className: 'main-layout'
 
-    tagName: 'section'
+      tagName: 'section'
 
-    events: ->
-      'click nav.navigate a': 'changeMainPageView'
+      events: ->
+        'click nav.navigate a': 'changeMainPageView'
 
-    template: _.template(mainPageNavTpl)
+      template: _.template(mainPageNavTpl)
 
-    initialize: ->
-      @createMainPageHistory()
-      $(window)
-        .off('scroll.app:main')
-        .on('scroll.app:main', @fixedPostionOnScroll)
-      @
+      initialize: ->
+        @createMainPageHistory()
+        $(window).off('scroll.app:main').on('scroll.app:main', @fixedPositionOnScroll)
+        @
 
-    fixedPostionOnScroll: (event) ->
-      pageOffsetTop = $(event.currentTarget).scrollTop()
-      layoutOffsetTop = $('.main-layout, .page-layout').offset().top
-      if layoutOffsetTop and pageOffsetTop > layoutOffsetTop
-        $('.navigate, .postinfo').addClass('fixed')
-      else
-        $('.navigate, .postinfo').removeClass('fixed')
-
-    createMainPageHistory: ->
-      $.get('/api/post/get_daystory',
-      (data) =>
-        if data.error is 'true'
-          if not @mainPageHistoryView?
-            @emptyView = new EmptyView({
-              message: data.errorText
-            })
-          else
-            @emptyView.delegateEvents()
-          @$el
-            .find('.mainPage-content')
-            .append(@emptyView.render().$el)
+      fixedPositionOnScroll: (event) ->
+        pageOffsetTop = $(event.currentTarget).scrollTop()
+        layoutOffsetTop = $('.main-layout, .page-layout').offset().top
+        if layoutOffsetTop and pageOffsetTop > layoutOffsetTop
+          $('.navigate, .postinfo').addClass('fixed')
         else
-          if not @emptyView?
-            @mainPageHistoryView = new MainPageHistoryView({
-              model: new MainPageHistoryModel(data)
-            })
-          else
-            @mainPageHistoryView.delegateEvents()
-          @$el
-            .find('.mainPage-content')
-            .append(@mainPageHistoryView.render().$el)
-      , 'json')
+          $('.navigate, .postinfo').removeClass('fixed')
 
-    createMainPageStories: ->
-      $.get('/api/post/get_best_posts',
-      (data) =>
-        if not @postsPreviews?
-          @postsPreviews = new PostsPreviews({
-            collection: new PostsPreviewsList(data)
-          })
-        else
-          @postsPreviews.delegateEvents()
-        @$el
-          .find('.mainPage-content')
-          .append(@postsPreviews.render().$el)
-      , 'json')
+      createMainPageHistory: ->
+        $.get('/api/post/get_daystory', (data) => if data.error is 'true' then @emptyDayStory(data) else  @dayStory(data))
 
-    changeMainPageView: (event) ->
-      event.preventDefault()
-      $this = $(event.currentTarget)
-      $mainLayout = $('.main-layout')
-      $("html, body").animate({
-        scrollTop: $mainLayout.offset().top
-      }, 'fast')
-      if not $this.hasClass('active')
-        $this.addClass('active').siblings().removeClass('active')
-        @$el.find('.mainPage-content').empty()
-        tab = $this.attr('href').replace('#', '')
-        @[tab].call(@)
+      emptyDayStory: (data) ->
+        emptyView = new EmptyView({message: data.errorText})
+        if not @mainPageHistoryView? then @emptyView = emptyView else @emptyView.delegateEvents()
+        @$el.find('.mainPage-content').append(@emptyView.render().$el)
 
-    render: ->
-      @$el.empty().append(@template())
-      @
-  })
+      dayStory: (data) ->
+        dayStory = new MainPageHistoryView({model: new MainPageHistoryModel(data)})
+        if not @mainPageHistoryView? then @mainPageHistoryView = dayStory else @mainPageHistoryView.delegateEvents()
+        @$el.find('.mainPage-content').append(@mainPageHistoryView.render().$el)
+
+      createMainPageStories: ->
+        $.get('/api/post/get_best_posts', (data) => @postPreviews(data))
+
+      postPreviews: (data) ->
+        postPreviews = new PostsPreviews({collection: new PostsPreviewsList(data)})
+        if not @postsPreviews? then postPreviews else @postsPreviews.delegateEvents()
+        @$el.find('.mainPage-content').append(@postsPreviews.render().$el)
+
+      changeMainPageView: (event) ->
+        event.preventDefault()
+        $this = $(event.currentTarget)
+        $mainLayout = $('.main-layout')
+        $("html, body").animate({scrollTop: $mainLayout.offset().top}, 'fast')
+        if not $this.hasClass('active')
+          $this.addClass('active').siblings().removeClass('active')
+          @$el.find('.mainPage-content').empty()
+          @[$this.attr('href').replace('#', '')].call(@)
+
+      render: ->
+        @$el.empty().append(@template())
+        @
 )
