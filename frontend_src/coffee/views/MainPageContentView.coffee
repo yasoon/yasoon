@@ -57,7 +57,7 @@ define(
 
       postPreviews: (data) ->
         postPreviews = new PostsPreviews({collection: new PostsPreviewsList(data)})
-        if not @postsPreviews? then postPreviews else @postsPreviews.delegateEvents()
+        if not @postsPreviews? then @postsPreviews = postPreviews else @postsPreviews.delegateEvents()
         @$el.find('.mainPage-content').append(@postsPreviews.render().$el)
 
       changeMainPageView: (event) ->

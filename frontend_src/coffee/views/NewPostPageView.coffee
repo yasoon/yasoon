@@ -91,12 +91,11 @@ define(
 
       createFullText: ->
         fullTextContainer = $('<div></div>')
-        $('#questionsList > .ui-sortable > li').each((iterator, item) => fullTextContainer.append(@getText(iterator, item)))
+        $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then fullTextContainer.append(@getText(iterator, item)))
         fullTextContainer.html()
 
       getText: (iterator, item) ->
-        text = if $(item).find('.redactor_editor').text().length then $(item).find('.redactor_editor').html() else 'Пользователь не ответил на этот вопрос'
-        @interviewsTemplate({'id': iterator, 'text': text, 'question': $(item).find('.a-quertion').html()})
+        @interviewsTemplate({'id': iterator, 'text': $(item).find('.redactor_editor').html(), 'question': $(item).find('.a-quertion').html()})
 
       getDescription: ->
         if @model.get('description')? then @model.get('description') else ''

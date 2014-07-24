@@ -131,18 +131,18 @@
         fullTextContainer = $('<div></div>');
         $('#questionsList > .ui-sortable > li').each((function(_this) {
           return function(iterator, item) {
-            return fullTextContainer.append(_this.getText(iterator, item));
+            if ($(item).find('.redactor_editor').text().length) {
+              return fullTextContainer.append(_this.getText(iterator, item));
+            }
           };
         })(this));
         return fullTextContainer.html();
       };
 
       WritePostPage.prototype.getText = function(iterator, item) {
-        var text;
-        text = $(item).find('.redactor_editor').text().length ? $(item).find('.redactor_editor').html() : 'Пользователь не ответил на этот вопрос';
         return this.interviewsTemplate({
           'id': iterator,
-          'text': text,
+          'text': $(item).find('.redactor_editor').html(),
           'question': $(item).find('.a-quertion').html()
         });
       };

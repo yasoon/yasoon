@@ -92,7 +92,7 @@
           collection: new PostsPreviewsList(data)
         });
         if (this.postsPreviews == null) {
-          postPreviews;
+          this.postsPreviews = postPreviews;
         } else {
           this.postsPreviews.delegateEvents();
         }
