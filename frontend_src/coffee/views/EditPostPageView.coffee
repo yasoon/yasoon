@@ -43,6 +43,7 @@ define(
 
       setPostData: (data) ->
         @model.set(data)
+        @model.set('category', @model.get('tags'))
         text = []
         $(@model.get('text')).each( (iterator) -> text.push({'id': iterator, 'text': $(@).find('.question_content').html(), 'question': $(@).find('.questionTitle').html()}))
         @model.set('formattedText', text)
@@ -52,7 +53,8 @@ define(
         @checkCategories()
 
       checkCategories: ->
-        _.each(@model.get('tags'), (item) => @$('input:checkbox').eq(item - 1).prop('checked', yes))
+        console.log(@model.get('category'))
+        _.each(@model.get('category'), (item) => @$('input:checkbox').eq(item - 1).prop('checked', yes))        
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('formattedText'))

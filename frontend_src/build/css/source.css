@@ -6370,8 +6370,7 @@ footer nav {
   width: 75%;
 }
 .navigate.fixed,
-.left-side.fixed,
-.postinfo.fixed {
+.left-side.fixed {
   position: fixed;
   top: 0;
   z-index: 10;

@@ -3330,7 +3330,7 @@ var RLANG = {
 				var html = '';
 				if (link !== true)
 				{
-					html = '<p><img src="' + json.filelink + '" /></p>';
+					html = '<p><img src="/web/' + json.filelink + '" /></p>';
 				}
 				else
 				{

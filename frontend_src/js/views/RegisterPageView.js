@@ -99,7 +99,7 @@
       };
 
       Register.prototype.changeImage = function() {
-        return $('.file_upload_block, header').find('img').attr('src', "/upload/avatar/" + (this.model.get('img')));
+        return $('.file_upload_block, header').find('img').attr('src', "/web/upload/avatar/" + (this.model.get('img')));
       };
 
       Register.prototype.goToStep = function(event) {
@@ -137,7 +137,7 @@
         return $.post('/api/author/register', this.model.toJSON(), (function(_this) {
           return function(data) {
             if (data.error === false) {
-              return _this.registered();
+              return _this.registered(data);
             } else {
               return _this.existedEmail(data);
             }
@@ -145,7 +145,8 @@
         })(this));
       };
 
-      Register.prototype.registered = function() {
+      Register.prototype.registered = function(data) {
+        this.model.set('id', data.userId);
         this.showStep(1);
         return this.setModels();
       };

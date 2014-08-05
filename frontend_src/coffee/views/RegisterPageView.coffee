@@ -33,7 +33,6 @@ define(
 
       className:                'page-layout m-page'
       tagName:                  'section'
-
       template:                 _.template(registerTpl)
 
       initialize: ->
@@ -82,7 +81,7 @@ define(
         )
 
       changeImage: ->
-        $('.file_upload_block, header').find('img').attr('src', "/upload/avatar/#{@model.get('img')}")
+        $('.file_upload_block, header').find('img').attr('src', "/web/upload/avatar/#{@model.get('img')}")
 
       goToStep: (event) ->
         $this = $(event.currentTarget)
@@ -103,9 +102,10 @@ define(
         @showErrors(@model.validationError)
 
       register: ->
-        $.post('/api/author/register', @model.toJSON(), (data) => if data.error is no then @registered() else @existedEmail(data))
+        $.post('/api/author/register', @model.toJSON(), (data) => if data.error is no then @registered(data) else @existedEmail(data))
 
-      registered: ->
+      registered: (data) ->
+        @model.set('id', data.userId)
         @showStep(1)
         @setModels()
 

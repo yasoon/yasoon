@@ -173,9 +173,24 @@
       WritePostPage.prototype.showErrors = function(errors) {
         return _.each(errors, (function(_this) {
           return function(error) {
-            return _this.$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error');
+            return _this.showError(error);
           };
         })(this));
+      };
+
+      WritePostPage.prototype.showError = function(error) {
+        this.$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error');
+        return this.checkPosition();
+      };
+
+      WritePostPage.prototype.checkPosition = function() {
+        var topPosition;
+        topPosition = this.$el.find('.has-error').offset().top;
+        if (topPosition < $(window).scrollTop()) {
+          return $("html, body").animate({
+            scrollTop: topPosition - 20
+          }, '500', 'swing');
+        }
       };
 
       WritePostPage.prototype.hideErrors = function() {

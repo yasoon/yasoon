@@ -108,7 +108,15 @@ define(
         window.location.reload(true)
 
       showErrors: (errors) ->
-        _.each(errors, (error) => @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error'))
+        _.each(errors, (error) => @showError(error))
+
+      showError: (error) ->
+        @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error')
+        @checkPosition()
+
+      checkPosition: ->
+        topPosition = @$el.find('.has-error').offset().top
+        if topPosition < $(window).scrollTop() then $("html, body").animate({scrollTop: topPosition - 20}, '500', 'swing');
 
       hideErrors: ->
         @$('.di').removeClass('has-error').addClass('has-success')

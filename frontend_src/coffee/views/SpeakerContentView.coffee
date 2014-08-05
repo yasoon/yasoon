@@ -31,7 +31,7 @@ define(
 
       answersPage: ->
         if not @isAuthor() then @createQuestionForm()
-        @getAnswers()
+        if @model.get('answers').length then @getAnswers() else if @model.get('posts').length then @emptyQuestions(50) else @emptyQuestions(48)
 
       setHandlers: ->
         @listenTo(@model, 'change:speakerPosts', @createPosts)
@@ -42,7 +42,7 @@ define(
 
       postsPage: ->
         if @isAuthor() then @writeButton()
-        @getPosts()
+        if @model.get('posts').length then @getPosts() else @emptyQuestions(34)
 
       writeButton: ->
         if not @writePostButton? then @writePostButton = new SpeakerWritePostButtonView() else @writePostButton.delegateEvents()
@@ -72,7 +72,7 @@ define(
 
       createAskedList: ->
         if @speakerAnswers.asked().length then @askedQuestions()
-        if @speakerAnswers.answered().length then @answeredQuestions() else if @model.get('posts').length then @emptyQuestions(50) else @emptyQuestions(48)
+        if @speakerAnswers.answered().length then @answeredQuestions()
 
       askedQuestions: ->
         @$el.prepend(@speakerAnswers.renderQuestion().$el)

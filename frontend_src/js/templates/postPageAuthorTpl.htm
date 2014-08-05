@@ -2,7 +2,7 @@
 	<% if(avatarImg === null) { %>
 		<img src="/frontend/img/noAvatar.jpg" alt="<%= name %>">
 	<% } else { %>
-		<img src="/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
+		<img src="/web/upload/avatar/<%= avatarImg %>" alt="<%= name %>">
 	<% } %>
 	<h4><a href="#/speaker/<%= id %>/posts" class="usr-name"><%= name %></a></h4>
 	<p class="u-description"><%= interviewCaption %></p>
