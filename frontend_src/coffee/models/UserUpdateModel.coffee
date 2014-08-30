@@ -19,16 +19,17 @@ define(
             message: 'Поле не может быть пустым'
           )
 
-        if not attrs.email
-          errors.push(
-            name: 'email'
-            message: 'Поле не может быть пустым'
-          )
-        else if not emailTest.test(attrs.email)
-          errors.push(
-            name: 'email'
-            message: 'Неверный формат email'
-          )
+        if typeof Window.config.regFrom is "undefined" or parseInt(Window.config.regFrom) is 0
+          if not attrs.email
+            errors.push(
+              name: 'email'
+              message: 'Поле не может быть пустым'
+            )
+          else if not emailTest.test(attrs.email)
+            errors.push(
+              name: 'email'
+              message: 'Неверный формат email'
+            )
 
         if not attrs.password?.length > passwordMaxLength
           errors.push(

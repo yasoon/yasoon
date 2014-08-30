@@ -6242,7 +6242,7 @@ header#header nav a:hover {
 }
 .nav-cat a {
   display: block;
-  color: #c3c3c3;
+  color: #7a7a7a;
   padding: 6px 10px;
   font-family: 'MuseoSansCyrl-100', Arial;
   font-size: 14px;
@@ -6526,7 +6526,7 @@ blockquote {
 .like-this span,
 .q-post span {
   display: block;
-  color: #ddd;
+  color: #7a7a7a;
 }
 .main-layout {
   padding-bottom: 20px;

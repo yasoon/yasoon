@@ -52,15 +52,15 @@
             <span class="help-block"></span>
         </div>
         <div class="hr di"></div>
-        <% if (reg) { %>
-            <div class="row">
-                <div class="col-sm-6">
-                    <button type="button" class="regbtn di btn nav prev" data-count="1">Вернуться назад</button>
-                </div>
-                <div class="col-sm-6">
-                    <button type="button" class="regbtn di btn nav next" data-count="1">Вперед</button>
-                </div>
+        <% if (!reg) { %>
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="button" class="regbtn di btn nav prev" data-count="1">Вернуться назад</button>
             </div>
+            <div class="col-sm-6">
+                <button type="button" class="regbtn di btn nav next" data-count="1">Вперед</button>
+            </div>
+        </div>
         <% } else { %>
             <div class="row">
                 <div class="col-sm-12">

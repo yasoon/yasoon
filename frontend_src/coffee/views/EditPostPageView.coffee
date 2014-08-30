@@ -29,7 +29,7 @@ define(
 
       events: ->
         'click :submit': 'updatePost'
-        'click .js-delete': 'deletePost'
+        'click .js-delete': 'deleteCheck'
 
       initialize: (options) ->
         @options = options || {}
@@ -67,8 +67,12 @@ define(
         @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
 
-      deletePost: (event) ->
+      deleteCheck: (event) ->
         event.preventDefault()
+        check = window.confirm(_.getContent(68))
+        if check then @deletePost()
+
+      deletePost: ->
         $.post('/api/post/deletePost', {post_id: @options.id}, () => window.location = "/#/speaker/#{@model.get('authorId')}/posts/")
 
       updatePost: (event) ->

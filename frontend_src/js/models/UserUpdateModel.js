@@ -23,16 +23,18 @@
             message: 'Поле не может быть пустым'
           });
         }
-        if (!attrs.email) {
-          errors.push({
-            name: 'email',
-            message: 'Поле не может быть пустым'
-          });
-        } else if (!emailTest.test(attrs.email)) {
-          errors.push({
-            name: 'email',
-            message: 'Неверный формат email'
-          });
+        if (typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0) {
+          if (!attrs.email) {
+            errors.push({
+              name: 'email',
+              message: 'Поле не может быть пустым'
+            });
+          } else if (!emailTest.test(attrs.email)) {
+            errors.push({
+              name: 'email',
+              message: 'Неверный формат email'
+            });
+          }
         }
         if (!((_ref = attrs.password) != null ? _ref.length : void 0) > passwordMaxLength) {
           errors.push({

@@ -60,6 +60,6 @@ define(
         @speakersCollectionView = new SpeakersCollectionView({category: @model.get('category'), description: @model.get('description'), collection: speakersCollection})
 
       emptyList: ->
-        if not @emptyView? then @emptyView = new EmptyView({message: _.getContent(33)}) else @emptyView.delegateEvents()
+        if not @emptyView? then @emptyView = new EmptyView({message: _.getContent(35)}) else @emptyView.delegateEvents()
         @$el.append(@emptyView.render().$el)
 )

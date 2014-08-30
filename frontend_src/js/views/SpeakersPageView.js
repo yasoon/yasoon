@@ -103,7 +103,7 @@
       SpeakersPageView.prototype.emptyList = function() {
         if (this.emptyView == null) {
           this.emptyView = new EmptyView({
-            message: _.getContent(33)
+            message: _.getContent(35)
           });
         } else {
           this.emptyView.delegateEvents();

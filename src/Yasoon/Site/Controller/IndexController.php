@@ -51,7 +51,7 @@ class IndexController {
     <meta name="viewport" content="width=device-width, initial-scale=0.6, user-scalable=yes" />
     <link href="/frontend/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="/frontend/css/source.css" type="text/css" media="screen" />
-
+    <meta name="description" content="Создание и продвижение Вашего личного профессионального бренда.">
     <script type="text/javascript" src="/frontend/js/vendor/require.js" data-main="/frontend/js/main.min.js"></script>
 </head>
 </html>

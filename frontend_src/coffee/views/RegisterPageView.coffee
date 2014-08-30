@@ -69,16 +69,18 @@ define(
         @onRender()
 
       setImageUploader: (model) ->
-        new AjaxUpload(
-          @$('#uploadImage')[0],
-          action: '/api/author/upload_user_image'
-          name: 'files[]'
-          id: 'upload'
-          createInput: ->
-          onComplete: (file, data) ->
-            ret = JSON.parse($(data).text())
-            if ret.file_name? then model.set('img', ret.file_name)
-        )
+        reg = typeof Window.config.regFrom is "undefined" or parseInt(Window.config.regFrom) is 0
+        if reg
+          new AjaxUpload(
+            @$('#uploadImage')[0],
+            action: '/api/author/upload_user_image'
+            name: 'files[]'
+            id: 'upload'
+            createInput: ->
+            onComplete: (file, data) ->
+              ret = JSON.parse($(data).text())
+              if ret.file_name? then model.set('img', ret.file_name)
+          )
 
       changeImage: ->
         $('.file_upload_block, header').find('img').attr('src', "/web/upload/avatar/#{@model.get('img')}")

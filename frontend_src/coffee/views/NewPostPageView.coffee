@@ -61,6 +61,7 @@ define(
 
       onRender: ->
         @createCategoryList()
+        @$('input:text:visible:first').focus()
 
       createCategoryList: ->
         @model.set('categoriesList', Window.config.category)

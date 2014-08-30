@@ -36,10 +36,10 @@
         }
         if (this.model.get('answers').length) {
           return this.getAnswers();
-        } else if (this.model.get('posts').length) {
-          return this.emptyQuestions(50);
-        } else {
+        } else if (!this.model.get('posts').length && this.isAuthor()) {
           return this.emptyQuestions(48);
+        } else {
+          return this.emptyQuestions(50);
         }
       };
 

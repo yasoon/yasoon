@@ -31,7 +31,8 @@ define(
 
       answersPage: ->
         if not @isAuthor() then @createQuestionForm()
-        if @model.get('answers').length then @getAnswers() else if @model.get('posts').length then @emptyQuestions(50) else @emptyQuestions(48)
+#        if @model.get('answers').length then @getAnswers() else if @model.get('posts').length then @emptyQuestions(50) else @emptyQuestions(48)
+        if @model.get('answers').length then @getAnswers() else if !@model.get('posts').length and @isAuthor() then @emptyQuestions(48) else @emptyQuestions(50)
 
       setHandlers: ->
         @listenTo(@model, 'change:speakerPosts', @createPosts)

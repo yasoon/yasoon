@@ -83,19 +83,23 @@
       };
 
       Register.prototype.setImageUploader = function(model) {
-        return new AjaxUpload(this.$('#uploadImage')[0], {
-          action: '/api/author/upload_user_image',
-          name: 'files[]',
-          id: 'upload',
-          createInput: function() {},
-          onComplete: function(file, data) {
-            var ret;
-            ret = JSON.parse($(data).text());
-            if (ret.file_name != null) {
-              return model.set('img', ret.file_name);
+        var reg;
+        reg = typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0;
+        if (reg) {
+          return new AjaxUpload(this.$('#uploadImage')[0], {
+            action: '/api/author/upload_user_image',
+            name: 'files[]',
+            id: 'upload',
+            createInput: function() {},
+            onComplete: function(file, data) {
+              var ret;
+              ret = JSON.parse($(data).text());
+              if (ret.file_name != null) {
+                return model.set('img', ret.file_name);
+              }
             }
-          }
-        });
+          });
+        }
       };
 
       Register.prototype.changeImage = function() {

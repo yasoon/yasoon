@@ -24,7 +24,9 @@ define(
         .text('')
 
       symbolsCounter: (model, value) ->
-        length = model.get('maxLength') - value.length
+#        length = model.get('maxLength') - value.length
+        length = if value then model.get('maxLength') - value.length else model.get('maxLength')
+
         if @$('.counter')?
           @$('.counter').text(length)
     })

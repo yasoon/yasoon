@@ -64,7 +64,8 @@
       };
 
       WritePostPage.prototype.onRender = function() {
-        return this.createCategoryList();
+        this.createCategoryList();
+        return this.$('input:text:visible:first').focus();
       };
 
       WritePostPage.prototype.createCategoryList = function() {
