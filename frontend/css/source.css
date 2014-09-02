@@ -6481,6 +6481,23 @@ blockquote {
   width: 100%;
   box-sizing: border-box;
 }
+.like-this i,
+.q-post i {
+  background: url(../img/spr_x2.png) no-repeat 0 0;
+  background-size: 115px auto;
+  width: 49px;
+  height: 48px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -24px;
+}
+.like-this span,
+.q-post span {
+  display: block;
+  color: #7a7a7a;
+}
 .like-this {
   position: absolute;
   top: 15px;
@@ -6509,24 +6526,7 @@ blockquote {
   font-size: 16px;
 }
 .q-post i {
-  background-position: -49px 0;
-}
-.like-this i,
-.q-post i {
-  background: url(../img/spr_x2.png) no-repeat 0 0;
-  background-size: 115px auto;
-  width: 49px;
-  height: 48px;
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  margin-top: -24px;
-}
-.like-this span,
-.q-post span {
-  display: block;
-  color: #7a7a7a;
+  background-position-x: -49px;
 }
 .main-layout {
   padding-bottom: 20px;

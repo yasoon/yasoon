@@ -67,10 +67,12 @@ define(
         @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
 
+      confirmAction: ->
+        window.confirm(_.getContent(42))
+
       deleteCheck: (event) ->
         event.preventDefault()
-        check = window.confirm(_.getContent(68))
-        if check then @deletePost()
+        if @confirmAction() then @deletePost()
 
       deletePost: ->
         $.post('/api/post/deletePost', {post_id: @options.id}, () => window.location = "/#/speaker/#{@model.get('authorId')}/posts/")

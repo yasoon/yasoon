@@ -41,6 +41,13 @@
             <span class="help-block"></span>
         </div>
         <div class="hr di"></div>
+        <% if (!reg) { %>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="regbtn di btn js-update" data-count="2"><%= _.getContent(44) %></button>
+                </div>
+            </div>
+        <% } %>
     <% if (reg) { %>
         <div class="di form-group">
             <input type="text" class="form-control" placeholder="<%= _.getContent(31) %>" id="homepage" name="homepage">

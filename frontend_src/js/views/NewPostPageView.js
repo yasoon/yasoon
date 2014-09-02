@@ -13,7 +13,8 @@
 
       WritePostPage.prototype.events = function() {
         return {
-          'click :submit': 'savePost'
+          'click :submit': 'savePost',
+          'click .js-cancel': 'cancelPost'
         };
       };
 
@@ -196,6 +197,17 @@
 
       WritePostPage.prototype.hideErrors = function() {
         return this.$('.di').removeClass('has-error').addClass('has-success');
+      };
+
+      WritePostPage.prototype.confirmAction = function() {
+        return window.confirm(_.getContent(42));
+      };
+
+      WritePostPage.prototype.cancelPost = function(event) {
+        event.preventDefault();
+        if (this.confirmAction()) {
+          return window.location = "/#/speaker/" + Window.config.userId + "/posts/";
+        }
       };
 
       return WritePostPage;

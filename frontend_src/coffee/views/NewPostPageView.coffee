@@ -26,6 +26,7 @@ define(
     class WritePostPage extends ValidationView
       events: ->
         'click :submit':            'savePost'
+        'click .js-cancel':         'cancelPost'
       bindings:
         '#description':             'description'
         '#title':                   'title'
@@ -121,4 +122,11 @@ define(
 
       hideErrors: ->
         @$('.di').removeClass('has-error').addClass('has-success')
+
+      confirmAction: ->
+        window.confirm(_.getContent(42))
+
+      cancelPost: (event) ->
+        event.preventDefault()
+        if @confirmAction() then window.location = "/#/speaker/#{Window.config.userId}/posts/"
 )
