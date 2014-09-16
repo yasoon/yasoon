@@ -44,7 +44,7 @@ class IndexController {
         $category = $this->category_service->getCategoryList();
         $content = $this->content_service->getAllContent(0);
 
-        $html = $this->render_template('D:\OpenServer\domains\yasoon\src\Yasoon\Site\View\main.php', array('category' => $category, 'content' => $content));
+        $html = $this->render_template('D:\OpenServer\domains\yasoon\src\Yasoon\Site\View\index.php', array('category' => $category, 'content' => $content));
 
         return new Response($html);
     }

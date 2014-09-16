@@ -109,7 +109,6 @@ class InterviewService extends AbstractApiService {
             
             $i++;
         }
-                
         return $result;
     }
     
