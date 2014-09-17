@@ -11,7 +11,7 @@ namespace Yasoon\Site\Service;
 use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
-use Yasoon\Site\Entity\PostAnswerEntity;
+//use Yasoon\Site\Entity\PostAnswerEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
@@ -110,23 +110,6 @@ class InterviewService extends AbstractApiService {
             
             $i++;
         }
-
-        # vladyc9 code #
-
-        $questionId = 1;
-        $postId = 786;
-        $postAnswerObject = (new PostAnswerEntity())
-        ->setAnswer("New TEXT!");
-//        ->setPostId($postId)
-//        ->setQuestionId($questionId);
-
-        $postAnswerObject->setPost($this->em->getReference('Yasoon\Site\Entity\PostEntity', $postId));
-        $postAnswerObject->setQuestion($this->em->getReference('Yasoon\Site\Entity\QuestionEntity', $questionId));
-
-        $this->em->persist($postAnswerObject);
-        $this->em->flush();
-
-        # end vladyc9 code #
 
         return $result;
     }

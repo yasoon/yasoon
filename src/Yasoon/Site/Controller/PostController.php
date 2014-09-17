@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\PostService;
+use Yasoon\Site\Service\PostAnswerService;
 use Yasoon\Site\Service\PartnerService;
 use Yasoon\Site\Service\AuthorService;
 use Yasoon\Site\Service\ImageService;
@@ -34,6 +35,13 @@ class PostController {
      * @DI\Inject("yasoon.service.post")
      */
     private $service;
+
+    /**
+     * @var PostAnswerService
+     *
+     * @DI\Inject("yasoon.service.post")
+     */
+    private $postAnswerService;
     
     /**
      * @var PartnerService
@@ -75,6 +83,20 @@ class PostController {
     public function savePostAction(Request $request) {
         $data = $request->request->get('postData');
         return  $this->service->addPost($data);
+    }
+
+    /**
+     * @Route("/saveInterview")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function saveInterviewAction(Request $request) {
+        $data = $request->request->get('postData');
+        return $this->$postAnswerService->saveInterviewAnswers($data);
+
     }
 
 
