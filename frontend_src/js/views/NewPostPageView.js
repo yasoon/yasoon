@@ -115,11 +115,7 @@
         event.preventDefault();
         this.hideErrors();
         this.model.set({
-<<<<<<< HEAD
-          'text': this.createAnswerArray(),
-=======
           'text': this.createAnswersArray(),
->>>>>>> master
           'category': this.postCategories.checkedCategories(),
           'description': this.getDescription()
         });
