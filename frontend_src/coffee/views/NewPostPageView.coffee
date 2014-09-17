@@ -87,7 +87,7 @@ define(
         event.preventDefault()
         @hideErrors()
 #        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
-        @model.set({'text': @createAnswerArray(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
+        @model.set({'text': @createAnswersArray(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
 
       createFullText: ->
