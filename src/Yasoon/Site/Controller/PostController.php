@@ -96,7 +96,6 @@ class PostController {
     public function saveInterviewAction(Request $request) {
         $data = $request->request->get('postData');
         return $this->$postAnswerService->saveInterviewAnswers($data);
-
     }
 
 
