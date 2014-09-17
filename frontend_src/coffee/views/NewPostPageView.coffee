@@ -87,8 +87,8 @@ define(
       savePost: (event) ->
         event.preventDefault()
         @hideErrors()
-        description = @getDescription()
-        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories(), 'description': description})
+#        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
+        @model.set({'text': @createAnswerArray(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
 
       createFullText: ->
@@ -96,14 +96,22 @@ define(
         $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then fullTextContainer.append(@getText(iterator, item)))
         fullTextContainer.html()
 
+      createAnswersArray: ->
+        answers = []
+        $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then answers.push(@getObj(iterator, item)))
+        answers
+
       getText: (iterator, item) ->
         @interviewsTemplate({'id': iterator, 'text': $(item).find('.redactor_editor').html(), 'question': $(item).find('.a-quertion').html()})
+
+      getObj: (iterator, item) ->
+        {'id': iterator, 'text': $(item).find('.redactor_editor').html()}
 
       getDescription: ->
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
-        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
+        $.post('/api/post/saveInterview', {postData: @model.toJSON()}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
