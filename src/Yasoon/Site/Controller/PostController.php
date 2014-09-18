@@ -85,18 +85,6 @@ class PostController {
         return  $this->service->addPost($data);
     }
 
-    /**
-     * @Route("/saveInterview")
-     * @Method({"POST"})
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function saveInterviewAction(Request $request) {
-        $data = $request->request->get('postData');
-        return $this->$postAnswerService->saveInterviewAnswers($data);
-    }
 
 
     /**
