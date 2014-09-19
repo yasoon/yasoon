@@ -55,7 +55,7 @@ class InterviewController {
      * @Method({"GET"})
      */
     public function get_interview() {
-        $result = $this->service->getINterviews();
+        $result = $this->service->getInterviews();
 
         return  $result;
     }

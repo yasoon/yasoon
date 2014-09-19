@@ -11,6 +11,7 @@ namespace Yasoon\Site\Service;
 use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
+//use Yasoon\Site\Entity\PostAnswerEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
@@ -109,7 +110,7 @@ class InterviewService extends AbstractApiService {
             
             $i++;
         }
-                
+
         return $result;
     }
     

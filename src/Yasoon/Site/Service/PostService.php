@@ -93,19 +93,23 @@ class PostService extends AbstractApiService {
                 }
             }
 
-            if(isset($post['questionList']) && count($post['questionList']) > 0)
+            # Считывание массива $post['text'] и добавление ответов в таблицу answer_question
+            if(isset($post['text']) && count($post['text']) > 0)
             {
-                foreach($post['questionList'] as $quest)
+                $i = 0; // счетчик для индекса массива $post['interviewQuestions']
+                foreach($post['text'] as $quest)
                 {
                     $postAnswerEntity = (new PostAnswerEntity())
                         ->setPostId($post_id)
-                        ->setQuestionId($quest['id']*1)
+                        ->setQuestionId($post['interviewQuestions'][$i]['id']*1)
                         ->setAnswer($quest['text']);
                     $postAnswerEntity->setPost($postEntity);
-                    $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $quest['id']*1));
+                    $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity',
+                        $post['interviewQuestions'][$i]['id']*1));
 
                     $this->em->persist($postAnswerEntity);
                     $this->em->flush();
+                    $i++;
                 }
             }
 
