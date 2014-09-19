@@ -714,7 +714,7 @@ class PostService extends AbstractApiService {
             ->join('question.answer', 'answer')
             ->where("question.postId = $postId")
             ->getQuery()->getResult();
-
+        print_r($questions);
 
         foreach ($questions as $question) {
             $result[] = [
@@ -796,13 +796,12 @@ class PostService extends AbstractApiService {
         ];*/
         $date = getdate();
         $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
-        $from_date = date('Y-m-d H:i:s', $time);
-        $to_date = date('Y-m-d H:i:s', ($time+86400));
+        //$from_date = date('Y-m-d H:i:s', $time);
+        $to_date = date('Y-m-d H:i:s', ($time+864000));
 
         try {
             $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
                 ->createQueryBuilder('pd')
-                ->where("(pd.assignedDatetime > '".$from_date."' AND pd.assignedDatetime < '$to_date')")
                 ->orderBy('pd.assignedDatetime', 'DESC')
                 ->getQuery()
                 ->getResult();
@@ -883,12 +882,14 @@ class PostService extends AbstractApiService {
     public function like($postId, $type)
     {
         $authorId = $this->securityContext->getToken()->getUsername();
-        if (!is_int($authorId)) {
+        
+        if ($authorId == 'anon.') {
             $authorId = 0;
             $user_ip = $_SERVER['REMOTE_ADDR'];
         }
         else
         {
+            $authorId = $authorId*1;
             $user_ip = '0';
         }
 

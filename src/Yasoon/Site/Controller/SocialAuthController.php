@@ -100,9 +100,9 @@ class SocialAuthController {
     public function testvk()
     {
         
-        $APP_ID = 4185052;
-        $APP_SECRET = 'o1SzMFfXxLZTJqByVsVh';
-        $REDIRECT_URI = 'http://yasoon.mnb-t.com/socauth/vkontakte';
+        $APP_ID = 4210679;
+        $APP_SECRET = 'S3ycqYG0EOuEBdkZm9Pa';
+        $REDIRECT_URI = 'http://yasoon.ru/socauth/vkontakte';
         $PERMISSIONS = 'offline';
         $API_VERSION = '5.5';
         if(!isset($_GET['code']))
@@ -189,9 +189,23 @@ class SocialAuthController {
         header('Content-type: text/html');
         if($new_user)
         {
-            return ['new_user' => true];
+            $response = '<script>
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/edit/\';
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
         }
-        return ['new_user' => false];
+        else
+        {
+            $response = '<script>
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/posts/\';
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
+        }
+        return new Response($response);
             /*
         ?>
         <script>
@@ -225,9 +239,9 @@ class SocialAuthController {
     {
         $URL_OAUTH = 'https://www.facebook.com/dialog/oauth';
         $URL_ACCESS_TOKEN = 'https://graph.facebook.com/oauth/access_token';
-        $APP_ID = 543703062406358;
-        $APP_SECRET = '642bc47242649e3fdd90ed25137986f3';
-        $URL_CALLBACK = 'http://yasoon.mnb-t.com/socauth/facebook';
+        $APP_ID = 644685618912154;
+        $APP_SECRET = '0a37ce622f4f7a32e4df8b3da4e54f8d';
+        $URL_CALLBACK = 'http://yasoon.ru/socauth/facebook';
         $URL_GET_ME = 'https://graph.facebook.com/me';
 
         if(!isset($_GET['code']))
@@ -330,9 +344,23 @@ class SocialAuthController {
         header('Content-type: text/html');
         if($new_user)
         {
-            return ['new_user' => true];
+            $response = '<script>
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/edit/\';
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
         }
-        return ['new_user' => false];
+        else
+        {
+            $response = '<script>
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/posts/\';
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
+        }
+        return new Response($response);
         /*
             ?>
         <script>

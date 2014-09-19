@@ -159,14 +159,13 @@ class PostController {
      */
     public function getPostAction(Request $request)
     {
-        $postId = $request->request->get('postid');        
+        $postId = $request->request->get('postid');
         if(!is_array($postId))
         {
             $postId = [$postId];
         }
         
         $result = $this->service->getPost($postId);
-
         return $result;
     }
 

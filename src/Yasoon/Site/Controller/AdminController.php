@@ -404,13 +404,23 @@ HTML;
         
         $users = $this->authorservice->get_all_subscribed();
         
-        $result = '';
+        $result = 'ID;Имя;Email;Дата регистрации;Откуда зарегистрирован;Подписка;кол-во опубликованных постов;кол-во опубликованных ответов'."\r\n";
         foreach($users as $user)
         {
-            $data = [$user['id'], $user['name'], $user['email'], $user['date_reg'], 'reg_from' => $user['reg_from']];
-            $result .= implode(',', $data)."\n";
+            $data = [$user['id'], iconv('utf-8', 'windows-1251', $user['name']), $user['email'], $user['date_reg'], 'reg_from' => $user['reg_from'], 'subscribed' => $user['subscribed'], 'post_count' => $user['post_count'], 'answers_count' => $user['answers_count']];
+            $result .= implode(';', $data)."\r\n";
         }
-        return ['result' => $result];
+        
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream'); 
+        header('Content-Disposition: attachment; filename=file_'.date('YmdHis').'.csv');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        echo "\xEF\xBB\xBF";
+        echo iconv('windows-1251', 'utf-8', $result);
+        die;
     }
     
     
