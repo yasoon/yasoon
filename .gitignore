@@ -1,6 +1,11 @@
 app/config/test/parameters.yml
 app/config/dev/parameters.yml
 
+app/bootstrap.php.cache
+app/config/prod/parameters.yml
+passwd.txt
+
+
 #vendors
 /vendor/
 
