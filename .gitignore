@@ -1,5 +1,8 @@
 app/config/test/parameters.yml
 app/config/dev/parameters.yml
+app/config/prod/parameters.yml
+
+passwd.txt
 
 #vendors
 /vendor/
