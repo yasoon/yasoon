@@ -56,20 +56,14 @@ define(
 
       posts: (category, sort) ->
         $('body').removeClass().addClass('posts')
-        @postsPageView = new PostsPageView({
-          category: category
-          sort: sort
-          model: new PostsPageModel()
-        })
+        @postsPageView = new PostsPageView({category: category, sort: sort, model: new PostsPageModel()})
         LayoutView.contentRegion.$el.empty().append(@postsPageView.render().$el)
         @postsPageView.delegateEvents()
         @
 
       post: (id) ->
         $('body').removeClass().addClass('post')
-        @postPageView = new PostPageView({
-          id: id
-        })
+        @postPageView = new PostPageView({id: id})
         LayoutView.contentRegion.$el.empty().append(@postPageView.$el)
         @postPageView.delegateEvents()
         @
@@ -83,39 +77,26 @@ define(
 
       newPost: (id) ->
         $('body').removeClass().addClass('new-post')
-        @newPostPageView = new NewPostPageView({
-          id: id
-          model: new PostPageModel()
-          el: LayoutView.contentRegion.$el
-        })
+        @newPostPageView = new NewPostPageView({id: id, model: new PostPageModel(), el: LayoutView.contentRegion.$el})
         @newPostPageView.delegateEvents()
         @
 
       editPost: (id) ->
         $('body').removeClass().addClass('edit-post')
-        @editPostPageView = new EditPostPageView({
-          id: id
-          el: LayoutView.contentRegion.$el
-          model: new PostPageModel()
-        })
+        @editPostPageView = new EditPostPageView({id: id, el: LayoutView.contentRegion.$el, model: new PostPageModel()})
         @editPostPageView.delegateEvents()
         @
 
       speakers: (category) ->
         $('body').removeClass().addClass('speakers')
-        @speakersPageView = new SpeakersPageView({
-          category: category
-          model: new SpeakersPageModel()
-        })
+        @speakersPageView = new SpeakersPageView({category: category, model: new SpeakersPageModel()})
         LayoutView.contentRegion.$el.empty().append(@speakersPageView.render().$el)
         @speakersPageView.delegateEvents()
         @
 
       register: ->
         $('body').removeClass().addClass('register')
-        @registerPageView = new RegisterPageView({
-          model: new UserRegisterModel()
-        })
+        @registerPageView = new RegisterPageView({model: new UserRegisterModel()})
         LayoutView.contentRegion.$el.empty().append(@registerPageView.render().$el)
         @registerPageView.delegateEvents()
         @
@@ -123,21 +104,14 @@ define(
       speaker: (id, page) ->
         $('body').removeClass().addClass('speaker')
         model = Backbone.Model.extend()
-        @speakerPageView = new SpeakerPageView({
-          id: id
-          page: page
-          model: new model()
-        })
+        @speakerPageView = new SpeakerPageView({id: id, page: page, model: new model()})
         LayoutView.contentRegion.$el.empty().append(@speakerPageView.render().$el)
         @speakerPageView.delegateEvents()
         @
 
       editSpeaker: (id) ->
         $('body').removeClass().addClass('editAuthor')
-        @editAuthorPageView = new EditSpeakerView({
-          model: new UserUpdateModel()
-          el: LayoutView.contentRegion.$el
-        })
+        @editAuthorPageView = new EditSpeakerView({model: new UserUpdateModel(), el: LayoutView.contentRegion.$el})
         @editAuthorPageView.delegateEvents()
         @
 
