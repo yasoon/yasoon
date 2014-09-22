@@ -20,6 +20,9 @@ use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
 use Yasoon\Site\Entity\PostsTimelineEntity;
+use Symfony\Component\Debug\Debug;
+
+//Debug::enable();
 
 error_reporting(0);
 
@@ -505,11 +508,60 @@ class PostService extends AbstractApiService {
         return ['error' => false, 'errorText' => ''];
     }
 
+    public function getPost($postId) {
+
+        /** @var PostEntity $post */
+        $posts = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\PostEntity', 'p')
+            ->where('p.id IN('.implode(',', $postId).')')
+            ->getQuery()->getResult();
+
+
+        $questionAnswerArray = $this->em->createQueryBuilder()
+                    ->select('pa.question_id, iq.text, pa.answer')
+                    ->from('Yasoon\Site\Entity\PostAnswerEntity', 'pa')
+                    ->innerJoin('Yasoon\Site\Entity\InterviewQuestionEntity', 'iq', 'WITH', 'pa.question_id = iq.id')
+                    ->where('pa.post_id = :idPost')
+                    ->setParameter('idPost', $postId)
+                    ->getQuery()->getResult();
+
+        foreach($posts as $post)
+        {
+            $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
+                ->leftJoin('c.post', 'p')
+                ->where('c.post_id = '.$post->getId())
+                ->orderBy('p.date', 'desc')->getQuery()->getResult();
+            $pcats = [];
+            foreach($tags as $tag)
+            {
+                $pcats[] = $tag->getCategoryId();
+            }
+            $result[] = [
+                'id'          => $post->getId(),
+                'authorId'    => $post->getAuthorId(),
+                'authorName'  => $post->getAuthor()->getName(),
+                'tags'        => $pcats,
+                'title'       => $post->getCaption(),
+                'description' => $post->getPreview(),
+                'text'        => /*$post->getText(),*/ $questionAnswerArray,
+                'publishDate' => $post->getDate()->format('d/m/Y'),
+                'post_likes'  => $post->getLikes()
+            ];
+        }
+
+//        $access = $this->getAccessLevel($post->getAuthorId());
+//
+//        return ['access' => $access, 'data' => $result];
+
+        return $result;
+    }
+
     /**
      * @param $postId
      * @return array
      */
-    public function getPost($postId) {
+    public function getPosts($postId) {
 
         /** @var PostEntity $post */
         $posts = $this->em->createQueryBuilder()
@@ -536,7 +588,7 @@ class PostService extends AbstractApiService {
                 'tags'        => $pcats,
                 'title'       => $post->getCaption(),
                 'description' => $post->getPreview(),
-                'text'        => $post->getText(),
+                'text'        => $post->getText(), // $questionAnswerArray,
                 'publishDate' => $post->getDate()->format('d/m/Y'),
                 'post_likes'  => $post->getLikes()
             ];
