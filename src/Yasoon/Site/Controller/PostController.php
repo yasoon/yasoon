@@ -161,12 +161,13 @@ class PostController {
         return $this->service->delete($post_id);
     }
 
+
     /**
-     * @Route("/getPost")
+     * @Route("/getPosts")
      * @Method({"POST"})
      *
      */
-    public function getPostAction(Request $request)
+    public function getPostsAction(Request $request)
     {
         $postId = $request->request->get('postid');        
         if(!is_array($postId))
@@ -174,10 +175,29 @@ class PostController {
             $postId = [$postId];
         }
         
+        $result = $this->service->getPosts($postId);
+
+        return $result;
+    }
+
+    /**
+     * @Route("/getPost")
+     * @Method({"POST"})
+     *
+     */
+    public function getPostAction(Request $request)
+    {
+        $postId = $request->request->get('postid');
+        if(!is_array($postId))
+        {
+            $postId = [$postId];
+        }
+
         $result = $this->service->getPost($postId);
 
         return $result;
     }
+
 
     /**
      * @Route("/getPostsByDate")
