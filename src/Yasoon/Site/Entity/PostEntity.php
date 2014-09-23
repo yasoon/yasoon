@@ -46,12 +46,27 @@ class PostEntity
     protected $authorId;
 
     /**
+     * @var int $interviewId
+     *
+     * @ORM\Column(name="interview_id", type="integer", nullable=false)
+     */
+    protected $interviewId;
+
+    /**
      * @var AuthorEntity $author
      *
      * @ORM\ManyToOne(targetEntity="AuthorEntity",  inversedBy="posts")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     protected $author;
+
+    /**
+     * @var InterviewEntity $interview
+     *
+     * @ORM\ManyToOne(targetEntity="InterviewEntity",  inversedBy="posts")
+     * @ORM\JoinColumn(name="interview_id", referencedColumnName="id")
+     */
+    protected $interview;
 
     /**
      * @var PostCategoryEntity[] $category
@@ -124,6 +139,24 @@ class PostEntity
     {
         return $this->author;
     }
+
+    /**
+     * @param $interview
+     * @return $this
+     */
+    public function setInterview($interview)
+    {
+        $this->interview = $interview;
+        return $this;
+    }
+
+    /**
+     * @return \Yasoon\Site\Entity\AuthorEntity
+     */
+    public function getInterview()
+    {
+        return $this->author;
+    }
     
     /**
      * @param $category
@@ -177,6 +210,24 @@ class PostEntity
     public function getAuthorId()
     {
         return $this->authorId;
+    }
+
+    /**
+     * @param $interviewId
+     * @return $this
+     */
+    public function setInterviewId($interviewId)
+    {
+        $this->interviewId = $interviewId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInterviewId()
+    {
+        return $this->interviewId;
     }
 
     /**

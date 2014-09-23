@@ -64,19 +64,20 @@ class PostService extends AbstractApiService {
 
         //echo $post['questionList'][1]['id'];
         //die;
-
         try {
             /** @var $postEntity PostEntity */
             $postEntity = (new PostEntity())
                 ->setCaption($post['title'])
                 ->setPreview($post['description'])
-                ->setText($post['text'])
+                ->setText('')
                 ->setPlace((int)$place)
                 ->setAuthorId($authorId)
+                ->setInterviewId($post['interviewId'])
                 ->setDate(new \DateTime())
                 ->setLikes(0)
                 ->setVisits(0);
             $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
+            $postEntity->setInterview($this->em->getReference('Yasoon\Site\Entity\InterviewEntity', $post['interviewId']));
             $this->em->persist($postEntity);
             $this->em->flush();
 
@@ -133,7 +134,7 @@ class PostService extends AbstractApiService {
                 }
             }
 
-            $data = ['id' => 'post_'.$postEntity->getId(),
+            /*$data = ['id' => 'post_'.$postEntity->getId(),
                      'url' => 'http://'.$_SERVER['HTTP_HOST'].'/#post/'.$postEntity->getId(),
                      'image' => '',
                      'subtype' => 'post',
@@ -143,7 +144,7 @@ class PostService extends AbstractApiService {
                      'date' => date('Y-m-d\TH:i:s', $postEntity->getDate()->getTimestamp()),
                      'title' => trim( strip_tags($postEntity->getCaption()))];
 
-            $this->allf->indexistoQueryAdd($data);
+            $this->allf->indexistoQueryAdd($data);*/
 
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
