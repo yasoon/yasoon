@@ -73,7 +73,7 @@
       };
 
       SpeakerContentView.prototype.getPosts = function() {
-        return $.post("/api/post/getPost", {
+        return $.post("/api/post/getPosts", {
           'postid[]': this.model.get('posts')
         }, (function(_this) {
           return function(data) {

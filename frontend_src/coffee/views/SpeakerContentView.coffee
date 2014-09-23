@@ -50,7 +50,7 @@ define(
         @$el.append(@writePostButton.render().$el)
 
       getPosts: ->
-        $.post("/api/post/getPost", {'postid[]': @model.get('posts')}, (data) => @model.set('speakerPosts', data))
+        $.post("/api/post/getPosts", {'postid[]': @model.get('posts')}, (data) => @model.set('speakerPosts', data))
 
       createPosts: ->
         postsCollection = new SpeakerPostsCollection(@model.get('speakerPosts'))

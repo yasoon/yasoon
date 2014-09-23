@@ -126,19 +126,6 @@
         }
       };
 
-      WritePostPage.prototype.createFullText = function() {
-        var fullTextContainer;
-        fullTextContainer = $('<div></div>');
-        $('#questionsList > .ui-sortable > li').each((function(_this) {
-          return function(iterator, item) {
-            if ($(item).find('.redactor_editor').text().length) {
-              return fullTextContainer.append(_this.getText(iterator, item));
-            }
-          };
-        })(this));
-        return fullTextContainer.html();
-      };
-
       WritePostPage.prototype.createAnswersArray = function() {
         var answers;
         answers = [];
@@ -150,14 +137,6 @@
           };
         })(this));
         return answers;
-      };
-
-      WritePostPage.prototype.getText = function(iterator, item) {
-        return this.interviewsTemplate({
-          'id': iterator,
-          'text': $(item).find('.redactor_editor').html(),
-          'question': $(item).find('.a-quertion').html()
-        });
       };
 
       WritePostPage.prototype.getObj = function(iterator, item) {
@@ -176,7 +155,7 @@
       };
 
       WritePostPage.prototype.sendPostData = function() {
-        return $.post('/api/post/saveInterview', {
+        return $.post('/api/post/savePost', {
           postData: this.model.toJSON()
         }, (function(_this) {
           return function(data) {
@@ -186,8 +165,7 @@
       };
 
       WritePostPage.prototype.changeLocation = function(data) {
-        window.location = "#/post/" + data.postId + "/";
-        return window.location.reload(true);
+        return window.location = "#/post/" + data.postId + "/";
       };
 
       WritePostPage.prototype.showErrors = function(errors) {

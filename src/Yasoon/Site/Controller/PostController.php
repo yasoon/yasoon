@@ -169,7 +169,7 @@ class PostController {
      */
     public function getPostsAction(Request $request)
     {
-        $postId = $request->request->get('postid');        
+        $postId = $request->request->get('postid');
         if(!is_array($postId))
         {
             $postId = [$postId];
@@ -194,7 +194,6 @@ class PostController {
         }
 
         $result = $this->service->getPost($postId);
-
         return $result;
     }
 

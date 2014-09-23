@@ -542,7 +542,7 @@ class AuthorService extends AbstractApiService {
 
 
 
-        $interviewQuestions= $this->em->createQueryBuilder()
+        /*$interviewQuestions= $this->em->createQueryBuilder()
             ->select('question')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'question')
             ->where('question.isInBlank = 1')
@@ -561,7 +561,8 @@ class AuthorService extends AbstractApiService {
               'authorId'=> $post->getAuthorId(),
               'likes'   => 0
             ]);
-        }
+        }*/
+        
 
         $result['ownerId'] = $authorId;
 //        $access = $this->getAccessLevel($authorId);
@@ -767,16 +768,12 @@ class AuthorService extends AbstractApiService {
             throw $e;
             #$this->em->rollback();
         }
+        
+        $message = $this->contentService->getAllContent(0)[6]['text'];
 
-        try {
-            $message = $this->contentService->getAllContent(0)[6]['text'];
+        $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
 
-            $message = str_replace(['%name%', '%email%', '%password%'], [$author['name'], $author['email'], $author['password']], $message);
-
-            $this->mailer->send($entity->getEmail(), 'Добро пожаловать на Ясун!', $message);
-        } catch (\Exception $e) {
-
-        }
+        $this->mailer->send($entity->getEmail(), 'Добро пожаловать на Ясун!', $message);
         #$this->em->commit();
 
         // Сразу авторизуем чела
@@ -1197,7 +1194,7 @@ class AuthorService extends AbstractApiService {
             ->select('a')
             ->from('Yasoon\Site\Entity\AuthorEntity', 'a')
             ->orderBy('a.publicationDate', 'desc')
-            ->where('a.subscribed = 1')
+            //->where('a.subscribed = 1')
             ->getQuery()->getResult();
             
         $adata = [];
@@ -1224,11 +1221,25 @@ class AuthorService extends AbstractApiService {
                 $lchange = '';
             }
             
+            $reg_from = $author->getRegFrom();
+            if($reg_from == 0)
+                $reg_from = 'email';
+            elseif($reg_from == 1)
+                $reg_from = 'facebook';
+            elseif($reg_from == 2)
+                $reg_from = 'vkontakte';
+            
+            $posts = $author->getPosts();
+            
             $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
                         'email' => $author->getEmail(),
                         'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s'),
-                        'last_change' => $lchange];
+                        'reg_from' => $reg_from,
+                        'last_change' => $lchange,
+                        'subscribed' => $author->getSubscribed(),
+                        'post_count' => count($posts),
+                        'answers_count' => $answer_count];
         }
         return $adata;
         

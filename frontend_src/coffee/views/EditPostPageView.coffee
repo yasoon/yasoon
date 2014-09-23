@@ -53,7 +53,6 @@ define(
         @checkCategories()
 
       checkCategories: ->
-        console.log(@model.get('category'))
         _.each(@model.get('category'), (item) => @$('input:checkbox').eq(item - 1).prop('checked', yes))        
 
       createInterviewsList: ->
@@ -84,5 +83,5 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-        window.location.reload(true)
+#        window.location.reload(true)
 )

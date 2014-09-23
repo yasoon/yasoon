@@ -20,6 +20,9 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Swift_Message;
 use Swift_Mailer;
 use Swift_MailTransport;
+use Swift_SmtpTransport;
+
+error_reporting(E_ALL);
 /**
  * @DI\Service("yasoon.mail.sender")
  */
@@ -45,8 +48,15 @@ class Sender
           ->setSubject($subject)
           ->setBody($text)
         ;
-        $transport = Swift_MailTransport::newInstance();
+        //$transport = Swift_MailTransport::newInstance();
+        $transport = Swift_SmtpTransport::newInstance('smtp.yasoon.ru')
+            ->setUsername('info@yasoon.ru')
+            ->setPassword('YasoonMailPa55w0rd')
+            ;
         $mailer = new Swift_Mailer($transport);
         return $mailer->send($message);
+        
+        //$mailer->send($message);
+        //die;
     }
 }

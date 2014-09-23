@@ -86,22 +86,13 @@ define(
       savePost: (event) ->
         event.preventDefault()
         @hideErrors()
-#        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
         @model.set({'text': @createAnswersArray(), 'category': @postCategories.checkedCategories(), 'description': @getDescription()})
         if @model.isValid() then @sendPostData() else @showErrors(@model.validationError)
-
-      createFullText: ->
-        fullTextContainer = $('<div></div>')
-        $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then fullTextContainer.append(@getText(iterator, item)))
-        fullTextContainer.html()
 
       createAnswersArray: ->
         answers = []
         $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then answers.push(@getObj(iterator, item)))
         answers
-
-      getText: (iterator, item) ->
-        @interviewsTemplate({'id': iterator, 'text': $(item).find('.redactor_editor').html(), 'question': $(item).find('.a-quertion').html()})
 
       getObj: (iterator, item) ->
         {'id': iterator, 'text': $(item).find('.redactor_editor').html()}
@@ -110,11 +101,11 @@ define(
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
-        $.post('/api/post/saveInterview', {postData: @model.toJSON()}, (data) => @changeLocation(data))
+        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-        window.location.reload(true)
+#        window.location.reload(true)
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))
