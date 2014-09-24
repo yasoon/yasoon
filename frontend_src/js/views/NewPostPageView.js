@@ -163,7 +163,8 @@
       };
 
       WritePostPage.prototype.changeLocation = function(data) {
-        return window.location = "#/post/" + data.postId + "/";
+        window.location = "#/post/" + data.postId + "/";
+        return window.reload = true;
       };
 
       WritePostPage.prototype.showErrors = function(errors) {
