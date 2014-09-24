@@ -4,6 +4,11 @@ app/config/prod/parameters.yml
 
 passwd.txt
 
+app/bootstrap.php.cache
+app/config/prod/parameters.yml
+passwd.txt
+
+
 #vendors
 /vendor/
 

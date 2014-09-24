@@ -105,11 +105,11 @@ class PostService extends AbstractApiService {
                 {
                     $postAnswerEntity = (new PostAnswerEntity())
                         ->setPostId($post_id)
-                        ->setQuestionId($post['interviewQuestions'][$i]['id']*1)
+                        ->setQuestionId($post['interviewQuestions'][$quest['id']]['question_id']*1)
                         ->setAnswer($quest['text']);
                     $postAnswerEntity->setPost($postEntity);
                     $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity',
-                        $post['interviewQuestions'][$i]['id']*1));
+                        $post['interviewQuestions'][$quest['id']]['question_id']*1));
 
                     $this->em->persist($postAnswerEntity);
                     $this->em->flush();
@@ -270,7 +270,7 @@ class PostService extends AbstractApiService {
         try {
             $post->setCaption($dataPost['title'])
                 ->setPreview($dataPost['description'])
-                ->setText($dataPost['text'])
+                ->setText('')
                 ->setDate(new \DateTime());
 
             $this->em->merge($post);
@@ -340,19 +340,21 @@ class PostService extends AbstractApiService {
                 $exists_answers[$question->getQuestionId()] = $question;
             }
             //print_r($dataPost);
-            if(isset($dataPost['questionList']) && count($dataPost['questionList']) > 0)
+            if(isset($dataPost['text']) && count($dataPost['text']) > 0)
             {
                 $saved = [];
-                foreach($dataPost['questionList'] as $ql)
+                $i = 0;
+                foreach($dataPost['text'] as $ql)
                 {
-                    if(!array_key_exists($ql['id'], $exists_answers))
+                    $postAnswerEntity = new PostAnswerEntity();
+                    if(!array_key_exists($dataPost['interviewQuestions'][$ql['id']]['question_id'], $exists_answers))
                     {
-                        $postAnswerEntity = (new PostAnswerEntity())
+                        $postAnswerEntity
                             ->setPostId($post->getId())
-                            ->setQuestionId($ql['id']*1)
+                            ->setQuestionId($dataPost['interviewQuestions'][$ql['id']]['question_id']*1)
                             ->setAnswer($ql['text']);
                         $postAnswerEntity->setPost($post);
-                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $ql['id']*1));
+                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $dataPost['interviewQuestions'][$ql['id']]['question_id']*1));
 
                         $this->em->persist($postAnswerEntity);
                         $this->em->flush();
@@ -361,12 +363,19 @@ class PostService extends AbstractApiService {
                     }
                     else
                     {
-                        $exists_answers[$ql['id']]->setAnswer($ql['text']);
-                        $this->em->merge($exists_answers[$ql['id']]);
+                        $postAnswerEntity
+                            ->setPostId($post->getId())
+                            ->setQuestionId($dataPost['interviewQuestions'][$ql['id']]['question_id']*1)
+                            ->setAnswer($ql['text']);
+                        $postAnswerEntity->setPost($post);
+                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $dataPost['interviewQuestions'][$ql['id']]['question_id']*1));
+
+                        $this->em->persist($postAnswerEntity);
                         $this->em->flush();
 
                         $saved[$ql['id']] = $ql['id'];
                     }
+                    $i++;
 
                 }
                 foreach($exists_answers as $ans)
