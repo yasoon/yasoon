@@ -543,6 +543,7 @@ class PostService extends AbstractApiService {
                 'authorId'    => $post->getAuthorId(),
                 'authorName'  => $post->getAuthor()->getName(),
                 'tags'        => $pcats,
+                'interviewId' => $post->getInterviewId(),
                 'title'       => $post->getCaption(),
                 'description' => $post->getPreview(),
                 'text'        => /*$post->getText(),*/ $questionAnswerArray,

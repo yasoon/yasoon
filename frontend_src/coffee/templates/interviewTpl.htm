@@ -2,7 +2,7 @@
 <a class="a-quertion <% if (test) { print('active') } %>" data-toggle="collapse" data-parent="#collapse" href="#question-<%= id %>">
 	<%= question %>
 </a>
-<div id="question-<%= id %>" class="collapse questionContent">
+<div id="question-<%= id %>" data-answer="<%= question_id %>" class="collapse questionContent">
 	<div class="di form-group">
 		<textarea class="editor" class="form-control" placeholder="Текст истории"></textarea>
 		<p class="help-block"></p>

@@ -74,13 +74,13 @@ define(
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('interviewQuestions'))
+        console.log(@model.get('interviewQuestions'), interviews)
         if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         @$('#questionsList').append(@postInterviews.render().$el)
         @afterRender()
 
       afterRender: ->
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
-        @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
 
       savePost: (event) ->
@@ -91,7 +91,7 @@ define(
 
       createAnswersArray: ->
         answers = []
-        $('#questionsList > .ui-sortable > li').each((iterator, item) => if $(item).find('.redactor_editor').text().length then answers.push(@getObj(iterator, item)))
+        $('#questionsList .form-group').each((iterator, item) => if $(item).find('.redactor_editor').text().length then answers.push(@getObj(iterator, item)))
         answers
 
       getObj: (iterator, item) ->
@@ -105,7 +105,6 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-#        window.location.reload(true)
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))

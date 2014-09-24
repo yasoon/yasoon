@@ -39,32 +39,36 @@ define(
       handler: ->
         @listenTo(@model, 'change:description', @symbolsCounter)
         @listenTo(@model, 'change:categoriesList', @createInterviewsList)
-        @listenTo(@model, 'change:formattedText', @render)
+        @listenTo(@model, 'change:interviewQuestions', @render)
 
       setPostData: (data) ->
-        @model.set(data)
-        @model.set('category', @model.get('tags'))
-        text = []
-        $(@model.get('text')).each( (iterator) -> text.push({'id': iterator, 'text': $(@).find('.question_content').html(), 'question': $(@).find('.questionTitle').html()}))
-        @model.set('formattedText', text)
+        @model.set(_.extend({}, data, {'category': @model.get('tags')}))
+        @getInterviewQuestions()
 
       createCategoryList: ->
         super
         @checkCategories()
 
       checkCategories: ->
-        _.each(@model.get('category'), (item) => @$('input:checkbox').eq(item - 1).prop('checked', yes))        
+        _.each(@model.get('category'), (item) => @$(':checkbox').eq(item - 1).prop('checked', yes))        
 
       createInterviewsList: ->
-        interviews = new InterviewCollection(@model.get('formattedText'))
+        interviews = new InterviewCollection(@model.get('interviewQuestions'))
+        console.log(@model.get('interviewQuestions'), interviews)
         if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
-        $('#questionsList').html(@postInterviews.render().$el)
+        @$('#questionsList').append(@postInterviews.render().$el)
+        @setAnswers()
+
+      setAnswers: ->
+        _.each(@model.get('text'), (answer) => $("[data-answer='#{answer.question_id}']").find('.editor').redactor({imageUpload: '/api/post/upload_image', emptyHtml: answer.answer}))
         @afterRender()
 
       afterRender: ->
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
-        @$('.sortable ul').sortable({cancel: '.form-group'})
         @stickit()
+
+      getInterviewQuestions: ->
+        $.get("/api/interview/questions/#{@model.get('interviewId')}", (data) => @model.set('interviewQuestions', data))
 
       confirmAction: ->
         window.confirm(_.getContent(42))
@@ -78,10 +82,9 @@ define(
 
       updatePost: (event) ->
         event.preventDefault()
-        @model.set({'text': @createFullText(), 'category': @postCategories.checkedCategories()})
+        @model.set({'text': @createAnswersArray(), 'category': @postCategories.checkedCategories()})
         $.post('/api/post/update', {postData: @model.toJSON()}, (data) =>  @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-#        window.location.reload(true)
 )

@@ -19,6 +19,7 @@ define(
       'textarea': 'text'
 
     render: ->
+      console.log(@model.toJSON())
       @$el.html(@template(@model.toJSON()))
       @stickit()
       @
@@ -26,10 +27,6 @@ define(
     changeColor: ->
       question = @$('.a-quertion')
       # not actual length because text editor adds blank tags
-      if @model.get('text').length > 0
-        question.addClass('active')
-      else
-        question.removeClass('active')
-
+      if @model.get('text').length > 0 then question.addClass('active') else question.removeClass('active')
   })
 )
