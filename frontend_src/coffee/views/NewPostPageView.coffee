@@ -105,10 +105,11 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
+        window.reload = true
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))
-
+        
       showError: (error) ->
         @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error')
         @checkPosition()
