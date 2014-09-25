@@ -92,6 +92,7 @@
       WritePostPage.prototype.createInterviewsList = function() {
         var interviews;
         interviews = new InterviewCollection(this.model.get('interviewQuestions'));
+        console.log(this.model.get('interviewQuestions'), interviews);
         if (this.postInterviews == null) {
           this.postInterviews = new PostInterviews({
             collection: interviews
@@ -104,9 +105,6 @@
       WritePostPage.prototype.afterRender = function() {
         this.$('.editor').redactor({
           imageUpload: '/api/post/upload_image'
-        });
-        this.$('.sortable ul').sortable({
-          cancel: '.form-group'
         });
         return this.stickit();
       };
@@ -129,7 +127,7 @@
       WritePostPage.prototype.createAnswersArray = function() {
         var answers;
         answers = [];
-        $('#questionsList > .ui-sortable > li').each((function(_this) {
+        $('#questionsList .form-group').each((function(_this) {
           return function(iterator, item) {
             if ($(item).find('.redactor_editor').text().length) {
               return answers.push(_this.getObj(iterator, item));
@@ -165,7 +163,8 @@
       };
 
       WritePostPage.prototype.changeLocation = function(data) {
-        return window.location = "#/post/" + data.postId + "/";
+        window.location = "#/post/" + data.postId + "/";
+        return window.reload = true;
       };
 
       WritePostPage.prototype.showErrors = function(errors) {

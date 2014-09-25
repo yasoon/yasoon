@@ -1,12 +1,1 @@
-define(
-  [
-    'models/InterviewModel'
-    'backbone'
-  ]
-(
-  InterviewModel
-  ) ->
-  Backbone.Collection.extend({
-    model: InterviewModel
-  })
-)
+define(['models/InterviewModel', 'backbone'], (InterviewModel) -> Backbone.Collection.extend({model: InterviewModel}))

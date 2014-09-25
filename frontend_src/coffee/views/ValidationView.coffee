@@ -1,33 +1,15 @@
-define(
-  [
-    'backbone'
-  ]
-  (
-  ) ->
-    Backbone.View.extend({
-      showErrors: (errors) ->
-        _.each(errors, (error) ->
-          @$el
-          .find('#' + error.name)
-          .closest('.form-group')
-          .removeClass('has-success')
-          .addClass('has-error')
-          .find('.help-block')
-          .text(error.message)
-        , @)
+define(['backbone'], () ->
+  class ValidationView extends Backbone.View
+    showErrors: (errors) ->
+      _.each(errors, (error) => @showError(error))
 
-      hideErrors: ->
-        @$('.form-group')
-        .removeClass('has-error')
-        .addClass('has-success')
-        .find('.help-block')
-        .text('')
+    showError: (error) ->
+      @$('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message)
 
-      symbolsCounter: (model, value) ->
-#        length = model.get('maxLength') - value.length
-        length = if value then model.get('maxLength') - value.length else model.get('maxLength')
+    hideErrors: ->
+      @$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('')
 
-        if @$('.counter')?
-          @$('.counter').text(length)
-    })
+    symbolsCounter: (model, value) ->
+      length = if value then model.get('maxLength') - value.length else model.get('maxLength')
+      if @$('.counter')? then @$('.counter').text(length)
 )

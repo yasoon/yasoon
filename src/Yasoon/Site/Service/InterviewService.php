@@ -52,7 +52,7 @@ class InterviewService extends AbstractApiService {
 
         foreach ($questions as $question) {
             $result[] = [
-                'id'         => $question->getId(),
+                'question_id'         => $question->getId(),
                 'interview_id' => $question->getInterviewId(),
                 'question' => $question->getText()
             ];
