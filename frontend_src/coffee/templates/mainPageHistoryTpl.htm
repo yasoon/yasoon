@@ -23,7 +23,18 @@
 		</span>
 		<h1><%= title %> <span class="media-pub">опубликовано <%= publishDate %></span></h1>
 	</div>
-	<div class="content"><%= text %></div>
+	<div class="content">
+    <% _.each(text, function(question) { %>
+        <article questionid="<%= question.question_id %>" class="questionContent">
+            <h3 class="questionTitle">
+                <%= question.text %>
+            </h3>
+            <div class="question_content">
+                <%= question.answer %>
+            </div>
+        </article>
+		<% }); %>
+	</div>
 	<div class="q-box">
 		<span class="like-this">
 			<b><i></i></b>
