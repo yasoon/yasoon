@@ -1,9 +1,1 @@
-define(
-  [
-    'router'
-    'backbone'
-  ]
-(
-  Router
-) ->
-)
+define(['router', 'backbone'], (Router) ->)

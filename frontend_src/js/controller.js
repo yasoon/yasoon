@@ -46,9 +46,9 @@
         $('body').removeClass().addClass('new-post');
         this.newPostPageView = new NewPostPageView({
           id: id,
-          model: new PostPageModel(),
-          el: LayoutView.contentRegion.$el
+          model: new PostPageModel()
         });
+        LayoutView.contentRegion.$el.empty().append(this.newPostPageView.$el);
         this.newPostPageView.delegateEvents();
         return this;
       };
@@ -57,9 +57,9 @@
         $('body').removeClass().addClass('edit-post');
         this.editPostPageView = new EditPostPageView({
           id: id,
-          el: LayoutView.contentRegion.$el,
           model: new PostPageModel()
         });
+        LayoutView.contentRegion.$el.empty().append(this.editPostPageView.$el);
         this.editPostPageView.delegateEvents();
         return this;
       };
