@@ -101,6 +101,7 @@ define(
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
+        console.log(1)
         $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->

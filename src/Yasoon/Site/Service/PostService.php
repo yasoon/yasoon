@@ -20,9 +20,6 @@ use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
 use Yasoon\Site\Entity\PostsTimelineEntity;
-use Symfony\Component\Debug\Debug;
-
-//Debug::enable();
 
 error_reporting(0);
 
@@ -64,20 +61,19 @@ class PostService extends AbstractApiService {
 
         //echo $post['questionList'][1]['id'];
         //die;
+
         try {
             /** @var $postEntity PostEntity */
             $postEntity = (new PostEntity())
                 ->setCaption($post['title'])
                 ->setPreview($post['description'])
-                ->setText('')
+                ->setText($post['text'])
                 ->setPlace((int)$place)
                 ->setAuthorId($authorId)
-                ->setInterviewId($post['interviewId'])
                 ->setDate(new \DateTime())
                 ->setLikes(0)
                 ->setVisits(0);
             $postEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
-            $postEntity->setInterview($this->em->getReference('Yasoon\Site\Entity\InterviewEntity', $post['interviewId']));
             $this->em->persist($postEntity);
             $this->em->flush();
 
@@ -105,11 +101,11 @@ class PostService extends AbstractApiService {
                 {
                     $postAnswerEntity = (new PostAnswerEntity())
                         ->setPostId($post_id)
-                        ->setQuestionId($post['interviewQuestions'][$quest['id']]['question_id']*1)
+                        ->setQuestionId($post['interviewQuestions'][$i]['id']*1)
                         ->setAnswer($quest['text']);
                     $postAnswerEntity->setPost($postEntity);
                     $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity',
-                        $post['interviewQuestions'][$quest['id']]['question_id']*1));
+                        $post['interviewQuestions'][$i]['id']*1));
 
                     $this->em->persist($postAnswerEntity);
                     $this->em->flush();
@@ -134,7 +130,7 @@ class PostService extends AbstractApiService {
                 }
             }
 
-            /*$data = ['id' => 'post_'.$postEntity->getId(),
+            $data = ['id' => 'post_'.$postEntity->getId(),
                      'url' => 'http://'.$_SERVER['HTTP_HOST'].'/#post/'.$postEntity->getId(),
                      'image' => '',
                      'subtype' => 'post',
@@ -144,7 +140,7 @@ class PostService extends AbstractApiService {
                      'date' => date('Y-m-d\TH:i:s', $postEntity->getDate()->getTimestamp()),
                      'title' => trim( strip_tags($postEntity->getCaption()))];
 
-            $this->allf->indexistoQueryAdd($data);*/
+            $this->allf->indexistoQueryAdd($data);
 
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
@@ -270,7 +266,7 @@ class PostService extends AbstractApiService {
         try {
             $post->setCaption($dataPost['title'])
                 ->setPreview($dataPost['description'])
-                ->setText('')
+                ->setText($dataPost['text'])
                 ->setDate(new \DateTime());
 
             $this->em->merge($post);
@@ -340,21 +336,19 @@ class PostService extends AbstractApiService {
                 $exists_answers[$question->getQuestionId()] = $question;
             }
             //print_r($dataPost);
-            if(isset($dataPost['text']) && count($dataPost['text']) > 0)
+            if(isset($dataPost['questionList']) && count($dataPost['questionList']) > 0)
             {
                 $saved = [];
-                $i = 0;
-                foreach($dataPost['text'] as $ql)
+                foreach($dataPost['questionList'] as $ql)
                 {
-                    $postAnswerEntity = new PostAnswerEntity();
-                    if(!array_key_exists($dataPost['interviewQuestions'][$ql['id']]['question_id'], $exists_answers))
+                    if(!array_key_exists($ql['id'], $exists_answers))
                     {
-                        $postAnswerEntity
+                        $postAnswerEntity = (new PostAnswerEntity())
                             ->setPostId($post->getId())
-                            ->setQuestionId($dataPost['interviewQuestions'][$ql['id']]['question_id']*1)
+                            ->setQuestionId($ql['id']*1)
                             ->setAnswer($ql['text']);
                         $postAnswerEntity->setPost($post);
-                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $dataPost['interviewQuestions'][$ql['id']]['question_id']*1));
+                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $ql['id']*1));
 
                         $this->em->persist($postAnswerEntity);
                         $this->em->flush();
@@ -363,19 +357,12 @@ class PostService extends AbstractApiService {
                     }
                     else
                     {
-                        $postAnswerEntity
-                            ->setPostId($post->getId())
-                            ->setQuestionId($dataPost['interviewQuestions'][$ql['id']]['question_id']*1)
-                            ->setAnswer($ql['text']);
-                        $postAnswerEntity->setPost($post);
-                        $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity', $dataPost['interviewQuestions'][$ql['id']]['question_id']*1));
-
-                        $this->em->persist($postAnswerEntity);
+                        $exists_answers[$ql['id']]->setAnswer($ql['text']);
+                        $this->em->merge($exists_answers[$ql['id']]);
                         $this->em->flush();
 
                         $saved[$ql['id']] = $ql['id'];
                     }
-                    $i++;
 
                 }
                 foreach($exists_answers as $ans)
@@ -518,6 +505,10 @@ class PostService extends AbstractApiService {
         return ['error' => false, 'errorText' => ''];
     }
 
+    /**
+     * @param $postId
+     * @return array
+     */
     public function getPost($postId) {
 
         /** @var PostEntity $post */
@@ -527,60 +518,6 @@ class PostService extends AbstractApiService {
             ->where('p.id IN('.implode(',', $postId).')')
             ->getQuery()->getResult();
 
-
-        $questionAnswerArray = $this->em->createQueryBuilder()
-                    ->select('pa.question_id, iq.text, pa.answer')
-                    ->from('Yasoon\Site\Entity\PostAnswerEntity', 'pa')
-                    ->innerJoin('Yasoon\Site\Entity\InterviewQuestionEntity', 'iq', 'WITH', 'pa.question_id = iq.id')
-                    ->where('pa.post_id = :idPost')
-                    ->setParameter('idPost', $postId)
-                    ->getQuery()->getResult();
-
-        foreach($posts as $post)
-        {
-            $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
-                ->leftJoin('c.post', 'p')
-                ->where('c.post_id = '.$post->getId())
-                ->orderBy('p.date', 'desc')->getQuery()->getResult();
-            $pcats = [];
-            foreach($tags as $tag)
-            {
-                $pcats[] = $tag->getCategoryId();
-            }
-            $result[] = [
-                'id'          => $post->getId(),
-                'authorId'    => $post->getAuthorId(),
-                'authorName'  => $post->getAuthor()->getName(),
-                'tags'        => $pcats,
-                'interviewId' => $post->getInterviewId(),
-                'title'       => $post->getCaption(),
-                'description' => $post->getPreview(),
-                'text'        => /*$post->getText(),*/ $questionAnswerArray,
-                'publishDate' => $post->getDate()->format('d/m/Y'),
-                'post_likes'  => $post->getLikes()
-            ];
-        }
-
-//        $access = $this->getAccessLevel($post->getAuthorId());
-//
-//        return ['access' => $access, 'data' => $result];
-
-        return $result;
-    }
-
-    /**
-     * @param $postId
-     * @return array
-     */
-    public function getPosts($postId) {
-
-        /** @var PostEntity $post */
-        $posts = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-            ->where('p.id IN('.implode(',', $postId).')')
-            ->getQuery()->getResult();
-
         foreach($posts as $post)
         {
             $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
@@ -599,7 +536,7 @@ class PostService extends AbstractApiService {
                 'tags'        => $pcats,
                 'title'       => $post->getCaption(),
                 'description' => $post->getPreview(),
-                'text'        => $post->getText(), // $questionAnswerArray,
+                'text'        => $post->getText(),
                 'publishDate' => $post->getDate()->format('d/m/Y'),
                 'post_likes'  => $post->getLikes()
             ];
@@ -781,7 +718,7 @@ class PostService extends AbstractApiService {
             ->join('question.answer', 'answer')
             ->where("question.postId = $postId")
             ->getQuery()->getResult();
-        print_r($questions);
+
 
         foreach ($questions as $question) {
             $result[] = [
@@ -863,16 +800,16 @@ class PostService extends AbstractApiService {
         ];*/
         $date = getdate();
         $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
-        //$from_date = date('Y-m-d H:i:s', $time);
-        $to_date = date('Y-m-d H:i:s', ($time+864000));
+        $from_date = date('Y-m-d H:i:s', $time);
+        $to_date = date('Y-m-d H:i:s', ($time+86400));
 
         try {
             $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
                 ->createQueryBuilder('pd')
+                ->where("(pd.assignedDatetime > '".$from_date."' AND pd.assignedDatetime < '$to_date')")
                 ->orderBy('pd.assignedDatetime', 'DESC')
                 ->getQuery()
                 ->getResult();
-
 
             $questionAnswerArray = $this->em->createQueryBuilder()
                 ->select('pa.question_id, iq.text, pa.answer')
@@ -898,7 +835,7 @@ class PostService extends AbstractApiService {
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
                         'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
                         'authorName'  => $dayentity[0]->getPost()->getAuthor()->getName(),
-                        'authorBio'  => $dayentity[0]->getPost()->getAuthor()->getInterest(),
+                        'authorBio'   => $dayentity[0]->getPost()->getAuthor()->getInterest(),
                         'tags'        => $pcats,
                         'title'       => $dayentity[0]->getPost()->getCaption(),
                         'description' => $dayentity[0]->getPost()->getPreview(),
@@ -958,14 +895,12 @@ class PostService extends AbstractApiService {
     public function like($postId, $type)
     {
         $authorId = $this->securityContext->getToken()->getUsername();
-        
-        if ($authorId == 'anon.') {
+        if (!is_int($authorId)) {
             $authorId = 0;
             $user_ip = $_SERVER['REMOTE_ADDR'];
         }
         else
         {
-            $authorId = $authorId*1;
             $user_ip = '0';
         }
 

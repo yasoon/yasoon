@@ -153,6 +153,7 @@
       };
 
       WritePostPage.prototype.sendPostData = function() {
+        console.log(1);
         return $.post('/api/post/savePost', {
           postData: this.model.toJSON()
         }, (function(_this) {
