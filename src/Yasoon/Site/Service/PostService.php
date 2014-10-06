@@ -873,6 +873,15 @@ class PostService extends AbstractApiService {
                 ->getQuery()
                 ->getResult();
 
+
+            $questionAnswerArray = $this->em->createQueryBuilder()
+                ->select('pa.question_id, iq.text, pa.answer')
+                ->from('Yasoon\Site\Entity\PostAnswerEntity', 'pa')
+                ->innerJoin('Yasoon\Site\Entity\InterviewQuestionEntity', 'iq', 'WITH', 'pa.question_id = iq.id')
+                ->where('pa.post_id = :idPost')
+                ->setParameter('idPost', $dayentity[0]->getPost()->getId())
+                ->getQuery()->getResult();
+
             if(count($dayentity) > 0)
             {
                 $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
@@ -893,7 +902,7 @@ class PostService extends AbstractApiService {
                         'tags'        => $pcats,
                         'title'       => $dayentity[0]->getPost()->getCaption(),
                         'description' => $dayentity[0]->getPost()->getPreview(),
-                        'text'        => $dayentity[0]->getPost()->getText(),
+                        'text'        => $questionAnswerArray,
                         'publishDate' => $dayentity[0]->getPost()->getDate()->format('d/m/Y'),
                         'post_likes'  => $dayentity[0]->getPost()->getLikes()];
             }
