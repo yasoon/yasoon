@@ -101,14 +101,16 @@ define(
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
+        console.log(1)
         $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
+        window.reload = true
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))
-
+        
       showError: (error) ->
         @$el.find('#' + error.name).closest('.di').removeClass('has-success').addClass('has-error')
         @checkPosition()

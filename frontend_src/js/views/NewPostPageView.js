@@ -153,6 +153,7 @@
       };
 
       WritePostPage.prototype.sendPostData = function() {
+        console.log(1);
         return $.post('/api/post/savePost', {
           postData: this.model.toJSON()
         }, (function(_this) {
@@ -163,7 +164,8 @@
       };
 
       WritePostPage.prototype.changeLocation = function(data) {
-        return window.location = "#/post/" + data.postId + "/";
+        window.location = "#/post/" + data.postId + "/";
+        return window.reload = true;
       };
 
       WritePostPage.prototype.showErrors = function(errors) {

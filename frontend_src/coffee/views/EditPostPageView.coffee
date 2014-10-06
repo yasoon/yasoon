@@ -42,7 +42,8 @@ define(
         @listenTo(@model, 'change:interviewQuestions', @render)
 
       setPostData: (data) ->
-        @model.set(_.extend({}, data, {'category': @model.get('tags')}))
+        @model.set(_.extend({}, data, {'category': data.tags}))
+        console.log(@model)
         @getInterviewQuestions()
 
       createCategoryList: ->
@@ -50,17 +51,17 @@ define(
         @checkCategories()
 
       checkCategories: ->
-        _.each(@model.get('category'), (item) => @$(':checkbox').eq(item - 1).prop('checked', yes))        
+        console.log(@model.get('category'), @$(':checkbox'))
+        _.each(@model.get('category'), (item) => @$(':checkbox').eq(item - 1).prop('checked', yes))
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('interviewQuestions'))
-        console.log(@model.get('interviewQuestions'), interviews)
         if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         @$('#questionsList').append(@postInterviews.render().$el)
         @setAnswers()
 
       setAnswers: ->
-        _.each(@model.get('text'), (answer) => $("[data-answer='#{answer.question_id}']").find('.editor').redactor({imageUpload: '/api/post/upload_image', emptyHtml: answer.answer}))
+        _.each(@model.get('text'), (answer) => $("[data-answer='#{answer.question_id}']").find('.editor').redactor({imageUpload: '/api/post/upload_image', emptyHtml: answer.answer}).closest('li').find('a').addClass('active'))
         @afterRender()
 
       afterRender: ->
@@ -87,4 +88,5 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
+        window.reload = true
 )
