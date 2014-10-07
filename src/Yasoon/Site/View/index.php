@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <title>Yasoon</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=yes' />
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no' />
     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
