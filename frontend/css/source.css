@@ -5938,6 +5938,22 @@ body {
   padding: 0 10px;
   margin: 0 auto;
 }
+.main-layout:before,
+.main-layout:after {
+  content: " ";
+  display: table;
+}
+.main-layout:after {
+  clear: both;
+}
+.main-layout:before,
+.main-layout:after {
+  content: " ";
+  display: table;
+}
+.main-layout:after {
+  clear: both;
+}
 html[xmlns] .clearfix,
 html[xmlns] .container,
 html[xmlns] .container-fluid,
@@ -6227,15 +6243,21 @@ header#header nav a:hover {
 }
 .main-w {
   font-family: "MuseoSansCyrl-100", Arial;
-  font-size: 5em;
-  padding-top: 3em;
-  padding-bottom: 3em;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  font-size: 1.2em;
   margin: 0 auto;
   color: #fff;
   text-align: center;
 }
 .main-w h1 {
-  margin-bottom: 10px;
+  font-family: "MuseoSansCyrl-700", Arial;
+  margin-bottom: 20px;
+}
+.main-w p {
+  font-size: 16px;
+  margin-bottom: 0;
+  padding-bottom: 20px;
 }
 .main-w span {
   display: block;
@@ -6608,6 +6630,9 @@ blockquote {
 .q-box .like-this {
   top: 25px;
 }
+.like-title .like-this {
+  top: 15px;
+}
 .q-post {
   position: relative;
   display: block;
@@ -6626,6 +6651,7 @@ blockquote {
 }
 .main-layout article {
   border-left: none;
+  overflow: hidden;
 }
 .main-layout .main-layout {
   padding: 0;
@@ -8031,16 +8057,11 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   display: block;
   margin: 0 auto;
 }
-@media screen and (max-width: 1060px) {
-  .main-w {
-    font-size: 4em;
-  }
-}
 @media screen and (max-width: 900px) {
   .main-w {
-    font-size: 2.8em;
-    padding-top: 3em;
-    padding-bottom: 2em;
+    padding-top: 100px;
+    padding-bottom: 80px;
+    font-size: 0.7em;
   }
   .m-page .navigate.fixed {
     left: 0;
@@ -8072,10 +8093,8 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   h3 {
     font-size: 1.5em;
   }
-  .main-w {
-    font-size: 1.8em;
-  }
   .main-w p {
+    font-size: 12px;
     margin-top: 20px;
     margin-bottom: 20px;
   }
@@ -8235,6 +8254,9 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     left: 0;
     padding: 0 0 0 10px !important;
   }
+  .main-w p {
+    display: none;
+  }
   .barrier .p-box.login {
     width: 320px;
   }
@@ -8261,15 +8283,10 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     font-size: 1.3em;
   }
   .main-w {
-    font-size: 1.5em;
-    padding-top: 4.8em;
-    padding-bottom: 1.5em;
+    font-size: .7em;
   }
   .like-title {
     padding-right: 60px;
-  }
-  .main-w p {
-    margin-bottom: 30px;
   }
   header nav {
     display: none;

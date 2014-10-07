@@ -22,6 +22,7 @@ body {
   max-width: 840px;
   padding: 0 10px;
   margin: 0 auto;
+  .clearfix;
 }
 
 html[xmlns]
@@ -308,14 +309,21 @@ header#header {
 
 .main-w {
   font-family: "MuseoSansCyrl-100", Arial;
-  font-size: 5em;
-  padding-top: 3em;
-  padding-bottom: 3em;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  font-size: 1.2em;
   margin: 0 auto;
   color: #fff;
   text-align: center;
+
   h1 {
-    margin-bottom: 10px;
+    font-family: "MuseoSansCyrl-700", Arial;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
   }
   span {
     display: block;
@@ -698,6 +706,9 @@ blockquote {
   .q-box & {
     top: 25px;
   }
+  .like-title &{
+    top: 15px;
+  }
 }
 .q-post{
   position: relative;
@@ -718,6 +729,7 @@ blockquote {
 
   article{
     border-left: none;
+    overflow: hidden;
   }
   .main-layout{
     padding: 0;
