@@ -5820,6 +5820,15 @@ h6,
   line-height: normal;
   -webkit-font-smoothing: antialiased;
 }
+h1,
+h2,
+h3,
+h4,
+.main-w {
+  -webkit-transition: font-size 0.5s ease;
+  -moz-transition: font-size 0.5s ease;
+  transition: font-size 0.5s ease;
+}
 h1 {
   font-size: 3em;
 }
@@ -6246,7 +6255,7 @@ header#header nav a:hover {
   margin-bottom: 20px;
 }
 .main-w p {
-  font-size: 22px;
+  font-size: 16px;
   margin-bottom: 0;
   padding-bottom: 20px;
 }
@@ -6646,6 +6655,9 @@ blockquote {
 .like-title .like-this {
   top: 15px;
 }
+.like-title .like-this {
+  top: 15px;
+}
 .q-post {
   position: relative;
   display: block;
@@ -6665,9 +6677,6 @@ blockquote {
 .main-layout article {
   border-left: none;
   overflow: hidden;
-}
-.main-layout .main-layout {
-  padding: 0;
 }
 .social-links a {
   display: block;
@@ -8105,9 +8114,6 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     padding-bottom: 80px;
     font-size: 0.7em;
   }
-  .main-w p {
-    font-size: 16px;
-  }
   .m-page .navigate.fixed {
     left: 0;
     margin-left: 0;
@@ -8381,13 +8387,19 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     font-size: 2.2em;
   }
   h2 {
-    font-size: 1.8em;
+    font-size: 2.2em;
   }
   h2 {
     font-size: 1.3em;
   }
   .main-w {
     font-size: .7em;
+  }
+  .like-title {
+    padding-right: 60px;
+  }
+  header nav {
+    display: none;
   }
   .media-main-nav {
     display: block;
