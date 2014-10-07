@@ -1,13 +1,8 @@
-@media screen and (max-width: 1060px) {
-  #bg-main .main-w{
-  	font-size: 4em;
-  }
-}
 @media screen and (max-width: 900px) {
-  #bg-main .main-w{
-  	font-size: 2.8em;
-  	padding-top: 3em;
-  	padding-bottom: 2em;
+  .main-w{
+    padding-top: 100px;
+    padding-bottom: 80px;
+    font-size: 0.7em;
   }
   .m-page .navigate.fixed {
 		left: 0;
@@ -50,11 +45,16 @@
 	h3{
 		font-size: 1.5em;
 	}
-	#bg-main .main-w{
-		font-size: 1.8em;
-	}
-	#bg-main .main-w p{
-		margin-bottom: 20px;
+	.main-w{
+      p{
+        font-size: 12px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        ~ p{
+          display: none;
+        }
+      }
 	}
 	[type="text"].search{
 		width: 100%;	
@@ -174,7 +174,24 @@
 		left: 0;
 		padding: 0 0 0 10px!important
 	}
-	
+    .main-w p{
+      display: none;
+    }
+    .barrier .p-box.login{
+      width: 320px;
+
+      h3{
+        margin-bottom: 20px;
+      }
+    }
+    .barrier .p-box.login .connect,
+    .barrier .p-box.login .connect + .connect{
+      width: 100%;
+      margin: 0;
+    }
+    .barrier .p-box.login .connect .btn{
+      top: 0;
+    }
 }
 @media screen and (max-width: 460px) {
 	h1{
@@ -183,15 +200,16 @@
 	h2{
 		font-size: 2.2em;
 	}
-	#bg-main .main-w{
-		font-size: 1.5em;
-		padding-top: 4.8em;
-		padding-bottom: 1.5em;
+    h2{
+      font-size: 1.3em;
+    }
+	.main-w{
+		font-size: .7em;
 	}
-	#bg-main .main-w p{
-		margin-bottom: 30px;
-	}
-	#bg-main nav{
+    .like-title{
+      padding-right: 60px;
+    }
+	header nav{
 		display: none;
 	}
 	.media-main-nav{
