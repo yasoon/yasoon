@@ -13,8 +13,6 @@
 
       PostsPreviewsCollection.prototype.tagName = 'section';
 
-      PostsPreviewsCollection.prototype.className = 'main-layout m-page';
-
       PostsPreviewsCollection.prototype.template = _.template(postPreviewsTpl);
 
       PostsPreviewsCollection.prototype.initialize = function(options) {

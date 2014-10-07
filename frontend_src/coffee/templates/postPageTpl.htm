@@ -11,7 +11,6 @@
 		<% if (authorId === Window.config.userId) { %>
 			<a href="#/post/<%= id %>/edit" class="editable"></a>
 		<% } %>
-        <br/>
 		<span class="media-pub">
 			опубликовано <%= _.getDateText(publishDate) %>
 		</span>
