@@ -23,7 +23,7 @@
 
       PostAuthorModelView.prototype.tagName = 'aside';
 
-      PostAuthorModelView.prototype.className = 'postinfo col-md-3';
+      PostAuthorModelView.prototype.className = 'postinfo';
 
       PostAuthorModelView.prototype.template = _.template(speakerInfoTpl);
 

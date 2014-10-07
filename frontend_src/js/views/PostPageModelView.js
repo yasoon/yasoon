@@ -13,7 +13,7 @@
 
       PostPageModelView.prototype.tagName = 'article';
 
-      PostPageModelView.prototype.className = 'col-md-9';
+      PostPageModelView.prototype.className = 'lim';
 
       PostPageModelView.prototype.template = _.template(postPageTpl);
 

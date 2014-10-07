@@ -21,7 +21,7 @@ define(
         'click .js-follow':   'followSpeaker'
 
       tagName:                'aside'
-      className:              'postinfo col-md-3'
+      className:              'postinfo'
 
       template:               _.template(speakerInfoTpl)
 

@@ -8,7 +8,7 @@ define(
   ) ->
     class PostPageModelView extends Backbone.View
       tagName: 'article'
-      className: 'col-md-9'
+      className: 'lim'
       template: _.template(postPageTpl)
       render: ->
         @$el.html(@template(@model.toJSON()))
