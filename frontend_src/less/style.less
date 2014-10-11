@@ -296,7 +296,7 @@ header#header {
     margin-bottom: 20px;
   }
   p {
-    font-size: 16px;
+    font-size: 22px;
     margin-bottom: 0;
     padding-bottom: 20px;
   }
@@ -530,6 +530,14 @@ footer nav{
   img {
     margin: 0 20px 20px 0;
   }
+  &.fixed {
+    position: fixed;
+    top: 0;
+  }
+  h4{
+    margin: 0;
+    padding: 15px 0;
+  }
 }
 .usr-name,
 .p-label {
@@ -595,11 +603,17 @@ blockquote {
 
 .like-title{
   position: relative;
-  padding-right: 100px;
+  padding-right: 180px;
   display: inline-block;
   zoom: 1;
   width: 100%;
   box-sizing: border-box;
+  padding-bottom: 10px;
+
+  .post-date {
+    padding-top: 20px;
+    display: block;
+  }
 }
 
 .like-this, .q-post {
@@ -624,7 +638,7 @@ blockquote {
   position: absolute;
   top: 15px;
   right: 0px;
-  height: 38px;
+  height: 48px;
   display: block;
   padding-left: 55px;
   padding-top: 5px;
@@ -740,6 +754,8 @@ article {
     }
     h1, h2, h3, h4 {
       text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 0;
     }
     //    &:after {
     //      padding-top: 20px;
@@ -1074,4 +1090,28 @@ h2 {
 
 .mainPage-intro {
   background: #F75E5E;
+  background-attachment: fixed;
+}
+
+h1,h2,h3,h4,h5{
+  line-height: 1;
+}
+
+article, section{
+  padding-bottom: 1px;
+  margin-bottom: -1px;
+}
+.u-description {
+  padding-right: 10px;
+  line-height: 1.5em;
+}
+.postinfo {
+  padding-bottom: 20px;
+}
+
+#window-close{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  padding: 5px;
 }
