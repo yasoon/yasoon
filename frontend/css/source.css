@@ -5820,15 +5820,6 @@ h6,
   line-height: normal;
   -webkit-font-smoothing: antialiased;
 }
-h1,
-h2,
-h3,
-h4,
-.main-w {
-  -webkit-transition: font-size 0.5s ease;
-  -moz-transition: font-size 0.5s ease;
-  transition: font-size 0.5s ease;
-}
 h1 {
   font-size: 3em;
 }
@@ -6255,7 +6246,7 @@ header#header nav a:hover {
   margin-bottom: 20px;
 }
 .main-w p {
-  font-size: 16px;
+  font-size: 22px;
   margin-bottom: 0;
   padding-bottom: 20px;
 }
@@ -6753,6 +6744,7 @@ article.cat-title h4 {
   font-weight: bold;
   font-family: inherit;
   text-transform: uppercase;
+  font-weight: 700;
   margin-top: 0;
 }
 .page-layout .postinfo {
@@ -8114,6 +8106,9 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     padding-bottom: 80px;
     font-size: 0.7em;
   }
+  .main-w p {
+    font-size: 16px;
+  }
   .m-page .navigate.fixed {
     left: 0;
     margin-left: 0;
@@ -8157,6 +8152,11 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     padding: 20px;
     margin: -20px;
     box-shadow: 0 2px 5px #e2e2e2;
+  }
+  .postinfo.fixed {
+    padding-left: 10px;
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   .postinfo .fixed {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -8394,12 +8394,6 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   }
   .main-w {
     font-size: .7em;
-  }
-  .like-title {
-    padding-right: 60px;
-  }
-  header nav {
-    display: none;
   }
   .media-main-nav {
     display: block;
