@@ -20,9 +20,6 @@ use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
 use Yasoon\Site\Entity\PostsTimelineEntity;
-use Symfony\Component\Debug\Debug;
-
-//Debug::enable();
 
 error_reporting(0);
 
@@ -64,6 +61,7 @@ class PostService extends AbstractApiService {
 
         //echo $post['questionList'][1]['id'];
         //die;
+
         try {
             /** @var $postEntity PostEntity */
             $postEntity = (new PostEntity())
@@ -105,11 +103,11 @@ class PostService extends AbstractApiService {
                 {
                     $postAnswerEntity = (new PostAnswerEntity())
                         ->setPostId($post_id)
-                        ->setQuestionId($post['interviewQuestions'][$quest['id']]['question_id']*1)
+                        ->setQuestionId($post['interviewQuestions'][$i]['question_id']*1)
                         ->setAnswer($quest['text']);
                     $postAnswerEntity->setPost($postEntity);
                     $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity',
-                        $post['interviewQuestions'][$quest['id']]['question_id']*1));
+                        $post['interviewQuestions'][$i]['question_id']*1));
 
                     $this->em->persist($postAnswerEntity);
                     $this->em->flush();
@@ -781,7 +779,7 @@ class PostService extends AbstractApiService {
             ->join('question.answer', 'answer')
             ->where("question.postId = $postId")
             ->getQuery()->getResult();
-        print_r($questions);
+
 
         foreach ($questions as $question) {
             $result[] = [
@@ -863,15 +861,24 @@ class PostService extends AbstractApiService {
         ];*/
         $date = getdate();
         $time = mktime(0,0,0,$date['mon'], $date['mday'], $date['year']);
-        //$from_date = date('Y-m-d H:i:s', $time);
-        $to_date = date('Y-m-d H:i:s', ($time+864000));
+        $from_date = date('Y-m-d H:i:s', $time);
+        $to_date = date('Y-m-d H:i:s', ($time+86400));
 
         try {
             $dayentity = $this->em->getRepository('Yasoon\Site\Entity\PostOfTheDayEntity')
                 ->createQueryBuilder('pd')
+                ->where("(pd.assignedDatetime > '".$from_date."' AND pd.assignedDatetime < '$to_date')")
                 ->orderBy('pd.assignedDatetime', 'DESC')
                 ->getQuery()
                 ->getResult();
+
+            $questionAnswerArray = $this->em->createQueryBuilder()
+                ->select('pa.question_id, iq.text, pa.answer')
+                ->from('Yasoon\Site\Entity\PostAnswerEntity', 'pa')
+                ->innerJoin('Yasoon\Site\Entity\InterviewQuestionEntity', 'iq', 'WITH', 'pa.question_id = iq.id')
+                ->where('pa.post_id = :idPost')
+                ->setParameter('idPost', $dayentity[0]->getPost()->getId())
+                ->getQuery()->getResult();
 
             if(count($dayentity) > 0)
             {
@@ -889,11 +896,11 @@ class PostService extends AbstractApiService {
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
                         'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
                         'authorName'  => $dayentity[0]->getPost()->getAuthor()->getName(),
-                        'authorBio'  => $dayentity[0]->getPost()->getAuthor()->getInterest(),
+                        'authorBio'   => $dayentity[0]->getPost()->getAuthor()->getInterest(),
                         'tags'        => $pcats,
                         'title'       => $dayentity[0]->getPost()->getCaption(),
                         'description' => $dayentity[0]->getPost()->getPreview(),
-                        'text'        => $dayentity[0]->getPost()->getText(),
+                        'text'        => $questionAnswerArray,
                         'publishDate' => $dayentity[0]->getPost()->getDate()->format('d/m/Y'),
                         'post_likes'  => $dayentity[0]->getPost()->getLikes()];
             }
@@ -949,14 +956,12 @@ class PostService extends AbstractApiService {
     public function like($postId, $type)
     {
         $authorId = $this->securityContext->getToken()->getUsername();
-        
-        if ($authorId == 'anon.') {
+        if (!is_int($authorId)) {
             $authorId = 0;
             $user_ip = $_SERVER['REMOTE_ADDR'];
         }
         else
         {
-            $authorId = $authorId*1;
             $user_ip = '0';
         }
 

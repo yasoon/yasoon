@@ -65,7 +65,7 @@ class InterviewController {
      * @Method({"POST"})
      */
     public function save_interview(Request $request) {
-        $data = $request->request->get('interview');   
+        $data = $request->request->get('interview');
         /*$data = ['interview' => ['id' => 1,
                                  'name' => 'rerere',
                                  'questions' => [['id' => 1, 'text' => 'testtt11'],

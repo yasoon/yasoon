@@ -24,6 +24,11 @@
         };
       };
 
+      $('body').on('click', '#window-close', function() {
+        event.preventDefault();
+        return $('.popUpBackground').click();
+      });
+
       HeaderLoginView.prototype.loginPopUp = function(event) {
         event.preventDefault();
         if (this.loginpopUpView == null) {

@@ -13,10 +13,16 @@ body {
   min-height: 100%;
 }
 
+.fixed + .mainPage-content{
+  padding-top: 45px;
+}
+
 .main-layout {
   position: relative;
   max-width: 840px;
+  padding: 0 10px;
   margin: 0 auto;
+  .clearfix;
 }
 
 html[xmlns]
@@ -48,6 +54,16 @@ a {
   }
   &.un{
     text-decoration: underline;
+  }
+}
+
+.ht-style{
+  padding-top: 20px;
+  padding-left: 20px;
+  border-left: 1px solid #e2e2e2;
+
+  .hr {
+    margin-left: -20px;
   }
 }
 
@@ -89,25 +105,28 @@ a.dd,
 
 .wrap {
   .index & {
-    padding-bottom: 44px;
+    padding-bottom: 58px;
     padding-top: 0;
   }
   padding-bottom: 42px;
   padding-top: 55px;
 }
 
-.posts {
-  .items-list {
-    article {
-      padding-left: 20px;
-      border-left: 1px solid #ccc;
-      padding-top: 20px;
-      .content {
-        padding: 0;
-      }
-      .hr {
-        margin-left: -20px;
-      }
+.items-list {
+  overflow: hidden;
+
+  article {
+    padding-bottom: 20px;
+    .ht-style;
+
+    .content {
+      padding: 0;
+    }
+
+    &.lim {
+      border-left: 1px solid #ddd;
+      margin-left: 0;
+      .clearfix();
     }
   }
 }
@@ -131,26 +150,32 @@ header#header {
   line-height: 55px;
   width: 100%;
   z-index: 9;
+
   & {
     background: #F5F5F5;
     border-bottom: 1px solid #ddd;
     line-height: 28px;
+
     .inside {
-      display: table;
       width: 100%;
       height: 55px;
       line-height: 55px;
       z-index: 9;
       position: relative;
-      & > .logo,
-      & > .my-nav,
-      & > nav {
-        display: table-cell;
-        vertical-align: middle;
+
+      > div{
+        position: absolute;
+        right: 10px;
+        top: 0;
       }
+
       & > nav {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         text-align: center;
+
         a {
           font: 14px 'MuseoSansCyrl-100', Arial;
           text-transform: uppercase;
@@ -158,6 +183,7 @@ header#header {
           border-radius: 15px;
           padding: 5px 10px;
           text-decoration: none;
+
           .speakers &.speakers, .posts &.posts {
             border-color: black;
           }
@@ -223,14 +249,16 @@ header#header {
         }
       }
     }
-    .logo{
-      padding-right: 25px;
+    a{
+      position: relative;
+      z-index: 2;
     }
     nav {
-      display: inline-block;
+
       a {
         font-weight: 700;
         color: #000;
+
         &:hover{
           border-color: #999;
         }
@@ -238,15 +266,13 @@ header#header {
     }
   }
 
-
-
   .index & {
     text-shadow: 0 0 5px rgba(0,0,0,.3);
     background: rgba(0,0,0,.3);
     color: #fff;
     border: none;
+
     .inside {
-      position: relative;
       & .btn,
       & a,
       & .main-w {
@@ -283,14 +309,21 @@ header#header {
 
 .main-w {
   font-family: "MuseoSansCyrl-100", Arial;
-  font-size: 5em;
-  padding-top: 3em;
-  padding-bottom: 3em;
-  margin: 0 auto 0.6em auto;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  font-size: 1.2em;
+  margin: 0 auto;
   color: #fff;
   text-align: center;
+
   h1 {
-    margin-bottom: 10px;
+    font-family: "MuseoSansCyrl-700", Arial;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 22px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
   }
   span {
     display: block;
@@ -412,18 +445,18 @@ footer nav{
     float: left;
   }
 
-  .post & article.lim,
-  .author & section.lim,
-  .speaker & section.lim {
-    margin-left: 212px;
+  .navigate{
+    padding-left: 20px;
   }
 
   & > aside {
     background: #fff;
-    width: 212px;
+    position: relative;
     float: left;
+    width: 195px;
+
     & ~ section {
-      margin-left: 212px;
+      margin-left: 195px;
     }
   }
 
@@ -435,22 +468,37 @@ footer nav{
   padding: 0!important
 }
 
+article.lim {
+  border-left: 1px solid #ddd;
+  padding-left: 20px;
+  padding-top: 20px;
+
+  .hr{
+    margin-left: -20px;
+  }
+}
+
+.lim .lim {
+  margin-left: 0;
+}
+
 .navigate, .write-post-button {
   height: 45px;
   line-height: 45px;
   border: solid #e2e2e2;
   border-width: 0 0 1px 1px;
-  padding-left: 20px;
   background: #fff;
+
   &.fixed {
     width: 100%;
     box-shadow: 0 6px 5px -4px rgba(0,0,0,.1);
-    .main-layout & {
-      max-width: 845px;
-    }
-    .page-layout & {
-      max-width: 830px;
-    }
+  }
+  .main-layout & {
+    border-left: none;
+    max-width: 820px;
+  }
+  .page-layout & {
+    max-width: 820px;
   }
 }
 
@@ -482,7 +530,6 @@ footer nav{
   z-index: 10;
 }
 
-.main-layout .navigate,
 .m-page .navigate {
   border-left: 0;
   padding-left: 0;
@@ -510,23 +557,43 @@ footer nav{
 .postinfo {
   .box-sizing(border-box);
   width: 195px;
-  padding-top: 15px;
+  padding-top: 25px;
   padding-right: 15px;
-  float: left;
   color: #a7a7a7;
   font-family: 'MuseoSansCyrl-100', Arial;
-  top: 0;
+  float: left;
+  .clearfix;
+
   .btn {
     color: #238C00;
   }
+  .usr-name{
+    padding: 0;
+  }
   img {
     margin: 0 20px 20px 0;
+  }
+  &.fixed {
+    position: fixed;
+    top: 0;
+  }
+  h4{
+    margin: 0;
+    padding: 15px 0;
   }
 }
 .usr-name,
 .p-label {
   text-transform: uppercase;
   padding-bottom: .5em;
+  padding-top: 1.3em;
+
+  .postinfo &{
+    padding-top: 0;
+  }
+  span ~ span {
+    padding-left: 20px;
+  }
 }
 .usr-name{
   color: #238C00;
@@ -565,10 +632,11 @@ a.editable {
 }
 
 .media-pub{
-  color: #ddd;
+  color: #999;
   font-size: 14px;
   font-family: 'MuseoSansCyrl-100', Arial;
   // display: none;
+  white-space: nowrap;
   font-weight: normal;
   margin-top: 10px;
 }
@@ -587,11 +655,17 @@ blockquote {
 
 .like-title{
   position: relative;
-  padding-right: 100px;
+  padding-right: 180px;
   display: inline-block;
   zoom: 1;
   width: 100%;
   box-sizing: border-box;
+  padding-bottom: 10px;
+
+  .post-date {
+    padding-top: 20px;
+    display: block;
+  }
 }
 
 .like-this, .q-post {
@@ -603,30 +677,36 @@ blockquote {
     display: block;
     position: absolute;
     left: 0;
-    top: 50%;
-    margin-top: -24px;
+    top: 0;
   }
   & span {
     display: block;
     color: #7a7a7a;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 
 .like-this {
   position: absolute;
-  top: 15px;
+  top: 50%;
+  margin-top: -16px;
   right: 0px;
-  height: 38px;
+  height: 48px;
   display: block;
   padding-left: 55px;
   padding-top: 5px;
   color: #238C00;
   cursor: pointer;
+
   .post & {
-    top: 28px;
+    top: 20px;
   }
   .q-box & {
-    top: 13px;
+    top: 25px;
+  }
+  .like-title &{
+    top: 15px;
   }
 }
 .q-post{
@@ -634,19 +714,24 @@ blockquote {
   display: block;
   padding-left: 55px;
   color: #238C00;
-  width: 440px;
   height: 33px;
   padding-top: 8px;
   font-size: 16px;
   i {
+    margin-top: -8px;
     background-position-x: -49px;
   }
 }
 
 .main-layout{
   padding-bottom: 20px;
+
   article{
     border-left: none;
+    overflow: hidden;
+  }
+  .main-layout{
+    padding: 0;
   }
 }
 
@@ -671,11 +756,10 @@ blockquote {
 
 
 article {
-  display: table;
   position: relative;
-  width: 100%;
   h1 {
     margin-bottom: 10px;
+    margin-top: 0;
   }
   .hr {
     padding-bottom: 0;
@@ -692,8 +776,10 @@ article {
   }
   .speaker-info {
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+
+    .usr-name, .p-label{
+      padding-top: 0;
+    }
   }
   .usr-ic {
     margin: 20px;
@@ -704,46 +790,28 @@ article {
   .btn {
     color: #238C00;
   }
-  &:before {
-    padding-top: 20px;
-  }
-  &.lim {
-    border-left: 1px solid #ddd;
-    padding-left: 20px;
-    .clearfix();
-    .hr {
-      margin-left: -20px;
-    }
-    .speakers & {
-      border-bottom: 1px solid #ddd;
-    }
-  }
+
   &.cat-title {
     font-family: 'MuseoSansCyrl-700', Arial;
     color: #000;
+    .ht-style;
+
     p {
       font-size: 18px;
-      color: #ddd;
+      color: #999;
       font-family: 'MuseoSansCyrl-100', Arial;
     }
     h1, h2, h3, h4 {
       text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 0;
     }
-    //    &:after {
-    //      padding-top: 20px;
-    //    }
-  }
-
-
-  .main-layout & {
-    padding-left: 0;
   }
 }
 
 .page-layout .postinfo{
   padding-right: 0;
 }
-
 
 .content{
   font-size: 1.3em;
@@ -888,6 +956,7 @@ footer {
           float: right;
           width: 260px;
           position: relative;
+
           &:before {
             content: '';
             width: 1px;
@@ -906,8 +975,9 @@ footer {
           display: block;
           margin-bottom: 25px;
           line-height: 25px;
+
           &.last {
-            margin-top: 40px;
+            margin-top: 30px;
           }
         }
       }
@@ -1044,22 +1114,34 @@ h2 {
   }
 }
 
-.index {
-  .main-layout .lim {
-    margin-left: 180px;
-    width: auto;
-    .content, .like-title {
-      padding-left: 1em;
-    }
-  }
-  .postinfo {
-    position: absolute;
-    &.fixed {
-      top: 140px;
-    }
-  }
+.lim {
+  margin-left: 195px;
 }
 
 .mainPage-intro {
   background: #F75E5E;
+  background-attachment: fixed;
+}
+
+h1,h2,h3,h4,h5{
+  line-height: 1;
+}
+
+article, section{
+  padding-bottom: 1px;
+  margin-bottom: -1px;
+}
+.u-description {
+  padding-right: 10px;
+  line-height: 1.5em;
+}
+.postinfo {
+  padding-bottom: 20px;
+}
+
+#window-close{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  padding: 5px;
 }

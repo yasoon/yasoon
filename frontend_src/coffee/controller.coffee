@@ -77,13 +77,15 @@ define(
 
       newPost: (id) ->
         $('body').removeClass().addClass('new-post')
-        @newPostPageView = new NewPostPageView({id: id, model: new PostPageModel(), el: LayoutView.contentRegion.$el})
+        @newPostPageView = new NewPostPageView({id: id, model: new PostPageModel()})
+        LayoutView.contentRegion.$el.empty().append(@newPostPageView.$el)
         @newPostPageView.delegateEvents()
         @
 
       editPost: (id) ->
         $('body').removeClass().addClass('edit-post')
-        @editPostPageView = new EditPostPageView({id: id, el: LayoutView.contentRegion.$el, model: new PostPageModel()})
+        @editPostPageView = new EditPostPageView({id: id, model: new PostPageModel()})
+        LayoutView.contentRegion.$el.empty().append(@editPostPageView.$el)
         @editPostPageView.delegateEvents()
         @
 

@@ -20,6 +20,10 @@ define(
       events: ->
         'click #js-login': 'loginPopUp'
 
+      $('body').on 'click', '#window-close', ->
+        event.preventDefault()
+        $('.popUpBackground').click()
+
       loginPopUp: (event) ->
         event.preventDefault()
         if not @loginpopUpView? then @loginpopUpView = new LoginPopUpView({model: new UserLoginModel()}) else @loginpopUpView.delegateEvents()
