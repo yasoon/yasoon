@@ -22,6 +22,7 @@ body {
   max-width: 840px;
   padding: 0 10px;
   margin: 0 auto;
+  .clearfix;
 }
 
 html[xmlns]
@@ -308,14 +309,21 @@ header#header {
 
 .main-w {
   font-family: "MuseoSansCyrl-100", Arial;
-  font-size: 5em;
-  padding-top: 3em;
-  padding-bottom: 3em;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  font-size: 1.2em;
   margin: 0 auto;
   color: #fff;
   text-align: center;
+
   h1 {
-    margin-bottom: 10px;
+    font-family: "MuseoSansCyrl-700", Arial;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 22px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
   }
   span {
     display: block;
@@ -567,7 +575,7 @@ article.lim {
   }
   &.fixed {
     position: fixed;
-    top: 45px;
+    top: 0;
   }
   h4{
     margin: 0;
@@ -647,15 +655,15 @@ blockquote {
 
 .like-title{
   position: relative;
-  padding-right: 120px;
+  padding-right: 180px;
   display: inline-block;
   zoom: 1;
   width: 100%;
   box-sizing: border-box;
+  padding-bottom: 10px;
 
   .post-date {
-    padding-top: 10px;
-    font-size: .7em;
+    padding-top: 20px;
     display: block;
   }
 }
@@ -685,7 +693,6 @@ blockquote {
   margin-top: -16px;
   right: 0px;
   height: 48px;
-  max-width: 100px;
   display: block;
   padding-left: 55px;
   padding-top: 5px;
@@ -697,6 +704,9 @@ blockquote {
   }
   .q-box & {
     top: 25px;
+  }
+  .like-title &{
+    top: 15px;
   }
 }
 .q-post{
@@ -718,6 +728,7 @@ blockquote {
 
   article{
     border-left: none;
+    overflow: hidden;
   }
   .main-layout{
     padding: 0;
@@ -792,6 +803,7 @@ article {
     }
     h1, h2, h3, h4 {
       text-transform: uppercase;
+      font-weight: 700;
       margin-top: 0;
     }
   }
@@ -1125,4 +1137,11 @@ article, section{
 }
 .postinfo {
   padding-bottom: 20px;
+}
+
+#window-close{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  padding: 5px;
 }
