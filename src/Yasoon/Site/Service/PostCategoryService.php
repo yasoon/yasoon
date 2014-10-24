@@ -97,6 +97,7 @@ class PostCategoryService extends AbstractApiService {
                    $strLength += strlen(strip_tags($answer->getAnswer()));
                 }        
                 $timeToRead = round($strLength/1200);
+                
                 foreach($post_categories as $pc)
                 {
                     $tags[] = $pc->getCategoryId();
@@ -110,7 +111,8 @@ class PostCategoryService extends AbstractApiService {
                             'text'        => $results_postsDateSort[$i]->getPost()->getText(),
                             'publishDate' => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
                             'post_likes'  => $results_postsDateSort[$i]->getPost()->getLikes(),
-                            'timeToRead'  => $timeToRead];
+                            'timeToRead'  => $timeToRead,
+                            'avatarImg'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage()];
                 unset($tags);
                 
                 $post_categories = $results_postsRateSort[$i]->getPost()->getCategory();
@@ -126,7 +128,9 @@ class PostCategoryService extends AbstractApiService {
                             'description' => $results_postsRateSort[$i]->getPost()->getPreview(),
                             'text'        => $results_postsRateSort[$i]->getPost()->getText(),
                             'publishDate' => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'  => $results_postsRateSort[$i]->getPost()->getLikes()];
+                            'post_likes'  => $results_postsRateSort[$i]->getPost()->getLikes(),
+                            'timeToRead'  => $timeToRead,
+                            'avatarImg'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage()];
                 unset($tags);
                 
                 

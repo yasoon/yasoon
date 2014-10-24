@@ -284,6 +284,24 @@ class AuthorEntity implements UserInterface, \Serializable
     {
         return $this->name;
     }
+    
+     /**
+     * @param $image
+     * @return $this
+     */
+    public function setImage($img)
+    {
+        $this->img = $img;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->img;
+    }
 
     /**
      * @param $posts

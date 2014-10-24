@@ -1,7 +1,13 @@
-<div class="p-label">
-    <a href="#/speaker/<%= authorId %>/posts">
-        <%= authorName %>
-    </a>
+<div class="speaker-avatar">
+	<a href="#/speaker/<%= authorId %>/posts">
+		<% if(avatarImg === null) { %>
+			<img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= name %>">
+		<% } else { %>
+			<img src="/web/upload/avatar/<%= avatarImg %>" class="usr-ic-small" alt="<%= name %>">
+		<% } %>
+                
+                <%= authorName %>
+	</a>
 </div>
 <h2>
     <a href="#/post/<%= id %>">
@@ -23,5 +29,15 @@
         <%= description %>
         <% } %>
     </p>
+    <div class="timeToRead">
+        <div class="p-label">
+            <% if (typeof(timeToRead) !== "undefined" && timeToRead > 0) { %>
+                <%= timeToRead %> мин чтения
+            <% } else if (timeToRead === 0) { %>
+                1 мин чтения
+            <% } %>
+        </div>
+    </div>
 </div>
+
 <div class="hr"></div>

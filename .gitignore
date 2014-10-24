@@ -21,6 +21,8 @@ app/logs/
 
 #node modules
 node_modules/
+frontend_src/build/js/main.min.js
 frontend_src/upload/
 frontend_src/assets/source_html_files/
 upload/
+/nbproject/private/

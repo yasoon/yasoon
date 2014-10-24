@@ -1,7 +1,13 @@
-<div class="p-label">
-    <a href="#/speaker/<%= authorId %>/posts">
-        <%= authorName %>
-    </a>
+<div class="speaker-avatar">
+	<a href="#/speaker/<%= authorId %>/posts">
+		<% if(avatarImg === null) { %>
+			<img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= name %>">
+		<% } else { %>
+			<img src="/web/upload/avatar/<%= avatarImg %>" class="usr-ic-small" alt="<%= name %>">
+		<% } %>
+                
+                <%= authorName %>
+	</a>
 </div>
 <h2>
     <a href="#/post/<%= id %>">

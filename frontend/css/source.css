@@ -6461,6 +6461,16 @@ article.lim .hr {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
+.usr-ic-small {
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  margin: 0 10px 5px 5px;
+}
 .postinfo {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -6518,6 +6528,14 @@ article.lim .hr {
 .usr-name span ~ span,
 .p-label span ~ span {
   padding-left: 20px;
+}
+.timeToRead .usr-name,
+.timeToRead .p-label {
+  padding-top: 0;
+  padding-bottom: 0;
+  text-transform: none;
+  font-size: 13px;
+  line-height: 1em;
 }
 .usr-name {
   color: #238C00;
