@@ -830,12 +830,22 @@ class PostService extends AbstractApiService {
             ->getQuery()->getResult();
 
         foreach ($posts as $post) {
+            
+            $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
+            $strLength = 0;
+            foreach ($post_answers as $answer) {
+               $strLength += strlen(strip_tags($answer->getAnswer()));
+            }        
+            $timeToRead = round($strLength/1200);
+                
             $result[] = [
                 'authorName' => $post->getAuthor()->getName(),
                 'authorId'   => $post->getAuthor()->getId(),
                 'caption'    => $post->getCaption(),
                 'preview'    => $post->getPreview(),
-                'id'         => $post->getId()
+                'id'         => $post->getId(),
+                'avatarImg'  => $post->getAuthor()->getImage(),
+                'timeToRead'  => $timeToRead
             ];
         }
 
