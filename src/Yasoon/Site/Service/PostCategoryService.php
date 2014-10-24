@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\CategoryEntity;
 use Yasoon\Site\Entity\PostCategoryEntity;
 use Yasoon\Site\Entity\PostEntity;
+use Yasoon\Site\Entity\PostAnswerEntity;
 
 error_reporting(E_ALL);
 
@@ -82,15 +83,25 @@ class PostCategoryService extends AbstractApiService {
             $postsDateSort = [];
             $postsRateSort = [];
             foreach($results_postsDateSort as $i => $v)
-            {
+            { 
+
                 try {
+                   
                 //echo $i.' ';
                 $post_categories = $results_postsDateSort[$i]->getPost()->getCategory();
+                $id = $results_postsDateSort[$i]->getPost()->getId();
+                
+                $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
+                $strLength = 0;
+                foreach ($post_answers as $answer) {
+                   $strLength += strlen(strip_tags($answer->getAnswer()));
+                }        
+                $timeToRead = round($strLength/1200);
                 foreach($post_categories as $pc)
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $postsDateSort[] = ['id'          => $results_postsDateSort[$i]->getPost()->getId(),
+                $postsDateSort[] = ['id'          => $id,
                             'authorId'    => $results_postsDateSort[$i]->getPost()->getAuthorId(),
                             'authorName'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
                             'tags'        => $tags,
@@ -98,7 +109,8 @@ class PostCategoryService extends AbstractApiService {
                             'description' => $results_postsDateSort[$i]->getPost()->getPreview(),
                             'text'        => $results_postsDateSort[$i]->getPost()->getText(),
                             'publishDate' => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'  => $results_postsDateSort[$i]->getPost()->getLikes()];
+                            'post_likes'  => $results_postsDateSort[$i]->getPost()->getLikes(),
+                            'timeToRead'  => $timeToRead];
                 unset($tags);
                 
                 $post_categories = $results_postsRateSort[$i]->getPost()->getCategory();

@@ -23,5 +23,15 @@
         <%= description %>
         <% } %>
     </p>
+    <div class="timeToRead">
+        <div class="p-label">
+            <% if (typeof(timeToRead) !== "undefined" && timeToRead > 0) { %>
+                <%= timeToRead %> мин чтения
+            <% } else if (timeToRead === 0) { %>
+                1 мин чтения
+            <% } %>
+        </div>
+    </div>
 </div>
+
 <div class="hr"></div>

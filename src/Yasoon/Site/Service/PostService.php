@@ -592,6 +592,15 @@ class PostService extends AbstractApiService {
             {
                 $pcats[] = $tag->getCategoryId();
             }
+            
+            $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
+            
+            $strLength = 0;
+            foreach ($post_answers as $answer) {
+               $strLength += strlen(strip_tags($answer->getAnswer()));
+            }        
+            $timeToRead = round($strLength/1200);
+                
             $result[] = [
                 'id'          => $post->getId(),
                 'authorId'    => $post->getAuthorId(),
@@ -601,7 +610,8 @@ class PostService extends AbstractApiService {
                 'description' => $post->getPreview(),
                 'text'        => $post->getText(), // $questionAnswerArray,
                 'publishDate' => $post->getDate()->format('d/m/Y'),
-                'post_likes'  => $post->getLikes()
+                'post_likes'  => $post->getLikes(),
+                'timeToRead'  => $timeToRead
             ];
         }
 
