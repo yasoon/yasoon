@@ -4,7 +4,7 @@
  * Date: 5/22/13
  */
 
-umask(0000); // This will let the permissions be 0777
+umask(0002); // This will let the permissions be 0777
 
 use Symfony\Component\HttpFoundation\Request;
 

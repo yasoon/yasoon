@@ -52,7 +52,7 @@ define(
 
       checkCategories: ->
         console.log(@model.get('category'), @$(':checkbox'))
-        _.each(@model.get('category'), (item) => @$(':checkbox').eq(item - 1).prop('checked', yes))
+        _.each(@model.get('category'), (item) => @$(':checkbox[value="'+item+'"]').prop('checked', yes))
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('interviewQuestions'))
