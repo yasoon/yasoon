@@ -130,7 +130,7 @@ class PostCategoryService extends AbstractApiService {
                             'publishDate' => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
                             'post_likes'  => $results_postsRateSort[$i]->getPost()->getLikes(),
                             'timeToRead'  => $timeToRead,
-                            'avatarImg'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage()];
+                            'avatarImg'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage()];
                 unset($tags);
                 
                 
