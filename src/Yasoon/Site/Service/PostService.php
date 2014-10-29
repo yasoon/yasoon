@@ -983,7 +983,7 @@ class PostService extends AbstractApiService {
         try {
             $post_like = $this->em->getRepository('Yasoon\Site\Entity\PostLikesEntity')
                 ->createQueryBuilder('l')
-                ->where("(l.authorId = ".$authorId." OR l.user_ip = '$user_ip') AND l.post_id = $postId")
+                ->where("(l.authorId = ".$authorId." AND l.user_ip = '$user_ip') AND l.post_id = $postId")
                 ->getQuery()
                 ->getResult();
 
@@ -1015,7 +1015,7 @@ class PostService extends AbstractApiService {
             }
             else
             {
-                if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 86400)
+                if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 15)
                 {
                     if($user_ip != '0')
                     {
