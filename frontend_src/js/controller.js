@@ -42,11 +42,15 @@
         return this;
       };
 
-      Controller.prototype.newPost = function(id) {
+      Controller.prototype.newPost = function(id, isUser) {
+        if (window.newPost != null) {
+          delete window.newPost;
+        }
         $('body').removeClass().addClass('new-post');
         this.newPostPageView = new NewPostPageView({
           id: id,
-          model: new PostPageModel()
+          model: new PostPageModel(),
+          isUser: isUser
         });
         LayoutView.contentRegion.$el.empty().append(this.newPostPageView.$el);
         this.newPostPageView.delegateEvents();

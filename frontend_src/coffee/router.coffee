@@ -48,7 +48,7 @@ define([
         Controller.posts(category, sort)
 
       newPost: (id) ->
-        userModel.deferred.done( => if @isUser() then Controller.newPost(id) else @navigate('#/404'))
+        userModel.deferred.done( => if @isUser() then Controller.newPost(id, true) else if window.newPost? then Controller.newPost(id, true) else Controller.newPost(id, false))
 
       showPost: (id) ->
         Controller.post(id)

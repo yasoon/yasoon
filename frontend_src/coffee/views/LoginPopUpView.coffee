@@ -44,7 +44,9 @@ define(
         window.open('/socauth/facebook', '', 'top=100, left=100, width=700, height=400, scrollbars=no, location=no, toolbar=no, directories=no, status=yes, menubar=no, resizable=yes')
 
       registerAction: ->
-        @closePopUp()
+        location = window.location.hash
+        if location.indexOf "#/post/new/" >= 0 then window.newPost = location.replace '#/post/new/', ''
+        $('.popUpBackground').click()
 
       loginAction: (event) ->
         event.preventDefault()
@@ -75,4 +77,5 @@ define(
 
       hideErrors: ->
         @$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('')
+        
 )

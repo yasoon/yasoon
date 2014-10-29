@@ -9,6 +9,9 @@ define(
 
     clickPopUp: (event) ->
       event.preventDefault()
+      location = window.location.hash
+      if location.indexOf "post/new/" >= 0 then 
+      window.location = '/#/posts/0/dateSort/'
       @closePopUp()
 
     escapePopUp: (event) ->

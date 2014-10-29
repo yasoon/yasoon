@@ -38,6 +38,7 @@ define(
       interviewsTemplate:           _.template(postInterviewTpl)
 
       initialize: (options) ->
+        if not options.isUser then $('#js-login').trigger 'click'
         @getDefaultInterview(options.id)
         @model.set({'maxLength': 255})
         @handler()
@@ -127,4 +128,5 @@ define(
       cancelPost: (event) ->
         event.preventDefault()
         if @confirmAction() then window.location = "/#/speaker/#{Window.config.userId}/posts/"
+
 )

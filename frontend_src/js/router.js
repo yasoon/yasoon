@@ -49,9 +49,11 @@
         return userModel.deferred.done((function(_this) {
           return function() {
             if (_this.isUser()) {
-              return Controller.newPost(id);
+              return Controller.newPost(id, true);
+            } else if (window.newPost != null) {
+              return Controller.newPost(id, true);
             } else {
-              return _this.navigate('#/404');
+              return Controller.newPost(id, false);
             }
           };
         })(this));

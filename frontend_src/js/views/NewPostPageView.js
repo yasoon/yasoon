@@ -32,6 +32,9 @@
       WritePostPage.prototype.interviewsTemplate = _.template(postInterviewTpl);
 
       WritePostPage.prototype.initialize = function(options) {
+        if (!options.isUser) {
+          $('#js-login').trigger('click');
+        }
         this.getDefaultInterview(options.id);
         this.model.set({
           'maxLength': 255

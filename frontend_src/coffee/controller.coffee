@@ -75,9 +75,10 @@ define(
         @aboutPageView.delegateEvents()
         @
 
-      newPost: (id) ->
+      newPost: (id, isUser) ->
+        if window.newPost? then delete window.newPost
         $('body').removeClass().addClass('new-post')
-        @newPostPageView = new NewPostPageView({id: id, model: new PostPageModel();})
+        @newPostPageView = new NewPostPageView({id: id, model: new PostPageModel(), isUser: isUser;})
         LayoutView.contentRegion.$el.empty().append(this.newPostPageView.$el)
         @newPostPageView.delegateEvents()
         @

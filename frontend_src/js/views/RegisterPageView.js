@@ -195,7 +195,11 @@
       };
 
       Register.prototype.loadUser = function() {
-        window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
+        if (window.newPost != null) {
+          window.location = "/#/post/new/" + window.newPost;
+        } else {
+          window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
+        }
         return window.location.reload(true);
       };
 

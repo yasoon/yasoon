@@ -52,7 +52,12 @@
       };
 
       LoginPopUpView.prototype.registerAction = function() {
-        return this.closePopUp();
+        var location;
+        location = window.location.hash;
+        if (location.indexOf("#/post/new/" >= 0)) {
+          window.newPost = location.replace('#/post/new/', '');
+        }
+        return $('.popUpBackground').click();
       };
 
       LoginPopUpView.prototype.loginAction = function(event) {
