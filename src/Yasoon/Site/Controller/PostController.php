@@ -302,12 +302,11 @@ class PostController {
     public function addLikes(Request $request)
     {
         $data = $request->request->get('postlike');
-        
         $result = [];
         
         if($data['type'] == 'add')
         {
-            $result = $this->service->like($data['postId']);
+            $result = $this->service->like($data['postId'], $data['type']);
         }
 
         return $result;
