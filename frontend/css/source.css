@@ -6259,6 +6259,10 @@ header#header nav a:hover {
 .main-w a.btn {
   color: inherit;
 }
+.main-w a.green {
+  color: #238c00;
+  margin: 5px auto;
+}
 .bg-panoram {
   background: #f75e5e border-box fixed no-repeat center center / cover;
   text-indent: -9999px;

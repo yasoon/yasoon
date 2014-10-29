@@ -1015,7 +1015,7 @@ class PostService extends AbstractApiService {
             }
             else
             {
-                if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 15)
+                if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 86400)
                 {
                     if($user_ip != '0')
                     {
