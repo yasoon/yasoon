@@ -6260,8 +6260,9 @@ header#header nav a:hover {
   color: inherit;
 }
 .main-w a.green {
-  color: #238c00;
-  margin: 5px auto;
+  background-color: #3CB371;
+  margin: 0px auto 15px;
+  border: 0px;
 }
 .bg-panoram {
   background: #f75e5e border-box fixed no-repeat center center / cover;

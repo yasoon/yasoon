@@ -61,8 +61,9 @@
       };
 
       LoginPopUpView.prototype.loginAction = function(event) {
+        this.$('input').change();
         event.preventDefault();
-        this.toggleButton(true);
+        this.toggleButton(false);
         this.hideErrors();
         if (this.model.isValid()) {
           return this.checkUser();

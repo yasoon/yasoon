@@ -10,10 +10,9 @@
         var location;
         event.preventDefault();
         location = window.location.hash;
-        if (location.indexOf("post/new/" >= 0)) {
-
+        if ((location.indexOf("post/new/")) >= 0) {
+          window.location = '/#/posts/0/dateSort/';
         }
-        window.location = '/#/posts/0/dateSort/';
         return this.closePopUp();
       },
       escapePopUp: function(event) {

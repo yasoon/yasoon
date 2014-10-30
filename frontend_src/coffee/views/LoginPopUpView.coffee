@@ -49,8 +49,9 @@ define(
         $('.popUpBackground').click()
 
       loginAction: (event) ->
+        this.$('input').change();
         event.preventDefault()
-        @toggleButton(on)
+        @toggleButton(off)
         @hideErrors()
         if @model.isValid() then @checkUser() else @showErrors(@model.validationError)
 
