@@ -78,14 +78,14 @@ class IndexController {
                 <head>
                     
                     <meta property='og:type' content='article'>
-                    <meta property='og:url' content='http://user@yasoon.ru:8090/%23/post/".$postId."'>
+                    <meta property='og:url' content='http://user:W4r8U2Fo@yasoon.ru:8090/%23/post/".$postId."'>
                     <meta property='og:title' content='".$post[0]['title']."'>
                     <meta property='og:description' content='".$post[0]['description']."'>
                     <script type='text/javascript' src='//code.jquery.com/jquery-latest.min.js' ></script>
                     <script type='text/javascript'>
                         $(document).ready(function(){
                             setTimeout(function(){
-                               window.location.href = 'http://yasoon.ru:8090/#/post/".$postId."'
+                               window.location.href = 'http://user:W4r8U2Fo@yasoon.ru:8090/#/post/".$postId."'
                             },1);
                         });
                     </script>
