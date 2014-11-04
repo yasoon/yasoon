@@ -85,7 +85,7 @@ class IndexController {
                     <script type='text/javascript'>
                         $(document).ready(function(){
                             setTimeout(function(){
-                               window.location.href = 'http://yasoon.ru/#/post/".$postId."'
+                               window.location.href = 'http://yasoon.ru:8090/#/post/".$postId."'
                             },1);
                         });
                     </script>
