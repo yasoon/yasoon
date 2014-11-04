@@ -78,7 +78,7 @@ class IndexController {
                 <head>
                     
                     <meta property='og:type' content='article'>
-                    <meta property='og:url' content='http://yasoon.ru/%23/post/".$postId."'>
+                    <meta property='og:url' content='http://user:W4r8U2Fo@yasoon.ru:8090/%23/post/".$postId."'>
                     <meta property='og:title' content='".$post[0]['title']."'>
                     <meta property='og:description' content='".$post[0]['description']."'>
                     <script type='text/javascript' src='//code.jquery.com/jquery-latest.min.js' ></script>
