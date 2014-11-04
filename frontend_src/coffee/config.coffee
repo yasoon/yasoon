@@ -11,6 +11,8 @@ requirejs.config({
     'editor':           'vendor/editor'
     'fileupload':       'vendor/fileupload'
     'bootstrap':        'vendor/bootstrap.min'
+    'socila-likes':     'vendor/social-likes.min'
+    'social':           'vendor/social'
   }
   shim: {
     'backbone':

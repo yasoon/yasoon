@@ -15,6 +15,27 @@
 			опубликовано <%= _.getDateText(publishDate) %>
 		</span>
 	</h1>
+
+	<div class="fb-share-button" data-href="http://yasoon.dev/%23/post/<%= id %>"></div>
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '744571352299805',
+                xfbml      : true,
+                version    : 'v2.2'
+              });
+            };
+
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = '//connect.facebook.net/en_US/sdk.js';
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          </script>
+
 </div>
 <div class="content">
     <% _.each(text, function(question) { %>
@@ -38,6 +59,7 @@
 			вдохновились
 		</span>
 	</span>
+        
 	<span class="q-post">
 		<a href="/#/speaker/<%= authorId %>/answers"><i></i></a> <%= questionCount %> вопросов этому автору
 	</span>

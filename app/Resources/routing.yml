@@ -1,3 +1,7 @@
 yasoon_site:
   resource: "@YasoonSiteBundle/Controller"
   prefix: /
+  
+fb_route:
+    path:      /#/post/{id}
+    defaults:  { _controller: YasoonSiteBundle:Index:facebook }

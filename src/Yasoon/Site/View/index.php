@@ -20,6 +20,11 @@
       ga('send', 'pageview');
 
     </script>
+    <meta property='og:type' content='article'>
+    <meta property='og:url' content=''>
+    <meta property='og:title' content=''>
+    <meta property='og:description' content=''>
+    <meta property='og:image' content=''>
 </head>
 </html>
 <body>

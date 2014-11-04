@@ -11,7 +11,9 @@
       'jqueryUi': 'vendor/jquery-ui-1.10.4.custom.min',
       'editor': 'vendor/editor',
       'fileupload': 'vendor/fileupload',
-      'bootstrap': 'vendor/bootstrap.min'
+      'bootstrap': 'vendor/bootstrap.min',
+      'socila-likes': 'vendor/social-likes.min',
+      'social': 'vendor/social'
     },
     shim: {
       'backbone': {

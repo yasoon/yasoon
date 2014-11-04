@@ -40,7 +40,7 @@
           postid: this.model.get('postId')
         }, (function(_this) {
           return function(data) {
-            return _this.model.set('postData', data[0]);
+            return _this.setSocial(data);
           };
         })(this));
       };
@@ -118,6 +118,10 @@
         if (!data.error && data.count) {
           return this.$el.find('.like-this .counter').text(data.count);
         }
+      };
+
+      PostPageView.prototype.setSocial = function(data) {
+        return this.model.set('postData', data[0]);
       };
 
       return PostPageView;

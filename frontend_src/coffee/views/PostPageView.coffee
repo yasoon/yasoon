@@ -33,7 +33,7 @@ define(
         @listenTo(@model, 'change:userData', @createPostAuthor)
 
       getPostData: ->
-        $.post("/api/post/getPost", {postid: @model.get('postId')}, (data) => @model.set('postData', data[0]))
+        $.post("/api/post/getPost", {postid: @model.get('postId')}, (data) => @setSocial(data))
 
       getAuthorData: ->
         author = @model.get('postData')
@@ -66,4 +66,8 @@ define(
 
       changeLikeCount: (data) ->
         if not data.error and data.count then @$el.find('.like-this .counter').text(data.count)
+
+      setSocial: (data) ->
+        @model.set('postData', data[0])
+
 )

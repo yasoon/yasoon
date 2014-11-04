@@ -572,6 +572,7 @@ class PostService extends AbstractApiService {
      * @param $postId
      * @return array
      */
+    
     public function getPosts($postId) {
 
         /** @var PostEntity $post */
