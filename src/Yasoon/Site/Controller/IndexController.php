@@ -152,7 +152,7 @@ class IndexController {
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
                     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
                     <script type='text/javascript' src='/frontend/js/vendor/require.js' data-main='/frontend/js/main.min.js'></script>
-
+                    <script type='text/javascript' src='http://vk.com/js/api/share.js?90' charset='windows-1251'></script>
                     <script>
                       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -163,10 +163,6 @@ class IndexController {
                       ga('send', 'pageview');
 
                     </script>
-                    <meta property='og:type' content='article'>
-                    <meta property='og:url' content=''>
-                    <meta property='og:title' content=''>
-                    <meta property='og:description' content=''>
                     
                 </head>";
     }
