@@ -135,7 +135,7 @@ class IndexController {
     
     /**
      *
-     * Set Doctype
+     * Set Head
      *
      * 
      *
@@ -169,7 +169,7 @@ class IndexController {
     
     /**
      *
-     * Set Doctype
+     * Set body
      *
      * 
      *
