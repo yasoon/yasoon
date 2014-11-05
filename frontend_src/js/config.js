@@ -12,8 +12,7 @@
       'editor': 'vendor/editor',
       'fileupload': 'vendor/fileupload',
       'bootstrap': 'vendor/bootstrap.min',
-      'socila-likes': 'vendor/social-likes.min',
-      'social': 'vendor/social'
+      'socila-likes': 'vendor/social-likes.min'
     },
     shim: {
       'backbone': {

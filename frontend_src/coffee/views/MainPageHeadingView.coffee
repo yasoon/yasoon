@@ -2,6 +2,7 @@ define(
   [
     'text!templates/mainPageHeadingTpl.htm'
     'backbone'
+    'socila-likes'
   ]
   (
     mainPageHeadingTpl

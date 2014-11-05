@@ -15,29 +15,10 @@
 			опубликовано <%= _.getDateText(publishDate) %>
 		</span>
 	</h1>
-
-	<div class="fb-share-button" data-href="http://yasoon.ru:8090/%23/post/<%= id %>"></div>
-        <div id="fb-root"></div>
-        <script>
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId      : '744571352299805',
-                xfbml      : true,
-                version    : 'v2.2'
-              });
-            };
-
-            (function(d, s, id){
-               var js, fjs = d.getElementsByTagName(s)[0];
-               if (d.getElementById(id)) {return;}
-               js = d.createElement(s); js.id = id;
-               js.src = '//connect.facebook.net/en_US/sdk.js';
-               fjs.parentNode.insertBefore(js, fjs);
-             }(document, 'script', 'facebook-jssdk'));
-             </script>
-
-           <a onclick="Share.vkontakte('http://yasoon.ru:8090/%23/post/<%= id %>','<%= title %>','','<%= description %>')"> V Share</a>
-
+        <div class="social-likes">
+            <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Share</div>
+            <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Share</div>
+        </div>
 </div>
 <div class="content">
     <% _.each(text, function(question) { %>
@@ -65,31 +46,32 @@
 	<span class="q-post">
 		<a href="/#/speaker/<%= authorId %>/answers"><i></i></a> <%= questionCount %> вопросов этому автору
 	</span>
+        <span class="social-likes-post_down">
+            <div class="social-likes">
+                <div class="facebook" title="Поделиться ссылкой на Фейсбуке">Share</div>
+                <div class="vkontakte" title="Поделиться ссылкой во Вконтакте">Share</div>
+            </div>
+        </span>
 </div>
 
 <script>
-    Share = {
-    vkontakte: function(purl, ptitle, pimg, text) {
-        url  = 'http://vkontakte.ru/share.php?';
-        url += 'url='          + encodeURIComponent(purl);
-        url += '&title='       + encodeURIComponent(ptitle);
-        url += '&description=' + encodeURIComponent(text);
-        url += '&image='       + encodeURIComponent(pimg);
-        url += '&noparse=true';
-        Share.popup(url);
-    },
-    
-    facebook: function(purl, ptitle, pimg, text) {
-        url  = 'http://www.facebook.com/sharer.php?s=100';
-        url += '&p[title]='     + encodeURIComponent(ptitle);
-        url += '&p[summary]='   + encodeURIComponent(text);
-        url += '&p[url]='       + encodeURIComponent(purl);
-        url += '&p[images][0]=' + encodeURIComponent(pimg);
-        Share.popup(url);
-    },
-            
-    popup: function(url) {
-        window.open(url,'','toolbar=0,status=0,width=626,height=436');
-    }
-};
+
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '744571352299805',
+          xfbml      : true,
+          version    : 'v2.2'
+        });
+      };
+      
+    $( document ).ready(function () {
+        $('.social-likes').socialLikes({
+            url: 'http://yasoon.ru:8090/%23/post/<%= id %>',
+            title: '<%= title %>',
+            description: '<%= description %>',
+            counters: true,
+            singleTitle: 'Share it!'
+        }); 
+    });
+
     </script>
