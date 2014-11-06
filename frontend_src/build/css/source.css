@@ -6437,8 +6437,7 @@ article.lim .hr {
   height: 50%;
   width: 75%;
 }
-.navigate.fixed,
-.left-side.fixed {
+.navigate.fixed {
   position: fixed;
   top: 0;
   z-index: 10;
@@ -6465,16 +6464,6 @@ article.lim .hr {
   height: 100px;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
-}
-.usr-ic-small {
-  -webkit-border-radius: 100%;
-  -moz-border-radius: 100%;
-  border-radius: 100%;
-  width: 35px;
-  height: 35px;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  margin: 0 10px 5px 5px;
 }
 .postinfo {
   -webkit-box-sizing: border-box;
@@ -6511,10 +6500,6 @@ article.lim .hr {
 }
 .postinfo img {
   margin: 0 20px 20px 0;
-}
-.postinfo.fixed {
-  position: fixed;
-  top: 0;
 }
 .postinfo h4 {
   margin: 0;
