@@ -6646,9 +6646,6 @@ blockquote {
 .like-title .like-this {
   top: 15px;
 }
-.like-title .like-this {
-  top: 15px;
-}
 .q-post {
   position: relative;
   display: block;
@@ -6668,6 +6665,9 @@ blockquote {
 .main-layout article {
   border-left: none;
   overflow: hidden;
+}
+.main-layout .main-layout {
+  padding: 0;
 }
 .social-links a {
   display: block;
@@ -8152,11 +8152,6 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     margin: -20px;
     box-shadow: 0 2px 5px #e2e2e2;
   }
-  .postinfo.fixed {
-    padding-left: 10px;
-    left: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
   .postinfo .fixed {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -8386,7 +8381,7 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     font-size: 2.2em;
   }
   h2 {
-    font-size: 2.2em;
+    font-size: 1.8em;
   }
   h2 {
     font-size: 1.3em;
