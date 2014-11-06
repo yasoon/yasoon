@@ -6465,6 +6465,16 @@ article.lim .hr {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
+.usr-ic-small {
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  margin: 0 10px 5px 5px;
+}
 .postinfo {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
