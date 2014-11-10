@@ -6260,7 +6260,7 @@ header#header nav a:hover {
   color: inherit;
 }
 .main-w a.green {
-  background-color: #238c00;
+  background-color: #3CB371;
   margin: 0px auto 15px;
   border: 0px;
 }
@@ -7100,13 +7100,13 @@ section {
 #js-login {
   padding: 7px 10px;
   border-radius: 15px;
-  background-color: #238c00;
+  background-color: #3CB371;
   color: #fff;
   font-size: 10px;
   text-transform: uppercase;
 }
 #js-login:hover {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 .social-likes-post_down {
   margin-left: 40%;
