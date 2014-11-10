@@ -23,7 +23,7 @@
             message: 'Поле не может быть пустым'
           });
         }
-        if (typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0) {
+        if (typeof window.config.regFrom === "undefined" || parseInt(window.config.regFrom) === 0) {
           if (!attrs.email) {
             errors.push({
               name: 'email',

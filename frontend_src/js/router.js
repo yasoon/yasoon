@@ -64,7 +64,7 @@
       editPost: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.admin || _this.isUser()) {
+            if (window.config.admin || _this.isUser()) {
               return Controller.editPost(id);
             } else {
               return _this.navigate('#/404');
@@ -125,7 +125,7 @@
       adminMainPage: function() {
         return userModel.deferred.done((function(_this) {
           return function() {
-            if (Window.config.admin) {
+            if (window.config.admin) {
               return AdminController.index();
             } else {
               return _this.navigate('#/404');
@@ -134,7 +134,7 @@
         })(this));
       },
       isUser: function() {
-        return typeof Window.config.userId === "number";
+        return typeof window.config.userId === "number";
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

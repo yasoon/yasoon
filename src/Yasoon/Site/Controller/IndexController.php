@@ -61,8 +61,8 @@ class IndexController {
             '', 
             [
                 $this->_initDocType(),
-                $this->_initHead(),
-                $this->_initBody($category, $content)
+                $this->_initHead($category, $content),
+                $this->_initBody()
             ]
         );
 
@@ -141,7 +141,7 @@ class IndexController {
      *
      * @return Head
      */
-    public function _initHead()
+    public function _initHead($category, $content)
     {
         
         return "<head>
@@ -151,6 +151,13 @@ class IndexController {
                     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
                     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
+                    <script>
+                        window.config = {
+                            category: ".json_encode($category).",
+                            content: ".json_encode($content).",
+                            userId: false
+                        }
+                    </script>
                     <script type='text/javascript' src='/frontend/js/vendor/require.js' data-main='/frontend/js/main.min.js'></script>
                     <script type='text/javascript' src='http://vk.com/js/api/share.js?90' charset='windows-1251'></script>
                     <script>
@@ -175,7 +182,7 @@ class IndexController {
      *
      * @return body
      */
-    public function _initBody($category, $content)
+    public function _initBody()
     {
         return "<body>
                     <header id='header'></header>
@@ -194,15 +201,9 @@ class IndexController {
                             <div class='clearfix'></div>
                         </div>
                     </footer>
-                    <script>
-                        Window.config = {
-                            category: ".json_encode($category).",
-                            content: ".json_encode($content).",
-                            userId: false
-                        }
-                    </script>
+                    
                 </body>
-            </html>";
+            ";
     }
     
     

@@ -32,7 +32,7 @@ define(
           noFollowedAnswers = parseInt(timeline[0].new_answers_count)
           followedPosts = parseInt(timeline[0].posts_timeline_count)
           newQuestions = parseInt(questions[0].result.length)
-          timeline = followedAnswers + noFollowedAnswers + followedPosts
+          timeline = followedAnswers + followedPosts
           @model.set({'timeline': timeline + newQuestions, 'timeline_answers': newQuestions, 'timeline_posts': timeline})
         )
 
@@ -45,7 +45,7 @@ define(
         event.preventDefault()
         event.stopPropagation()
         $.post('/logout', ->
-          Window.config.userId = no
+          window.config.userId = no
           window.location = '/'
         )
 )

@@ -28,7 +28,7 @@
       PostAuthorModelView.prototype.template = _.template(speakerInfoTpl);
 
       PostAuthorModelView.prototype.initialize = function() {
-        this.author = Window.config.userId;
+        this.author = window.config.userId;
         return this.model.set('isAuthor', this.isAuthor());
       };
 
@@ -79,14 +79,14 @@
       };
 
       PostAuthorModelView.prototype.addToFriends = function() {
-        return Window.config.friends.push({
+        return window.config.friends.push({
           'id': this.model.get('id'),
           'date': new Date()
         });
       };
 
       PostAuthorModelView.prototype.removeFromFriends = function() {
-        return Window.config.friends = $.grep(Window.config.friends, (function(_this) {
+        return window.config.friends = $.grep(window.config.friends, (function(_this) {
           return function(object) {
             return object.id !== _this.model.get('id');
           };

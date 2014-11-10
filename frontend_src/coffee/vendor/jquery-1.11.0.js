@@ -2995,7 +2995,7 @@ jQuery.each({
 	},
 	contents: function( elem ) {
 		return jQuery.nodeName( elem, "iframe" ) ?
-			elem.contentDocument || elem.contentWindow.document :
+			elem.contentDocument || elem.contentwindow.document :
 			jQuery.merge( [], elem.childNodes );
 	}
 }, function( name, fn ) {

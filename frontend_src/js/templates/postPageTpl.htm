@@ -8,7 +8,7 @@
 	</span>
 	<h1>
 		<%= title %>
-		<% if (authorId === Window.config.userId) { %>
+		<% if (authorId === window.config.userId) { %>
 			<a href="#/post/<%= id %>/edit" class="editable"></a>
 		<% } %>
 		<span class="media-pub">

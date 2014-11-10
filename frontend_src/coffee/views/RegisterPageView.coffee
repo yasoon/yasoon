@@ -69,7 +69,7 @@ define(
         @onRender()
 
       setImageUploader: (model) ->
-        reg = typeof Window.config.regFrom is "undefined" or parseInt(Window.config.regFrom) is 0
+        reg = typeof window.config.regFrom is "undefined" or parseInt(window.config.regFrom) is 0
         if reg
           new AjaxUpload(
             @$('#uploadImage')[0],

@@ -31,7 +31,7 @@
       };
 
       PostsPageView.prototype.getCategoryList = function() {
-        return this.model.set('categoryList', Window.config.category);
+        return this.model.set('categoryList', window.config.category);
       };
 
       PostsPageView.prototype.createsCategoryFilter = function() {

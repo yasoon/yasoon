@@ -74,7 +74,7 @@
 
       WritePostPage.prototype.createCategoryList = function() {
         var category;
-        this.model.set('categoriesList', Window.config.category);
+        this.model.set('categoriesList', window.config.category);
         category = new CategoryCollection(this.model.get('categoriesList'));
         if (this.postCategories == null) {
           this.postCategories = new PostCategories({
@@ -204,7 +204,7 @@
       WritePostPage.prototype.cancelPost = function(event) {
         event.preventDefault();
         if (this.confirmAction()) {
-          return window.location = "/#/speaker/" + Window.config.userId + "/posts/";
+          return window.location = "/#/speaker/" + window.config.userId + "/posts/";
         }
       };
 

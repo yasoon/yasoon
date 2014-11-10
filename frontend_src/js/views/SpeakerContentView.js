@@ -49,7 +49,7 @@
       };
 
       SpeakerContentView.prototype.isAuthor = function() {
-        return Window.config.userId === parseInt(this.model.get('id'));
+        return window.config.userId === parseInt(this.model.get('id'));
       };
 
       SpeakerContentView.prototype.postsPage = function() {

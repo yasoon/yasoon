@@ -31,7 +31,7 @@ define(
         @listenTo(@model, 'change:categoryList', @createsCategoryFilter)
 
       getCategoryList: ->
-        @model.set('categoryList', Window.config.category)
+        @model.set('categoryList', window.config.category)
 
       createsCategoryFilter: ->
         if not @categoryListView? then @categoryList() else @categoryListView.delegateEvents()

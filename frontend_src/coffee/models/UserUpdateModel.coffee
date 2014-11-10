@@ -19,7 +19,7 @@ define(
             message: 'Поле не может быть пустым'
           )
 
-        if typeof Window.config.regFrom is "undefined" or parseInt(Window.config.regFrom) is 0
+        if typeof window.config.regFrom is "undefined" or parseInt(window.config.regFrom) is 0
           if not attrs.email
             errors.push(
               name: 'email'

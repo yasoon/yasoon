@@ -49,10 +49,13 @@ class QuestionService extends AbstractApiService {
         $this->em->persist($entity);
         $this->em->flush();
 
+        $askAuthorId = $entity->getAskAuthorId();              
+        $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
+        
         $result = [
             'id'        => $entity->getId(),
             'authorId'      => $entity->getAuthorId(),
-            'ask_author_id'  => $entity->getAskAuthorId(),
+            'ask_author_name'  => $askAuthor->getName(),
             'date'      => $entity->getDate()->format('d/m/Y'),
             'question'  => $entity->getText()
         ];
@@ -286,10 +289,12 @@ class QuestionService extends AbstractApiService {
             $result = [];
             foreach($answersTimeline as $answerTimeline)
             {
+                $askAuthorId = $answerTimeline->getQuestion()->getAskAuthorId();              
+                $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
                 $result[] = [
                     'id'        => $answerTimeline->getQuestion()->getId(),
                     'authorId'      => $answerTimeline->getQuestion()->getAuthorId(),
-                    'ask_author_id'  => $answerTimeline->getQuestion()->getAskAuthorId(),
+                    'ask_author_name'  => $askAuthor,
                     'date'      => $answerTimeline->getQuestion()->getDate()->format('d/m/Y'),
                     'question'  => $answerTimeline->getQuestion()->getText(),
                     'answer'    => $answerTimeline->getQuestion()->getAnswer()
@@ -340,11 +345,13 @@ class QuestionService extends AbstractApiService {
 
 
         foreach ($questions as $question) {
+            $askAuthorId = $question->getAskAuthorId();              
+            $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
             $result[] = [
                 'id'            => $question->getId(),
                 'text'          => $question->getText(),
                 'answerText'    => $question->getAnswer(),
-                'ask_author_id' => $question->getAskAuthorId(),
+                'ask_author_name' => $askAuthor->getName(),
                 'author_id' => $question->getAuthorId(),
                 'date'          => $question->getDate()->format('d/m/Y')
             ];
@@ -426,10 +433,12 @@ class QuestionService extends AbstractApiService {
             $result['error'] = false;
             $result['result'] = [];
             foreach ($questions as $question) {
+                $askAuthorId = $question->getAskAuthorId();              
+                $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
                 $result['result'][] = [
                     'id'            => $question->getId(),
                     'text'          => $question->getText(),
-                    'ask_author_id' => $question->getAskAuthorId(),
+                    'ask_author_name' => $askAuthor->getName(),
                     'date'          => $question->getDate()->format('d/m/Y')
                 ];
             }

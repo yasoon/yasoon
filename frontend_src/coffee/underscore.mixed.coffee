@@ -8,7 +8,7 @@ define(
   ) ->
     _.mixin({
       'getContent': (id) ->
-        content = _.where(Window.config.content, {id: id})
+        content = _.where(window.config.content, {id: id})
         text = if content.length > 0 then content[0].text else "Контента с id: #{id} нет!"
         text
     })

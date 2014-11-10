@@ -11,15 +11,15 @@
             if (data) {
               _this.set(data);
               admin = _this.get('roles')[0];
-              Window.config.admin = admin === "ROLE_ADMIN" ? true : false;
-              Window.config.userId = _this.get('id');
-              Window.config.regFrom = _this.get('regFrom');
-              Window.config.friends = _this.get('friends');
+              window.config.admin = admin === "ROLE_ADMIN" ? true : false;
+              window.config.userId = _this.get('id');
+              window.config.regFrom = _this.get('regFrom');
+              window.config.friends = _this.get('friends');
               return _this.deferred.resolve();
             } else {
-              Window.config.admin = false;
-              Window.config.userId = false;
-              Window.config.regFrom = _this.get('regFrom');
+              window.config.admin = false;
+              window.config.userId = false;
+              window.config.regFrom = _this.get('regFrom');
               return _this.deferred.resolve();
             }
           };

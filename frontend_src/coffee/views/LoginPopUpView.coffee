@@ -70,7 +70,7 @@ define(
         else if data is 'invalidPassword' then @showErrors([{name: 'password', message: 'Неверный пароль'}])
 
       changeLocation: (data) ->
-        Window.config.userId = data.id
+        window.config.userId = data.id
         window.location.reload(true)
 
       showErrors: (errors) ->

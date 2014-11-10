@@ -1,4 +1,4 @@
-<% var reg = (typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0) ? true : false; %>
+<% var reg = (typeof window.config.regFrom === "undefined" || parseInt(window.config.regFrom) === 0) ? true : false; %>
 <form role="form" class="register-form">
     <% if (reg) { %>
         <div class="page-header">

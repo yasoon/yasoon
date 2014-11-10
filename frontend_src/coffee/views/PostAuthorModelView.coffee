@@ -26,7 +26,7 @@ define(
       template:               _.template(speakerInfoTpl)
 
       initialize: ->
-        @author = Window.config.userId
+        @author = window.config.userId
         @model.set('isAuthor', @isAuthor())
 
       render: ->
@@ -51,10 +51,10 @@ define(
         if type is 'add' then @addToFriends() else @removeFromFriends()
 
       addToFriends: ->
-        Window.config.friends.push({'id': @model.get('id'), 'date': new Date()})
+        window.config.friends.push({'id': @model.get('id'), 'date': new Date()})
 
       removeFromFriends: ->
-        Window.config.friends = $.grep(Window.config.friends, (object) => object.id isnt @model.get('id'))
+        window.config.friends = $.grep(window.config.friends, (object) => object.id isnt @model.get('id'))
 
       showPopUp: ->
         userModel = new PostAuthorModel()

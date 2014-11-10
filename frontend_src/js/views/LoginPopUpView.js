@@ -115,7 +115,7 @@
       };
 
       LoginPopUpView.prototype.changeLocation = function(data) {
-        Window.config.userId = data.id;
+        window.config.userId = data.id;
         return window.location.reload(true);
       };
 

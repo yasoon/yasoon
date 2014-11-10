@@ -84,7 +84,7 @@
 
       Register.prototype.setImageUploader = function(model) {
         var reg;
-        reg = typeof Window.config.regFrom === "undefined" || parseInt(Window.config.regFrom) === 0;
+        reg = typeof window.config.regFrom === "undefined" || parseInt(window.config.regFrom) === 0;
         if (reg) {
           return new AjaxUpload(this.$('#uploadImage')[0], {
             action: '/api/author/upload_user_image',

@@ -3860,7 +3860,7 @@ var RLANG = {
 			}
 			else if (i.contentWindow)
 			{
-				d = i.contentWindow.document;
+				d = i.contentwindow.document;
 			}
 			else
 			{

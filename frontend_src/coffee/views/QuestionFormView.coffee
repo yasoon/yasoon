@@ -33,7 +33,7 @@ define(
         event.preventDefault()
         @hideErrors()
         target = @$(event.currentTarget)
-        if typeof Window.config.userId is "number"
+        if typeof window.config.userId is "number"
           if @model.isValid()
             target.find('button').prop('disabled', yes)
             $.post('/api/question/add', {model: @model.toJSON()}, () =>

@@ -29,7 +29,7 @@ define(
         @listenTo(@model, 'change:speakersList', @createSpeakersList)
 
       getCategoryList: ->
-        @model.set('categoryList', Window.config.category)
+        @model.set('categoryList', window.config.category)
 
       createCategoryFilter: ->
         if not @categoriesListView? then @categories() else @categoriesListView.delegateEvents()

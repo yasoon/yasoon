@@ -54,7 +54,7 @@ define([
         Controller.post(id)
 
       editPost: (id) ->
-        userModel.deferred.done( => if Window.config.admin or @isUser() then Controller.editPost(id) else @navigate('#/404'))
+        userModel.deferred.done( => if window.config.admin or @isUser() then Controller.editPost(id) else @navigate('#/404'))
 
       speakers: (category) ->
         userModel.deferred.done( => Controller.speakers(category))
@@ -75,10 +75,10 @@ define([
         Controller.about()
 
       adminMainPage: ->
-        userModel.deferred.done( => if Window.config.admin then AdminController.index() else @navigate('#/404'))
+        userModel.deferred.done( => if window.config.admin then AdminController.index() else @navigate('#/404'))
 
       isUser: ->
-        typeof Window.config.userId is "number"
+        typeof window.config.userId is "number"
 
       undefinedRoute: ->
         Controller.undefinedRoute()

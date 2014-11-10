@@ -30,7 +30,7 @@
       };
 
       SpeakersPageView.prototype.getCategoryList = function() {
-        return this.model.set('categoryList', Window.config.category);
+        return this.model.set('categoryList', window.config.category);
       };
 
       SpeakersPageView.prototype.createCategoryFilter = function() {

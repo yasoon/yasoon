@@ -39,7 +39,7 @@ define(
         @listenTo(@model, 'change:speakerAnswers', @createAnswers)
 
       isAuthor: ->
-        Window.config.userId is parseInt(@model.get('id'))
+        window.config.userId is parseInt(@model.get('id'))
 
       postsPage: ->
         if @isAuthor() then @writeButton()

@@ -65,7 +65,7 @@ define(
         @$('input:text:visible:first').focus()
 
       createCategoryList: ->
-        @model.set('categoriesList', Window.config.category)
+        @model.set('categoriesList', window.config.category)
         category = new CategoryCollection(@model.get('categoriesList'))
         if not @postCategories? then @postCategories = new PostCategories({collection: category})
         @$('#categories').append(@postCategories.render().$el)
@@ -127,6 +127,6 @@ define(
 
       cancelPost: (event) ->
         event.preventDefault()
-        if @confirmAction() then window.location = "/#/speaker/#{Window.config.userId}/posts/"
+        if @confirmAction() then window.location = "/#/speaker/#{window.config.userId}/posts/"
 
 )
