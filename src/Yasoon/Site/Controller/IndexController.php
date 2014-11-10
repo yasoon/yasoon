@@ -195,7 +195,7 @@ class IndexController {
                         </div>
                     </footer>
                     <script>
-                        Window.config = {
+                        window.config = {
                             category: ".json_encode($category).",
                             content: ".json_encode($content).",
                             userId: false
