@@ -289,7 +289,7 @@ class QuestionService extends AbstractApiService {
             $result = [];
             foreach($answersTimeline as $answerTimeline)
             {
-                $askAuthorId = $answerTimeline->getQuestion()->getAskAuthorId();              
+                $askAuthorId = $answerTimeline->getQuestion()->getAuthorId();              
                 $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
                 $result[] = [
                     'id'        => $answerTimeline->getQuestion()->getId(),
@@ -345,7 +345,7 @@ class QuestionService extends AbstractApiService {
 
 
         foreach ($questions as $question) {
-            $askAuthorId = $question->getAskAuthorId();              
+            $askAuthorId = $question->getAuthorId();              
             $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
             $result[] = [
                 'id'            => $question->getId(),

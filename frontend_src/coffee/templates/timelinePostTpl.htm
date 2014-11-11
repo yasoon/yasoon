@@ -1,24 +1,36 @@
-<div class="row">
-    <div class="col-sm-2">
-        <% if(avatarImg === null) { %>
-        <img src="/frontend/img/noAvatar.jpg" alt="<%= name %>" width="100" height="100" class="img-circle">
-        <% } else { %>
-        <img src="/web/upload/avatar/<%= avatarImg %>" alt="<%= name %>" width="100" height="100" class="img-circle">
-        <% } %>
-    </div>
-    <div class="col-sm-10">
-        <h4>
-            <a href="#/speaker/<%= authorId %>/posts" class="p-label">
-                <%= authorName %>
-            </a>
-        </h4>
-        <h2>
-            <a href="#/post/<%= id %>"><%= title %></a>
-            <span class="post-date"><%= _.getDateText(publishDate) %></span>
-        </h2>
-        <div class="content lic">
-            <p><%= description %></p>
-        </div>
-    </div>
+<div class="speaker-avatar">
+    <a href="#/speaker/<%= authorId %>/posts">
+            <% if(avatarImg === null) { %>
+                    <img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= name %>">
+            <% } else { %>
+                    <img src="/web/upload/avatar/<%= avatarImg %>" class="usr-ic-small" alt="<%= name %>">
+            <% } %>
+
+            <%= authorName %>
+    </a>
+    <% if (typeof(timeToRead) !== "undefined" && timeToRead > 0) { %>
+        | <%= timeToRead %> мин чтения
+    <% } else if (timeToRead === 0) { %>
+        | 1 мин чтения
+    <% } %>
 </div>
+<h2>
+    <a href="#/post/<%= id %>">
+        <% if (typeof(caption) !== "undefined") { %>
+        <%= caption %>
+        <% } else { %>
+        <%= title %>
+        <% } %>
+    </a>
+</h2>
+<div class="content">
+    <p>
+        <% if (typeof(preview) !== "undefined") { %>
+        <%= preview %>
+        <% } else { %>
+        <%= description %>
+        <% } %>
+    </p>
+</div>
+
 <div class="hr"></div>

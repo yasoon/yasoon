@@ -29,7 +29,7 @@ define(
         $.get('/statistic/get_user_notification', (data) => @setModel(data))
 
       setModel: (data) ->
-        @model.set({'answers': _.extend({}, @isString(data.answers_timeline), @isString(data.new_answers)), 'posts': @isString(data.posts_timeline)})
+        @model.set({'answers': @isString(data.new_answers), 'posts': @isString(data.posts_timeline)})
         @clearTimelineCounters()
 
       clearTimelineCounters: ->

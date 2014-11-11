@@ -12,6 +12,6 @@ define(
       template: _.template(timelineAnswerTpl)
 
       render: ->
-        @$el.append(@template(@model.toJSON()[0]))
+        @$el.append(@template(@model.toJSON()))
         @
 )
