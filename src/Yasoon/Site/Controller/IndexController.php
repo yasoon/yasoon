@@ -81,6 +81,7 @@ class IndexController {
                     <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."'>
                     <meta property='og:title' content='".$post[0]['title']."'>
                     <meta property='og:description' content='".$post[0]['description']."'>
+                    <meta property='og:image' content='/frontend/img/logo.jpg' />
                     <script type='text/javascript' src='//code.jquery.com/jquery-latest.min.js' ></script>
                     <script type='text/javascript'>
                         $(document).ready(function(){

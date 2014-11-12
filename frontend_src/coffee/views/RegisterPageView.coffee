@@ -78,7 +78,7 @@ define(
             id: 'upload'
             createInput: ->
             onComplete: (file, data) ->
-              ret = JSON.parse($(data).text())
+              ret = JSON.parse(data)
               if ret.file_name? then model.set('img', ret.file_name)
           )
 

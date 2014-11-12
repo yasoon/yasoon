@@ -93,7 +93,7 @@
             createInput: function() {},
             onComplete: function(file, data) {
               var ret;
-              ret = JSON.parse($(data).text());
+              ret = JSON.parse(data);
               if (ret.file_name != null) {
                 return model.set('img', ret.file_name);
               }
