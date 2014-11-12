@@ -151,6 +151,7 @@ class IndexController {
                     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
                     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
+                    <!--[if IE]><script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script><![endif]-->
                     <script type='text/javascript' src='/frontend/js/vendor/require.js' data-main='/frontend/js/main.min.js'></script>
                     <script type='text/javascript' src='https://vk.com/js/api/share.js?90' charset='windows-1251'></script>
                     <script>
