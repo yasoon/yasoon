@@ -78,14 +78,14 @@ class IndexController {
                 <head>
                     
                     <meta property='og:type' content='article'>
-                    <meta property='og:url' content='http://yasoon.ru:8090/%23/post/".$postId."'>
+                    <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."'>
                     <meta property='og:title' content='".$post[0]['title']."'>
                     <meta property='og:description' content='".$post[0]['description']."'>
                     <script type='text/javascript' src='//code.jquery.com/jquery-latest.min.js' ></script>
                     <script type='text/javascript'>
                         $(document).ready(function(){
                             setTimeout(function(){
-                               window.location.href = 'http://yasoon.ru:8090/#/post/".$postId."'
+                               window.location.href = 'https://yasoon.ru/#/post/".$postId."'
                             },1);
                         });
                     </script>
@@ -152,7 +152,7 @@ class IndexController {
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
                     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
                     <script type='text/javascript' src='/frontend/js/vendor/require.js' data-main='/frontend/js/main.min.js'></script>
-                    <script type='text/javascript' src='http://vk.com/js/api/share.js?90' charset='windows-1251'></script>
+                    <script type='text/javascript' src='https://vk.com/js/api/share.js?90' charset='windows-1251'></script>
                     <script>
                       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
