@@ -2,6 +2,7 @@
   requirejs.config({
     baseUrl: 'assets/js',
     paths: {
+      'html5shiv': 'vendor/html5shiv',
       'backbone': 'vendor/backbone',
       'stickit': 'vendor/backbone.stickit',
       'mediator': 'vendor/backbone.mediator',

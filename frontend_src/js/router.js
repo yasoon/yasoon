@@ -1,5 +1,5 @@
 (function() {
-  define(['controller', 'admin/controller', 'models/userModel', 'backbone', 'mediator'], function(Controller, AdminController, userModel) {
+  define(['controller', 'admin/controller', 'models/userModel', 'backbone', 'mediator', 'html5shiv'], function(Controller, AdminController, userModel) {
     var AppRouter;
     AppRouter = Backbone.Router.extend({
       routes: {

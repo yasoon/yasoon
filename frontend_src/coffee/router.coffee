@@ -4,6 +4,7 @@ define([
     'models/userModel'
     'backbone'
     'mediator'
+    'html5shiv'
   ]
   (
     Controller
