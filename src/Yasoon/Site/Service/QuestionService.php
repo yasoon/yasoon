@@ -352,6 +352,7 @@ class QuestionService extends AbstractApiService {
                 'text'          => $question->getText(),
                 'answerText'    => $question->getAnswer(),
                 'ask_author_name' => $askAuthor->getName(),
+                'ask_author_job' => $askAuthor->getJob(),
                 'author_id' => $question->getAuthorId(),
                 'date'          => $question->getDate()->format('d/m/Y')
             ];

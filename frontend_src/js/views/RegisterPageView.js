@@ -94,9 +94,8 @@
             onComplete: function(file, data) {
               var ret;
               ret = JSON.parse(data);
-              if (ret.file_name != null) {
-                return model.set('img', ret.file_name);
-              }
+              model.set('img', ret.file_name);
+              return $('.file_upload_block, header').find('img').attr('src', "/web/upload/avatar/" + ret.file_name);
             }
           });
         }

@@ -346,7 +346,7 @@ class AuthorController {
 
         $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
         $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
-       return 1;
+
         $fileSource['file_name'] = $resultImage;
         $fileSource['dir']       = $path;
 
@@ -357,7 +357,7 @@ class AuthorController {
             unlink($absolutePath  . '/' . $oldImage);
         }
 
-        return new Response($fileSource);
+        return new Response(json_encode($fileSource));
     }
 
     /**

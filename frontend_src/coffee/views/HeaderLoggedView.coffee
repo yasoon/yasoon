@@ -22,7 +22,7 @@ define(
         @getTimelineData()
         window.setInterval(=>
           @getTimelineData()
-        , 1000 * 10
+        , 1000 * 30
         )
 
       getTimelineData: ->

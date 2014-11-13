@@ -79,7 +79,9 @@ define(
             createInput: ->
             onComplete: (file, data) ->
               ret = JSON.parse(data)
-              if ret.file_name? then model.set('img', ret.file_name)
+              model.set('img', ret.file_name)
+              #hotfix @toDo listener not call change img
+              $('.file_upload_block, header').find('img').attr('src', "/web/upload/avatar/#{ret.file_name}")
           )
 
       changeImage: ->

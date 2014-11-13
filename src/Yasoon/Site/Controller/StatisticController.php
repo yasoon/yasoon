@@ -149,7 +149,7 @@ class StatisticController {
      */
     public function getUserNotifications()
     {
-        $result['posts_timeline'] = $this->post_service->getTimeline();
+        $result['posts_timeline'] = $this->post_service->getNewPosts();
         $result['answers_timeline'] = $this->question_service->getAnswerTimeline();
         $result['new_answers'] = $this->question_service->getNewAnswers();
         return $result;

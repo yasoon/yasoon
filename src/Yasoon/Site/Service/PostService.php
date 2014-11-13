@@ -236,6 +236,46 @@ class PostService extends AbstractApiService {
         return $posts_timeline_count;
 
     }
+    
+    /**
+     * @return array
+     */
+    // fix @stopWork
+    public function getNewPosts() {
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            return ['error' => true, 'errorText' => 'accessDenied'];
+        }
+        $result = [];
+        $frindIds = 
+        $questions = $this->em->createQueryBuilder()
+            ->select('p')
+            ->from('Yasoon\Site\Entity\PostEntity', 'p')
+            ->where("p.notified  != 1")
+            ->andWhere("p.answer IS NOT NULL")
+            ->andWhere("p.ask_authorId = :ask_authorId")
+            ->setParameter('ask_authorId',$authorId)
+            ->getQuery()->getResult();
+
+
+        foreach ($questions as $question) {
+            $askAuthorId = $question->getAuthorId();              
+            $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
+            $result[] = [
+                'id'            => $question->getId(),
+                'text'          => $question->getText(),
+                'answerText'    => $question->getAnswer(),
+                'ask_author_name' => $askAuthor->getName(),
+                'ask_author_job' => $askAuthor->getJob(),
+                'author_id' => $question->getAuthorId(),
+                'date'          => $question->getDate()->format('d/m/Y')
+            ];
+        }
+        return [
+            'error'       => false,
+            'result'      => $result
+        ];
+    }
 
     /**
      * @param $post_id
