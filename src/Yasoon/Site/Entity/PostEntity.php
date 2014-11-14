@@ -247,6 +247,15 @@ class PostEntity
     {
         return $this->date;
     }
+    
+    /**
+     * @return \timestamp
+     */
+    public function getDateTimeStamp()
+    {
+        $date = $date->setTimestamp($this->date);
+        return $date;
+    }
 
     /**
      * @param $id

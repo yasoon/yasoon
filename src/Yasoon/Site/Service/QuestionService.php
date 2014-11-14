@@ -334,13 +334,20 @@ class QuestionService extends AbstractApiService {
         }
         $result = [];
 
+        $postsTimeline = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('readerId' => $authorId));
+        $postIdsArray = array();
+        foreach ($postsTimeline as $postTimeline) {
+            $postIdsArray[] = $postTimeline->getWriterId();
+
+        }
         $questions = $this->em->createQueryBuilder()
             ->select('p')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
             ->where("p.notified  != 1")
             ->andWhere("p.answer IS NOT NULL")
-            ->andWhere("p.ask_authorId = :ask_authorId")
-            ->setParameter('ask_authorId',$authorId)
+            ->andWhere("p.authorId IN (:author_id)")
+            ->orderBy('p.date', 'DESC')
+            ->setParameter('author_id',$postIdsArray)
             ->getQuery()->getResult();
 
 
@@ -348,13 +355,14 @@ class QuestionService extends AbstractApiService {
             $askAuthorId = $question->getAuthorId();              
             $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
             $result[] = [
-                'id'            => $question->getId(),
-                'text'          => $question->getText(),
-                'answerText'    => $question->getAnswer(),
-                'ask_author_name' => $askAuthor->getName(),
-                'ask_author_job' => $askAuthor->getJob(),
-                'author_id' => $question->getAuthorId(),
-                'date'          => $question->getDate()->format('d/m/Y')
+                'id'                => $question->getId(),
+                'text'              => $question->getText(),
+                'answerText'        => $question->getAnswer(),
+                'ask_author_name'   => $askAuthor->getName(),
+                'ask_author_job'    => $askAuthor->getJob(),
+                'author_id'         => $question->getAuthorId(),
+                'ask_authorId'      => $question->getAskAuthorId(),
+                'date'              => $question->getDate()->format('d/m/Y')
             ];
         }
         return [

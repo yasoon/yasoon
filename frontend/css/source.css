@@ -7132,6 +7132,9 @@ section {
 #questions article {
   margin-top: 10px;
 }
+#questions article h3 {
+  font-weight: bold;
+}
 #questions span a {
   color: #238c00;
 }

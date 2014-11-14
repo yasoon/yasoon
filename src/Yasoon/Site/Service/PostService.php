@@ -240,41 +240,66 @@ class PostService extends AbstractApiService {
     /**
      * @return array
      */
-    // fix @stopWork
-    public function getNewPosts() {
-        $authorId = (int) $this->securityContext->getToken()->getUsername();
+    public function getNewPosts() 
+    {
+       $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (!is_int($authorId)) {
             return ['error' => true, 'errorText' => 'accessDenied'];
         }
-        $result = [];
-        $frindIds = 
-        $questions = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-            ->where("p.notified  != 1")
-            ->andWhere("p.answer IS NOT NULL")
-            ->andWhere("p.ask_authorId = :ask_authorId")
-            ->setParameter('ask_authorId',$authorId)
-            ->getQuery()->getResult();
+        
+        $posts_timeline = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('readerId' => $authorId));
+        
+        $postsTimeline = array();
+        foreach ($posts_timeline as $post_timeline) {
+            $postsTimeline[] = $post_timeline->getWriterId();
 
+        }
+        if (count($postsTimeline) > 0) {
+                   
+            $posts = $this->em->createQueryBuilder()
+           ->select('p')
+           ->from('Yasoon\Site\Entity\PostEntity', 'p')
+           ->where('p.authorId = (:writer_id)')
+           ->orderBy('p.date', 'DESC')
+           ->setParameter('writer_id', $postsTimeline)
+           ->getQuery()->getResult();
 
-        foreach ($questions as $question) {
-            $askAuthorId = $question->getAuthorId();              
-            $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
-            $result[] = [
-                'id'            => $question->getId(),
-                'text'          => $question->getText(),
-                'answerText'    => $question->getAnswer(),
-                'ask_author_name' => $askAuthor->getName(),
-                'ask_author_job' => $askAuthor->getJob(),
-                'author_id' => $question->getAuthorId(),
-                'date'          => $question->getDate()->format('d/m/Y')
+            $result['error'] = false;
+            foreach ($posts as $post) {
+                if ($post->getAuthor()->getImg()) {
+                    $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
+                } else {
+                    $authorImg = null;
+                }
+                
+                $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
+                $strLength = 0;
+                foreach ($post_answers as $answer) {
+                   $strLength += strlen(strip_tags($answer->getAnswer()));
+                }        
+                $timeToRead = round($strLength/1200);
+                
+                $result['result'][] = [
+                    'id' => $post->getId(),
+                    'authorId' => $post->getAuthorId(),
+                    'authorName' => $post->getAuthor()->getName(),
+                    'avatarImg' => $authorImg,
+                    'title' => $post->getCaption(),
+                    'description' => $post->getPreview(),
+                    'text' => $post->getText(),
+                    'publishDate' => $post->getDate()->format('d/m/Y'),
+                    'post_likes' => $post->getLikes(),
+                    'timeToRead'  => $timeToRead
+                    
+                ];
+            }
+        } else {
+            $result = [
+                'error' => false,
+                'result' => "NOT_FOUND"
             ];
         }
-        return [
-            'error'       => false,
-            'result'      => $result
-        ];
+        return $result;
     }
 
     /**
