@@ -259,7 +259,7 @@ class PostService extends AbstractApiService {
             $posts = $this->em->createQueryBuilder()
            ->select('p')
            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-           ->where('p.authorId = (:writer_id)')
+           ->where('p.authorId IN (:writer_id)')
            ->setParameter('writer_id', $postsTimeline)
            ->getQuery()->getResult();
 
