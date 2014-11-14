@@ -260,7 +260,6 @@ class PostService extends AbstractApiService {
            ->select('p')
            ->from('Yasoon\Site\Entity\PostEntity', 'p')
            ->where('p.authorId = (:writer_id)')
-           ->orderBy('p.date', 'DESC')
            ->setParameter('writer_id', $postsTimeline)
            ->getQuery()->getResult();
 

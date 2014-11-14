@@ -346,7 +346,6 @@ class QuestionService extends AbstractApiService {
             ->where("p.notified  != 1")
             ->andWhere("p.answer IS NOT NULL")
             ->andWhere("p.authorId IN (:author_id)")
-            ->orderBy('p.date', 'DESC')
             ->setParameter('author_id',$postIdsArray)
             ->getQuery()->getResult();
 
