@@ -7138,6 +7138,9 @@ section {
 #questions span a {
   color: #238c00;
 }
+#posts article {
+  margin-top: 10px;
+}
 ul li {
   list-style: none;
   padding: 0;
