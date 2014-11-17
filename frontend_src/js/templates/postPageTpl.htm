@@ -16,23 +16,33 @@
 		</span>
 	</h1>
 
+        
 	<div class="fb-share-button" data-href="https://yasoon.ru/%23/post/<%= id %>" data-layout="button_count"></div>
         <div id="fb-root"></div>
         
         <script>
-            (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=744571352299805&version=v2.0";
-              fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
+            window.fbAsyncInit = function() {
+                FB.init({
+                  appId      : '744571352299805',
+                  xfbml      : true,
+                  version    : 'v2.1'
+                });
+              };
+
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
 
                  document.getElementById('vk_share_button').innerHTML = VK.Share.button(
                     {
                         url : 'https://yasoon.ru/%23/post/<%= id %>',
                         title: '<%= title %>',
-                        description: '<%= description %>'
+                        description: '<%= description %>',
+                        img: '/frontend/img/logo.jpg'
                     }, 
                     {
                         type: 'round', 
@@ -43,7 +53,8 @@
                     {
                         url : 'https://yasoon.ru/%23/post/<%= id %>',
                         title: '<%= title %>',
-                        description: '<%= description %>'
+                        description: '<%= description %>',
+                        img: '/frontend/img/logo.jpg'
                     }, 
                     {
                         type: 'round', 
@@ -52,7 +63,6 @@
                 );
          </script>
          <div id="vk_share_button"></div>
-
 
         </div>
 <div class="content">

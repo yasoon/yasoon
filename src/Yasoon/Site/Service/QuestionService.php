@@ -336,6 +336,7 @@ class QuestionService extends AbstractApiService {
 
         $postsTimeline = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('readerId' => $authorId));
         $postIdsArray = array();
+        if (count($postsTimeline) > 0) {
         foreach ($postsTimeline as $postTimeline) {
             $postIdsArray[] = $postTimeline->getWriterId();
 
@@ -350,25 +351,31 @@ class QuestionService extends AbstractApiService {
             ->setParameter('author_id',$postIdsArray)
             ->getQuery()->getResult();
 
-
-        foreach ($questions as $question) {
-            $askAuthorId = $question->getAuthorId();              
-            $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
-            $result[] = [
-                'id'                => $question->getId(),
-                'text'              => $question->getText(),
-                'answerText'        => $question->getAnswer(),
-                'ask_author_name'   => $askAuthor->getName(),
-                'ask_author_job'    => $askAuthor->getJob(),
-                'author_id'         => $question->getAuthorId(),
-                'ask_authorId'      => $question->getAskAuthorId(),
-                'date'              => $question->getDate()->format('d/m/Y')
+        
+            foreach ($questions as $question) {
+                $askAuthorId = $question->getAuthorId();              
+                $askAuthor = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($askAuthorId);
+                $result[] = [
+                    'id'                => $question->getId(),
+                    'text'              => $question->getText(),
+                    'answerText'        => $question->getAnswer(),
+                    'ask_author_name'   => $askAuthor->getName(),
+                    'ask_author_job'    => $askAuthor->getJob(),
+                    'author_id'         => $question->getAuthorId(),
+                    'ask_authorId'      => $question->getAskAuthorId(),
+                    'date'              => $question->getDate()->format('d/m/Y')
+                ];
+            }
+            return [
+                'error'       => false,
+                'result'      => $result
+            ];
+        } else {
+            return [
+                'error'       => false,
+                'result'      => "NOT_FOUND"
             ];
         }
-        return [
-            'error'       => false,
-            'result'      => $result
-        ];
     }
 
     public function getNewAnswersCount() {

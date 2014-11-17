@@ -195,11 +195,11 @@
 
       Register.prototype.loadUser = function() {
         if (window.newPost != null) {
-          window.location = "/#/post/new/" + window.newPost;
+          window.location = "/#/post/new/";
         } else {
           window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
         }
-        return window.location.reload(true);
+        return window.reload(true);
       };
 
       return Register;

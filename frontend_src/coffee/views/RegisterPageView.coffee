@@ -133,7 +133,7 @@ define(
         $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
 
       loadUser: ->
-        if window.newPost? then window.location = "/#/post/new/" + window.newPost
+        if window.newPost? then window.location = "/#/post/new/"
         else window.location = "/#/speaker/#{@model.get('id')}/posts/"
-        window.location.reload(yes)
+        window.reload(true)
 )

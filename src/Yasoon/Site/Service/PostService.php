@@ -248,52 +248,59 @@ class PostService extends AbstractApiService {
         }
         
         $posts_timeline = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('readerId' => $authorId));
-        
-        $postsTimeline = array();
-        foreach ($posts_timeline as $post_timeline) {
-            $postsTimeline[] = $post_timeline->getWriterId();
+        if (count($posts_timeline) > 0) {
+            $postsTimeline = array();
+            foreach ($posts_timeline as $post_timeline) {
+                $postsTimeline[] = $post_timeline->getWriterId();
 
-        }
-        if (count($postsTimeline) > 0) {
-                   
-            $posts = $this->em->createQueryBuilder()
-           ->select('p')
-           ->from('Yasoon\Site\Entity\PostEntity', 'p')
-           ->where('p.authorId IN (:writer_id)')
-           ->orderBy('p.date', 'DESC')
-           ->setParameter('writer_id', $postsTimeline)
-           ->getQuery()->getResult();
+            }
+            if (count($postsTimeline) > 0) {
 
-            $result['error'] = false;
-            foreach ($posts as $post) {
-                if ($post->getAuthor()->getImg()) {
-                    $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
-                } else {
-                    $authorImg = null;
+                $posts = $this->em->createQueryBuilder()
+               ->select('p')
+               ->from('Yasoon\Site\Entity\PostEntity', 'p')
+               ->where('p.authorId IN (:writer_id)')
+               ->orderBy('p.date', 'DESC')
+               ->setParameter('writer_id', $postsTimeline)
+               ->getQuery()->getResult();
+
+                $result['error'] = false;
+                foreach ($posts as $post) {
+                    if ($post->getAuthor()->getImg()) {
+                        $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
+                    } else {
+                        $authorImg = null;
+                    }
+
+                    $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
+                    $strLength = 0;
+                    foreach ($post_answers as $answer) {
+                       $strLength += strlen(strip_tags($answer->getAnswer()));
+                    }        
+                    $timeToRead = round($strLength/1200);
+
+                    $result['result'][] = [
+                        'id' => $post->getId(),
+                        'authorId' => $post->getAuthorId(),
+                        'authorName' => $post->getAuthor()->getName(),
+                        'avatarImg' => $authorImg,
+                        'title' => $post->getCaption(),
+                        'description' => $post->getPreview(),
+                        'text' => $post->getText(),
+                        'publishDate' => $post->getDate()->format('d/m/Y'),
+                        'post_likes' => $post->getLikes(),
+                        'timeToRead'  => $timeToRead
+
+                    ];
                 }
-                
-                $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
-                $strLength = 0;
-                foreach ($post_answers as $answer) {
-                   $strLength += strlen(strip_tags($answer->getAnswer()));
-                }        
-                $timeToRead = round($strLength/1200);
-                
-                $result['result'][] = [
-                    'id' => $post->getId(),
-                    'authorId' => $post->getAuthorId(),
-                    'authorName' => $post->getAuthor()->getName(),
-                    'avatarImg' => $authorImg,
-                    'title' => $post->getCaption(),
-                    'description' => $post->getPreview(),
-                    'text' => $post->getText(),
-                    'publishDate' => $post->getDate()->format('d/m/Y'),
-                    'post_likes' => $post->getLikes(),
-                    'timeToRead'  => $timeToRead
-                    
+            
+            } else {
+                $result = [
+                    'error' => false,
+                    'result' => "NOT_FOUND"
                 ];
             }
-        } else {
+        }else {
             $result = [
                 'error' => false,
                 'result' => "NOT_FOUND"
