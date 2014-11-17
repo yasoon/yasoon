@@ -81,8 +81,8 @@ class IndexController {
                     <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."' />
                     <meta property='og:title' content='".$post[0]['title']."'>
                     <meta property='og:description' content='".$post[0]['description']."' />
-                    <meta property='og:image' content='/frontend/img/logo.jpg' />
-                    <meta property='og:image:secure_url' content='/frontend/img/logo.jpg' />
+                    <meta property='og:image' content='http://yasoon.ru/frontend/img/logo.jpg' />
+                    <meta property='og:image:secure_url' content='https://yasoon.ru/frontend/img/logo.jpg' />
                     <meta property='og:image:type' content='image/jpeg' />
                     <meta property='og:image:width' content='400' />
                     <meta property='og:image:height' content='300' />
