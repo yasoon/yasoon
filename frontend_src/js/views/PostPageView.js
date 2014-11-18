@@ -22,6 +22,7 @@
       };
 
       PostPageView.prototype.initialize = function(options) {
+        this.reloadFacebook();
         this.model = new PostViewModel();
         this.model.set({
           'postId': options.id
@@ -122,6 +123,12 @@
 
       PostPageView.prototype.setSocial = function(data) {
         return this.model.set('postData', data[0]);
+      };
+
+      PostPageView.prototype.reloadFacebook = function() {
+        if (typeof FB !== 'undefined') {
+          return location.reload(false);
+        }
       };
 
       return PostPageView;

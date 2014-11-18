@@ -96,7 +96,7 @@ class PostCategoryService extends AbstractApiService {
                 foreach ($post_answers as $answer) {
                    $strLength += strlen(strip_tags($answer->getAnswer()));
                 }        
-                $timeToRead = round($strLength/1200);
+                $timeToRead = round($strLength/4200);
                 
                 foreach($post_categories as $pc)
                 {
@@ -124,7 +124,7 @@ class PostCategoryService extends AbstractApiService {
                 foreach ($post_answers_Rate as $answer_rate) {
                    $strLength_Rate += strlen(strip_tags($answer_rate->getAnswer()));
                 }        
-                $timeToReadRate = round($strLength_Rate/1200);
+                $timeToReadRate = round($strLength_Rate/4200);
                 foreach($post_categories as $pc)
                 {
                     $tags[] = $pc->getCategoryId();

@@ -135,5 +135,5 @@ define(
       loadUser: ->
         if window.newPost? then window.location = "/#/post/new/"
         else window.location = "/#/speaker/#{@model.get('id')}/posts/"
-        window.reload(true)
+        location.reload(true)
 )

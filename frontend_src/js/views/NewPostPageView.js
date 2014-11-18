@@ -167,7 +167,7 @@
 
       WritePostPage.prototype.changeLocation = function(data) {
         window.location = "#/post/" + data.postId + "/";
-        return window.reload = true;
+        return location.reload = true;
       };
 
       WritePostPage.prototype.showErrors = function(errors) {

@@ -194,7 +194,7 @@ class PostService extends AbstractApiService {
                 foreach ($post_answers as $answer) {
                    $strLength += strlen(strip_tags($answer->getAnswer()));
                 }        
-                $timeToRead = round($strLength/1200);
+                $timeToRead = round($strLength/4200);
                 
                 $result['result'][] = [
                     'id' => $post->getId(),
@@ -277,7 +277,7 @@ class PostService extends AbstractApiService {
                     foreach ($post_answers as $answer) {
                        $strLength += strlen(strip_tags($answer->getAnswer()));
                     }        
-                    $timeToRead = round($strLength/1200);
+                    $timeToRead = round($strLength/4200);
 
                     $result['result'][] = [
                         'id' => $post->getId(),
@@ -682,7 +682,7 @@ class PostService extends AbstractApiService {
             foreach ($post_answers as $answer) {
                $strLength += strlen(strip_tags($answer->getAnswer()));
             }        
-            $timeToRead = round($strLength/1200);
+            $timeToRead = round($strLength/4200);
                 
             $result[] = [
                 'id'          => $post->getId(),
@@ -919,7 +919,7 @@ class PostService extends AbstractApiService {
             foreach ($post_answers as $answer) {
                $strLength += strlen(strip_tags($answer->getAnswer()));
             }        
-            $timeToRead = round($strLength/1200);
+            $timeToRead = round($strLength/4200);
                 
             $result[] = [
                 'authorName' => $post->getAuthor()->getName(),

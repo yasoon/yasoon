@@ -199,7 +199,7 @@
         } else {
           window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
         }
-        return window.reload(true);
+        return location.reload(true);
       };
 
       return Register;

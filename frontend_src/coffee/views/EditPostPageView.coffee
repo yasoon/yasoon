@@ -88,5 +88,5 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-        window.reload = true
+        location.reload(true)
 )
