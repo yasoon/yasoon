@@ -76,7 +76,7 @@ class IndexController {
          $html = "<!DOCTYPE html>
                 <html>
                 <head>
-                    <link href='/frontend/img/logo.jpg' rel='logo' type='image/x-icon' />
+                    <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <meta property='og:type' content='article'>
                     <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."' />
                     <meta property='og:title' content='".$post[0]['title']."'>
@@ -153,7 +153,7 @@ class IndexController {
                     <meta charset='utf-8'>
                     <title>Yasoon</title>
                     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no' />
-                    <link href='/frontend/img/logo.jpg' rel='logo' type='image/x-icon' />
+                    <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
                     <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>

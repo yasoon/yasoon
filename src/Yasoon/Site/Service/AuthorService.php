@@ -457,17 +457,11 @@ class AuthorService extends AbstractApiService {
                          'question_count' => $timeline_data[0]->getQuestionsCount()];
         }
 
-        $avatarimg = null;
-        $src = '/upload/avatar/'.$data->getImg();
-        if (file_exists($src)) {
-            $avatarimg = $data->getImg();
-        }
-        
         $result = [
             'id'    => $data->getId(),
             'name'    => $data->getName(),
             'email'   => $data->getEmail(),
-            'avatarImg' => $avatarimg,
+            'avatarImg' => $data->getImg(),
             'interviewCaption' => $data->getInterviewCaption(),
             'job' => $data->getJob(),
             'homepage' => $data->getHomepage(),
@@ -996,14 +990,9 @@ class AuthorService extends AbstractApiService {
                 $adata = [];
                 foreach($authors as $author)
                 {
-                    $avatarimg = null;
-                    $src = '/upload/avatar/'.$author->getImg();
-                    if (file_exists($src)) {
-                        $avatarimg = $author->getImg();
-                    }
                     $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
-                        'avatarImg' => $avatarimg,
+                        'avatarImg' => $author->getImg(),
                         'last_publish_date' => $author->getPublicationDate()->format('d/m/Y'),
                         'interviewCaption' => $author->getInterviewCaption(),
                         'likes_count' => $ids[$author->getId()]['likes'],
@@ -1099,15 +1088,11 @@ class AuthorService extends AbstractApiService {
             {
                 $afriends[] = $friend->getWriterId();
             }
-            $avatarimg = null;
-            $src = '/upload/avatar/'.$author->getImg();
-            if (file_exists($src)) {
-                $avatarimg = $author->getImg();
-            }
+            
             $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
                         'email' => $author->getEmail(),
-                        'avatarImg' => $avatarimg,
+                        'avatarImg' => $author->getImg(),
                         'interviewCaption' => $author->getInterviewCaption(),
                         'job' => $author->getJob(),
                         'dream' => $author->getDream(),
@@ -1180,15 +1165,11 @@ class AuthorService extends AbstractApiService {
             else{
                 $lchange = '';
             }
-            $avatarimg = null;
-            $src = '/upload/avatar/'.$author->getImg();
-            if (file_exists($src)) {
-                $avatarimg = $author->getImg();
-            }
+            
             $adata[] = ['id' => $author->getId(),
                         'name' => $author->getName(),
                         'email' => $author->getEmail(),
-                        'avatarImg' => $avatarimg,
+                        'avatarImg' => $author->getImg(),
                         'date_reg' => $author->getPublicationDate()->format('Y-m-d H:i:s'),
                         'story_count' => $story_count,
                         'answer_count' => $answer_count,

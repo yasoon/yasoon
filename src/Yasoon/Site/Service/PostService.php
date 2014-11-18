@@ -183,7 +183,7 @@ class PostService extends AbstractApiService {
                 ->getQuery()->getResult();
             $result['error'] = false;
             foreach ($posts as $post) {
-                if ($post->getAuthor()->getImg() && file_exists('/upload/avatar/'.$post->getAuthor()->getImg())) {
+                if ($post->getAuthor()->getImg()) {
                     $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
                 } else {
                     $authorImg = null;
@@ -266,7 +266,7 @@ class PostService extends AbstractApiService {
 
                 $result['error'] = false;
                 foreach ($posts as $post) {
-                    if ($post->getAuthor()->getImg() && file_exists('/upload/avatar/'.$post->getAuthor()->getImg())) {
+                    if ($post->getAuthor()->getImg()) {
                         $authorImg = '/upload/avatar/' . $post->getAuthor()->getImg();
                     } else {
                         $authorImg = null;
@@ -752,17 +752,10 @@ class PostService extends AbstractApiService {
                 {
                     $pcats[] = $tag->getCategoryId();
                 }
-                
-                $avatarimg = null;
-                $src = '/upload/avatar/'.$post->getAuthor()->getImg();
-                if (file_exists($src)) {
-                    $avatarimg = $post->getAuthor()->getImg();
-                }
-                
                 $result[] = [
                     'postId'          => $post->getId(),
                     'authorId'    => $post->getAuthorId(),
-                    'avatarImg'   => $avatarimg,
+                    'avatarImg'   => $post->getAuthor()->getImg(),
                     'authorName'  => $post->getAuthor()->getName(),
                     'tags'        => $pcats,
                     'title'       => $post->getCaption(),
@@ -927,12 +920,6 @@ class PostService extends AbstractApiService {
                $strLength += strlen(strip_tags($answer->getAnswer()));
             }        
             $timeToRead = round($strLength/4200);
-            
-            $avatarimg = null;
-            $src = '/upload/avatar/'.$post->getAuthor()->getImg();
-            if (file_exists($src)) {
-                $avatarimg = $post->getAuthor()->getImg();
-            }
                 
             $result[] = [
                 'authorName' => $post->getAuthor()->getName(),
@@ -940,7 +927,7 @@ class PostService extends AbstractApiService {
                 'caption'    => $post->getCaption(),
                 'preview'    => $post->getPreview(),
                 'id'         => $post->getId(),
-                'avatarImg'  => $avatarimg,
+                'avatarImg'  => $post->getAuthor()->getImage(),
                 'timeToRead'  => $timeToRead
             ];
         }
@@ -1000,13 +987,7 @@ class PostService extends AbstractApiService {
                 {
                     $pcats[] = $tag->getCategoryId();
                 }
-                
-                $avatarimg = null;
-                $src = '/upload/avatar/'.$dayentity[0]->getPost()->getAuthor()->getImg();
-                if (file_exists($src)) {
-                    $avatarimg = $dayentity[0]->getPost()->getAuthor()->getImg();
-                }
-                
+
                 return ['id'          => $dayentity[0]->getPost()->getId(),
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
                         'avatarImg'   => $dayentity[0]->getPost()->getAuthor()->getImg(),
@@ -1204,12 +1185,6 @@ class PostService extends AbstractApiService {
             ->orderBy('q.date', 'desc')->getQuery()->getResult();
         foreach($questions as $question)
         {
-            $avatarimg = null;
-            $src = '/upload/avatar/'.$question->getAuthor()->getImg();
-            if (file_exists($src)) {
-                $avatarimg = $question->getAuthor()->getImg();
-            }
-                
             $aquestions[] = ['id' => $question->getId(),
                              'authorId' => $question->getAuthorId(),
                              'ask_authorId' => $question->getAskAuthorId(),
@@ -1221,7 +1196,7 @@ class PostService extends AbstractApiService {
                              'questionAnswerText' => $question->getAnswer(),
                              'hasAnswer' => ($question->getAnswer() != '') ? true : false,
                              'publishDate' => $question->getDate()->format('d/m/Y'),
-                             'avatarImg'  => $avatarimg];
+                             'avatarImg'  => $question->getAuthor()->getImg()];
         }
         return $aquestions;
     }

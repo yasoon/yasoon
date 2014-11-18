@@ -102,11 +102,6 @@ class PostCategoryService extends AbstractApiService {
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $avatarimg = null;
-                $src = '/upload/avatar/'.$results_postsDateSort[$i]->getPost()->getAuthor()->getImage();
-                if (file_exists($src)) {
-                    $avatarimg = $results_postsDateSort[$i]->getPost()->getAuthor()->getImage();
-                }
                 $postsDateSort[] = ['id'          => $id,
                             'authorId'    => $results_postsDateSort[$i]->getPost()->getAuthorId(),
                             'authorName'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
@@ -117,7 +112,7 @@ class PostCategoryService extends AbstractApiService {
                             'publishDate' => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
                             'post_likes'  => $results_postsDateSort[$i]->getPost()->getLikes(),
                             'timeToRead'  => $timeToRead,
-                            'avatarImg'   => $avatarimg];
+                            'avatarImg'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage()];
                 unset($tags);
                 
                 $post_categories = $results_postsRateSort[$i]->getPost()->getCategory();
@@ -134,11 +129,6 @@ class PostCategoryService extends AbstractApiService {
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $avatarimg = null;
-                $src = '/upload/avatar/'.$results_postsRateSort[$i]->getPost()->getAuthor()->getImage();
-                if (file_exists($src)) {
-                    $avatarimg = $results_postsRateSort[$i]->getPost()->getAuthor()->getImage();
-                }
                 $postsRateSort[] = ['id'          => $id_Rate,
                             'authorId'    => $results_postsRateSort[$i]->getPost()->getAuthorId(),
                             'authorName'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
@@ -149,7 +139,7 @@ class PostCategoryService extends AbstractApiService {
                             'publishDate' => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
                             'post_likes'  => $results_postsRateSort[$i]->getPost()->getLikes(),
                             'timeToRead'  => $timeToReadRate,
-                            'avatarImg'   => $avatarimg];
+                            'avatarImg'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage()];
                 unset($tags);
                 
                 

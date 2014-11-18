@@ -48,11 +48,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
             $id = $user->getId();
             $name = $user->getName();
             $email = $user->getEmail();
-            $avatarimg = null;
-            $src = '/upload/avatar/'.$user->getImg();
-            if (file_exists($src)) {
-                $avatarimg = $user->getImg();
-            }
+            $avatarimg = $user->getImg();
             $shortBio = $user->getInterviewCaption();
             $profession = $user->getJob();
             $self_link = $user->getHomepage();
