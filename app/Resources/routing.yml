@@ -3,5 +3,5 @@ yasoon_site:
   prefix: /
   
 fb_route:
-    path:      /#/post/{id}
+    path:      /social/post/{id}
     defaults:  { _controller: YasoonSiteBundle:Index:facebook }
