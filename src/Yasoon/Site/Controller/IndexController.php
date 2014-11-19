@@ -78,7 +78,6 @@ class IndexController {
                 <head>
                     <meta name='title' content='".$post[0]['title']."' />
                     <meta name='description' content='".$post[0]['description']."' />
-                    <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <meta property='og:type' content='article'>
                     <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."' />
                     <meta property='og:title' content='".$post[0]['title']."' />
