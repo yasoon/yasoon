@@ -106,7 +106,7 @@ define(
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
-        location.reload = true
+        window.reload = true
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))
