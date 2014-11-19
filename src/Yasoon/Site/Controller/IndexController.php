@@ -76,10 +76,12 @@ class IndexController {
          $html = "<!DOCTYPE html>
                 <html>
                 <head>
+                    <meta name='title' content='".$post[0]['title']."' />
+                    <meta name='description' content='".$post[0]['description']."' />
                     <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <meta property='og:type' content='article'>
                     <meta property='og:url' content='https://yasoon.ru/%23/post/".$postId."' />
-                    <meta property='og:title' content='".$post[0]['title']."'>
+                    <meta property='og:title' content='".$post[0]['title']."' />
                     <meta property='og:description' content='".$post[0]['description']."' />
                     <meta property='og:image' content='http://yasoon.ru/frontend/img/logo.jpg' />
                     <meta property='og:image:secure_url' content='https://yasoon.ru/frontend/img/logo.jpg' />
