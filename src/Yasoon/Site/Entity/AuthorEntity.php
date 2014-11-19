@@ -146,8 +146,8 @@ class AuthorEntity implements UserInterface, \Serializable
      *
      * @ORM\ManyToMany(targetEntity="AuthorEntity")
      * @ORM\JoinTable(name="friends",
-     *      joinColumns={@ORM\JoinColumn(name="reader_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="writer_id", referencedColumnName="id", unique=true)})
+     *      joinColumns={@ORM\JoinColumn(name="writer_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="reader_id", referencedColumnName="id", unique=true)})
      */
     protected $writers;
 

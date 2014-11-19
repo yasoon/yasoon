@@ -6649,6 +6649,7 @@ blockquote {
   height: 33px;
   padding-top: 8px;
   font-size: 16px;
+  max-width: 250px;
 }
 .q-post i {
   margin-top: -8px;
