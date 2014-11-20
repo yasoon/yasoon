@@ -6753,7 +6753,8 @@ article.cat-title h4 {
   transition: margin 0.5s ease;
 }
 .content img {
-  width: 100%;
+  margin: 0 auto !important;
+  display: block;
 }
 .content .quotes {
   border-left: 2px solid #238C00;

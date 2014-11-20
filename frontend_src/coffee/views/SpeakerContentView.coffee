@@ -72,8 +72,8 @@ define(
         if @speakerAnswers.answered().length then @answeredQuestions() else @emptyQuestions(47)
 
       createAskedList: ->
-        if @speakerAnswers.asked().length then @askedQuestions()
         if @speakerAnswers.answered().length then @answeredQuestions()
+        if @speakerAnswers.asked().length then @askedQuestions()
 
       askedQuestions: ->
         @$el.prepend(@speakerAnswers.renderQuestion().$el)

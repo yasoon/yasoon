@@ -1182,7 +1182,7 @@ class PostService extends AbstractApiService {
 
         $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->createQueryBuilder('q')
             ->where('q.id IN('.implode(',', $ids).')')
-            ->orderBy('q.date', 'desc')->getQuery()->getResult();
+            ->getQuery()->getResult();
         foreach($questions as $question)
         {
             $aquestions[] = ['id' => $question->getId(),

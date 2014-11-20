@@ -6,6 +6,7 @@
 
       Controller.prototype.index = function() {
         $('body').removeClass().addClass('index');
+        $('#js-login').removeClass();
         this.mainPageView = new MainPageView;
         LayoutView.contentRegion.$el.empty().append(this.mainPageView.render().$el);
         this.mainPageView.delegateEvents();
@@ -14,6 +15,7 @@
 
       Controller.prototype.posts = function(category, sort) {
         $('body').removeClass().addClass('posts');
+        $('#js-login').removeClass();
         this.postsPageView = new PostsPageView({
           category: category,
           sort: sort,
@@ -26,6 +28,7 @@
 
       Controller.prototype.post = function(id) {
         $('body').removeClass().addClass('post');
+        $('#js-login').removeClass();
         this.postPageView = new PostPageView({
           id: id
         });
@@ -36,6 +39,7 @@
 
       Controller.prototype.about = function() {
         $('body').removeClass().addClass('about');
+        $('#js-login').removeClass();
         this.aboutPageView = new AboutPageView();
         LayoutView.contentRegion.$el.empty().append(this.aboutPageView.render().$el);
         this.aboutPageView.delegateEvents();
@@ -47,6 +51,7 @@
           delete window.newPost;
         }
         $('body').removeClass().addClass('new-post');
+        $('#js-login').removeClass();
         this.newPostPageView = new NewPostPageView({
           id: id,
           model: new PostPageModel(),
@@ -59,6 +64,7 @@
 
       Controller.prototype.editPost = function(id) {
         $('body').removeClass().addClass('edit-post');
+        $('#js-login').removeClass();
         this.editPostPageView = new EditPostPageView({
           id: id,
           model: new PostPageModel()
@@ -70,6 +76,7 @@
 
       Controller.prototype.speakers = function(category) {
         $('body').removeClass().addClass('speakers');
+        $('#js-login').removeClass();
         this.speakersPageView = new SpeakersPageView({
           category: category,
           model: new SpeakersPageModel()
@@ -81,6 +88,7 @@
 
       Controller.prototype.register = function() {
         $('body').removeClass().addClass('register');
+        $('#js-login').removeClass().addClass('hidden');
         this.registerPageView = new RegisterPageView({
           model: new UserRegisterModel()
         });
@@ -92,6 +100,7 @@
       Controller.prototype.speaker = function(id, page) {
         var model;
         $('body').removeClass().addClass('speaker');
+        $('#js-login').removeClass();
         model = Backbone.Model.extend();
         this.speakerPageView = new SpeakerPageView({
           id: id,
@@ -105,6 +114,7 @@
 
       Controller.prototype.editSpeaker = function(id) {
         $('body').removeClass().addClass('editAuthor');
+        $('#js-login').removeClass();
         this.editAuthorPageView = new EditSpeakerView({
           model: new UserUpdateModel(),
           el: LayoutView.contentRegion.$el
@@ -115,6 +125,7 @@
 
       Controller.prototype.timeline = function() {
         $('body').removeClass().addClass('timeline');
+        $('#js-login').removeClass();
         this.timelinePageView = new TimelinePageView({
           model: new TimelinePageModel()
         });
@@ -125,6 +136,7 @@
 
       Controller.prototype.undefinedRoute = function() {
         $('body').removeClass().addClass('error');
+        $('#js-login').removeClass();
         this.errorPageView = new ErrorPageView();
         LayoutView.contentRegion.$el.empty().append(this.errorPageView.render().$el);
         this.errorPageView.delegateEvents();

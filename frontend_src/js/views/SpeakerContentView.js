@@ -135,11 +135,11 @@
       };
 
       SpeakerContentView.prototype.createAskedList = function() {
-        if (this.speakerAnswers.asked().length) {
-          this.askedQuestions();
-        }
         if (this.speakerAnswers.answered().length) {
-          return this.answeredQuestions();
+          this.answeredQuestions();
+        }
+        if (this.speakerAnswers.asked().length) {
+          return this.askedQuestions();
         }
       };
 

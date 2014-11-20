@@ -353,7 +353,7 @@ class AuthorController {
         $oldImage = $this->service->setAvatarAuthor($resultImage);
         // удаляем оригинальное и старое изображение
         unlink($absolutePath  . '/' . $fileInfo->getFilename());
-        if (!empty($oldImage)) {
+        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage)) {
             unlink($absolutePath  . '/' . $oldImage);
         }
 
