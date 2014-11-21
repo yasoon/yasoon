@@ -61,7 +61,10 @@ define(
         @setAnswers()
 
       setAnswers: ->
-        _.each(@model.get('text'), (answer) => $("[data-answer='#{answer.question_id}']").find('.editor').redactor({imageUpload: '/api/post/upload_image', emptyHtml: answer.answer}).closest('li').find('a').addClass('active'))
+        _.each(@model.get('text'), (answer) => 
+            $("[data-answer='#{answer.question_id}']").find('.editor').redactor({imageUpload: '/api/post/upload_image'}).closest('li').find('a').addClass('active')
+            $("[data-answer='#{answer.question_id}']").find('.redactor_editor').html(answer.answer)
+        )
         @afterRender()
 
       afterRender: ->
