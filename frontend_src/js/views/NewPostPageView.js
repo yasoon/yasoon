@@ -53,7 +53,7 @@
               name: name
             });
             _this.model.set('interviewId', array.length ? id : data[0]['id']);
-            return _this.model.set('interviewTitle', data[id - 1]['name']);
+            return _this.model.set('interviewTitle', data[_this.model.get('interviewId') - 1]['name']);
           };
         })(this));
       };
