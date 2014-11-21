@@ -629,14 +629,13 @@ class PostService extends AbstractApiService {
             {
                 $pcats[] = $tag->getCategoryId();
             }
-            $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->find($post->getInterviewId());
             $result[] = [
                 'id'          => $post->getId(),
                 'authorId'    => $post->getAuthorId(),
                 'authorName'  => $post->getAuthor()->getName(),
                 'tags'        => $pcats,
                 'interviewId' => $post->getInterviewId(),
-                'interviewTitle' => $interview->getName(),
+                'interviewTitle' => $post->getInterview()->getName(),
                 'title'       => $post->getCaption(),
                 'description' => $post->getPreview(),
                 'text'        => /*$post->getText(),*/ $questionAnswerArray,
