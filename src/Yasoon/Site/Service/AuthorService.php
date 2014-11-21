@@ -900,8 +900,8 @@ class AuthorService extends AbstractApiService {
     
             $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
     
-            return [
-                'id' => $author->getId()
+            return ['error' => false, 'userData' => array(
+                'id' => $author->getId())
             ];
         } catch(\Exception $e) {
             return ['error' => true, 'errorType' => 'nouser'];
