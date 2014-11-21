@@ -15,6 +15,7 @@ define(
           'click #vk-login': 'vkLogin'
           'click #fb-login': 'facebookLogin'
           'click #js-register': 'registerAction'
+          'click #forgot-password': 'forgotPasswordAction'
           'submit form': 'loginAction'
 
       bindings:
@@ -78,5 +79,10 @@ define(
 
       hideErrors: ->
         @$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('')
-        
+
+      forgotPasswordAction: (event) ->
+        event.preventDefault()
+        @hideErrors()
+        $.post('/api/author/notify', {email: @model.get('email')}, (data) => @showAnswer(data))
+
 )

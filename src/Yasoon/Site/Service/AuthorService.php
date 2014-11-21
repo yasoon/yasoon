@@ -895,7 +895,7 @@ class AuthorService extends AbstractApiService {
             
             $link = $_SERVER['HTTP_HOST'].'#api/author/change_pass/'.$author->getEmail().'/'.md5($newPass);
     
-            $message = $this->contentService->getAllContent()[5]['text'];
+            $message = $this->contentService->getAllContent(0)[5]['text'];
             $message = str_replace(['%email%', '%newpass%', '%link%'], [$author->getEmail(), $newPass, $link], $message);
     
             $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
@@ -904,7 +904,7 @@ class AuthorService extends AbstractApiService {
                 'id' => $author->getId()
             ];
         } catch(\Exception $e) {
-            return ['authorData' => false, 'message' => $e->getMessage()];
+            return ['error' => true, 'errorType' => 'nouser'];
         }
     }
     

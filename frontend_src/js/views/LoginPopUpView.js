@@ -16,6 +16,7 @@
           'click #vk-login': 'vkLogin',
           'click #fb-login': 'facebookLogin',
           'click #js-register': 'registerAction',
+          'click #forgot-password': 'forgotPasswordAction',
           'submit form': 'loginAction'
         });
       };
@@ -129,6 +130,18 @@
 
       LoginPopUpView.prototype.hideErrors = function() {
         return this.$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('');
+      };
+
+      LoginPopUpView.prototype.forgotPasswordAction = function(event) {
+        event.preventDefault();
+        this.hideErrors();
+        return $.post('/api/author/notify', {
+          email: this.model.get('email')
+        }, (function(_this) {
+          return function(data) {
+            return _this.showAnswer(data);
+          };
+        })(this));
       };
 
       return LoginPopUpView;

@@ -317,8 +317,10 @@ class AuthorController {
     public function notify(Request $request)
     {
         $email = $request->request->get('email');
-
-        return $this->service->notify($email);
+        if (!empty($email)) {
+            return $this->service->notify($email);
+        }
+        return ['error' => true, 'errorType' => 'nouser'];
     }
 
     /**
