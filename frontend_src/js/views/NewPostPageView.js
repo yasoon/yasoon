@@ -45,11 +45,15 @@
       WritePostPage.prototype.getDefaultInterview = function(id) {
         return $.get("/api/interview/get_interviews", (function(_this) {
           return function(data) {
-            var array;
+            var array, arrayName;
             array = _.where(data, {
               id: parseInt(id)
             });
-            return _this.model.set('interviewId', array.length ? id : data[0]['id']);
+            arrayName = _.where(data, {
+              name: name
+            });
+            _this.model.set('interviewId', array.length ? id : data[0]['id']);
+            return _this.model.set('interviewTitle', arrayName.length ? name : data[0]['name']);
           };
         })(this));
       };

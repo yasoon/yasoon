@@ -155,7 +155,7 @@ class PostEntity
      */
     public function getInterview()
     {
-        return $this->author;
+        return $this->interview;
     }
     
     /**

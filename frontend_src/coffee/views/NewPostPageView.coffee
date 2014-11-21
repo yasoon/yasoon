@@ -46,7 +46,9 @@ define(
       getDefaultInterview: (id) ->
         $.get("/api/interview/get_interviews", (data) =>
           array = _.where(data, {id: parseInt(id)})
+          arrayName = _.where(data, {name: name})
           @model.set('interviewId', if array.length then id else data[0]['id'])
+          @model.set('interviewTitle', if arrayName.length then name else data[0]['name'])
         )
 
       handler: ->
