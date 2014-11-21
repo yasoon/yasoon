@@ -876,6 +876,9 @@ class AuthorService extends AbstractApiService {
         try {
             $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
             
+            if (empty($author)) {
+                return ['error' => true, 'errorType' => 'nouser'];
+            }
             if($author->getRole() == 4)
             {
                 return ['error' => true, 'errorText' => 'Admin cannot change pass'];
