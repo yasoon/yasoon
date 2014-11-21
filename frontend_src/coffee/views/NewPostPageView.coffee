@@ -48,7 +48,7 @@ define(
           array = _.where(data, {id: parseInt(id)})
           arrayName = _.where(data, {name: name})
           @model.set('interviewId', if array.length then id else data[0]['id'])
-          @model.set('interviewTitle', data[id]['name'])
+          @model.set('interviewTitle', data[id - 1]['name'])
         )
 
       handler: ->
