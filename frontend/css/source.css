@@ -7143,8 +7143,38 @@ section {
 #posts article {
   margin-top: 10px;
 }
-#select-new-history {
-  width: 250px;
+#new-histories-menu {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: -1px;
+  background: #fff;
+  border: 1px solid #238C00;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 150px;
+}
+.pssel {
+  display: inline-block;
+  /* или inline-block */
+  display: inline;
+  position: relative;
+  /* должна быть отличной от static */
+  z-index: 1;
+  width: auto;
+  height: 28px;
+}
+.ps_dr_item {
+  white-space: nowrap;
+  cursor: pointer;
+  height: 30px;
+  display: inline-block;
+  display: inline;
+  line-height: 30px;
+  padding: 0 5px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 ul li {
   list-style: none;

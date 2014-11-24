@@ -8,7 +8,7 @@ define(
   ) ->
     class SpeakerWritePostButtonView extends Backbone.View
       events: ->
-        'change #select-new-history': 'createHistory'
+        'click .write-post-button a': 'showHistories'
 
       tagName: 'section'
       template: _.template(speakerPageTpl)
@@ -16,8 +16,8 @@ define(
         @$el.append(@template())
         @
 
-      createHistory:(event) ->
+      showHistories:(event) ->
         event.preventDefault()
-        page = $('#select-new-history').val()
-        window.location.href = '/#/post/new/'+ page
+        $('#new-histories-menu').toggle()
+
 )

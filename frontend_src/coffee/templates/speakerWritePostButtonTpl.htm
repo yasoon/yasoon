@@ -1,7 +1,14 @@
 <div class="write-post-button">
-    <select name="addNewHistory" id="select-new-history" class="btn" title="Написать историю">
-        <option value='' disabled selected style='display:none;'>Написать историю</option>
-        <option class='new-history-opt' value="2"><%= _.getContent(10) %></option>
-        <option class='new-history-opt' value="3"><%= _.getContent(12) %></option>    
-    </select>
+    <p>
+        <div class='pssel'>
+            <a href="#/post/new/1" class="btn">
+                ТЕМА ИСТОРИИ
+            </a>
+            <div id='new-histories-menu'>
+                <div class="ps_dr_item"><a href='/#/post/new/2' ><%= _.getContent(10) %></a></div>
+                <div class="ps_dr_item"><a href='/#/post/new/3' ><%= _.getContent(12) %></a></div>
+            </div>
+        </div>
+    </p>
 </div>
+
