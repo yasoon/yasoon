@@ -1237,7 +1237,7 @@ article, section{
 #new-histories-menu {
     display: none;
     position: absolute;
-    top: 25px;
+    top: 41px;
     left: -1px;
     background: #fff;
     border: 1px solid #238C00;
@@ -1249,19 +1249,21 @@ article, section{
 
 .pssel {
     display: inline-block; /* или inline-block */
-    display: inline;
     position: relative; /* должна быть отличной от static */
     z-index: 1;
     width: auto;
     height: 28px;
 }
 
+.ie .pssel {
+    display: inline;
+}
+
 .ps_dr_item {
     white-space: nowrap;
     cursor: pointer;
     height: 30px;
-    display: inline-block;
-    display: inline;
+    display: inline-block;  
     line-height: 30px;
     padding: 0 5px;
     font-size: 14px;
@@ -1269,4 +1271,6 @@ article, section{
     font-weight: bold;
 }
 
-
+.ie .ps_dr_item {
+    display: inline;
+}
