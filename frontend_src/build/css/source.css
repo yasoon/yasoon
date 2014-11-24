@@ -7143,6 +7143,9 @@ section {
 #posts article {
   margin-top: 10px;
 }
+#select-new-history {
+  width: 250px;
+}
 ul li {
   list-style: none;
   padding: 0;

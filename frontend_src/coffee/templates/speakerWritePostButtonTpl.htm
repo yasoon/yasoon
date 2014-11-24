@@ -1,7 +1,7 @@
 <div class="write-post-button">
-    <p>
-        <a href="#/post/new/1" class="btn">
-            Написать историю
-        </a>
-    </p>
+    <select name="addNewHistory" id="select-new-history" class="btn" title="Написать историю">
+        <option value='' disabled selected style='display:none;'>Написать историю</option>
+        <option class='new-history-opt' value="2"><%= _.getContent(10) %></option>
+        <option class='new-history-opt' value="3"><%= _.getContent(12) %></option>    
+    </select>
 </div>
