@@ -1,14 +1,16 @@
 define(
   [
     'text!templates/speakerWritePostButtonTpl.htm'
+    'views/StoriesPopUpView'
     'backbone'
   ]
   (
     speakerPageTpl
+    StoriesPopUpView
   ) ->
     class SpeakerWritePostButtonView extends Backbone.View
       events: ->
-        'click .write-post-button a': 'showHistories'
+        'click .write-post-button p a': 'showHistories'
 
       tagName: 'section'
       template: _.template(speakerPageTpl)
@@ -18,6 +20,7 @@ define(
 
       showHistories:(event) ->
         event.preventDefault()
-        $('#new-histories-menu').toggle()
+        if not @storiesPopUpView? then @storiesPopUpView = new StoriesPopUpView() else @storiesPopUpView.delegateEvents()
+        $('body').append(@storiesPopUpView.render().$el)
 
 )
