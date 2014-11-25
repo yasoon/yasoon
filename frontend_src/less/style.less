@@ -777,6 +777,26 @@ blockquote {
     background-position: -36px -48px;
   }
 }
+.social-links-footer {
+    position: absolute;
+    left: 25%;
+    top: -45%;
+    width: 10em;
+}
+.social-links-footer a {
+  display: block;
+  float: left;
+  width: 35px;
+  height: 35px;
+  background: url(../img/social.png) no-repeat;
+  margin-right: 5px;
+  &.ws {
+    background-position: -40px -15px;
+  }
+  &.wf {
+    background-position: -5px -15px;
+  }
+}
 
 
 article {
@@ -928,9 +948,10 @@ footer {
   text-align: center;
 
   .popUpBackground {
-    background-image: url(../img/barrier.png);
-    box-shadow: inset 0 0 50px rgba(0,0,0,.5);
+    background: #fff;
+    box-shadow: inset 0 0 50px rgba(0,0,0,.3);
     position: fixed;
+    opacity: 0.5;
     top: 0;
     left: 0;
     width: 100%;

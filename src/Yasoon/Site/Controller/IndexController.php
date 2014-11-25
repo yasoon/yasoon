@@ -195,6 +195,10 @@ class IndexController {
                     <footer>
                         <div class='inside'>
                             <div class='left aus'>© 2013-2015 yasoon</div>
+                            <div class='social-links-footer'>
+                            <a class='ws' href='https://vk.com/yasoon'></a>
+                            <a class='wf' href='https://www.facebook.com/pages/Yasoon/153967808144954'></a>
+                            </div>
                             <nav>
                                 <a href='/#/about'>О нас</a>
                                 <a href='/#/digest'>Дайджест</a>
