@@ -1008,6 +1008,46 @@ footer {
         }
       }
     }
+    &.stories {
+      width: auto;
+      a {
+        white-space: nowrap;
+      }
+      .connect {
+        margin-top: 12px;
+        width: auto;
+        float: left;
+        color: #777;
+        & + .connect {
+          float: right;
+          width: 260px;
+          position: relative;
+
+          &:before {
+            content: '';
+            width: 1px;
+            top: 0;
+            bottom: 20px;
+            position: absolute;
+            left: -12%;
+            background: #d2d2d2;
+          }
+        }
+        .btn {
+          color: #238C00;
+          margin-left: 10px;
+        }
+        li {
+          display: block;
+          margin-bottom: 25px;
+          line-height: 25px;
+
+          &.last {
+            margin-top: 30px;
+          }
+        }
+      }
+    }
   }
 }
 
