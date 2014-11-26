@@ -36,10 +36,15 @@ jms_di_extra:
     directories: ["%kernel.root_dir%/../src"]
 
 swiftmailer:
-#    auth_mode:  login
-#    encryption: ssl
-#    host:       smtp.gmail.com
-#    username: 'parandiy.mihail@gmail.com'
-#    password: '123'
-    transport: sendmail
+    default_mailer: default
+    mailers:
+        default:
+            transport: sendmail
+        forgotPass:
+            transport: %mailer_transport%
+            host:      %mailer_host%
+            username:  %mailer_user%
+            password:  %mailer_password%
+            encryption: %mailer_encryption%
+            auth_mode: %mailer_auth_mode%
 

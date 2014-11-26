@@ -873,6 +873,7 @@ class AuthorService extends AbstractApiService {
      */
     public function notify($email)
     {
+        return $this->mailer->send($email, 'Восстановление пароля Yasoon', 'Message');
         try {
             $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
             

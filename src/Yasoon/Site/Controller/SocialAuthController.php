@@ -138,43 +138,46 @@ class SocialAuthController {
                     ->setParameter('vkid', $response['response'][0]['uid'])
                     ->getQuery()->getResult();
             
+            $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
+            $newUser = (new AuthorEntity())
+                ->setName($name)
+                ->setEmail('')
+                ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
+                ->setPassword('')
+                ->setSubscribed(1)
+                ->setVkontakteId($response['response'][0]['uid'])
+                ->setPublicationDate(new \DateTime())
+                ->setRegFrom(2)
+                ->setRole(1);
+
+            $url  = $response['response'][0]['photo_medium'];
+            $image_name = time().'.jpg';
+            $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
+
+            $ch = curl_init($url);
+            $fp = fopen($path, 'wb');
+            curl_setopt($ch, CURLOPT_FILE, $fp);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_exec($ch);
+            curl_close($ch);
+            fclose($fp);
+
+            $newUser->setImg($image_name);
+            
             if (count($user) < 1 || !is_object($user[0])) {
-                $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
-                $user = (new AuthorEntity())
-                    ->setName($name)
-                    ->setEmail('')
-                    ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
-                    ->setPassword('')
-                    ->setSubscribed(1)
-                    ->setVkontakteId($response['response'][0]['uid'])
-                    ->setPublicationDate(new \DateTime())
-                    ->setRegFrom(2)
-                    ->setRole(1);
-                    
-                $url  = $response['response'][0]['photo_medium'];
-                $image_name = time().'.jpg';
-                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
                 
-                $ch = curl_init($url);
-                $fp = fopen($path, 'wb');
-                curl_setopt($ch, CURLOPT_FILE, $fp);
-                curl_setopt($ch, CURLOPT_HEADER, 0);
-                curl_exec($ch);
-                curl_close($ch);
-                fclose($fp);
-                
-                $user->setImg($image_name);
                     
-                $this->_em->persist($user);
+                $this->_em->persist($newUser);
                 $this->_em->flush();
                 $new_user = true;
             }
             else
             {
-                $user = $user[0];
+                $this->_em->merge($newUser);
+                $this->_em->flush();
             }
         
-            $token = new UsernamePasswordToken((string) $user->getId(), $user->getPassword(), "secured_area", ['ROLE_USER']);
+            $token = new UsernamePasswordToken((string) $newUser->getId(), $newUser->getPassword(), "secured_area", ['ROLE_USER']);
 
             $this->securityContext->setToken($token);
     
@@ -190,7 +193,7 @@ class SocialAuthController {
         if($new_user)
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$user->getId().'/edit/\';
+                            window.opener.location.hash=\'/speaker/'.$newUser->getId().'/edit/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
@@ -199,7 +202,7 @@ class SocialAuthController {
         else
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$user->getId().'/posts/\';
+                            window.opener.location.hash=\'/speaker/'.$newUser->getId().'/posts/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
