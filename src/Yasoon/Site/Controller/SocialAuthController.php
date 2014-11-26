@@ -138,46 +138,64 @@ class SocialAuthController {
                     ->setParameter('vkid', $response['response'][0]['uid'])
                     ->getQuery()->getResult();
             
-            $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
-            $newUser = (new AuthorEntity())
-                ->setName($name)
-                ->setEmail('')
-                ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
-                ->setPassword('')
-                ->setSubscribed(1)
-                ->setVkontakteId($response['response'][0]['uid'])
-                ->setPublicationDate(new \DateTime())
-                ->setRegFrom(2)
-                ->setRole(1);
-
-            $url  = $response['response'][0]['photo_medium'];
-            $image_name = time().'.jpg';
-            $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
-
-            $ch = curl_init($url);
-            $fp = fopen($path, 'wb');
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_exec($ch);
-            curl_close($ch);
-            fclose($fp);
-
-            $newUser->setImg($image_name);
-            
             if (count($user) < 1 || !is_object($user[0])) {
-                
+                $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
+                $user = (new AuthorEntity())
+                    ->setName($name)
+                    ->setEmail('')
+                    ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
+                    ->setPassword('')
+                    ->setSubscribed(1)
+                    ->setVkontakteId($response['response'][0]['uid'])
+                    ->setPublicationDate(new \DateTime())
+                    ->setRegFrom(2)
+                    ->setRole(1);
                     
-                $this->_em->persist($newUser);
+                $url  = $response['response'][0]['photo_medium'];
+                $image_name = time().'.jpg';
+                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
+                
+                $ch = curl_init($url);
+                $fp = fopen($path, 'wb');
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_exec($ch);
+                curl_close($ch);
+                fclose($fp);
+                
+                $user->setImg($image_name);
+                    
+                $this->_em->persist($user);
                 $this->_em->flush();
                 $new_user = true;
             }
             else
             {
-                $this->_em->merge($newUser);
+                $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
+                $user = (new AuthorEntity())
+                    ->setName($name)
+                    ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
+                    ->setVkontakteId($response['response'][0]['uid']);
+                    
+                $url  = $response['response'][0]['photo_medium'];
+                $image_name = time().'.jpg';
+                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
+                
+                $ch = curl_init($url);
+                $fp = fopen($path, 'wb');
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_exec($ch);
+                curl_close($ch);
+                fclose($fp);
+                
+                $user->setImg($image_name);
+                    
+                $user = $this->_em->merge($user);
                 $this->_em->flush();
             }
         
-            $token = new UsernamePasswordToken((string) $newUser->getId(), $newUser->getPassword(), "secured_area", ['ROLE_USER']);
+            $token = new UsernamePasswordToken((string) $user->getId(), $user->getPassword(), "secured_area", ['ROLE_USER']);
 
             $this->securityContext->setToken($token);
     
@@ -193,7 +211,7 @@ class SocialAuthController {
         if($new_user)
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$newUser->getId().'/edit/\';
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/edit/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
@@ -202,7 +220,7 @@ class SocialAuthController {
         else
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$newUser->getId().'/posts/\';
+                            window.opener.location.hash=\'/speaker/'.$user->getId().'/posts/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
@@ -286,8 +304,10 @@ class SocialAuthController {
                 ->where('u.facebookId = :fbid')
                 ->setParameter('fbid', $userInfo->id)
                 ->getQuery()->getResult();
+            
+            $name = $userInfo->name;
+            
             if (count($user) < 1 || !is_object($user[0])) {
-                $name = $userInfo->name;
                 $user = (new AuthorEntity())
                     ->setName($name)
                     ->setEmail('')
@@ -328,10 +348,40 @@ class SocialAuthController {
                 $this->_em->persist($user);
                 $this->_em->flush();
                 $new_user = true;
-            }
-            else
-            {
-                $user = $user[0];
+            } else {
+                $user = (new AuthorEntity())
+                    ->setName($name)
+                    ->setHomepage($userInfo->link)
+                    ->setFacebookId($userInfo->id);
+                    
+                
+                $enc = urlencode('SELECT current_location, pic_big FROM user WHERE uid IN ('.$userInfo->id.')');
+                $request_url = 'https://graph.facebook.com/fql?q='.$enc.'&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($curl, CURLOPT_URL, $request_url);
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $userCountry = json_decode($response);
+                
+                $url  = str_replace('https:', 'http:', $userCountry->data[0]->pic_big);
+                $image_name = time().'.jpg';
+                $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
+                
+                $ch = curl_init($url);
+                $fp = fopen($path, 'wb');
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_exec($ch);
+                curl_close($ch);
+                fclose($fp);
+                
+                $user->setImg($image_name);
+                    
+                $user = $this->_em->merge($user);
+                $this->_em->flush();
             }
         
             $token = new UsernamePasswordToken((string) $user->getId(), $user->getPassword(), "secured_area", ['ROLE_USER']);
