@@ -19,6 +19,8 @@
       },
       initialize: function() {
         Backbone.history.start();
+        this.bind('route', this.sendPageview);
+        Backbone.history.on("route", this.sendPageview());
         return this.setHandlers();
       },
       setHandlers: function() {
@@ -138,6 +140,13 @@
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();
+      },
+      sendPageview: function() {
+        var url;
+        url = Backbone.history.getFragment();
+        return ga('send', 'pageview', {
+          'page': '/#/' + url
+        });
       }
     });
     return new AppRouter();

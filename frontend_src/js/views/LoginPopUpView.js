@@ -112,6 +112,13 @@
               message: 'Неверный пароль'
             }
           ]);
+        } else if (data === 'notSent') {
+          return this.showErrors([
+            {
+              name: 'email',
+              message: 'Сбой в работе почты. Попробуйте позже.'
+            }
+          ]);
         }
       };
 

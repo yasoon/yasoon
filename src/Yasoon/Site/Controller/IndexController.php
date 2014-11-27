@@ -168,7 +168,6 @@ class IndexController {
                       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
                       ga('create', 'UA-53635352-1', 'auto');
-                      ga('send', 'pageview');
 
                     </script>
                     

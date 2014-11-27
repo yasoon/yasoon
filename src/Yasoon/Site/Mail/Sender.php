@@ -49,9 +49,9 @@ class Sender
           ->setBody($text)
         ;
 //        $transport = Swift_MailTransport::newInstance();
-        $transport = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465)
-            ->setUsername('suraleb.boris@gmail.com')
-            ->setPassword('1529633boris')
+        $transport = Swift_SmtpTransport::newInstance('ssl://smtp.yandex.ru', 465)
+            ->setUsername('info@yasoon.ru')
+            ->setPassword('YasoonMailPa55w0rd')
             ;
         $mailer = new Swift_Mailer($transport);
         return $mailer->send($message);

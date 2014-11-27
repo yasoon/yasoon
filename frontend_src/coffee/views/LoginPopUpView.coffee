@@ -69,6 +69,7 @@ define(
         @toggleButton(off)
         if data is 'nouser' then @showErrors([{name: 'email', message: 'Пользователя с таким email нет'}])
         else if data is 'invalidPassword' then @showErrors([{name: 'password', message: 'Неверный пароль'}])
+        else if data is 'notSent' then @showErrors([{name: 'email', message: 'Сбой в работе почты. Попробуйте позже.'}])
 
       changeLocation: (data) ->
         window.config.userId = data.id

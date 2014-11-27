@@ -29,7 +29,10 @@ define([
 
       initialize: ->
         Backbone.history.start()
+        @bind 'route', @sendPageview
+        Backbone.history.on("route", @sendPageview())
         @setHandlers()
+        
 
       setHandlers: ->
         $(document).on('click', 'a[href^="/"]', (event) => @isClicked(event))
@@ -82,6 +85,10 @@ define([
 
       undefinedRoute: ->
         Controller.undefinedRoute()
+        
+      sendPageview: ->
+        url = Backbone.history.getFragment()
+        ga('send', 'pageview', {'page' : '/#/'+url});
     })
     return new AppRouter()
 )

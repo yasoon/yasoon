@@ -16,6 +16,7 @@ use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\FriendsEntity;
 use Yasoon\Site\Entity\TimelineEntity;
+use Yasoon\Site\Entity\AuthorChangedPassEntity;
 use Yasoon\Site\Mail\Sender;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -873,7 +874,6 @@ class AuthorService extends AbstractApiService {
      */
     public function notify($email)
     {
-        return $this->mailer->send($email, 'Восстановление пароля Yasoon', 'Message');
         try {
             $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findOneByEmail($email);
             
@@ -897,16 +897,19 @@ class AuthorService extends AbstractApiService {
     
             $name = $author->getName();
             
-            $link = $_SERVER['HTTP_HOST'].'#api/author/change_pass/'.$author->getEmail().'/'.md5($newPass);
-    
+            $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+            $link = $protocol.$_SERVER['HTTP_HOST'].'/api/author/change_pass/'.$author->getEmail().'/'.md5($newPass);
+            
             $message = $this->contentService->getAllContent(0)[5]['text'];
             $message = str_replace(['%email%', '%newpass%', '%link%'], [$author->getEmail(), $newPass, $link], $message);
     
-            $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
-    
-            return ['error' => false, 'userData' => array(
-                'id' => $author->getId())
-            ];
+            $request = $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
+            
+            if ($request) {
+                return ['error' => false, 'userData' => $author->getId(),'message' => 'Инструкции по восстановлению пароля высланы на '.$email];
+            }
+            
+            return ['error' => true, 'errorType' => 'notSent '];
         } catch(\Exception $e) {
             return ['error' => true, 'errorType' => 'nouser'];
         }
@@ -922,10 +925,11 @@ class AuthorService extends AbstractApiService {
         
         if($hash == md5($author->getNewpass()))
         {
+            $authorId = $author->getId();
             $author->setPassword(md5($author->getNewpass()));
             $author->setNewpass(NULL);
             
-            $this->em->merge($author);
+            $author = $this->em->merge($author);
             $this->em->flush();
             
             // Сразу авторизуем чела
@@ -937,21 +941,19 @@ class AuthorService extends AbstractApiService {
             $session = $this->container->get('request')->getSession();
             $session->set('_security_secured_area', serialize($token));
             $this->container->get('request')->setSession($session);
-            
-            
-            $statEntity = (new AuthorChangedPassEntity())
-                ->setAuthorId($author->getId())
-                ->setLastDate(new \DateTime());
-            $this->em->persist($statEntity);
-            $this->em->flush();
+
+//            $statEntity = new AuthorChangedPassEntity();
+//            $statEntity->setAuthorId($authorId);
+//            $statEntity->setLastDate(new \DateTime());
+//            
+//            $this->em->persist($statEntity);
+//            $this->em->flush();
     
-            return ['error' => false,
-                    'userId' => $author->getId()];
+            return true;
         }
         else
         {
-            return ['error' => true,
-                    'errorText' => 'notFound'];
+            return false;
         }
     }
 
