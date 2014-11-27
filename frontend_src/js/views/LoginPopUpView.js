@@ -105,6 +105,13 @@
               message: 'Пользователя с таким email нет'
             }
           ]);
+        } else if (data === 'empty') {
+          return this.showErrors([
+            {
+              name: 'email',
+              message: 'Необходимо указать email'
+            }
+          ]);
         } else if (data === 'invalidPassword') {
           return this.showErrors([
             {
@@ -116,7 +123,21 @@
           return this.showErrors([
             {
               name: 'email',
-              message: 'Сбой в работе почты. Попробуйте позже.'
+              message: 'Сбой в работе почты. Попробуйте позже'
+            }
+          ]);
+        } else if (data === 'admin') {
+          return this.showErrors([
+            {
+              name: 'email',
+              message: 'Невозможно изменить пароль'
+            }
+          ]);
+        } else if (data === 'alliswell') {
+          return this.showNoErrors([
+            {
+              name: 'email',
+              message: _.getContent(63)
             }
           ]);
         }
@@ -131,6 +152,14 @@
         return _.each(errors, (function(_this) {
           return function(error) {
             return _this.$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message);
+          };
+        })(this));
+      };
+
+      LoginPopUpView.prototype.showNoErrors = function(errors) {
+        return _.each(errors, (function(_this) {
+          return function(error) {
+            return _this.$el.find('#' + error.name).closest('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text(error.message);
           };
         })(this));
       };

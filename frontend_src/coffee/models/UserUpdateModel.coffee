@@ -37,11 +37,5 @@ define(
             message: 'Слишком длинный пароль'
           )
 
-        if not attrs.job
-          errors.push(
-            name: 'job'
-            message: 'Поле не может быть пустым'
-          )
-
         if errors.length > 0 then errors else false
 )

@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -332,7 +331,6 @@ class AuthorController {
     public function change_pass($email, $hash)
     {
         $changepass = $this->service->change_pass($email, $hash);
-        $controller = new Controller();
         return new RedirectResponse('/');
     }
 

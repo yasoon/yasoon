@@ -816,10 +816,11 @@ class AuthorService extends AbstractApiService {
                 ->find($authorId);
     
             
-    
-            if (isset($author['new_password']) && $author['new_password'] != '') {
-                if (md5($author['old_password']) == $entity->getPassword()) {
-                    $entity->setPassword(md5($author['new_password']));
+            if (isset($author['new_pasword']) && $author['new_pasword'] != '') {
+                
+                if (md5($author['old_pasword']) == $entity->getPassword()) {
+                    $entity->setPassword(md5($author['new_pasword']));
+                    
                 }
                 else
                 {
@@ -847,7 +848,7 @@ class AuthorService extends AbstractApiService {
                 $entity->setSubscribed(0);
             }
         
-            $this->em->merge($entity);
+            $entity = $this->em->merge($entity);
             $this->em->flush();
             
             $data = ['id' => 'author_'.$entity->getId(),
@@ -882,7 +883,7 @@ class AuthorService extends AbstractApiService {
             }
             if($author->getRole() == 4)
             {
-                return ['error' => true, 'errorText' => 'Admin cannot change pass'];
+                return ['error' => true, 'errorType' => 'admin'];
             }
     
             $newPass = '';
@@ -906,12 +907,12 @@ class AuthorService extends AbstractApiService {
             $request = $this->mailer->send($author->getEmail(), 'Восстановление пароля Yasoon', $message);
             
             if ($request) {
-                return ['error' => false, 'userData' => $author->getId(),'message' => 'Инструкции по восстановлению пароля высланы на '.$email];
+                return ['error' => true, 'errorType' => 'alliswell'];
             }
             
             return ['error' => true, 'errorType' => 'notSent '];
         } catch(\Exception $e) {
-            return ['error' => true, 'errorType' => 'nouser'];
+            return ['error' => true, 'errorType' => 'empty'];
         }
     }
     

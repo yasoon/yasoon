@@ -3439,6 +3439,7 @@ var RLANG = {
 		},
 		insertLink: function()
 		{
+                    console.log(1)
 			var tab_selected = $('#redactor_tab_selected').val();
 			var link = '', text = '', target = '';
 
@@ -3453,10 +3454,11 @@ var RLANG = {
 				}
 
 				// test url
-				var pattern = '/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/';
-				//var pattern = '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}';
+				//var pattern = '/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/';
+				var pattern = '((xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}';
 				var re = new RegExp('^(http|ftp|https)://' + pattern,'i');
 				var re2 = new RegExp('^' + pattern,'i');
+                                console.log(link.search(re) == -1,  link.search(re2) == 0 , this.opts.protocol !== false)
 				if (link.search(re) == -1 && link.search(re2) == 0 && this.opts.protocol !== false)
 				{
 					link = this.opts.protocol + link;

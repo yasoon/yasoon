@@ -42,12 +42,6 @@
             message: 'Слишком длинный пароль'
           });
         }
-        if (!attrs.job) {
-          errors.push({
-            name: 'job',
-            message: 'Поле не может быть пустым'
-          });
-        }
         if (errors.length > 0) {
           return errors;
         } else {

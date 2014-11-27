@@ -68,8 +68,11 @@ define(
       checkError: (data) ->
         @toggleButton(off)
         if data is 'nouser' then @showErrors([{name: 'email', message: 'Пользователя с таким email нет'}])
+        else if data is 'empty' then @showErrors([{name: 'email', message: 'Необходимо указать email'}])
         else if data is 'invalidPassword' then @showErrors([{name: 'password', message: 'Неверный пароль'}])
-        else if data is 'notSent' then @showErrors([{name: 'email', message: 'Сбой в работе почты. Попробуйте позже.'}])
+        else if data is 'notSent' then @showErrors([{name: 'email', message: 'Сбой в работе почты. Попробуйте позже'}])
+        else if data is 'admin' then @showErrors([{name: 'email', message: 'Невозможно изменить пароль'}])
+        else if data is 'alliswell' then @showNoErrors([{name: 'email', message:  _.getContent(63)}])
 
       changeLocation: (data) ->
         window.config.userId = data.id
@@ -77,6 +80,9 @@ define(
 
       showErrors: (errors) ->
         _.each(errors, (error) => @$el.find('#' + error.name).closest('.form-group').removeClass('has-success').addClass('has-error').find('.help-block').text(error.message))
+
+      showNoErrors: (errors) ->
+        _.each(errors, (error) => @$el.find('#' + error.name).closest('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text(error.message))
 
       hideErrors: ->
         @$('.form-group').removeClass('has-error').addClass('has-success').find('.help-block').text('')
