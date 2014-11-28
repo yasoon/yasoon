@@ -420,7 +420,7 @@ class AuthorService extends AbstractApiService {
         }
         
         $data = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
-            
+
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->createQueryBuilder('p')
             ->leftJoin('p.author', 'a')
             ->where('a.id = '.$authorId)->setMaxResults(1)->setFirstResult(0)
@@ -442,7 +442,7 @@ class AuthorService extends AbstractApiService {
         }
         
         //$followers = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('writerId' => $data->getId()));
-        $followers = $data->getWriters();
+        $followers = $data->getFriends();
         $friends = [];
         foreach($followers as $follower)
         {
@@ -457,7 +457,7 @@ class AuthorService extends AbstractApiService {
                          'answers_count' => $timeline_data[0]->getAnswersCount(),
                          'question_count' => $timeline_data[0]->getQuestionsCount()];
         }
-
+        
         $result = [
             'id'    => $data->getId(),
             'name'    => $data->getName(),

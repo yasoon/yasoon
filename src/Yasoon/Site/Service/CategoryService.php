@@ -34,7 +34,7 @@ class CategoryService extends AbstractApiService {
     public function getCategoryList() {
         
         /** @var CategoryEntity[] $categories */
-        $categories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findAll();
+        $categories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy([], ['name' => 'asc']);
 
         
         $result = [];

@@ -79,7 +79,7 @@ var linkClass = 'ws'
             <% if (!isAuthor) { %>
             <div class="hdi">
                 <% if (typeof _.find(window.config.friends, {id: id}) !== "undefined") { %>
-                <button type="button" class="btn js-follow color-red">Отписаться</button>
+                <button type="button" class="btn js-follow color-no-red">Вы подписаны</button>
                 <% } else { %>
                 <button type="button" class="btn js-follow">Подписаться</button>
                 <% } %>

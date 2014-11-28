@@ -2,13 +2,19 @@ define(
   [
     'text!templates/storiesPopUpTpl.htm'
     'views/PopUpView'
+    'views/ButtonsStoriesView'
     'backbone'
   ]
   (
     storiesPopUpTpl
     PopUpView
+    ButtonsStoriesView
   ) ->
     class StoriesPopUpView extends PopUpView
+        
+      initialize: ->
+        @setInterviews()
+
       events: ->
         _.extend {}, super,
           'click .connect p a': 'closePopup'
@@ -28,4 +34,13 @@ define(
       closePopup: ->
         $('.popUpBackground').click()
 
+      setInterviews: ->
+        $.get("/api/interview/get_interview_buttons", (data) =>
+            _.each(data, (item, i) ->
+                $('.connect').append(new ButtonsStoriesView({
+                    interviewTitle: item
+                    interviewId: i
+                }).render().$el)
+            )
+        )
 )

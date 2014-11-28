@@ -77,7 +77,6 @@ define(
 
       createInterviewsList: ->
         interviews = new InterviewCollection(@model.get('interviewQuestions'))
-        console.log(@model.get('interviewQuestions'), interviews)
         if not @postInterviews? then @postInterviews = new PostInterviews({collection: interviews})
         @$('#questionsList').append(@postInterviews.render().$el)
         @afterRender()

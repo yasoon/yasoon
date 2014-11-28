@@ -99,7 +99,6 @@
       WritePostPage.prototype.createInterviewsList = function() {
         var interviews;
         interviews = new InterviewCollection(this.model.get('interviewQuestions'));
-        console.log(this.model.get('interviewQuestions'), interviews);
         if (this.postInterviews == null) {
           this.postInterviews = new PostInterviews({
             collection: interviews

@@ -41,10 +41,11 @@ define(
         if typeof @author is "number" then @setFriends(event) else @showPopUp()
 
       setFriends: (event) ->
-        $.post('/api/author/setFriends', {authorId: @author, friend: @model.get('id')}, (data) => @changeButtonType(data.type, @$(event.currentTarget)))
+        if @$(event.currentTarget).hasClass('color-no-red') then @$(event.currentTarget).addClass('color-red').removeClass('color-no-red').text('Отписаться')
+        else $.post('/api/author/setFriends', {authorId: @author, friend: @model.get('id')}, (data) => @changeButtonType(data.type, @$(event.currentTarget)))
 
       changeButtonType: (type, target) ->
-        if type is 'add' then target.addClass('color-red').text('Отписаться') else target.removeClass('color-red').text('Подписаться')
+        if type is 'add' then target.removeClass('color-red').addClass('color-no-red').text('Вы подписаны') else target.removeClass('color-red').removeClass('color-no-red').text('Подписаться')
         @changeStatus(type)
 
       changeStatus: (type) ->

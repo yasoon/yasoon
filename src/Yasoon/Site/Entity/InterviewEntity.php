@@ -32,6 +32,20 @@ class InterviewEntity
     protected $name;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", columnDefinition="ENUM('visible', 'invisible')")
+     */
+    protected $status;
+    
+    /**
+     * @var integer $order
+     *
+     * @ORM\Column(name="order", type="integer", nullable=false)
+     */
+    protected $order;
+    
+    /**
      * @var InterviewQuestionEntity[] $questions
      *
      * @ORM\OneToMany(targetEntity="InterviewQuestionEntity",  mappedBy="interview")
@@ -57,6 +71,7 @@ class InterviewEntity
         return $this->id;
     }
 
+    
     /**
      * @param string $name
      * @return $this
@@ -73,6 +88,42 @@ class InterviewEntity
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * @param int $order
+     * @return $this
+     */
+    public function setOrder($order)
+    {
+        $this->order =  $order;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+    
+    /**
+     * @param string $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status =  $status;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
     
     /**

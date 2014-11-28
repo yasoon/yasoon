@@ -51,21 +51,25 @@
       };
 
       PostAuthorModelView.prototype.setFriends = function(event) {
-        return $.post('/api/author/setFriends', {
-          authorId: this.author,
-          friend: this.model.get('id')
-        }, (function(_this) {
-          return function(data) {
-            return _this.changeButtonType(data.type, _this.$(event.currentTarget));
-          };
-        })(this));
+        if (this.$(event.currentTarget).hasClass('color-no-red')) {
+          return this.$(event.currentTarget).addClass('color-red').removeClass('color-no-red').text('Отписаться');
+        } else {
+          return $.post('/api/author/setFriends', {
+            authorId: this.author,
+            friend: this.model.get('id')
+          }, (function(_this) {
+            return function(data) {
+              return _this.changeButtonType(data.type, _this.$(event.currentTarget));
+            };
+          })(this));
+        }
       };
 
       PostAuthorModelView.prototype.changeButtonType = function(type, target) {
         if (type === 'add') {
-          target.addClass('color-red').text('Отписаться');
+          target.removeClass('color-red').addClass('color-no-red').text('Вы подписаны');
         } else {
-          target.removeClass('color-red').text('Подписаться');
+          target.removeClass('color-red').removeClass('color-no-red').text('Подписаться');
         }
         return this.changeStatus(type);
       };

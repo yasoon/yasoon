@@ -60,6 +60,16 @@ class InterviewController {
         return  $result;
     }
     
+     /**
+     * @Route("/get_interview_buttons")
+     * @Method({"GET"})
+     */
+    public function get_interview_buttons() {
+        $result = $this->service->getInterviewsButtons();
+
+        return  $result;
+    }
+    
     /**
      * @Route("/save_interview")
      * @Method({"POST"})

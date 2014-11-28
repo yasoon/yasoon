@@ -99,8 +99,10 @@ class InterviewService extends AbstractApiService {
         $i = 0;
         foreach($interviews as $interview)
         {
-            $result[$i] = ['id' => $interview->getId(),
-                         'name' => $interview->getName()];
+            $result[$i] = [ 'id' => $interview->getId(),
+                            'name' => $interview->getName(),
+                            'order' => $interview->getOrder(),
+                            'status' => $interview->getStatus()];
                          
             $questions = $interview->getQuestions();
             foreach($questions as $question)
@@ -108,6 +110,31 @@ class InterviewService extends AbstractApiService {
                 $result[$i]['questions'][] = ['id' => $question->getId(), 'text' => $question->getText()];
             }
             
+            $i++;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getInterviewsButtons()
+    {
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->where('i.status = :status')
+            ->orderBy('i.order', 'ASC')
+            ->setParameter('status', 'visible')
+            ->getQuery()->getResult();
+        
+        $i = 0;
+        foreach($interviews as $interview)
+        {
+            $result[$interview->getId()] = $interview->getName();
+
             $i++;
         }
 
