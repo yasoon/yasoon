@@ -23,6 +23,8 @@ define(
       bindings:
         '#name': 'name'
         '.name': 'name'
+        '#order': 'order'
+        '#status': 'status'
 
       events: ->
         'click .js-delete': 'deleteInterview'

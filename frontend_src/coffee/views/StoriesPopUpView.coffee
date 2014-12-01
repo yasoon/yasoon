@@ -36,10 +36,10 @@ define(
 
       setInterviews: ->
         $.get("/api/interview/get_interview_buttons", (data) =>
-            _.each(data, (item, i) ->
+            _.each(data, (item) ->
                 $('.connect').append(new ButtonsStoriesView({
-                    interviewTitle: item
-                    interviewId: i
+                    interviewTitle: item.name
+                    interviewId: item.id
                 }).render().$el)
             )
         )

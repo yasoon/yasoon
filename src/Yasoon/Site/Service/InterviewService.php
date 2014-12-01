@@ -133,7 +133,7 @@ class InterviewService extends AbstractApiService {
         $i = 0;
         foreach($interviews as $interview)
         {
-            $result[$interview->getId()] = $interview->getName();
+            $result[$interview->getOrder()] = ['name' => $interview->getName(), 'id' => $interview->getId()];
 
             $i++;
         }
@@ -153,13 +153,15 @@ class InterviewService extends AbstractApiService {
         }
         else
         {
-            $interview = (new InterviewEntity())->setName($data['name']);
+            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status']);
             $this->em->persist($interview);
             $this->em->flush();
         }
             if($interview)
             {
                 $interview->setName($data['name']);
+                $interview->setOrder($data['order']);
+                $interview->setStatus($data['status']);
                 
                 $questions = [];
                 foreach($data['questions'] as $question)

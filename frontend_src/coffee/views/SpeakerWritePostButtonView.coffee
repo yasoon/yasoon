@@ -20,7 +20,7 @@ define(
 
       showHistories:(event) ->
         event.preventDefault()
-        if not @storiesPopUpView? then @storiesPopUpView = new StoriesPopUpView() else @storiesPopUpView.delegateEvents()
+        @storiesPopUpView = new StoriesPopUpView()
         $('body').append(@storiesPopUpView.render().$el)
 
 )

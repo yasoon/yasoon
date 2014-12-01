@@ -41,7 +41,7 @@ class InterviewEntity
     /**
      * @var integer $order
      *
-     * @ORM\Column(name="order", type="integer", nullable=false)
+     * @ORM\Column(name="`order`", type="integer", nullable=false)
      */
     protected $order;
     
@@ -96,7 +96,7 @@ class InterviewEntity
      */
     public function setOrder($order)
     {
-        $this->order =  $order;
+        $this->order =  (int) $order;
         return $this;
     }
 
