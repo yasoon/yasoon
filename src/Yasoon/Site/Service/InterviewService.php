@@ -94,8 +94,6 @@ class InterviewService extends AbstractApiService {
         $interviews = $this->em->createQueryBuilder()
             ->select('i')
             ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
-            ->where('i.status = :status')
-            ->setParameter('status', 'visible')
             ->getQuery()->getResult();
         
         $i = 0;
