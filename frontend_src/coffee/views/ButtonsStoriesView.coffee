@@ -14,7 +14,6 @@ define(
       template: _.template(buttonsStoriesTpl)
 
       render: ->
-
         @$el.append(@template(@options))
         @
 )

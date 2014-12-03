@@ -119,6 +119,60 @@ class InterviewService extends AbstractApiService {
     /**
      * @return array
      */
+    public function getInterviewsAll()
+    {
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->getQuery()->getResult();
+        
+        foreach($interviews as $interview)
+        {
+            $result[] = [ 'id' => $interview->getId(),
+                            'name' => $interview->getName()];
+        }
+
+        return $result;
+    }
+    
+
+    /**
+     * @return array
+     */
+    public function getInterviewsLego($interviewId)
+    {
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->where('id = :interviewId')
+            ->setParameter('interviewId', $interviewId)
+            ->getQuery()->getResult();
+        
+        $i = 0;
+        foreach($interviews as $interview)
+        {
+            $result[$i] = [ 'id' => $interview->getId(),
+                            'name' => $interview->getName(),
+                            'order' => $interview->getOrder(),
+                            'status' => $interview->getStatus()];
+                         
+            $questions = $interview->getQuestions();
+            foreach($questions as $question)
+            {
+                $result[$i]['questions'][] = ['id' => $question->getId(), 'text' => $question->getText()];
+            }
+            
+            $i++;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * @return array
+     */
     public function getInterviewsButtons()
     {
         $result = [];
