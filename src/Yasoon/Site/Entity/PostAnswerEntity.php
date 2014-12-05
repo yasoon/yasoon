@@ -45,6 +45,13 @@ class PostAnswerEntity
      * @ORM\Column(name="answer", type="string", nullable=false)
      */
     protected $answer;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lego", type="string", columnDefinition="ENUM(0, 1)")
+     */
+    protected $lego;
 
     /**
      * @var PostEntity
@@ -169,5 +176,23 @@ class PostAnswerEntity
     public function getAnswer()
     {
         return $this->answer;
+    }
+    
+    /**
+     * @param string $status
+     * @return $this
+     */
+    public function setLego($lego)
+    {
+        $this->lego =  $lego;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLego()
+    {
+        return $this->lego;
     }
 }

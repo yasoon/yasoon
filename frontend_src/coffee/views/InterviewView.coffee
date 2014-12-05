@@ -19,7 +19,6 @@ define(
       'textarea': 'text'
 
     render: ->
-      console.log(@model.toJSON())
       @$el.html(@template(@model.toJSON()))
       @stickit()
       @

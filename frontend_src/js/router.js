@@ -6,6 +6,7 @@
         '': 'index',
         'posts/:category/:sort(/)': 'posts',
         'post/new(/:id)(/)': 'newPost',
+        'interview/:id(/)': 'showInterview',
         'post/:id(/)': 'showPost',
         'post/:id/edit(/)': 'editPost',
         'register(/)': 'registerSpeaker',
@@ -137,6 +138,9 @@
       },
       isUser: function() {
         return typeof window.config.userId === "number";
+      },
+      showInterview: function(id) {
+        return Controller.interview(id);
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

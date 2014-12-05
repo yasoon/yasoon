@@ -39,6 +39,13 @@ class InterviewEntity
     protected $status;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="lego", type="string", columnDefinition="ENUM(0, 1)")
+     */
+    protected $lego;
+    
+    /**
      * @var integer $order
      *
      * @ORM\Column(name="`order`", type="integer", nullable=false)
@@ -124,6 +131,24 @@ class InterviewEntity
     public function getStatus()
     {
         return $this->status;
+    }
+    
+    /**
+     * @param string $lego
+     * @return $this
+     */
+    public function setLego($lego)
+    {
+        $this->lego =  $lego;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLego()
+    {
+        return $this->lego;
     }
     
     /**

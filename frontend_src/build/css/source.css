@@ -7244,6 +7244,17 @@ section {
 .ie .ps_dr_item {
   display: inline;
 }
+.lego-answers-text {
+  width: 90%;
+  float: left;
+}
+.lego-answers-check {
+  width: 5%;
+  float: right;
+}
+#lego-answers-content {
+  margin: 20px 0;
+}
 ul li {
   list-style: none;
   padding: 0;

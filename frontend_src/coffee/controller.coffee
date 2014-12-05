@@ -71,6 +71,14 @@ define(
         @postPageView.delegateEvents()
         @
 
+      interview: (id) -> 
+        $('body').removeClass().addClass('post')
+        $('#js-login').removeClass()
+        @postPageView = new PostPageView({id: id})
+        LayoutView.contentRegion.$el.empty().append(@postPageView.$el)
+        @postPageView.delegateEvents()
+        @
+
       about: ->
         $('body').removeClass().addClass('about')
         $('#js-login').removeClass()

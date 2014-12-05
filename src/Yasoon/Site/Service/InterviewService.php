@@ -76,7 +76,12 @@ class InterviewService extends AbstractApiService {
             $data = [];
             foreach($answers as $answer)
             {
-                $data[] = ['answer' => $answer->getAnswer()];
+                $lego = $answer->getLego() == '1' ? 'checked' : '';
+                $authorId = $answer->getPost()->getAuthor()->getId();
+                $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
+                $data[] = ['answer' => $answer->getAnswer(),'id' => $answer->getId(), 
+                    'authorName' => $author->getName(), 'avatarImg' => $author->getImage(), 
+                    'lego' => $lego];
             }
                 
             return $data;
@@ -114,6 +119,37 @@ class InterviewService extends AbstractApiService {
         }
 
         return $result;
+    }
+    
+     /**
+      * @return array
+      */
+    public function getInterviewsAll()
+    {
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->getQuery()->getResult();
+        
+        foreach($interviews as $interview)
+        {
+            $result[] = [ 'id' => $interview->getId(),
+                            'name' => $interview->getName()];
+        }
+
+        return $result;
+    }
+    
+
+    /**
+     * @return array
+     */
+    public function getInterviewsLego($interviewId)
+    {
+        
+
+        return 'Интервью не готово';
     }
     
     /**
@@ -197,7 +233,92 @@ class InterviewService extends AbstractApiService {
         return $data;
     }
     
+     /**
+     * @param $answersIds, $interviewId
+     * @return array
+     */
+    public function saveInterviewLego($interviewId, $questionId, $answersIds)
+    {
+        if (empty($answersIds)){
+            return ['error' => true, 'errorText' => 'Необходимо выбрать ответы на данный вопрос'];
+        } else {
+            try {
+                $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->find($interviewId);
+                $lego = $interview->getLego();
+                if ($lego == 0) {
+                    $interview->setLego('1');
+                    $this->em->persist($interview);
+                    $this->em->flush();
+                } 
+
+                $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $questionId));
+                
+                foreach ($answers as $answer) {
+
+                    if (in_array($answer->getId(), $answersIds)){   
+                        $answer->setLego('1');
+                        $this->em->persist($answer);
+                        $this->em->flush();
+                    } else {
+                        $answer->setLego('0');
+                        $this->em->persist($answer);
+                        $this->em->flush();
+                    } 
+                }
+                
+                return ['error' => false, 'message' => 'Ответы на данный вопрос сохранены'];
+                
+            } catch(\Exception $e) {
+                return ['error' => true, 'errorText' => $e->getMessage()];
+            }
+        }
+    }
     
+    /**
+     * @param $questionId, $interviewId
+     * @return array
+     */
+    
+    public function removeInterviewLego($interviewId, $questionId)
+    {
+        try {
+             $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $questionId));
+             foreach ($answers as $answer) {
+                $answer->setLego('0');
+                $this->em->persist($answer);
+                $this->em->flush();
+            }
+
+            $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->find($interviewId);
+            
+            $questions = $interview->getQuestions();
+            $qids = array();
+            foreach ($questions as $question) {
+                $qids[] = $question->getId();
+            }
+
+            $countOfAnswers = $this->em->createQueryBuilder()
+                    ->select('count(pa.id)')
+                    ->from('Yasoon\Site\Entity\PostAnswerEntity', 'pa')
+                    ->where('pa.question_id IN (:questionsId)')
+                    ->andWhere('pa.lego = :lego')
+                    ->setParameter('questionsId', $qids)
+                    ->setParameter('lego', '1')
+                    ->getQuery()->getSingleScalarResult();
+            
+            if ($countOfAnswers == 0) {
+                
+                $interview->setLego('0');
+                
+                return ['error' => false, 'message' => 'Вы удалили все ответы из интервью, теперь оно не доступно по ссылке!'];
+            }
+            
+            return ['error' => false, 'message' => 'Ответы для данного вопроса удалены'];
+
+        } catch (\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+    }
     /**
      * @param $id
      * @return array

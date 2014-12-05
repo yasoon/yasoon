@@ -71,6 +71,25 @@ class InterviewController {
     }
     
     /**
+     * @Route("/get_interviews_lego/{interviewId}")
+     * @Method({"GET"})
+     */
+    public function get_interview_lego($interviewId) {
+        $result = $this->service->getInterviewsLego($interviewId);
+
+        return  $result;
+    }
+    
+    /**
+     * @Route("/get_interviews_all")
+     * @Method({"GET"})
+     */
+    public function get_interviews_all() {
+        $result = $this->service->getInterviewsAll();
+
+        return  $result;
+    }
+    /**
      * @Route("/save_interview")
      * @Method({"POST"})
      */
@@ -84,6 +103,33 @@ class InterviewController {
                                  ]
                 ];*/
         $result = $this->service->saveInterview($data);
+        return  $result;
+    }
+    
+    /**
+     * @Route("/save_interview_lego")
+     * @Method({"POST"})
+     */
+    public function save_interview_lego(Request $request) {
+        $answersIds = $request->request->get('answers');
+        $interviewId = $request->request->get('interviewId');
+        $questionId = $request->request->get('questionId');
+
+        $result = $this->service->saveInterviewLego($interviewId, $questionId, $answersIds);
+
+        return  $result;
+    }
+    
+    /**
+     * @Route("/remove_interview_lego")
+     * @Method({"POST"})
+     */
+    public function remove_interview_lego(Request $request) {
+        $interviewId = $request->request->get('interviewId');
+        $questionId = $request->request->get('questionId');
+        
+        $result = $this->service->removeInterviewLego($interviewId, $questionId);
+
         return  $result;
     }
 

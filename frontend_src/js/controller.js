@@ -37,6 +37,17 @@
         return this;
       };
 
+      Controller.prototype.interview = function(id) {
+        $('body').removeClass().addClass('post');
+        $('#js-login').removeClass();
+        this.postPageView = new PostPageView({
+          id: id
+        });
+        LayoutView.contentRegion.$el.empty().append(this.postPageView.$el);
+        this.postPageView.delegateEvents();
+        return this;
+      };
+
       Controller.prototype.about = function() {
         $('body').removeClass().addClass('about');
         $('#js-login').removeClass();

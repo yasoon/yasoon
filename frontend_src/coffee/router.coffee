@@ -15,6 +15,7 @@ define([
         '': 'index'
         'posts/:category/:sort(/)': 'posts'
         'post/new(/:id)(/)': 'newPost'
+        'interview/:id(/)': 'showInterview'
         'post/:id(/)': 'showPost'
         'post/:id/edit(/)': 'editPost'
         'register(/)': 'registerSpeaker'
@@ -82,6 +83,9 @@ define([
 
       isUser: ->
         typeof window.config.userId is "number"
+
+      showInterview: (id)->
+        Controller.interview(id)
 
       undefinedRoute: ->
         Controller.undefinedRoute()

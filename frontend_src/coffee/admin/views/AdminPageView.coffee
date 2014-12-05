@@ -6,6 +6,7 @@ define(
     'admin/views/ContentsList'
     'admin/views/InterviewsList'
     'admin/views/PeoplesList'
+    'admin/views/LegoView'
     'backbone'
     'bootstrap'
   ]
@@ -16,6 +17,7 @@ define(
     ContentsList
     InterviewsList
     PeoplesList
+    LegoView
   ) ->
     class AdminPageView extends Backbone.View
       template: _.template(adminMainPageTpl)
@@ -30,6 +32,7 @@ define(
         @createContentList()
         @createInterviewList()
         @createPeoplesList()
+        @createLegoView()
         @
 
 #     createAdminsList: ->
@@ -57,6 +60,14 @@ define(
         else
           @interviewsList.delegateEvents()
         @$('#interview').append(@interviewsList.$el)
+        @
+
+      createLegoView: ->
+        if not @legoView?
+          @legoView = new LegoView()
+        else
+          @legoView.delegateEvents()
+        @$('#lego').append(@legoView.render().$el)
         @
 
       createPeoplesList: ->
