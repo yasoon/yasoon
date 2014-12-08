@@ -6,6 +6,7 @@ define(
   ]
   (
     legoInterviewsTpl
+    
   ) ->
     class LegoInterviewView extends Backbone.View
       tagName: 'section'
@@ -18,8 +19,11 @@ define(
         $.get("/api/interview/get_interviews_lego/" + options.id, {}, (data) => @checkErrors(data))
 
       checkErrors: (data) ->
-        if data.error is yes then @showError(data.errorType) else @setInterviewData(data.interviewData)
+        if data.error is yes then @showError(data) else @setInterviewData(data.interviewData)
 
       setInterviewData: (data) ->
         @$el.empty().append(@template(_.extend({}, {'questions': data.questions})))
+        
+      showError: (data) ->
+        @$el.empty().append('<div class="content">'+data.errorText+'</div>')
 )
