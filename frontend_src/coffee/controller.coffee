@@ -13,6 +13,7 @@ define(
     'views/ErrorPageView'
     'views/EditSpeakerView'
     'views/TimelinePageView'
+    'views/InterviewsView'
     'models/UserRegisterModel'
     'models/UserUpdateModel'
     'models/userModel'
@@ -36,6 +37,7 @@ define(
     ErrorPageView
     EditSpeakerView
     TimelinePageView
+    InterviewsView
     UserRegisterModel
     UserUpdateModel
     userModel
@@ -74,9 +76,9 @@ define(
       interview: (id) -> 
         $('body').removeClass().addClass('post')
         $('#js-login').removeClass()
-        @postPageView = new PostPageView({id: id})
-        LayoutView.contentRegion.$el.empty().append(@postPageView.$el)
-        @postPageView.delegateEvents()
+        @interviewView = new InterviewView({id: id})
+        LayoutView.contentRegion.$el.empty().append(@interviewView.$el)
+        @interviewView.delegateEvents()
         @
 
       about: ->
