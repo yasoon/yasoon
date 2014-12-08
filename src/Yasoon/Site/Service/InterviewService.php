@@ -147,9 +147,59 @@ class InterviewService extends AbstractApiService {
      */
     public function getInterviewsLego($interviewId)
     {
+        if (!empty($interviewId)) {
+            
         
+            $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->findOneBy(array('id' => $interviewId, 'lego' => '1'));
 
-        return 'Интервью не готово';
+            if (!empty($interview)) {
+                $questions = $interview->getQuestions();
+                
+                $interviewQuestions = array();
+                foreach ($questions as $question) {
+                    $questionId = $question->getId();
+                    $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $questionId, 'lego' => '1'));
+                    
+                    $questionAnswers = array();
+                    foreach ($answers as $answer) {
+                        $postId = $answer->getPostId();
+                        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($postId);
+                        $author = $post->getAuthor();
+                        $title = $post->getPreview() != '' ? $post->getPreview() : $post->getCaption();
+                        $questionAnswers[] =    [
+                                                    'text' => $answer->getAnswer(),
+                                                    'authorId' => $author->getId(),
+                                                    'authorName' => $author->getName(),
+                                                    'avatarImg' => $author->getImg(),
+                                                    'postTitle' => $title,
+                                                    'postId' => $postId
+                                                ];
+                    }
+                    if (!empty($questionAnswers)) {
+                        $interviewQuestions[] = [
+                                                    'questionId' => $questionId,
+                                                    'questionText' => $question->getText(),
+                                                    'answers' => $questionAnswers
+                                                ];
+                    }
+                    
+                }
+                
+                $result =   [
+                                'interviewId' => $interviewId,
+                                'questions' => $interviewQuestions
+                            ];
+                
+                return ['error' => false, 'interviewData' => $result];
+            } else {
+                return ['error' => true, 'errorText' => 'Данное интервью не сформировано'];
+            }
+        
+            
+        } else {
+            return ['error' => true, 'errorText' => 'Данное интервью не сформировано'];
+        }
+        return array(0 => array('text' => 'first q', 'answers' => array(0 => array('text' => 'answer 1'), 1 => array('text' => 'answer 2'))));
     }
     
     /**

@@ -14,6 +14,7 @@ define(
     'views/EditSpeakerView'
     'views/TimelinePageView'
     'views/InterviewsView'
+    'views/LegoInterviewView'
     'models/UserRegisterModel'
     'models/UserUpdateModel'
     'models/userModel'
@@ -38,6 +39,7 @@ define(
     EditSpeakerView
     TimelinePageView
     InterviewsView
+    LegoInterviewView
     UserRegisterModel
     UserUpdateModel
     userModel
@@ -45,6 +47,7 @@ define(
     PostsPageModel
     SpeakersPageModel
     TimelinePageModel
+    
   ) ->
     class Controller
       constructor: () ->
@@ -74,9 +77,9 @@ define(
         @
 
       interview: (id) -> 
-        $('body').removeClass().addClass('post')
+        $('body').removeClass().addClass('interview')
         $('#js-login').removeClass()
-        @interviewView = new InterviewView({id: id})
+        @interviewView = new LegoInterviewView({id: id})
         LayoutView.contentRegion.$el.empty().append(@interviewView.$el)
         @interviewView.delegateEvents()
         @

@@ -1,0 +1,30 @@
+<div class="content">
+    <% _.each(questions, function(question) { %>
+        <article questionid="<%= question.question_id %>" class="questionContent">
+            <h3 class="questionTitle">
+                <%= question.questionText %>
+            </h3>
+            <% _.each(question.answers, function(answer) { %>
+                <div class="question_content">
+                    <div class="speaker-avatar">
+                            <a href="#/speaker/<%= answer.authorId %>/posts">
+                                    <% if(answer.avatarImg === null) { %>
+                                            <img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= answer.authorName %>">
+                                    <% } else { %>
+                                            <img src="/web/upload/avatar/<%= answer.avatarImg %>" class="usr-ic-small" alt="<%= answer.authorName %>">
+                                    <% } %>
+                                    <%= answer.authorName %>
+                            </a>
+                    </div>
+                    <div class="content">
+                        <a href="#/post/<%= answer.postId %>" alt="<%= answer.postTitle %>">
+                           <%= answer.text %>
+                        </a>
+                    </div>
+
+                </div>
+            <% }); %>
+            <div class="hr"></div>
+        </article>
+	<% }); %>
+</div>

@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'views/InterviewsView', 'views/LegoInterviewView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, InterviewsView, LegoInterviewView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -38,13 +38,13 @@
       };
 
       Controller.prototype.interview = function(id) {
-        $('body').removeClass().addClass('post');
+        $('body').removeClass().addClass('interview');
         $('#js-login').removeClass();
-        this.postPageView = new PostPageView({
+        this.interviewView = new LegoInterviewView({
           id: id
         });
-        LayoutView.contentRegion.$el.empty().append(this.postPageView.$el);
-        this.postPageView.delegateEvents();
+        LayoutView.contentRegion.$el.empty().append(this.interviewView.$el);
+        this.interviewView.delegateEvents();
         return this;
       };
 
