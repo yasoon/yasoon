@@ -32,5 +32,10 @@ define(
 
       openQuestion: (event) ->
         event.preventDefault()
-        $(event.currentTarget).next().slideToggle()
+        $this = $(event.currentTarget)
+        if not $this.hasClass('active')
+          $this.addClass('active')
+        else 
+          $this.removeClass('active')
+        $this.next().slideToggle()
 )

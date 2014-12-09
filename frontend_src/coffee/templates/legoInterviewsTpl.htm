@@ -2,8 +2,9 @@
     <h1><%= title %></h1>
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent">
+            
                 <h3 class="questionTitle js-open" data-toggle="collapse">
-                    <%= question.questionText %>
+                    <a><%= question.questionText %></a>
                 </h3>
                 <div class="collapse">
                 <% _.each(question.answers, function(answer) { %>

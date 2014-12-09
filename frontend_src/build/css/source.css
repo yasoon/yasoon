@@ -7276,6 +7276,10 @@ section {
 .LegoInterviewsList {
   margin-left: 20px;
 }
+.questionTitle.active {
+  color: green;
+  font-weight: bold;
+}
 ul li {
   list-style: none;
   padding: 0;
