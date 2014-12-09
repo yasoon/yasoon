@@ -7276,7 +7276,7 @@ section {
 .LegoInterviewsList {
   margin-left: 20px;
 }
-.questionTitle.active {
+.questionTitle.active a {
   color: green;
   font-weight: bold;
 }
