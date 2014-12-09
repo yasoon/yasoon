@@ -7,6 +7,7 @@
         'posts/:category/:sort(/)': 'posts',
         'post/new(/:id)(/)': 'newPost',
         'interview/:id(/)': 'showInterview',
+        'interviews(/)': 'interviews',
         'post/:id(/)': 'showPost',
         'post/:id/edit(/)': 'editPost',
         'register(/)': 'registerSpeaker',
@@ -141,6 +142,9 @@
       },
       showInterview: function(id) {
         return Controller.interview(id);
+      },
+      interviews: function() {
+        return Controller.interviews();
       },
       undefinedRoute: function() {
         return Controller.undefinedRoute();

@@ -16,6 +16,7 @@ define([
         'posts/:category/:sort(/)': 'posts'
         'post/new(/:id)(/)': 'newPost'
         'interview/:id(/)': 'showInterview'
+        'interviews(/)': 'interviews'
         'post/:id(/)': 'showPost'
         'post/:id/edit(/)': 'editPost'
         'register(/)': 'registerSpeaker'
@@ -86,6 +87,9 @@ define([
 
       showInterview: (id)->
         Controller.interview(id)
+
+      interviews: ->
+        Controller.interviews()
 
       undefinedRoute: ->
         Controller.undefinedRoute()

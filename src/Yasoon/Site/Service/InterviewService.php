@@ -141,6 +141,70 @@ class InterviewService extends AbstractApiService {
         return $result;
     }
     
+    /**
+      * @return array
+      */
+    public function getInterviewsLegoAll()
+    {
+        $answer = ['error' => true, 'errorText' => 'Истории не сформированы'];
+        
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->where('i.lego = :lego')
+            ->setParameter('lego', '1')
+            ->getQuery()->getResult();
+        
+        foreach($interviews as $interview)
+        {
+            $questions = $interview->getQuestions();
+            $strLength = 0;
+            $posts = [];
+            
+            foreach ($questions as $question) {
+                $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $question->getId(), 'lego' => '1'));
+                
+                foreach ($answers as $answer) {
+                    $posts[] = $answer->getPostId();
+                    $strLength += strlen(strip_tags($answer->getAnswer()));
+                }      
+            }
+            $timeRead = round($strLength/4200);
+            $timeToRead = $timeRead > 1 ? $timeRead : 1;
+            
+            $posts = array_unique($posts);
+            if (!empty($posts)) {
+                $likesQuery = $this->em->createQueryBuilder()
+                        ->select('sum(pl.count_likes)')
+                        ->from('Yasoon\Site\Entity\PostLikesEntity', 'pl')
+                        ->where('pl.post_id IN (:posts)')
+                        ->setParameter('posts', $posts)
+                        ->getQuery()->getSingleScalarResult();
+
+                $likes = $likesQuery == null ? 0 : $likesQuery;
+                $speakers = $this->em->createQueryBuilder()
+                        ->select('count(distinct p.authorId)')
+                        ->from('Yasoon\Site\Entity\PostEntity', 'p')
+                        ->where('p.id IN (:posts)')
+                        ->setParameter('posts', $posts)
+                        ->getQuery()->getSingleScalarResult();
+
+                $result[] = [   'id' => $interview->getId(),
+                                'name' => $interview->getName(),
+                                'likes' => $likes,
+                                'speakers' => $speakers,
+                                'timeToRead' => $timeToRead
+                            ];
+            } 
+        }
+        if (!empty($result)) {
+            $answer = ['error' => false, 'result' => $result];
+        } 
+        
+        return $answer;
+    }
+    
 
     /**
      * @return array
@@ -187,7 +251,8 @@ class InterviewService extends AbstractApiService {
                 
                 $result =   [
                                 'interviewId' => $interviewId,
-                                'questions' => $interviewQuestions
+                                'questions' => $interviewQuestions,
+                                'interviewTitle' => $interview->getName()
                             ];
                 
                 return ['error' => false, 'interviewData' => $result];

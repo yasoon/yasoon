@@ -1,29 +1,35 @@
 <div class="content">
+    <h1><%= title %></h1>
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent">
-            <h3 class="questionTitle">
-                <%= question.questionText %>
-            </h3>
-            <% _.each(question.answers, function(answer) { %>
-                <div class="question_content">
+                <h3 class="questionTitle js-open" data-toggle="collapse">
+                    <%= question.questionText %>
+                </h3>
+                <div class="collapse">
+                <% _.each(question.answers, function(answer) { %>
+                <article>
                     <div class="speaker-avatar">
                             <a href="#/speaker/<%= answer.authorId %>/posts">
+                                <div class="legoImg">
                                     <% if(answer.avatarImg === null) { %>
                                             <img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= answer.authorName %>">
                                     <% } else { %>
                                             <img src="/web/upload/avatar/<%= answer.avatarImg %>" class="usr-ic-small" alt="<%= answer.authorName %>">
                                     <% } %>
+                                </div>
+                                <div class="legoText">
                                     <%= answer.authorName %>
+                                </div>
                             </a>
                     </div>
-                    <div class="content">
+                    <div class="answer_lego_text">
                         <a href="#/post/<%= answer.postId %>" alt="<%= answer.postTitle %>">
                            <%= answer.text %>
                         </a>
                     </div>
-
+                </article>
+                <% }); %>
                 </div>
-            <% }); %>
             <div class="hr"></div>
         </article>
 	<% }); %>

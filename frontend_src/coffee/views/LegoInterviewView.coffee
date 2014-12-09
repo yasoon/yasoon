@@ -9,6 +9,9 @@ define(
     
   ) ->
     class LegoInterviewView extends Backbone.View
+      events: ->
+        'click .js-open':   'openQuestion'
+
       tagName: 'section'
 
       className: 'page-layout row'
@@ -22,8 +25,12 @@ define(
         if data.error is yes then @showError(data) else @setInterviewData(data.interviewData)
 
       setInterviewData: (data) ->
-        @$el.empty().append(@template(_.extend({}, {'questions': data.questions})))
-        
+        @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId})))
+
       showError: (data) ->
         @$el.empty().append('<div class="content">'+data.errorText+'</div>')
+
+      openQuestion: (event) ->
+        event.preventDefault()
+        $(event.currentTarget).next().slideToggle()
 )

@@ -15,6 +15,7 @@ define(
     'views/TimelinePageView'
     'views/InterviewsView'
     'views/LegoInterviewView'
+    'views/LegoInterviewsView'
     'models/UserRegisterModel'
     'models/UserUpdateModel'
     'models/userModel'
@@ -40,6 +41,7 @@ define(
     TimelinePageView
     InterviewsView
     LegoInterviewView
+    LegoInterviewsView
     UserRegisterModel
     UserUpdateModel
     userModel
@@ -66,6 +68,14 @@ define(
         @postsPageView = new PostsPageView({category: category, sort: sort, model: new PostsPageModel()})
         LayoutView.contentRegion.$el.empty().append(@postsPageView.render().$el)
         @postsPageView.delegateEvents()
+        @
+
+      interviews: ->
+        $('body').removeClass().addClass('interviews')
+        $('#js-login').removeClass()
+        @legoInterviewsView = new LegoInterviewsView()
+        LayoutView.contentRegion.$el.empty().append(@legoInterviewsView.$el)
+        @legoInterviewsView.delegateEvents()
         @
 
       post: (id) ->

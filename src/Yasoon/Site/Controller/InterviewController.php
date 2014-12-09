@@ -89,6 +89,17 @@ class InterviewController {
 
         return  $result;
     }
+    
+    /**
+     * @Route("/get_interviews_lego_all")
+     * @Method({"GET"})
+     */
+    public function get_interviews_lego_all() {
+        $result = $this->service->getInterviewsLegoAll();
+
+        return  $result;
+    }
+    
     /**
      * @Route("/save_interview")
      * @Method({"POST"})

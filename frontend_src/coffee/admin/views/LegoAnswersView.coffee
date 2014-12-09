@@ -45,7 +45,10 @@ define(
       if data.length != 0
         $.post('api/interview/save_interview_lego', {'interviewId': @idForInterview, 'questionId': @idForQuestion, 'answers': data}, (data) => @showText(data))
       else
-        @showText({'error': true, 'errorText': 'Нет выбранных ответов'})
+        $.post('api/interview/remove_interview_lego', {'interviewId': @idForInterview, 'questionId': @idForQuestion}, (data) => 
+            @showText(data)
+        )
+        
       
     showText: (data) ->
       if data.error is yes 
@@ -57,15 +60,10 @@ define(
       ), 4000
 
     deleteLego: ->
-      data = []
-      $('.checkbox-lego-answer:checked').each((iterator, item) => data[iterator] = $(item).val())
-      if data.length != 0
         $.post('api/interview/remove_interview_lego', {'interviewId': @idForInterview, 'questionId': @idForQuestion}, (data) => 
             @showText(data)
             @unCheckAll(data)
         )
-      else
-        @showText({'error': true, 'errorText': 'Нет выбранных ответов'})
 
     unCheckAll: (data) ->
       if data.error is no then $('.checkbox-lego-answer:checked').each((iterator, item) => $(item).prop('checked', false))
