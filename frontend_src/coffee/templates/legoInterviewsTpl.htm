@@ -1,14 +1,16 @@
 <div class="content">
-    <h1><%= title %></h1>
+    <div class="margin-top-20">
+        <h2><%= title %></h2>
+    </div>
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent">
             
-                <h3 class="questionTitle js-open" data-toggle="collapse">
+                <h4 class="questionTitle js-open" data-toggle="collapse">
                     <a><%= question.questionText %></a>
-                </h3>
+                </h4>
                 <div class="collapse">
                 <% _.each(question.answers, function(answer) { %>
-                <article>
+                <article class="margin-top-20">
                     <div class="speaker-avatar">
                             <a href="#/speaker/<%= answer.authorId %>/posts">
                                 <div class="legoImg">

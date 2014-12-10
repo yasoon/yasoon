@@ -7276,6 +7276,7 @@ section {
 }
 .LegoInterviewsList {
   margin-left: 20px;
+  margin-top: 15px;
 }
 .questionTitle.active a {
   color: green;
@@ -7288,6 +7289,12 @@ section {
   display: inline-block;
   float: left;
   padding-right: 10px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+.questionContent {
+  margin-bottom: 20px;
 }
 ul li {
   list-style: none;

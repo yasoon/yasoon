@@ -1,5 +1,7 @@
 <div class="content">
-    <h2><%= _.getContent(65) %></h2>
+    <div class="margin-top-20">
+        <h2><%= _.getContent(65) %></h2>
+    </div>
     <% _.each(interviews, function(interview) { %>
         <article interviewId="<%= interview.id %>" class="LegoInterviewsList">
             <a href="#/interview/<%= interview.id %>">
