@@ -1,5 +1,5 @@
 <div class="content">
-    <h2>Доступные лего-истории:</h2>
+    <h2><%= _.getContent(65) %></h2>
     <% _.each(interviews, function(interview) { %>
         <article interviewId="<%= interview.id %>" class="LegoInterviewsList">
             <a href="#/interview/<%= interview.id %>">

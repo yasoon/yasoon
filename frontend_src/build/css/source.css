@@ -6131,7 +6131,8 @@ header#header .inside > nav a {
   text-decoration: none;
 }
 .speakers header#header .inside > nav a.speakers,
-.posts header#header .inside > nav a.posts {
+.posts header#header .inside > nav a.posts,
+.interviews header#header .inside > nav a.interviews {
   border-color: black;
 }
 header#header .inside .my-nav {
