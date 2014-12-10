@@ -3,6 +3,7 @@
     <% _.each(interviews, function(interview) { %>
         <article interviewId="<%= interview.id %>" class="LegoInterviewsList">
             <a href="#/interview/<%= interview.id %>">
+                <img src="/web/upload/interviews/<%= interview.image %>" class="interview-lego-small" alt="">
                 <h3><%= interview.name %></h3>
             </a>
              <%= interview.timeToRead %> минут чтения | <%= interview.speakers %> спикеров | <%= interview.likes %> вдохновились

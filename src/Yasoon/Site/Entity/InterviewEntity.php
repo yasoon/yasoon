@@ -53,6 +53,13 @@ class InterviewEntity
     protected $order;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="lego_img", type="string")
+     */
+    protected $lego_img;
+    
+    /**
      * @var InterviewQuestionEntity[] $questions
      *
      * @ORM\OneToMany(targetEntity="InterviewQuestionEntity",  mappedBy="interview")
@@ -149,6 +156,24 @@ class InterviewEntity
     public function getLego()
     {
         return $this->lego;
+    }
+    
+    /**
+     * @param string $lego_img
+     * @return $this
+     */
+    public function setImg($img)
+    {
+        $this->lego_img =  $img;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImg()
+    {
+        return $this->lego_img;
     }
     
     /**

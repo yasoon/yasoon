@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\InterviewService;
+use Yasoon\Site\Service\ImageService;
 
 /**
  * Class InterviewController
@@ -28,6 +29,13 @@ class InterviewController {
      * @DI\Inject("yasoon.service.interview")
      */
     private $service;
+    
+    /**
+     * @var ImageService
+     *
+     * @DI\Inject("yasoon.service.image")
+     */
+    private $imageService;
     
     /**
      * @Route("/questions/{interviewId}", requirements={"interviewId" = "\d+"})
@@ -152,5 +160,37 @@ class InterviewController {
         $interview_id = $request->request->get('id');
         $result = $this->service->deleteInterview($interview_id);
         return $result;
+    }
+    
+        /**
+     * @Route("/upload_interview_image/{interviewId}")
+     * @Method({"FILES|POST"})
+     */
+    public function uploadInterviewImage(Request $request, $interviewId)
+    {
+
+        $fileSource = array();
+        /** @var UploadedFile[] $files */
+        $files = $request->files->get('files');
+
+        $path  = '/upload/interviews/';
+        $absolutePath = $request->server->get('DOCUMENT_ROOT') . "/upload/interviews";
+
+        $file = $files[0];
+
+        $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
+        $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
+
+        $fileSource['file_name'] = $resultImage;
+        $fileSource['dir']       = $path;
+
+        $oldImage = $this->service->setInterviewImg($resultImage, $interviewId);
+        // удаляем оригинальное и старое изображение
+        unlink($absolutePath  . '/' . $fileInfo->getFilename());
+        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage)) {
+            unlink($absolutePath  . '/' . $oldImage);
+        }
+
+        return new Response(json_encode($fileSource));
     }
 }
