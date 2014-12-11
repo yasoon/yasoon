@@ -1,13 +1,22 @@
+<% if(image === null || image === '') { %>
+<div class="interview-intro" style="background-image: url('/frontend/img/logo.jpg');">
+<% } else { %>
+<div class="interview-intro" style="background-image: url('/web/upload/interviews/<%= image %>');">
+<% } %>
+
+    <div class="main-w">
+	<div class="interview-title">
+            <h1><%= title %></h1>
+        </div>
+    </div>  
+</div>
 <div class="content">
-    <div class="interview-title">
-        <h2><%= title %></h2>
-    </div>
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent">
             
-                <h4 class="questionTitle js-open" data-toggle="collapse">
+                <h3 class="questionTitle js-open" data-toggle="collapse">
                     <a><%= question.questionText %></a>
-                </h4>
+                </h3>
                 <div class="collapse">
                 <% _.each(question.answers, function(answer) { %>
                 <article class="margin-top-20">
@@ -21,7 +30,7 @@
                                     <% } %>
                                 </div>
                                 <div class="legoText">
-                                    <%= answer.authorName %>
+                                    <%= answer.authorName %>, <%= answer.authorJob %>
                                 </div>
                             </a>
                     </div>

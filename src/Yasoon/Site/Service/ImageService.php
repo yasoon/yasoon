@@ -21,13 +21,13 @@ class ImageService
      *
      * @return string
      */
-    public function resizeImage(File $img, $path)
+    public function resizeImage(File $img, $path, $width = 100, $height = 100)
     {
         $imageLib = new ImageLib();
         $imageLib->load($path . $img->getFilename());
         $outputImgName = md5($img->getFilename() . time()) . '.' .$img->getExtension();
 
-        $imageLib->resizeImage(100, 100, array('crop', 'tr'), true);
+        $imageLib->resizeImage($width, $height, array('crop', 'tr'), true);
         $imageLib->saveImage($path . $outputImgName, 100);
 
         return $outputImgName;

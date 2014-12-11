@@ -237,6 +237,7 @@ class InterviewService extends AbstractApiService {
                                                     'text' => $answer->getAnswer(),
                                                     'authorId' => $author->getId(),
                                                     'authorName' => $author->getName(),
+                                                    'authorJob' => $author->getJob(),
                                                     'avatarImg' => $author->getImg(),
                                                     'postTitle' => $title,
                                                     'postId' => $postId
@@ -255,7 +256,8 @@ class InterviewService extends AbstractApiService {
                 $result =   [
                                 'interviewId' => $interviewId,
                                 'questions' => $interviewQuestions,
-                                'interviewTitle' => $interview->getName()
+                                'interviewTitle' => $interview->getName(),
+                                'interviewImg' => $interview->getImg()
                             ];
                 
                 return ['error' => false, 'interviewData' => $result];
@@ -307,7 +309,7 @@ class InterviewService extends AbstractApiService {
         }
         else
         {
-            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status']);
+            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status'])->setLego('0');
             $this->em->persist($interview);
             $this->em->flush();
         }

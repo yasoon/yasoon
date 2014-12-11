@@ -106,7 +106,8 @@ class PostService extends AbstractApiService {
                     $postAnswerEntity = (new PostAnswerEntity())
                         ->setPostId($post_id)
                         ->setQuestionId($post['interviewQuestions'][$quest['id']]['question_id']*1)
-                        ->setAnswer($quest['text']);
+                        ->setAnswer($quest['text'])
+                        ->setLego('0');
                     $postAnswerEntity->setPost($postEntity);
                     $postAnswerEntity->setQuestion($this->em->getReference('Yasoon\Site\Entity\InterviewQuestionEntity',
                         $post['interviewQuestions'][$quest['id']]['question_id']*1));
