@@ -86,7 +86,7 @@ define(
               ret = JSON.parse(data)
               modelLego.set('interviewImg', ret.file_name)
               #hotfix @toDo listener not call change img
-              $('.file_upload_block, header').find('img').attr('src', "/web/upload/interviews/#{ret.file_name}")
+              $('.file_upload_block').find('img').attr('src', "/web/upload/interviews/#{ret.file_name}")
         )
 
 )

@@ -47,8 +47,9 @@ define(
         $.get("/api/interview/get_interviews", (data) =>
           array = _.where(data, {id: parseInt(id)})
           arrayName = _.where(data, {name: name})
-          @model.set('interviewId', if array.length then id else data[0]['id'])
-          @model.set('interviewTitle', data[@model.get('interviewId') - 1]['name'])
+          @model.set('interviewId', if array.length then id else data[1]['id'])
+          console.log(data)
+          @model.set('interviewTitle', data[@model.get('interviewId')]['name'])
         )
 
       handler: ->

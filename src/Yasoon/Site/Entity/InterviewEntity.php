@@ -60,6 +60,13 @@ class InterviewEntity
     protected $lego_img;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="preview_img", type="string")
+     */
+    protected $preview_img;
+    
+    /**
      * @var InterviewQuestionEntity[] $questions
      *
      * @ORM\OneToMany(targetEntity="InterviewQuestionEntity",  mappedBy="interview")
@@ -174,6 +181,24 @@ class InterviewEntity
     public function getImg()
     {
         return $this->lego_img;
+    }
+    
+    /**
+     * @param string $preview_img
+     * @return $this
+     */
+    public function setPreviewImg($img)
+    {
+        $this->preview_img =  $img;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreviewImg()
+    {
+        return $this->preview_img;
     }
     
     /**

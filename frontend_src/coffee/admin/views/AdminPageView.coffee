@@ -24,6 +24,7 @@ define(
 
       events: ->
         'click a[data-change="tab"]': 'changeTab'
+        'click  #lego-start-show':             'createLegoView'
 
       render: ->
         @$el.empty().append(@template())
@@ -32,7 +33,6 @@ define(
         @createContentList()
         @createInterviewList()
         @createPeoplesList()
-        @createLegoView()
         @
 
 #     createAdminsList: ->
@@ -67,7 +67,7 @@ define(
           @legoView = new LegoView()
         else
           @legoView.delegateEvents()
-        @$('#lego').append(@legoView.render().$el)
+        @$('#lego').empty().append(@legoView.render().$el)
         @
 
       createPeoplesList: ->

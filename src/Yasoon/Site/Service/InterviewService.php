@@ -93,7 +93,7 @@ class InterviewService extends AbstractApiService {
     /**
      * @return array
      */
-    public function getInterviews()
+    public function getInterviewsAdmin()
     {
         $result = [];
         $interviews = $this->em->createQueryBuilder()
@@ -116,6 +116,35 @@ class InterviewService extends AbstractApiService {
             }
             
             $i++;
+        }
+
+        return $result;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getInterviews()
+    {
+        $result = [];
+        $interviews = $this->em->createQueryBuilder()
+            ->select('i')
+            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+            ->getQuery()->getResult();
+        
+        foreach($interviews as $interview)
+        {
+            $result[$interview->getId()] = [ 'id' => $interview->getId(),
+                            'name' => $interview->getName(),
+                            'order' => $interview->getOrder(),
+                            'status' => $interview->getStatus()];
+                         
+            $questions = $interview->getQuestions();
+            foreach($questions as $question)
+            {
+                $result[$interview->getId()]['questions'][] = ['id' => $question->getId(), 'text' => $question->getText()];
+            }
+            
         }
 
         return $result;
@@ -257,7 +286,8 @@ class InterviewService extends AbstractApiService {
                                 'interviewId' => $interviewId,
                                 'questions' => $interviewQuestions,
                                 'interviewTitle' => $interview->getName(),
-                                'interviewImg' => $interview->getImg()
+                                'interviewImg' => $interview->getImg(),
+                                'previewImg' => $interview->getPreviewImg()
                             ];
                 
                 return ['error' => false, 'interviewData' => $result];
@@ -318,6 +348,8 @@ class InterviewService extends AbstractApiService {
                 $interview->setName($data['name']);
                 $interview->setOrder($data['order']);
                 $interview->setStatus($data['status']);
+                $interview->setImg('');
+                $interview->setPreviewImg('');
                 
                 $questions = [];
                 foreach($data['questions'] as $question)
@@ -476,7 +508,7 @@ class InterviewService extends AbstractApiService {
         }
     }
     
-    public function setInterviewImg($imageName, $id)
+    public function setInterviewImg($imageName, $previewImage, $id)
     {
 
         /** @var AuthorEntity $entity */
@@ -484,12 +516,15 @@ class InterviewService extends AbstractApiService {
             ->find($id);
 
         $oldImage = $entity->getImg();
+        $oldPreviewImage = $entity->getPreviewImg();
+        
         $entity->setImg($imageName);
+        $entity->setPreviewImg($previewImage);
 
         $this->em->merge($entity);
         $this->em->flush();
 
-        return $oldImage;
+        return array('oldImage' => $oldImage, 'oldPreviewImage' => $oldPreviewImage);
     }
     
 }

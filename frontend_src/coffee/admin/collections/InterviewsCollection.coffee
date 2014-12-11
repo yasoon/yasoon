@@ -8,6 +8,6 @@ define(
   )->
     Backbone.Collection.extend({
       model: InterviewModel
-      url: "/api/interview/get_interviews"
+      url: "/api/interview/get_interviews_admin"
     })
 )

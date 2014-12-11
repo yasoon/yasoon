@@ -68,6 +68,16 @@ class InterviewController {
         return  $result;
     }
     
+    /**
+     * @Route("/get_interviews_admin")
+     * @Method({"GET"})
+     */
+    public function get_interview_admin() {
+        $result = $this->service->getInterviewsAdmin();
+
+        return  $result;
+    }
+    
      /**
      * @Route("/get_interview_buttons")
      * @Method({"GET"})
@@ -180,15 +190,21 @@ class InterviewController {
 
         $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
         $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
+        sleep(1);
+        $resultPreviewImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/', '1020', '487');
 
         $fileSource['file_name'] = $resultImage;
         $fileSource['dir']       = $path;
 
-        $oldImage = $this->service->setInterviewImg($resultImage, $interviewId);
+        $oldImage = $this->service->setInterviewImg($resultImage, $resultPreviewImage, $interviewId);
         // удаляем оригинальное и старое изображение
         unlink($absolutePath  . '/' . $fileInfo->getFilename());
-        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage)) {
-            unlink($absolutePath  . '/' . $oldImage);
+        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage['oldImage'])) {
+            unlink($absolutePath  . '/' . $oldImage['oldImage']);
+        }
+        
+        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage['oldPreviewImage'])) {
+            unlink($absolutePath  . '/' . $oldImage['oldPreviewImage']);
         }
 
         return new Response(json_encode($fileSource));
