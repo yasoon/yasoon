@@ -22,13 +22,7 @@
       };
 
       PostPageView.prototype.initialize = function(options) {
-        this.reloadFacebook();
-        this.model = new PostViewModel();
-        this.model.set({
-          'postId': options.id
-        });
-        this.setHandlers();
-        return this.getPostData();
+        return this.reloadFacebook(options);
       };
 
       PostPageView.prototype.setHandlers = function() {
@@ -125,9 +119,16 @@
         return this.model.set('postData', data[0]);
       };
 
-      PostPageView.prototype.reloadFacebook = function() {
+      PostPageView.prototype.reloadFacebook = function(options) {
         if (typeof FB !== 'undefined') {
           return location.reload(false);
+        } else {
+          this.model = new PostViewModel();
+          this.model.set({
+            'postId': options.id
+          });
+          this.setHandlers();
+          return this.getPostData();
         }
       };
 

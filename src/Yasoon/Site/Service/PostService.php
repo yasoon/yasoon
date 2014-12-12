@@ -623,6 +623,9 @@ class PostService extends AbstractApiService {
 
         foreach($posts as $post)
         {
+            $visits = $post->getVisits();
+            $visits++;
+            
             $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
                 ->leftJoin('c.post', 'p')
                 ->where('c.post_id = '.$post->getId())
@@ -645,6 +648,10 @@ class PostService extends AbstractApiService {
                 'publishDate' => $post->getDate()->format('d/m/Y'),
                 'post_likes'  => $post->getLikes()
             ];
+            
+            $postSave = $post->setVisits($visits);
+            $this->em->merge($postSave);
+            $this->em->flush();
         }
 
 //        $access = $this->getAccessLevel($post->getAuthorId());
@@ -1001,7 +1008,20 @@ class PostService extends AbstractApiService {
                     $pcats[] = $tag->getCategoryId();
                 }
                 
-                
+                $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->createQueryBuilder('q')
+                    ->leftJoin('q.author', 'a')
+                    ->where('a.id = '.$dayentity[0]->getPost()->getAuthorId())
+                    ->orderBy('q.date', 'desc')->getQuery()->getResult();
+                $aquestions = [];
+                $answer_count = 0;
+                foreach($questions as $question)
+                {
+                    $aquestions[] = $question->getId();
+                    if($question->getAnswer() != '')
+                    {
+                        $answer_count++;
+                    }
+                }
 
                 return ['id'          => $dayentity[0]->getPost()->getId(),
                         'authorId'    => $dayentity[0]->getPost()->getAuthorId(),
@@ -1013,7 +1033,8 @@ class PostService extends AbstractApiService {
                         'description' => $dayentity[0]->getPost()->getPreview(),
                         'text'        => $questionAnswerArray,
                         'publishDate' => $dayentity[0]->getPost()->getDate()->format('d/m/Y'),
-                        'post_likes'  => $dayentity[0]->getPost()->getLikes()];
+                        'post_likes'  => $dayentity[0]->getPost()->getLikes(),
+                        'answer_count' => $answer_count];
             }
 
             return ['error' => 'true', 'errorText' => 'storyNotAssigned'];
@@ -1077,7 +1098,7 @@ class PostService extends AbstractApiService {
             $authorId = $authorId*1;
             $user_ip = '0';
         }
-
+        
         try {
             $post_like = $this->em->getRepository('Yasoon\Site\Entity\PostLikesEntity')
                 ->createQueryBuilder('l')

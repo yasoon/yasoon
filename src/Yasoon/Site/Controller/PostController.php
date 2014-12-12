@@ -303,12 +303,12 @@ class PostController {
     {
         $data = $request->request->get('postlike');
         $result = [];
-        
+
         if($data['type'] == 'add')
         {
             $result = $this->service->like($data['postId'], $data['type']);
         }
-
+                
         return $result;
     }
     /**

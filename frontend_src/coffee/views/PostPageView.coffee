@@ -23,11 +23,8 @@ define(
         'click .like-this': 'addLike'
 
       initialize: (options) ->
-        @reloadFacebook()
-        @model = new PostViewModel()
-        @model.set({'postId': options.id})
-        @setHandlers()
-        @getPostData()
+        @reloadFacebook(options)
+        
 
       setHandlers: ->
         @listenTo(@model, 'change:postData', @getAuthorData)
@@ -71,9 +68,14 @@ define(
       setSocial: (data) ->
         @model.set('postData', data[0])
         
-      reloadFacebook: ->
-        if typeof(FB) != 'undefined' then location.reload(false)
-          
+      reloadFacebook: (options) ->
+        if typeof(FB) != 'undefined'
+            location.reload(false)
+        else
+            @model = new PostViewModel()
+            @model.set({'postId': options.id})
+            @setHandlers()
+            @getPostData()
         
         
 )
