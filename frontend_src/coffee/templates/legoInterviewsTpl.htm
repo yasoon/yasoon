@@ -14,7 +14,7 @@
 <section class="page-layout row">
 <div class="content">
     <% _.each(questions, function(question) { %>
-        <article questionid="<%= question.question_id %>" class="questionContent">
+        <article questionid="<%= question.question_id %>" class="questionContent question-content">
             
                 <h3 class="questionTitle js-open" data-toggle="collapse">
                     <a><%= question.questionText %></a>
