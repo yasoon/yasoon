@@ -203,7 +203,7 @@ class InterviewController {
             unlink($absolutePath  . '/' . $oldImage['oldImage']);
         }
         
-        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage['oldPreviewImage'])) {
+        if (!empty($oldImage) && $oldImage['oldPreviewImage'] != '' && file_exists($absolutePath  . '/' . $oldImage['oldPreviewImage'])) {
             unlink($absolutePath  . '/' . $oldImage['oldPreviewImage']);
         }
 
