@@ -990,9 +990,7 @@ class PostService extends AbstractApiService {
                     ->where('pa.post_id = :idPost')
                     ->setParameter('idPost', $dayentity[0]->getPost()->getId())
                     ->getQuery()->getResult();
-                foreach ($questionAnswerArray as $qq) {
-                    return $qq;
-                }
+                
                 $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
                     ->leftJoin('c.post', 'p')
                     ->where('c.post_id = '.$dayentity[0]->getPost()->getId())
