@@ -199,7 +199,7 @@ class InterviewController {
         $oldImage = $this->service->setInterviewImg($resultImage, $resultPreviewImage, $interviewId);
         // удаляем оригинальное и старое изображение
         unlink($absolutePath  . '/' . $fileInfo->getFilename());
-        if (!empty($oldImage) && file_exists($absolutePath  . '/' . $oldImage['oldImage'])) {
+        if (!empty($oldImage) && $oldImage['oldImage'] != '' && file_exists($absolutePath  . '/' . $oldImage['oldImage'])) {
             unlink($absolutePath  . '/' . $oldImage['oldImage']);
         }
         
