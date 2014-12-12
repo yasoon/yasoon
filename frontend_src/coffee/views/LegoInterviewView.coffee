@@ -14,8 +14,6 @@ define(
 
       tagName: 'section'
 
-      className: 'page-layout row'
-
       template: _.template(legoInterviewsTpl)
 
       initialize: (options) ->

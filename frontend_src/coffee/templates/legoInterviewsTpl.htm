@@ -11,6 +11,7 @@
         </div>
     </div>  
 </div>
+<section class="page-layout row">
 <div class="content">
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent">
@@ -47,3 +48,4 @@
         </article>
 	<% }); %>
 </div>
+</section>
