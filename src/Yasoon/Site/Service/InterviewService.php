@@ -184,6 +184,7 @@ class InterviewService extends AbstractApiService {
             ->select('i')
             ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
             ->where('i.lego = :lego')
+            ->orderBy('i.position')
             ->setParameter('lego', '1')
             ->getQuery()->getResult();
         
@@ -339,7 +340,7 @@ class InterviewService extends AbstractApiService {
         }
         else
         {
-            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status'])->setLego('0');
+            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status'])->setLego('0')->setPosition(0);
             $this->em->persist($interview);
             $this->em->flush();
         }
@@ -397,8 +398,17 @@ class InterviewService extends AbstractApiService {
             try {
                 $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->find($interviewId);
                 $lego = $interview->getLego();
+                
+                $maxPosition = $this->em->createQueryBuilder()
+                    ->select('max(i.position)')
+                    ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
+                    ->where('i.lego = :lego')
+                    ->setParameter('lego', '1')
+                    ->getQuery()->getSingleScalarResult();
+                
                 if ($lego == 0) {
                     $interview->setLego('1');
+                    $interview->setPosition($maxPosition + 1);
                     $this->em->persist($interview);
                     $this->em->flush();
                 } 
@@ -461,6 +471,7 @@ class InterviewService extends AbstractApiService {
             if ($countOfAnswers == 0) {
                 
                 $interview->setLego('0');
+                $interview->setPosition(0);
                 
                 return ['error' => false, 'message' => 'Вы удалили все ответы из интервью, теперь оно не доступно по ссылке!'];
             }

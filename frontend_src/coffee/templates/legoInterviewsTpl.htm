@@ -1,9 +1,8 @@
 <% if(image === null || image === '') { %>
-<div class="interview-intro" style="background-image: url('/frontend/img/logo.jpg');">
+<div class="interview-intro" style="background-image: url('/frontend/img/i6.jpg');">
 <% } else { %>
 <div class="interview-intro" style="background-image: url('/web/upload/interviews/<%= image %>');">
 <% } %>
-
     <div class="main-w">
 	<div class="interview-title">
             <h1><%= title %></h1>
@@ -15,7 +14,6 @@
 <div class="content">
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent question-content">
-            
                 <h3 class="questionTitle js-open" data-toggle="collapse">
                     <a><%= question.questionText %></a>
                 </h3>

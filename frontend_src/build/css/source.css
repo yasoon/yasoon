@@ -7278,6 +7278,8 @@ section {
 .answer_lego_text {
   font-size: 1em;
   line-height: 1.6em;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .answer_lego_text a p {
   font-weight: 200;

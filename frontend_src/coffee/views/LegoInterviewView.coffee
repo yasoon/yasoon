@@ -23,7 +23,11 @@ define(
         if data.error is yes then @showError(data) else @setInterviewData(data.interviewData)
 
       setInterviewData: (data) ->
-        @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId}, {'image': data.previewImg})))
+        if (data.questions).length == 0
+            data.errorText = 'Нет ответов на данное интервью'
+            @showError(data)
+        else
+            @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId}, {'image': data.previewImg})))
 
       showError: (data) ->
         @$el.empty().append('<div class="content">'+data.errorText+'</div>')

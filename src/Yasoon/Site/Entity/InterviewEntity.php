@@ -53,6 +53,13 @@ class InterviewEntity
     protected $order;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="integer", nullable=false)
+     */
+    protected $position;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="lego_img", type="string")
@@ -163,6 +170,24 @@ class InterviewEntity
     public function getLego()
     {
         return $this->lego;
+    }
+    
+    /**
+     * @param string $lego
+     * @return $this
+     */
+    public function setPosition($position)
+    {
+        $this->position =  $position;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
     
     /**
