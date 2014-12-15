@@ -340,7 +340,7 @@ class InterviewService extends AbstractApiService {
         }
         else
         {
-            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status'])->setLego('0')->setPosition(0)->setPreviewImg('');
+            $interview = (new InterviewEntity())->setName($data['name'])->setOrder($data['order'])->setStatus($data['status'])->setLego('0')->setPosition(0)->setPreviewImg('')->setImg('');
             $this->em->persist($interview);
             $this->em->flush();
         }
