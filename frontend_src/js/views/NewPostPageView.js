@@ -53,7 +53,6 @@
               name: name
             });
             _this.model.set('interviewId', array.length ? id : data[1]['id']);
-            console.log(data);
             return _this.model.set('interviewTitle', data[_this.model.get('interviewId')]['name']);
           };
         })(this));

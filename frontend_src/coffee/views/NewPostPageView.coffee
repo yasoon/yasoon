@@ -48,7 +48,6 @@ define(
           array = _.where(data, {id: parseInt(id)})
           arrayName = _.where(data, {name: name})
           @model.set('interviewId', if array.length then id else data[1]['id'])
-          console.log(data)
           @model.set('interviewTitle', data[@model.get('interviewId')]['name'])
         )
 

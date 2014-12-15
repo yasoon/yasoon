@@ -43,7 +43,6 @@ define(
 
       setPostData: (data) ->
         @model.set(_.extend({}, data, {'category': data.tags}))
-        console.log(@model)
         @getInterviewQuestions()
 
       createCategoryList: ->
@@ -51,7 +50,6 @@ define(
         @checkCategories()
 
       checkCategories: ->
-        console.log(@model.get('category'), @$(':checkbox'))
         _.each(@model.get('category'), (item) => @$(':checkbox[value="'+item+'"]').prop('checked', yes))
 
       createInterviewsList: ->
