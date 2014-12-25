@@ -171,11 +171,6 @@ class SocialAuthController {
             }
             else
             {
-                $old_image = $user->getImg();
-                $odl_img_path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$old_image;
-                if (file_exists($odl_img_path)) {
-                    unlink($odl_img_path);
-                }
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
                 $user = (new AuthorEntity())
                     ->setName($name)
@@ -354,13 +349,7 @@ class SocialAuthController {
                 $this->_em->flush();
                 $new_user = true;
             } else {
-                
-                $old_image = $user->getImg();
-                $odl_img_path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$old_image;
-                if (file_exists($odl_img_path)) {
-                    unlink($odl_img_path);
-                }
-                
+
                 $user = (new AuthorEntity())
                     ->setName($name)
                     ->setHomepage($userInfo->link)
