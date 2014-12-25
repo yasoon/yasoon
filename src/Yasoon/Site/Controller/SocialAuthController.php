@@ -172,8 +172,7 @@ class SocialAuthController {
             else
             {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
-                $user = (new AuthorEntity())
-                    ->setName($name)
+                $user->setName($name)
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setVkontakteId($response['response'][0]['uid']);
                     
@@ -350,8 +349,7 @@ class SocialAuthController {
                 $new_user = true;
             } else {
 
-                $user = (new AuthorEntity())
-                    ->setName($name)
+                $user->setName($name)
                     ->setHomepage($userInfo->link)
                     ->setFacebookId($userInfo->id);
                     
