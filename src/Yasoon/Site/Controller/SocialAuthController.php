@@ -172,7 +172,7 @@ class SocialAuthController {
             else
             {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
-                $user->setName($name)
+                $user[0]->setName($name)
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setVkontakteId($response['response'][0]['uid']);
                     
@@ -188,9 +188,9 @@ class SocialAuthController {
                 curl_close($ch);
                 fclose($fp);
                 
-                $user->setImg($image_name);
+                $user[0]->setImg($image_name);
                     
-                $user = $this->_em->merge($user);
+                $user = $this->_em->merge($user[0]);
                 $this->_em->flush();
             }
         
@@ -349,7 +349,7 @@ class SocialAuthController {
                 $new_user = true;
             } else {
 
-                $user->setName($name)
+                $user[0]->setName($name)
                     ->setHomepage($userInfo->link)
                     ->setFacebookId($userInfo->id);
                     
@@ -377,9 +377,9 @@ class SocialAuthController {
                 curl_close($ch);
                 fclose($fp);
                 
-                $user->setImg($image_name);
+                $user[0]->setImg($image_name);
                     
-                $user = $this->_em->merge($user);
+                $user = $this->_em->merge($user[0]);
                 $this->_em->flush();
             }
         
