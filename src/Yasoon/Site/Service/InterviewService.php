@@ -165,7 +165,8 @@ class InterviewService extends AbstractApiService {
         {
             $result[] = [   'id' => $interview->getId(),
                             'name' => $interview->getName(),
-                            'interviewImg' => $interview->getImg()
+                            'interviewImg' => $interview->getImg(),
+                            'description' => $interview->getDescription()
                         ];
         }
 
@@ -251,7 +252,7 @@ class InterviewService extends AbstractApiService {
 
             if (!empty($interview)) {
                 $questions = $interview->getQuestions();
-                
+                $description = $interview->getDescription();
                 $interviewQuestions = array();
                 foreach ($questions as $question) {
                     $questionId = $question->getId();
@@ -288,7 +289,8 @@ class InterviewService extends AbstractApiService {
                                 'questions' => $interviewQuestions,
                                 'interviewTitle' => $interview->getName(),
                                 'interviewImg' => $interview->getImg(),
-                                'previewImg' => $interview->getPreviewImg()
+                                'previewImg' => $interview->getPreviewImg(),
+                                'interviewDescription' => $description
                             ];
                 
                 return ['error' => false, 'interviewData' => $result];
@@ -435,6 +437,32 @@ class InterviewService extends AbstractApiService {
             }
         }
     }
+    
+    /**
+     * @param $interviewId, $description
+     * @return array
+     */
+    public function saveInterviewDescription($interviewId, $description)
+    {
+        if (empty($interviewId)){
+            return ['error' => true, 'errorText' => 'Ошибка с номером интервью, попробуйте позже!'];
+        } else {
+            try {
+                $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->find($interviewId);
+                
+                $interview->setDescription($description);
+                
+                $this->em->persist($interview);
+                $this->em->flush();
+                
+                return ['error' => false, 'message' => 'Описание интервью успешно сохранено'];
+                
+            } catch(\Exception $e) {
+                return ['error' => true, 'errorText' => $e->getMessage()];
+            }
+        }
+    }
+    
     
     /**
      * @param $questionId, $interviewId

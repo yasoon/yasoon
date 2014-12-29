@@ -4,6 +4,7 @@ define(
     'text!admin/templates/oneInterviewTpl.htm'
     'text!admin/templates/imgTpl.htm'
     'admin/views/LegoAnswersView'
+    'admin/views/InterviewDescriptionView'
     'admin/collections/LegoCollection'
     'backbone'
     'mediator'
@@ -13,6 +14,7 @@ define(
     oneInterviewTpl
     imageTpl
     LegoAnswersView
+    InterviewDescriptionView
     LegoCollection
   )->
     class LegoView extends Backbone.View
@@ -44,13 +46,14 @@ define(
       addAll: (data) ->
         for index,values of data            
             @$('#lego-interviews').append(@oneTemplate(_.extend({}, {id: values.id}, {name: values.name})))
-            window.legoCollection.add({'id': values.id, 'interviewImg': values.interviewImg})
+            window.legoCollection.add({'id': values.id, 'interviewImg': values.interviewImg, 'interviewDescription': values.description})
         $('#lego-interviews').change()
 
       getInterview: ->
         interviewId = @$('#lego-interviews').val()
         $.get('api/interview/questions/'+interviewId, (data) => @showInterviewQuestions(data))
         modelLego = window.legoCollection.get(interviewId)
+        @showDescription(modelLego.get('id'))
         @$('.file_upload_block').empty().append(@imgTemplate(_.extend({}, {id: modelLego.get('id')}, {interviewImg: modelLego.get('interviewImg')})))
         @setImageUploader(modelLego, interviewId)
         
@@ -88,5 +91,10 @@ define(
               #hotfix @toDo listener not call change img
               $('.file_upload_block').find('img').attr('src', "/web/upload/interviews/#{ret.file_name}")
         )
+        
+      showDescription: (interviewId) ->
+        if @interviewDescriptionView? then @close(@interviewDescriptionView)
+        @interviewDescriptionView = new InterviewDescriptionView(_.extend({}, {id: interviewId}))
+        @$('#content-interview-description').append(@interviewDescriptionView.render().$el)
 
 )

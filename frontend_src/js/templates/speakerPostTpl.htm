@@ -23,6 +23,9 @@
         <% } else if (timeToRead === 0) { %>
             | 1 мин чтения
         <% } %>
+        <% if (typeof(interview_name) !== "undefined" && interview_name !== '') { %>
+        | <%= _.getContent(61) %> <a href='/#/interview/<%= interview_id %>'><%= interview_name %></a>
+        <% } %>
 
         </span>
     </h2>

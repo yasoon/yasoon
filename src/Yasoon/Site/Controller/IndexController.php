@@ -200,6 +200,7 @@ class IndexController {
                             </div>
                             <nav>
                                 <a href='/#/about'>О нас</a>
+                                <a href='/#/rules'>Правила</a>
                             </nav>
                             <div class='clearfix'></div>
                         </div>

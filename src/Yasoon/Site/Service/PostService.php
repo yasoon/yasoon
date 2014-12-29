@@ -690,22 +690,33 @@ class PostService extends AbstractApiService {
             $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
             
             $strLength = 0;
+            $interviewLego = 0;
             foreach ($post_answers as $answer) {
                $strLength += strlen(strip_tags($answer->getAnswer()));
+               if ($answer->getLego() > 0) {
+                   $interviewLego++;
+               }
             }        
             $timeToRead = round($strLength/4200);
                 
+            $interviewName = '';
+            if ($interviewLego > 0) {
+                $interviewName = $post->getInterview()->getName();
+            } 
+            
             $result[] = [
-                'id'          => $post->getId(),
-                'authorId'    => $post->getAuthorId(),
-                'authorName'  => $post->getAuthor()->getName(),
-                'tags'        => $pcats,
-                'title'       => $post->getCaption(),
-                'description' => $post->getPreview(),
-                'text'        => $post->getText(), // $questionAnswerArray,
-                'publishDate' => $post->getDate()->format('d/m/Y'),
-                'post_likes'  => $post->getLikes(),
-                'timeToRead'  => $timeToRead
+                'id'            => $post->getId(),
+                'authorId'      => $post->getAuthorId(),
+                'authorName'    => $post->getAuthor()->getName(),
+                'tags'          => $pcats,
+                'title'         => $post->getCaption(),
+                'description'   => $post->getPreview(),
+                'text'          => $post->getText(), // $questionAnswerArray,
+                'publishDate'   => $post->getDate()->format('d/m/Y'),
+                'post_likes'    => $post->getLikes(),
+                'timeToRead'    => $timeToRead,
+                'interview_name'=> $interviewName,
+                'interview_id'  => $post->getInterview()->getId()
             ];
         }
 

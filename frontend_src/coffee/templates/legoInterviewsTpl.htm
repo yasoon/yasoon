@@ -6,11 +6,12 @@
     <div class="main-w">
 	<div class="interview-title">
             <h1><%= title %></h1>
+            <p><%= description %></p>
             <a href="#/post/new/<%= id %>" class="btn green">Рассказать на эту тему</a> <br />
         </div>
     </div>  
 </div>
-<section class="page-layout row">
+<section class="main-layout">
 <div class="content">
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent question-content">

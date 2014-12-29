@@ -16,6 +16,7 @@
         'speaker/:id/:page(/)': 'showSpeaker',
         'timeline(/)': 'timeline',
         'about(/)': 'about',
+        'rules(/)': 'rules',
         'admin(/)': 'adminMainPage',
         '*other': 'undefinedRoute'
       },
@@ -125,6 +126,9 @@
       },
       about: function() {
         return Controller.about();
+      },
+      rules: function() {
+        return Controller.rules();
       },
       adminMainPage: function() {
         return userModel.deferred.done((function(_this) {

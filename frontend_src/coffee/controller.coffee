@@ -5,6 +5,7 @@ define(
     'views/PostsPageView'
     'views/PostPageView'
     'views/AboutPageView'
+    'views/RulesPageView'
     'views/NewPostPageView'
     'views/EditPostPageView'
     'views/SpeakersPageView'
@@ -31,6 +32,7 @@ define(
     PostsPageView
     PostPageView
     AboutPageView
+    RulesPageView
     NewPostPageView
     EditPostPageView
     SpeakersPageView
@@ -100,6 +102,14 @@ define(
         @aboutPageView = new AboutPageView()
         LayoutView.contentRegion.$el.empty().append(@aboutPageView.render().$el)
         @aboutPageView.delegateEvents()
+        @
+
+      rules: ->
+        $('body').removeClass().addClass('rules')
+        $('#js-login').removeClass()
+        @rulesPageView = new RulesPageView()
+        LayoutView.contentRegion.$el.empty().append(@rulesPageView.render().$el)
+        @rulesPageView.delegateEvents()
         @
 
       newPost: (id, isUser) ->

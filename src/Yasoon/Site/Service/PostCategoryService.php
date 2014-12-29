@@ -93,26 +93,36 @@ class PostCategoryService extends AbstractApiService {
                 
                 $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
                 $strLength = 0;
+                $interviewLego = 0;
                 foreach ($post_answers as $answer) {
                    $strLength += strlen(strip_tags($answer->getAnswer()));
-                }        
+                   if ($answer->getLego() > 0) {
+                       $interviewLego++;
+                   }
+                }
+                $interviewName = '';
+                if ($interviewLego > 0) {
+                    $interviewName = $results_postsDateSort[$i]->getPost()->getInterview()->getName();
+                } 
                 $timeToRead = round($strLength/4200);
                 
                 foreach($post_categories as $pc)
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $postsDateSort[] = ['id'          => $id,
-                            'authorId'    => $results_postsDateSort[$i]->getPost()->getAuthorId(),
-                            'authorName'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
-                            'tags'        => $tags,
-                            'title'       => $results_postsDateSort[$i]->getPost()->getCaption(),
-                            'description' => $results_postsDateSort[$i]->getPost()->getPreview(),
-                            'text'        => $results_postsDateSort[$i]->getPost()->getText(),
-                            'publishDate' => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'  => $results_postsDateSort[$i]->getPost()->getLikes(),
-                            'timeToRead'  => $timeToRead,
-                            'avatarImg'   => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage()];
+                $postsDateSort[] = ['id'    => $id,
+                            'authorId'      => $results_postsDateSort[$i]->getPost()->getAuthorId(),
+                            'authorName'    => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
+                            'tags'          => $tags,
+                            'title'         => $results_postsDateSort[$i]->getPost()->getCaption(),
+                            'description'   => $results_postsDateSort[$i]->getPost()->getPreview(),
+                            'text'          => $results_postsDateSort[$i]->getPost()->getText(),
+                            'publishDate'   => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                            'post_likes'    => $results_postsDateSort[$i]->getPost()->getLikes(),
+                            'timeToRead'    => $timeToRead,
+                            'avatarImg'     => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage(),
+                            'interview_name'=> $interviewName,
+                            'interview_id'=> $results_postsDateSort[$i]->getPost()->getInterview()->getId()];
                 unset($tags);
                 
                 $post_categories = $results_postsRateSort[$i]->getPost()->getCategory();
@@ -121,25 +131,36 @@ class PostCategoryService extends AbstractApiService {
                 
                 $post_answers_Rate = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id_Rate));
                 $strLength_Rate = 0;
+                $interviewLegoRate = 0;
                 foreach ($post_answers_Rate as $answer_rate) {
                    $strLength_Rate += strlen(strip_tags($answer_rate->getAnswer()));
-                }        
+                   if ($answer_rate->getLego() > 0) {
+                       $interviewLegoRate++;
+                   }
+                }
+                
+                $interviewNameRate = '';
+                if ($interviewLegoRate > 0) {
+                    $interviewNameRate = $results_postsRateSort[$i]->getPost()->getInterview()->getName();
+                } 
                 $timeToReadRate = round($strLength_Rate/4200);
                 foreach($post_categories as $pc)
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $postsRateSort[] = ['id'          => $id_Rate,
-                            'authorId'    => $results_postsRateSort[$i]->getPost()->getAuthorId(),
-                            'authorName'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
-                            'tags'        => $tags,
-                            'title'       => $results_postsRateSort[$i]->getPost()->getCaption(),
-                            'description' => $results_postsRateSort[$i]->getPost()->getPreview(),
-                            'text'        => $results_postsRateSort[$i]->getPost()->getText(),
-                            'publishDate' => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'  => $results_postsRateSort[$i]->getPost()->getLikes(),
-                            'timeToRead'  => $timeToReadRate,
-                            'avatarImg'   => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage()];
+                $postsRateSort[] = ['id'    => $id_Rate,
+                            'authorId'      => $results_postsRateSort[$i]->getPost()->getAuthorId(),
+                            'authorName'    => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
+                            'tags'          => $tags,
+                            'title'         => $results_postsRateSort[$i]->getPost()->getCaption(),
+                            'description'   => $results_postsRateSort[$i]->getPost()->getPreview(),
+                            'text'          => $results_postsRateSort[$i]->getPost()->getText(),
+                            'publishDate'   => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                            'post_likes'    => $results_postsRateSort[$i]->getPost()->getLikes(),
+                            'timeToRead'    => $timeToReadRate,
+                            'avatarImg'     => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage(),
+                            'interview_name'=> $interviewName,
+                            'interview_id'=> $results_postsRateSort[$i]->getPost()->getInterview()->getId()];
                 unset($tags);
                 
                 

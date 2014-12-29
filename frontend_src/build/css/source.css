@@ -7290,15 +7290,15 @@ section {
   margin-bottom: 50px;
 }
 .LegoInterviewsList h3 {
-  padding-top: 10px;
+  padding-top: 30px;
 }
 .questionTitle.active a {
   color: green;
   font-weight: bold;
 }
 .interview-lego-small {
-  width: 88px;
-  height: 78px;
+  width: 132px;
+  height: 122px;
   z-index: 2;
   display: inline-block;
   float: left;
@@ -7316,6 +7316,9 @@ section {
 }
 #lego .file_upload_block input {
   top: 0;
+}
+#lego #js-save-description {
+  margin-bottom: 15px;
 }
 ul li {
   list-style: none;

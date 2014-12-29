@@ -27,7 +27,7 @@ define(
             data.errorText = 'Нет ответов на данное интервью'
             @showError(data)
         else
-            @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId}, {'image': data.previewImg})))
+            @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId}, {'image': data.previewImg}, {'description': data.interviewDescription})))
 
       showError: (data) ->
         @$el.empty().append('<div class="content">'+data.errorText+'</div>')

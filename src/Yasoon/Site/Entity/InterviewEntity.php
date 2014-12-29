@@ -74,6 +74,13 @@ class InterviewEntity
     protected $preview_img;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string")
+     */
+    protected $description;
+    
+    /**
      * @var InterviewQuestionEntity[] $questions
      *
      * @ORM\OneToMany(targetEntity="InterviewQuestionEntity",  mappedBy="interview")
@@ -224,6 +231,24 @@ class InterviewEntity
     public function getPreviewImg()
     {
         return $this->preview_img;
+    }
+    
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description =  $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
     
     /**

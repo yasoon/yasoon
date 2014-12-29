@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'views/InterviewsView', 'views/LegoInterviewView', 'views/LegoInterviewsView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, InterviewsView, LegoInterviewView, LegoInterviewsView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/RulesPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'views/InterviewsView', 'views/LegoInterviewView', 'views/LegoInterviewsView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, RulesPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, InterviewsView, LegoInterviewView, LegoInterviewsView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -63,6 +63,15 @@
         this.aboutPageView = new AboutPageView();
         LayoutView.contentRegion.$el.empty().append(this.aboutPageView.render().$el);
         this.aboutPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.rules = function() {
+        $('body').removeClass().addClass('rules');
+        $('#js-login').removeClass();
+        this.rulesPageView = new RulesPageView();
+        LayoutView.contentRegion.$el.empty().append(this.rulesPageView.render().$el);
+        this.rulesPageView.delegateEvents();
         return this;
       };
 

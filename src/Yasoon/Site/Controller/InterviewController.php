@@ -135,6 +135,7 @@ class InterviewController {
         return  $result;
     }
     
+    
     /**
      * @Route("/save_interview_lego")
      * @Method({"POST"})
@@ -145,6 +146,19 @@ class InterviewController {
         $questionId = $request->request->get('questionId');
 
         $result = $this->service->saveInterviewLego($interviewId, $questionId, $answersIds);
+
+        return  $result;
+    }
+    
+    /**
+     * @Route("/save_interview_description")
+     * @Method({"POST"})
+     */
+    public function save_interview_description(Request $request) {
+        $description = $request->request->get('description');
+        $interviewId = $request->request->get('interviewId');
+
+        $result = $this->service->saveInterviewDescription($interviewId, $description);
 
         return  $result;
     }

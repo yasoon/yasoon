@@ -25,6 +25,7 @@ define([
         'speaker/:id/:page(/)': 'showSpeaker'
         'timeline(/)': 'timeline'
         'about(/)': 'about'
+        'rules(/)': 'rules'
         'admin(/)': 'adminMainPage'
         '*other': 'undefinedRoute'
       }
@@ -78,6 +79,9 @@ define([
 
       about: ->
         Controller.about()
+
+      rules: ->
+        Controller.rules()
 
       adminMainPage: ->
         userModel.deferred.done( => if window.config.admin then AdminController.index() else @navigate('#/404'))
