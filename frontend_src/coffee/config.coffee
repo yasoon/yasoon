@@ -11,7 +11,13 @@ requirejs.config({
     'editor':           'vendor/editor'
     'fileupload':       'vendor/fileupload'
     'bootstrap':        'vendor/bootstrap.min'
-    
+    'videoBG':          'vendor/videoBG'
+    'videojs':          'vendor/videojs'
+    'imagesloaded':     'vendor/imagesloaded'
+    'EventEmitter':     'vendor/EventEmitter'
+    'eventie':          'vendor/eventie'
+    'moderniz':         'vendor/moderniz'
+
   }
   shim: {
     'backbone':

@@ -11,7 +11,13 @@
       'jqueryUi': 'vendor/jquery-ui-1.10.4.custom.min',
       'editor': 'vendor/editor',
       'fileupload': 'vendor/fileupload',
-      'bootstrap': 'vendor/bootstrap.min'
+      'bootstrap': 'vendor/bootstrap.min',
+      'videoBG': 'vendor/videoBG',
+      'videojs': 'vendor/videojs',
+      'imagesloaded': 'vendor/imagesloaded',
+      'EventEmitter': 'vendor/EventEmitter',
+      'eventie': 'vendor/eventie',
+      'moderniz': 'vendor/moderniz'
     },
     shim: {
       'backbone': {

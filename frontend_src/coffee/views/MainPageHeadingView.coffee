@@ -2,6 +2,8 @@ define(
   [
     'text!templates/mainPageHeadingTpl.htm'
     'backbone'
+    'videoBG'
+    'moderniz'
   ]
   (
     mainPageHeadingTpl
@@ -11,5 +13,23 @@ define(
       template: _.template(mainPageHeadingTpl)
       render: ->
         @$el.html(@template()).css({'background-image': "url(frontend#{_.getContent(13)})", 'background-size': "cover"})
+        @onRender()
         @
+
+      onRender: ->
+        if (_.getContent(69) != '')
+            setTimeout ( ->
+                BV = new $.BigVideo({container: $('.mainPage-intro')});
+                BV.init();
+                if (Modernizr.touch) 
+                    BV.show("/frontend#{_.getContent(13)})")
+                else
+                    BV.show([
+                        { type: "video/mp4",  src: "#{_.getContent(69)}.mp4" },
+                        { type: "video/webm", src: "#{_.getContent(69)}".webm },
+                        { type: "video/ogg",  src: "#{_.getContent(69)}".ogg },
+                        {ambient:true}
+                    ]);
+            ), 200
+
 )
