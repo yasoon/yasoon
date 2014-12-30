@@ -159,8 +159,8 @@ class PostCategoryService extends AbstractApiService {
                             'post_likes'    => $results_postsRateSort[$i]->getPost()->getLikes(),
                             'timeToRead'    => $timeToReadRate,
                             'avatarImg'     => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage(),
-                            'interview_name'=> $interviewName,
-                            'interview_id'=> $results_postsRateSort[$i]->getPost()->getInterview()->getId()];
+                            'interview_name'=> $interviewNameRate,
+                            'interview_id'  => $results_postsRateSort[$i]->getPost()->getInterview()->getId()];
                 unset($tags);
                 
                 

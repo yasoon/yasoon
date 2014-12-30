@@ -151,7 +151,7 @@ class PostEntity
     }
 
     /**
-     * @return \Yasoon\Site\Entity\AuthorEntity
+     * @return \Yasoon\Site\Entity\InterviewEntity
      */
     public function getInterview()
     {
