@@ -7138,6 +7138,8 @@ h2 {
 .mainPage-intro {
   background: #F75E5E;
   background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
 }
 .interview-intro {
   background: #F75E5E;

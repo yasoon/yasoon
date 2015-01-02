@@ -18,12 +18,12 @@ define(
 
       onRender: ->
         if (_.getContent(69) != '')
-            setTimeout ( ->
-                BV = new $.BigVideo({container: $('.mainPage-intro')});
-                BV.init();
+            setTimeout ( ->               
                 if (Modernizr.touch) 
-                    BV.show("/frontend#{_.getContent(13)})")
+                    
                 else
+                    BV = new $.BigVideo({container: $('.mainPage-intro')});
+                    BV.init();
                     BV.show([
                         { type: "video/mp4",  src: "#{_.getContent(69)}.mp4" },
                         { type: "video/webm", src: "#{_.getContent(69)}".webm },

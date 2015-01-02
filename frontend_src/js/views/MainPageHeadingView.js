@@ -28,13 +28,13 @@
         if (_.getContent(69) !== '') {
           return setTimeout((function() {
             var BV;
-            BV = new $.BigVideo({
-              container: $('.mainPage-intro')
-            });
-            BV.init();
             if (Modernizr.touch) {
-              return BV.show("/frontend" + (_.getContent(13)) + ")");
+
             } else {
+              BV = new $.BigVideo({
+                container: $('.mainPage-intro')
+              });
+              BV.init();
               return BV.show([
                 {
                   type: "video/mp4",
