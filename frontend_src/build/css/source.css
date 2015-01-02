@@ -7292,7 +7292,10 @@ section {
   margin-bottom: 50px;
 }
 .LegoInterviewsList h3 {
-  padding-top: 30px;
+  padding-top: 25px;
+}
+.LegoInterviewsList .cat-title h3 {
+  font-weight: normal;
 }
 .questionTitle.active a {
   color: green;

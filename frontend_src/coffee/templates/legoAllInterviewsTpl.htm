@@ -10,7 +10,9 @@
                 <% } else { %>
                 <img src="/web/upload/interviews/<%= interview.image %>" alt="" class="interview-lego-small">
                 <% } %>
-                <h3><%= interview.name %></h3>
+                <article class="cat-title">
+                    <h3><%= interview.name %></h3>
+                </article>
             </a>
              <%= interview.timeToRead %> минут чтения | <%= interview.speakers %> спикеров | <%= interview.likes %> вдохновились
         </article>
