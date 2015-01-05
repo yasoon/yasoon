@@ -23,13 +23,13 @@ define(
                     
                 else
                     BV = new $.BigVideo({container: $('.mainPage-intro')});
-                    BV.init();
+                    BV.init()
                     BV.show([
                         { type: "video/mp4",  src: "#{_.getContent(69)}.mp4" },
-                        { type: "video/webm", src: "#{_.getContent(69)}".webm },
-                        { type: "video/ogg",  src: "#{_.getContent(69)}".ogg },
+                        { type: "video/webm", src: "#{_.getContent(69)}.webm" },
+                        { type: "video/ogg",  src: "#{_.getContent(69)}.ogg" },
                         {ambient:true}
-                    ]);
-            ), 200
+                    ])
+            ), 300
 
 )

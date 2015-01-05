@@ -6241,6 +6241,7 @@ header#header nav a:hover {
   margin: 0 auto;
   color: #fff;
   text-align: center;
+  position: relative;
 }
 .main-w h1 {
   font-family: "MuseoSansCyrl-700", Arial;

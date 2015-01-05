@@ -41,16 +41,16 @@
                   src: "" + (_.getContent(69)) + ".mp4"
                 }, {
                   type: "video/webm",
-                  src: ("" + (_.getContent(69))).webm
+                  src: "" + (_.getContent(69)) + ".webm"
                 }, {
                   type: "video/ogg",
-                  src: ("" + (_.getContent(69))).ogg
+                  src: "" + (_.getContent(69)) + ".ogg"
                 }, {
                   ambient: true
                 }
               ]);
             }
-          }), 200);
+          }), 300);
         }
       };
 
