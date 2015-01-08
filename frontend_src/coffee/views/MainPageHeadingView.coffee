@@ -28,6 +28,6 @@ define(
                         { type: "video/ogg",  src: "#{_.getContent(69)}.ogg" },
                         {ambient:true}
                     ])
-            ), 100
+            ), 200
 
 )
