@@ -210,7 +210,6 @@ class SocialAuthController {
         if($new_user)
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$user->getId().'/edit/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
@@ -219,7 +218,6 @@ class SocialAuthController {
         else
         {
             $response = '<script>
-                            window.opener.location.hash=\'/speaker/'.$user->getId().'/posts/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();

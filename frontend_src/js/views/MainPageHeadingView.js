@@ -28,9 +28,7 @@
         if (_.getContent(69) !== '') {
           return setTimeout((function() {
             var BV;
-            if (Modernizr.touch) {
-
-            } else {
+            if (Modernizr.video) {
               BV = new $.BigVideo({
                 container: $('.mainPage-intro')
               });
@@ -50,7 +48,7 @@
                 }
               ]);
             }
-          }), 300);
+          }), 100);
         }
       };
 

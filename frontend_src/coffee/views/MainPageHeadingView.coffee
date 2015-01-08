@@ -19,9 +19,7 @@ define(
       onRender: ->
         if (_.getContent(69) != '')
             setTimeout ( ->               
-                if (Modernizr.touch) 
-                    
-                else
+                if (Modernizr.video) 
                     BV = new $.BigVideo({container: $('.mainPage-intro')});
                     BV.init()
                     BV.show([
@@ -30,6 +28,6 @@ define(
                         { type: "video/ogg",  src: "#{_.getContent(69)}.ogg" },
                         {ambient:true}
                     ])
-            ), 300
+            ), 100
 
 )
