@@ -7326,6 +7326,9 @@ section {
 #lego #js-save-description {
   margin-bottom: 15px;
 }
+#big-video-wrap {
+  display: none;
+}
 ul li {
   list-style: none;
   padding: 0;

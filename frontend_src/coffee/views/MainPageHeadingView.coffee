@@ -28,6 +28,10 @@ define(
                         { type: "video/ogg",  src: "#{_.getContent(69)}.ogg" },
                         {ambient:true}
                     ])
+                    BV.getPlayer().on('durationchange', ( ->
+                        $('#big-video-wrap').fadeIn();
+                    ))
             ), 200
+            
 
 )

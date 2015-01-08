@@ -33,7 +33,7 @@
                 container: $('.mainPage-intro')
               });
               BV.init();
-              return BV.show([
+              BV.show([
                 {
                   type: "video/mp4",
                   src: "" + (_.getContent(69)) + ".mp4"
@@ -47,6 +47,9 @@
                   ambient: true
                 }
               ]);
+              return BV.getPlayer().on('durationchange', (function() {
+                return $('#big-video-wrap').fadeIn();
+              }));
             }
           }), 200);
         }
