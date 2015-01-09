@@ -45,7 +45,11 @@
         });
       },
       index: function() {
-        return Controller.index();
+        if (window.reloadMainPage != null) {
+          return window.location.reload(true);
+        } else {
+          return Controller.index();
+        }
       },
       posts: function(category, sort) {
         return Controller.posts(category, sort);

@@ -48,7 +48,7 @@ define([
         @navigate($(event.currentTarget).attr('href').replace(/^\//, ''), {trigger: yes})
 
       index: ->
-        Controller.index()
+        if window.reloadMainPage? then window.location.reload(yes) else Controller.index()
 
       posts: (category, sort) ->
         Controller.posts(category, sort)

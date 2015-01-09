@@ -196,7 +196,7 @@
 
       Register.prototype.loadUser = function() {
         if (window.newPost != null) {
-          window.location = "/#/post/new/";
+          window.location = "/#/post/new/" + window.newPost;
         } else {
           window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
         }

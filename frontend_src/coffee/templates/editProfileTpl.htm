@@ -1,9 +1,9 @@
 <% var reg = (typeof window.config.regFrom === "undefined" || parseInt(window.config.regFrom) === 0) ? true : false; %>
 <form role="form" class="register-form">
+    <div class="page-header">
+        <h3><%= _.getContent(43) %></h3>
+    </div>
     <% if (reg) { %>
-        <div class="page-header">
-            <h3><%= _.getContent(43) %></h3>
-        </div>
         <div class="di form-group">
             <input type="text" class="form-control" placeholder="<%= _.getContent(22) %>" id="name" name="name">
             <span class="help-block"></span>

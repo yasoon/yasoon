@@ -7,6 +7,7 @@
       Controller.prototype.index = function() {
         $('body').removeClass().addClass('index');
         $('#js-login').removeClass();
+        window.reloadMainPage = 1;
         this.mainPageView = new MainPageView;
         LayoutView.contentRegion.$el.empty().append(this.mainPageView.render().$el);
         this.mainPageView.delegateEvents();

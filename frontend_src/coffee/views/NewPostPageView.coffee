@@ -47,7 +47,7 @@ define(
         $.get("/api/interview/get_interviews", (data) =>
           array = _.where(data, {id: parseInt(id)})
           arrayName = _.where(data, {name: name})
-          @model.set('interviewId', if array.length then id else data[1]['id'])
+          @model.set('interviewId', if array.length then data[id]['id'] else data[1]['id'])
           @model.set('interviewTitle', data[@model.get('interviewId')]['name'])
         )
 
@@ -73,6 +73,7 @@ define(
         @$('#categories').append(@postCategories.render().$el)
 
       getInterviewQuestions: ->
+        console.log(@model.get('interviewId'))
         $.get("/api/interview/questions/#{@model.get('interviewId')}", (data) => @model.set('interviewQuestions', data))
 
       createInterviewsList: ->

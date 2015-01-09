@@ -52,7 +52,7 @@
             arrayName = _.where(data, {
               name: name
             });
-            _this.model.set('interviewId', array.length ? id : data[1]['id']);
+            _this.model.set('interviewId', array.length ? data[id]['id'] : data[1]['id']);
             return _this.model.set('interviewTitle', data[_this.model.get('interviewId')]['name']);
           };
         })(this));
@@ -89,6 +89,7 @@
       };
 
       WritePostPage.prototype.getInterviewQuestions = function() {
+        console.log(this.model.get('interviewId'));
         return $.get("/api/interview/questions/" + (this.model.get('interviewId')), (function(_this) {
           return function(data) {
             return _this.model.set('interviewQuestions', data);

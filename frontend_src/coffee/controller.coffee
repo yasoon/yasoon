@@ -59,6 +59,7 @@ define(
       index: ->
         $('body').removeClass().addClass('index')
         $('#js-login').removeClass()
+        window.reloadMainPage = 1
         @mainPageView = new MainPageView
         LayoutView.contentRegion.$el.empty().append(@mainPageView.render().$el)
         @mainPageView.delegateEvents()
