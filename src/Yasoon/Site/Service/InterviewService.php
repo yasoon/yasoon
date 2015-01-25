@@ -77,11 +77,16 @@ class InterviewService extends AbstractApiService {
             foreach($answers as $answer)
             {
                 $lego = $answer->getLego() == '1' ? 'checked' : '';
-                $authorId = $answer->getPost()->getAuthor()->getId();
-                $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
-                $data[] = ['answer' => $answer->getAnswer(),'id' => $answer->getId(), 
-                    'authorName' => $author->getName(), 'avatarImg' => $author->getImage(), 
-                    'lego' => $lego];
+                $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->findOneBy(array('id' => $answer->getPostId()));
+                if (!empty($post)) {
+                    $authorId = $answer->getPost()->getAuthor()->getId();
+                    $author = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId);
+                    if (!empty($author)) {
+                    $data[] = ['answer' => $answer->getAnswer(),'id' => $answer->getId(), 
+                        'authorName' => $author->getName(), 'avatarImg' => $author->getImage(), 
+                        'lego' => $lego];
+                    }
+                }
             }
                 
             return $data;
@@ -257,30 +262,35 @@ class InterviewService extends AbstractApiService {
                 foreach ($questions as $question) {
                     $questionId = $question->getId();
                     $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $questionId, 'lego' => '1'));
-                    
+                   
                     $questionAnswers = array();
-                    foreach ($answers as $answer) {
-                        $postId = $answer->getPostId();
-                        $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($postId);
-                        $author = $post->getAuthor();
-                        $title = $post->getPreview() != '' ? $post->getPreview() : $post->getCaption();
-                        $questionAnswers[] =    [
-                                                    'text' => $answer->getAnswer(),
-                                                    'authorId' => $author->getId(),
-                                                    'authorName' => $author->getName(),
-                                                    'authorJob' => $author->getJob(),
-                                                    'avatarImg' => $author->getImg(),
-                                                    'postTitle' => $title,
-                                                    'postId' => $postId
-                                                ];
-                    }
-                    if (!empty($questionAnswers)) {
-                        $interviewQuestions[] = [
-                                                    'questionId' => $questionId,
-                                                    'questionText' => $question->getText(),
-                                                    'answers' => $questionAnswers
-                                                ];
-                    }
+                    
+                        foreach ($answers as $answer) { 
+                            $postId = $answer->getPostId();
+                            $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->findOneBy(array('id' => $postId));
+                            if (!empty($post)) {
+                            
+                            $author = $post->getAuthor();
+                            $title = $post->getPreview() != '' ? $post->getPreview() : $post->getCaption();
+                            $questionAnswers[] =    [
+                                                        'text' => $answer->getAnswer(),
+                                                        'authorId' => $author->getId(),
+                                                        'authorName' => $author->getName(),
+                                                        'authorJob' => $author->getJob(),
+                                                        'avatarImg' => $author->getImg(),
+                                                        'postTitle' => $title,
+                                                        'postId' => $postId
+                                                    ];
+                            }
+                        }
+                    
+                        if (!empty($questionAnswers)) {
+                            $interviewQuestions[] = [
+                                                        'questionId' => $questionId,
+                                                        'questionText' => $question->getText(),
+                                                        'answers' => $questionAnswers
+                                                    ];
+                        }
                     
                 }
                 
