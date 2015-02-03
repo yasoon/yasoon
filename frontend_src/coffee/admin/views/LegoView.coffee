@@ -12,7 +12,7 @@ define(
   (
     legoTpl
     oneInterviewTpl
-    imageTpl
+    imgTpl
     LegoAnswersView
     InterviewDescriptionView
     LegoCollection
@@ -30,7 +30,7 @@ define(
       
       oneTemplate: _.template(oneInterviewTpl)
 
-      imgTemplate: _.template(imageTpl)
+      imgTemplate: _.template(imgTpl)
 
       render: ->
         @$el.html(@template())

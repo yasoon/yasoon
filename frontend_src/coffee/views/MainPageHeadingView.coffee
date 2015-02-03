@@ -12,7 +12,7 @@ define(
       className: 'mainPage-intro'
       template: _.template(mainPageHeadingTpl)
       render: ->
-        @$el.html(@template()).css({'background-image': "url(frontend#{_.getContent(13)})", 'background-size': "cover"})
+        @$el.html(@template()).css({'background-image': "url(web/upload#{_.getContent(13)})", 'background-size': "cover"})
         @onRender()
         @
 

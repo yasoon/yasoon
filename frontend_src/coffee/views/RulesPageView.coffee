@@ -11,6 +11,6 @@ define(
       className: 'row'
       template: _.template(aboutPageTpl)
       render: ->
-        @$el.empty().append(@template(_.extend({}, {'heading': ''}, {'text': _.getContent(5)})))
+        @$el.empty().append(@template(_.extend({}, {'heading': ''}, {'text': _.getContent(5)}, {'image': _.getContent(71)})))
         @
 )

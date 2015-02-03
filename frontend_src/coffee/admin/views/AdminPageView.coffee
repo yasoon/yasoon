@@ -7,6 +7,7 @@ define(
     'admin/views/InterviewsList'
     'admin/views/PeoplesList'
     'admin/views/LegoView'
+    'admin/views/BigImagesView'
     'backbone'
     'bootstrap'
   ]
@@ -18,6 +19,7 @@ define(
     InterviewsList
     PeoplesList
     LegoView
+    BigImagesView
   ) ->
     class AdminPageView extends Backbone.View
       template: _.template(adminMainPageTpl)
@@ -25,6 +27,7 @@ define(
       events: ->
         'click a[data-change="tab"]': 'changeTab'
         'click  #lego-start-show':             'createLegoView'
+        'click  #big-images-start-show':             'createBigImagesView'
 
       render: ->
         @$el.empty().append(@template())
@@ -60,6 +63,14 @@ define(
         else
           @interviewsList.delegateEvents()
         @$('#interview').append(@interviewsList.$el)
+        @
+        
+      createBigImagesView: ->
+        if not @bigImagesView?
+          @bigImagesView = new BigImagesView()
+        else
+          @bigImagesView.delegateEvents()
+        @$('#bigImages').empty().append(@bigImagesView.render().$el)
         @
 
       createLegoView: ->

@@ -24,7 +24,7 @@
       MainPageContentView.prototype.template = _.template(mainPageNavTpl);
 
       MainPageContentView.prototype.initialize = function() {
-        this.createMainPageHistory();
+        this.createMainPageStories();
         $(window).off('scroll.app:main').on('scroll.app:main', this.fixedPositionOnScroll);
         return this;
       };

@@ -1,6 +1,6 @@
 <span><a href="#/speaker/<%= author_id %>/posts"><%= ask_author_name %>, <%= ask_author_job %></a> ответил(a) на <% if (ask_authorId === window.config.userId) { %><b>Ваш</b><% } %> вопрос:</span>
 <h3>
-    <%= text %>
+    <%= text %><br>
     <span class="post-date"><%= _.getDateText(date) %></span>
 </h3>
 <div class="content">

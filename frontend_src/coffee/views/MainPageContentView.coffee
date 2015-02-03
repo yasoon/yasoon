@@ -27,7 +27,7 @@ define(
       template: _.template(mainPageNavTpl)
 
       initialize: ->
-        @createMainPageHistory()
+        @createMainPageStories()
         $(window).off('scroll.app:main').on('scroll.app:main', @fixedPositionOnScroll)
         @
 

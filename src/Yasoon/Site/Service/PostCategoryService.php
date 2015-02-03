@@ -77,9 +77,28 @@ class PostCategoryService extends AbstractApiService {
                 //echo 'test';
             }
             
+            $minLikesCount = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(75);
+            $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
             
-            $results_postsDateSort = $category->setMaxResults($itemsPerPage)->setFirstResult($offset)->orderBy('p.date', 'DESC')->getQuery()->getResult();
-            $results_postsRateSort = $category->setMaxResults($itemsPerPage)->setFirstResult($offset)->orderBy('p.likes', 'DESC')->getQuery()->getResult();
+            $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
+            
+            $results_postsDateSort = $category
+                    ->setMaxResults($itemsPerPage)
+                    ->setFirstResult($offset)
+                    ->where('p.likes >= :likes')
+                    ->andWhere('p.date >= :dateTime')
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('dateTime', $dateTime)
+                    ->setParameter('likes', (int) $minLikesCount->getText())
+                    ->getQuery()
+                    ->getResult();
+
+            $results_postsRateSort = $category
+                    ->setMaxResults($itemsPerPage)
+                    ->setFirstResult($offset)
+                    ->orderBy('p.likes', 'DESC')
+                    ->getQuery()
+                    ->getResult();
             $postsDateSort = [];
             $postsRateSort = [];
             foreach($results_postsDateSort as $i => $v)

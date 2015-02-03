@@ -17,7 +17,7 @@
 
       MainPageHeadingView.prototype.render = function() {
         this.$el.html(this.template()).css({
-          'background-image': "url(frontend" + (_.getContent(13)) + ")",
+          'background-image': "url(web/upload" + (_.getContent(13)) + ")",
           'background-size': "cover"
         });
         this.onRender();

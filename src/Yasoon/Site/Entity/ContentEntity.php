@@ -16,6 +16,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ContentEntity
 {
+    
+    const MAIN_PAGE_IMAGE_ID = 13;
+    const ABOUT_PAGE_IMAGE_ID = 70;
+    const RULES_PAGE_IMAGE_ID = 71;
+    
     /**
      * @var integer $id
      *

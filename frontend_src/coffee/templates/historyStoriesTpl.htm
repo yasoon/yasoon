@@ -5,6 +5,6 @@
 </article>
 
 <nav class="navigate">
-	<a href="#/posts/<%= category %>/dateSort/" class="<% if (sort === 'dateSort') print('active') %>">новые</a>
-	<a href="#/posts/<%= category %>/rateSort/" class="<% if (sort === 'rateSort') print('active') %>">популярные</a>
+	<a href="#/posts/<%= category %>/dateSort/" class="<% if (sort === 'dateSort') print('active') %>"><%= _.getContent(72) %></a>
+	<a href="#/posts/<%= category %>/rateSort/" class="<% if (sort === 'rateSort') print('active') %>"><%= _.getContent(73) %></a>
 </nav>

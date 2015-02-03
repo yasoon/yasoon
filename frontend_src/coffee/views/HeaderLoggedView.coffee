@@ -19,6 +19,7 @@ define(
       template:                 _.template(headerLoggedTpl)
 
       initialize: ->
+        @model.set({'timeline': 0, 'timeline_answers': 0, 'timeline_posts': 0})
         @getTimelineData()
         window.setInterval(=>
           @getTimelineData()
@@ -32,7 +33,7 @@ define(
           noFollowedAnswers = parseInt(timeline[0].new_answers_count)
           followedPosts = parseInt(timeline[0].posts_timeline_count)
           newQuestions = parseInt(questions[0].result.length)
-          timeline = followedAnswers + followedPosts
+          timeline = followedAnswers + followedPosts + noFollowedAnswers
           @model.set({'timeline': timeline + newQuestions, 'timeline_answers': newQuestions, 'timeline_posts': timeline})
         )
 

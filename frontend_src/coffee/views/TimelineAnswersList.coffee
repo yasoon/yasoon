@@ -12,9 +12,9 @@ define(
       tagName: 'section'
 
       initialize: ->
-        @collection.each((post)=> @addOne(post))
+        @collection.each((answer)=> @addOne(answer))
 
-      addOne: (post) ->
-        post = new TimelineAnswerView({model: post})
-        @$el.append(post.render().$el)
+      addOne: (answer) ->
+        answerView = new TimelineAnswerView({model: answer})
+        @$el.append(answerView.render().$el)
 )

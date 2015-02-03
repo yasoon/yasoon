@@ -17,7 +17,7 @@ use Yasoon\Site\Entity\QuestionEntity;
  * @DI\Service("yasoon.service.content")
  */
 class ContentService extends AbstractApiService {
-
+    
     /**
      * @var \Symfony\Component\Security\Core\SecurityContextInterface
      *
@@ -203,5 +203,49 @@ class ContentService extends AbstractApiService {
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
+    }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getBigImages()
+    {
+        try {
+
+            $mainPageEntity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')
+                    ->find(constant('Yasoon\Site\Entity\ContentEntity::MAIN_PAGE_IMAGE_ID'));
+            $aboutPageEntity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')
+                    ->find(constant('Yasoon\Site\Entity\ContentEntity::ABOUT_PAGE_IMAGE_ID'));
+            $rulesPageEntity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')
+                    ->find(constant('Yasoon\Site\Entity\ContentEntity::RULES_PAGE_IMAGE_ID'));
+            
+            return ['error' => false, 'data' => array(
+                $mainPageEntity->getId() => array('text' => $mainPageEntity->getText(), 'title' => 'Изображение для главной страницы'), 
+                $aboutPageEntity->getId() => array('text' => $aboutPageEntity->getText(), 'title' => 'Изображение для страницы "О нас"'), 
+                $rulesPageEntity->getId() => array('text' => $rulesPageEntity->getText(), 'title' => 'Изображение для страницы "Правила"')
+            )];
+        } catch (Exception $ex) {
+            return ['error' => true, 'errorText' => $ex->getMessage()];
+        }
+    }
+    
+    /**
+     * @param  $contentId, $url
+     * @return array
+     */
+    public function editTextById($contentId, $text) {
+
+        $this->checkAdminAccess();
+
+        /** @var ContentEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find($contentId);
+
+        $entity->setText($text);
+
+        $this->em->merge($entity);
+        $this->em->flush();
+
+        return ['text' => $entity->getText()];
     }
 }

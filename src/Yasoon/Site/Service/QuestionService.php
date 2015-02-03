@@ -308,7 +308,7 @@ class QuestionService extends AbstractApiService {
         } else {
             return [
                 'error' => false,
-                'result' => 'NOT_FOUND'
+                'result' => []
             ];
         }
     }
@@ -334,21 +334,12 @@ class QuestionService extends AbstractApiService {
         }
         $result = [];
 
-        $postsTimeline = $this->em->getRepository('Yasoon\Site\Entity\FriendsEntity')->findBy(array('readerId' => $authorId));
-        $postIdsArray = array();
-        if (count($postsTimeline) > 0) {
-        foreach ($postsTimeline as $postTimeline) {
-            $postIdsArray[] = $postTimeline->getWriterId();
-
-        }
         $questions = $this->em->createQueryBuilder()
             ->select('p')
             ->from('Yasoon\Site\Entity\QuestionEntity', 'p')
             ->where("p.notified  != 1")
             ->andWhere("p.answer IS NOT NULL")
-            ->andWhere("p.authorId IN (:author_id)")
             ->orderBy('p.date', 'DESC')
-            ->setParameter('author_id',$postIdsArray)
             ->getQuery()->getResult();
 
         
@@ -370,15 +361,11 @@ class QuestionService extends AbstractApiService {
                 'error'       => false,
                 'result'      => $result
             ];
-        } else {
-            return [
-                'error'       => false,
-                'result'      => "NOT_FOUND"
-            ];
-        }
+       
     }
 
     public function getNewAnswersCount() {
+        return 0;
         $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (!is_int($authorId)) {
             return ['error' => true, 'errorText' => 'accessDenied'];
