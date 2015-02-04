@@ -49,7 +49,6 @@ define(
           
           topPos = $this.offset().top;
           $(window).on 'scroll':->
-            _.each($('.floating.active'), (item) => $(item).removeClass('question-fix'))
             top = $(document).scrollTop() + 50
             pip = $this.parent().next().offset().top
             height = $this.outerHeight()
