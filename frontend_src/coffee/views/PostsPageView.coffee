@@ -39,7 +39,7 @@ define(
         @setDescription()
 
       getPostsList: ->
-        $.get("/api/post/get_categoryPosts/#{@model.get('category')}/1/10", (data) => @model.set('postsList', data[@model.get('sort')]))
+        $.get("/api/post/get_categoryPosts/#{@model.get('category')}/1/10/#{@model.get('sort')}", (data) => @checkErrors(data))
 
       createPostsList: ->
         if @model.get('postsList').length > 0 then @createPosts() else @emptyPosts()
@@ -70,4 +70,11 @@ define(
 
       posts: ->
         @postsPreviews = new PostsPreviews({category: @model.get('category'), sort: @model.get('sort'), collection: new PostsPreviewsList(@model.get('postsList'))})
+        
+      checkErrors: (data) ->
+        if data.errors is yes
+          @emptyPosts
+        else 
+          @model.set('postsList', data[@model.get('sort')])
+        
 )

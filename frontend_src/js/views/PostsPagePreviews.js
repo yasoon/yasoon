@@ -31,7 +31,7 @@
       PostsPreviewsCollection.prototype.updateCollection = function() {
         var counter;
         counter = this.counter + 1;
-        return $.get("/api/post/get_categoryPosts/" + this.category + "/" + counter + "/10", (function(_this) {
+        return $.get("/api/post/get_categoryPosts/" + this.category + "/" + counter + "/10/" + this.sort, (function(_this) {
           return function(data) {
             var max;
             max = data['postsCount'];

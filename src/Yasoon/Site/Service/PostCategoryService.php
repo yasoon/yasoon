@@ -39,10 +39,14 @@ class PostCategoryService extends AbstractApiService {
      * @param $itemsPerPage
      * @return array
      */
-    public function getPostsByCategory($categoryId, $page, $itemsPerPage)
+    public function getPostsByCategory($categoryId, $page, $itemsPerPage, $sort)
     {
         try {
             $offset = ($page*$itemsPerPage)-$itemsPerPage;
+            
+            $minLikesCount = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(75);
+            $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
+            $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
             
             $category = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')
                 ->createQueryBuilder('c');
@@ -55,7 +59,16 @@ class PostCategoryService extends AbstractApiService {
             $category->leftJoin('c.post', 'p');
             
             $clone = clone $category;
+           
             $all = $clone->orderBy('p.id', 'DESC')->getQuery()->getResult();
+             if ($sort == 'dateSort') {
+                 $all = $clone->where('p.likes >= :likes')
+                    ->andWhere('p.date >= :dateTime')
+                    ->orderBy('p.id', 'DESC')
+                    ->setParameter('dateTime', $dateTime)
+                    ->setParameter('likes', (int) $minLikesCount->getText())
+                    ->getQuery()->getResult();
+             }
             $count_all = count($all);
 
             if($count_all < ($offset+$itemsPerPage))
@@ -76,13 +89,9 @@ class PostCategoryService extends AbstractApiService {
                 $count_all = 1;
                 //echo 'test';
             }
-            
-            $minLikesCount = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(75);
-            $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
-            
-            $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
-            
-            $results_postsDateSort = $category
+            $results_postsSort = null;
+            if ($sort == 'dateSort') {
+                $results_postsSort = $category
                     ->setMaxResults($itemsPerPage)
                     ->setFirstResult($offset)
                     ->where('p.likes >= :likes')
@@ -92,23 +101,24 @@ class PostCategoryService extends AbstractApiService {
                     ->setParameter('likes', (int) $minLikesCount->getText())
                     ->getQuery()
                     ->getResult();
-
-            $results_postsRateSort = $category
+            } else {
+                $results_postsSort = $category
                     ->setMaxResults($itemsPerPage)
                     ->setFirstResult($offset)
                     ->orderBy('p.likes', 'DESC')
                     ->getQuery()
                     ->getResult();
-            $postsDateSort = [];
-            $postsRateSort = [];
-            foreach($results_postsDateSort as $i => $v)
+            }
+
+            $postsSort = [];
+            foreach($results_postsSort as $i => $v)
             { 
 
                 try {
                    
                 //echo $i.' ';
-                $post_categories = $results_postsDateSort[$i]->getPost()->getCategory();
-                $id = $results_postsDateSort[$i]->getPost()->getId();
+                $post_categories = $results_postsSort[$i]->getPost()->getCategory();
+                $id = $results_postsSort[$i]->getPost()->getId();
                 
                 $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
                 $strLength = 0;
@@ -121,7 +131,7 @@ class PostCategoryService extends AbstractApiService {
                 }
                 $interviewName = '';
                 if ($interviewLego > 0) {
-                    $interviewName = $results_postsDateSort[$i]->getPost()->getInterview()->getName();
+                    $interviewName = $results_postsSort[$i]->getPost()->getInterview()->getName();
                 } 
                 $timeToRead = round($strLength/4200);
                 
@@ -129,60 +139,20 @@ class PostCategoryService extends AbstractApiService {
                 {
                     $tags[] = $pc->getCategoryId();
                 }
-                $postsDateSort[] = ['id'    => $id,
-                            'authorId'      => $results_postsDateSort[$i]->getPost()->getAuthorId(),
-                            'authorName'    => $results_postsDateSort[$i]->getPost()->getAuthor()->getName(),
+                $postsSort[] = ['id'    => $id,
+                            'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
+                            'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
                             'tags'          => $tags,
-                            'title'         => $results_postsDateSort[$i]->getPost()->getCaption(),
-                            'description'   => $results_postsDateSort[$i]->getPost()->getPreview(),
-                            'text'          => $results_postsDateSort[$i]->getPost()->getText(),
-                            'publishDate'   => $results_postsDateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'    => $results_postsDateSort[$i]->getPost()->getLikes(),
+                            'title'         => $results_postsSort[$i]->getPost()->getCaption(),
+                            'description'   => $results_postsSort[$i]->getPost()->getPreview(),
+                            'text'          => $results_postsSort[$i]->getPost()->getText(),
+                            'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                            'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
                             'timeToRead'    => $timeToRead,
-                            'avatarImg'     => $results_postsDateSort[$i]->getPost()->getAuthor()->getImage(),
+                            'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
                             'interview_name'=> $interviewName,
-                            'interview_id'=> $results_postsDateSort[$i]->getPost()->getInterview()->getId()];
+                            'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId()];
                 unset($tags);
-                
-                $post_categories = $results_postsRateSort[$i]->getPost()->getCategory();
-                
-                $id_Rate = $results_postsRateSort[$i]->getPost()->getId();
-                
-                $post_answers_Rate = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id_Rate));
-                $strLength_Rate = 0;
-                $interviewLegoRate = 0;
-                foreach ($post_answers_Rate as $answer_rate) {
-                   $strLength_Rate += strlen(strip_tags($answer_rate->getAnswer()));
-                   if ($answer_rate->getLego() > 0) {
-                       $interviewLegoRate++;
-                   }
-                }
-                
-                $interviewNameRate = '';
-                if ($interviewLegoRate > 0) {
-                    $interviewNameRate = $results_postsRateSort[$i]->getPost()->getInterview()->getName();
-                } 
-                $timeToReadRate = round($strLength_Rate/4200);
-                foreach($post_categories as $pc)
-                {
-                    $tags[] = $pc->getCategoryId();
-                }
-                $postsRateSort[] = ['id'    => $id_Rate,
-                            'authorId'      => $results_postsRateSort[$i]->getPost()->getAuthorId(),
-                            'authorName'    => $results_postsRateSort[$i]->getPost()->getAuthor()->getName(),
-                            'tags'          => $tags,
-                            'title'         => $results_postsRateSort[$i]->getPost()->getCaption(),
-                            'description'   => $results_postsRateSort[$i]->getPost()->getPreview(),
-                            'text'          => $results_postsRateSort[$i]->getPost()->getText(),
-                            'publishDate'   => $results_postsRateSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'    => $results_postsRateSort[$i]->getPost()->getLikes(),
-                            'timeToRead'    => $timeToReadRate,
-                            'avatarImg'     => $results_postsRateSort[$i]->getPost()->getAuthor()->getImage(),
-                            'interview_name'=> $interviewNameRate,
-                            'interview_id'  => $results_postsRateSort[$i]->getPost()->getInterview()->getId()];
-                unset($tags);
-                
-                
                 } catch(\Exception $e) {
                     $count_all--;
                 }
@@ -191,8 +161,7 @@ class PostCategoryService extends AbstractApiService {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         
-        $result = ['dateSort'   => $postsDateSort,
-                   'rateSort'   => $postsRateSort,
+        $result = [$sort   => $postsSort,
                    'postsCount' => $count_all];
         
         return $result;

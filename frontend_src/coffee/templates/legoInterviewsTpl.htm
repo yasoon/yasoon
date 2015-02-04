@@ -15,7 +15,7 @@
 <div class="content">
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent question-content">
-                <h3 class="questionTitle js-open" data-toggle="collapse">
+                <h3 class="questionTitle js-open floating" data-toggle="collapse">
                     <a><%= question.questionText %></a>
                 </h3>
                 <div class="collapse">
@@ -42,9 +42,11 @@
                     </div>
                 </article>
                 <% }); %>
+                
                 </div>
             <div class="hr"></div>
         </article>
 	<% }); %>
+        <div></div>
 </div>
 </section>

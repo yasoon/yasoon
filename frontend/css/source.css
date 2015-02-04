@@ -7335,6 +7335,14 @@ section {
 .all-big-images-admin h3 {
   margin-left: 25%;
 }
+.question-fix {
+  position: fixed;
+  top: 10px;
+  z-index: 9999;
+}
+.floating {
+  background: #fff;
+}
 ul li {
   list-style: none;
   padding: 0;

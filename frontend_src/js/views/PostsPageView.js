@@ -45,9 +45,9 @@
       };
 
       PostsPageView.prototype.getPostsList = function() {
-        return $.get("/api/post/get_categoryPosts/" + (this.model.get('category')) + "/1/10", (function(_this) {
+        return $.get("/api/post/get_categoryPosts/" + (this.model.get('category')) + "/1/10/" + (this.model.get('sort')), (function(_this) {
           return function(data) {
-            return _this.model.set('postsList', data[_this.model.get('sort')]);
+            return _this.checkErrors(data);
           };
         })(this));
       };
@@ -125,6 +125,14 @@
           sort: this.model.get('sort'),
           collection: new PostsPreviewsList(this.model.get('postsList'))
         });
+      };
+
+      PostsPageView.prototype.checkErrors = function(data) {
+        if (data.errors === true) {
+          return this.emptyPosts;
+        } else {
+          return this.model.set('postsList', data[this.model.get('sort')]);
+        }
       };
 
       return PostsPageView;

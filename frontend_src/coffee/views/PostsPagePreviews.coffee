@@ -30,7 +30,7 @@ define(
 
     updateCollection: () ->
       counter = @counter + 1
-      $.get("/api/post/get_categoryPosts/#{@category}/#{counter}/10",
+      $.get("/api/post/get_categoryPosts/#{@category}/#{counter}/10/#{@sort}",
       (data) =>
         max = data['postsCount']
         data = data[@sort]

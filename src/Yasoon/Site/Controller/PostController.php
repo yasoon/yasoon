@@ -345,12 +345,12 @@ class PostController {
     }
 
     /**
-     * @Route("/get_categoryPosts/{catId}/{catPage}/{maxPagePosts}", requirements={"catId" = "\d+", "catPage" = "\d+", "maxPagePosts" = "\d+"})
+     * @Route("/get_categoryPosts/{catId}/{catPage}/{maxPagePosts}/{sort}", requirements={"catId" = "\d+", "catPage" = "\d+", "maxPagePosts" = "\d+"})
      * @Method({"GET"})
      */
-    public function get_categoryPosts($catId, $catPage, $maxPagePosts)
+    public function get_categoryPosts($catId, $catPage, $maxPagePosts, $sort = 'dateSort')
     {
-        $result = $this->postcategoryservice->getPostsByCategory($catId, $catPage, $maxPagePosts);
+        $result = $this->postcategoryservice->getPostsByCategory($catId, $catPage, $maxPagePosts, $sort);
 
         return $result;
     }
