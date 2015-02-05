@@ -96,7 +96,11 @@ define(
         answers = []
         $('#questionsList .form-group').each((iterator, item) => if $(item).find('.redactor_editor').text().length then answers.push(@getObj(iterator, item)))
         answers
-
+      
+      getImg: ->
+        if $('.content').find('img:first').length then  $('.content').find('img:first').attr('src') else ''
+          
+        
       getObj: (iterator, item) ->
         {'id': iterator, 'text': $(item).find('.redactor_editor').html()}
 
@@ -104,7 +108,7 @@ define(
         if @model.get('description')? then @model.get('description') else ''
 
       sendPostData: ->
-        $.post('/api/post/savePost', {postData: @model.toJSON()}, (data) => @changeLocation(data))
+        $.post('/api/post/savePost', {postData: @model.toJSON(), imgUrl: @getImg()}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"

@@ -82,7 +82,8 @@ class PostController {
      */
     public function savePostAction(Request $request) {
         $data = $request->request->get('postData');
-        return  $this->service->addPost($data);
+        $url = $request->request->get('imgUrl');
+        return  $this->service->addPost($data, $url);
     }
 
 
@@ -144,8 +145,8 @@ class PostController {
                                       'text' => 'dfsfsf'],
                                       ['id' => 4,
                                       'text' => 'dfsfsf'],]];*/
-        
-        return  $this->service->updatePost($model);
+        $url = $request->request->get('imgUrl');
+        return  $this->service->updatePost($model, $url);
 
     }
 

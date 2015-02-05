@@ -39,6 +39,13 @@ class IndexController {
     private $service;
     
     /**
+     * @var InterviewService
+     *
+     * @DI\Inject("yasoon.service.interview")
+     */
+    private $interview_service;
+    
+    /**
      * @Route("/")
      *
      * @return Response
@@ -92,6 +99,40 @@ class IndexController {
                         $(document).ready(function(){
                             setTimeout(function(){
                                window.location.href = 'https://yasoon.ru/#/post/".$postId."'
+                            },1);
+                        });
+                    </script>
+                </head>
+                </html>"
+                ;
+
+        return new Response($html);
+     }
+     
+     public function interviewsocialAction(Request $request) 
+     {
+         $interviewId = $request->get('id');
+         $interview = $this->interview_service->getInterviewById($interviewId);
+
+         $html = "<!DOCTYPE html>
+                <html>
+                <head>
+                    <meta name='title' content='".$interview[0]['title']."' />
+                    <meta name='description' content='".$interview[0]['description']."' />
+                    <meta property='og:type' content='article'>
+                    <meta property='og:url' content='https://yasoon.ru/social/interview/".$interviewId."' />
+                    <meta property='og:title' content='".$interview[0]['title']."' />
+                    <meta property='og:description' content='".$interview[0]['description']."' />
+                    <meta property='og:image' content='http://yasoon.ru/web/upload/interviews/".$interview[0]['lego_img']."' />
+                    <meta property='og:image:secure_url' content='https://yasoon.ru/web/upload/interviews/".$interview[0]['lego_img']."' />
+                    <meta property='og:image:type' content='image/jpeg' />
+                    <meta property='og:image:width' content='400' />
+                    <meta property='og:image:height' content='300' />
+                    <script type='text/javascript' src='//code.jquery.com/jquery-latest.min.js' ></script>
+                    <script type='text/javascript'>
+                        $(document).ready(function(){
+                            setTimeout(function(){
+                               window.location.href = 'https://yasoon.ru/#/interview/".$interviewId."'
                             },1);
                         });
                     </script>

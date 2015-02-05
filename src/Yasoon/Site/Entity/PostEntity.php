@@ -30,6 +30,13 @@ class PostEntity
      * @ORM\Column(name="preview", type="string", nullable=false)
      */
     protected $preview;
+    
+     /**
+     * @var string $previewImg
+     *
+     * @ORM\Column(name="previewImg", type="string", nullable=false)
+     */
+    protected $previewImg;
 
     /**
      * @var string $text
@@ -291,6 +298,24 @@ class PostEntity
     public function getPreview()
     {
         return $this->preview;
+    }
+    
+    /**
+     * @param $preview
+     * @return $this
+     */
+    public function setPreviewImg($previewImg)
+    {
+        $this->previewImg = $previewImg;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreviewImg()
+    {
+        return $this->previewImg;
     }
 
     /**

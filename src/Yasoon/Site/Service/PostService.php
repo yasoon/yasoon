@@ -52,8 +52,7 @@ class PostService extends AbstractApiService {
      * @return array
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function addPost(array $post) {
-
+    public function addPost(array $post, $url) {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
         if (!is_int($authorId)) {
             throw new AccessDeniedException();
@@ -69,6 +68,7 @@ class PostService extends AbstractApiService {
             $postEntity = (new PostEntity())
                 ->setCaption($post['title'])
                 ->setPreview($post['description'])
+                ->setPreviewImg($url)
                 ->setText('')
                 ->setPlace((int)$place)
                 ->setAuthorId($authorId)
@@ -342,7 +342,7 @@ class PostService extends AbstractApiService {
      * @param array $post
      * @return array
      */
-    public function updatePost(array $dataPost) {
+    public function updatePost(array $dataPost, $urlImg) {
         $authorId = (int) $this->securityContext->getToken()->getUsername();
         /** @var PostEntity $post */
         $post = $this->em->getRepository('Yasoon\Site\Entity\PostEntity')->find($dataPost['id']);
@@ -353,6 +353,7 @@ class PostService extends AbstractApiService {
         try {
             $post->setCaption($dataPost['title'])
                 ->setPreview($dataPost['description'])
+                ->setPreviewImg($urlImg)
                 ->setText('')
                 ->setDate(new \DateTime());
 
@@ -1171,7 +1172,7 @@ class PostService extends AbstractApiService {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
 
-        return ['count' => $result_likes];
+        return ['count' => $result_likes, 'postId' => $postId];
     }
 
     /**

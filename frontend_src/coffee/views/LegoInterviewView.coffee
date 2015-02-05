@@ -11,13 +11,15 @@ define(
     class LegoInterviewView extends Backbone.View
       events: ->
         'click .js-open':   'openQuestion'
+        'click .like-this': 'addLike'
 
       tagName: 'section'
 
       template: _.template(legoInterviewsTpl)
 
       initialize: (options) ->
-        $.get("/api/interview/get_interviews_lego/" + options.id, {}, (data) => @checkErrors(data))
+        @checkSocial(options)
+        
 
       checkErrors: (data) ->
         if data.error is yes then @showError(data) else @setInterviewData(data.interviewData)
@@ -31,6 +33,24 @@ define(
 
       showError: (data) ->
         @$el.empty().append('<div class="content">'+data.errorText+'</div>')
+        
+      addLike: (event) ->
+        event.preventDefault()
+        clickElement = $(event.target)
+        postId = clickElement.closest('.like-title-interview').attr('data-postid')
+        $.post('/api/post/add_likes', {'postlike': @likeData(postId)}, (data) => @changeLikeCount(data))
+
+      likeData: (id) ->
+        _.extend({}, {postId: id, type: 'add'})
+
+      changeLikeCount: (data) ->
+        if not data.error and data.count then @$el.find("[data-postid='" + data.postId + "']").find('.like-this .counter').text(data.count)
+        
+      checkSocial: (options) ->
+        if typeof(FB) != 'undefined'
+          location.reload(false)
+        else
+          $.get("/api/interview/get_interviews_lego/" + options.id, {}, (data) => @checkErrors(data))
 
       openQuestion: (event) ->
         event.preventDefault()
@@ -55,5 +75,5 @@ define(
             if (top > topPos && top < pip - height) then $this.addClass('question-fix').removeAttr("style") 
             else if (top > pip - height) then $this.removeClass('question-fix')
             else $this.removeClass('question-fix')
-        
+
 )

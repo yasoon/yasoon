@@ -5,3 +5,7 @@ yasoon_site:
 fb_route:
     path:      /social/post/{id}
     defaults:  { _controller: YasoonSiteBundle:Index:facebook }
+    
+social_route:
+    path:      /social/interview/{id}
+    defaults:  { _controller: YasoonSiteBundle:Index:interviewsocial }

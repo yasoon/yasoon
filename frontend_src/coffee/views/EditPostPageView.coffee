@@ -85,9 +85,12 @@ define(
       updatePost: (event) ->
         event.preventDefault()
         @model.set({'text': @createAnswersArray(), 'category': @postCategories.checkedCategories()})
-        $.post('/api/post/update', {postData: @model.toJSON()}, (data) =>  @changeLocation(data))
+        $.post('/api/post/update', {postData: @model.toJSON(), imgUrl: @getImg()}, (data) =>  @changeLocation(data))
 
       changeLocation: (data) ->
         window.location = "#/post/#{data.postId}/"
         window.reload = true
+        
+      getImg: ->
+        if $('.content').find('img:first').length then  $('.content').find('img:first').attr('src') else ''
 )

@@ -279,7 +279,8 @@ class InterviewService extends AbstractApiService {
                                                         'authorJob' => $author->getJob(),
                                                         'avatarImg' => $author->getImg(),
                                                         'postTitle' => $title,
-                                                        'postId' => $postId
+                                                        'postId' => $postId,
+                                                        'post_likes'  => $post->getLikes()
                                                     ];
                             }
                         }
@@ -574,6 +575,22 @@ class InterviewService extends AbstractApiService {
         $this->em->flush();
 
         return array('oldImage' => $oldImage, 'oldPreviewImage' => $oldPreviewImage);
+    }
+    
+    public function getInterviewById($interviewId)
+    {
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')
+            ->find($interviewId);
+        
+        $result = [];
+        
+        $result[] = [
+            'title' => $entity->getName(),
+            'description' => $entity->getDescription(),
+            'lego_img' => $entity->getImg()
+        ];
+        
+        return $result;
     }
     
 }

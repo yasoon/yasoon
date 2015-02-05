@@ -6606,9 +6606,9 @@ blockquote {
 }
 .like-this i,
 .q-post i {
-  background: url(../img/spr_x2.png) no-repeat 0 0;
+  background: url(../img/spr.jpg) no-repeat 0 0;
   background-size: 115px auto;
-  width: 49px;
+  width: 50px;
   height: 48px;
   display: block;
   position: absolute;
@@ -7281,7 +7281,7 @@ section {
 .answer_lego_text {
   font-size: 1em;
   line-height: 1.6em;
-  margin-top: 20px;
+  max-width: 95%;
   margin-bottom: 20px;
 }
 .answer_lego_text a p {
@@ -7342,6 +7342,12 @@ section {
 }
 .floating {
   background: #fff;
+}
+.social-likes-post_down #vk_share_button {
+  padding-top: 7px;
+}
+.like-title-interview {
+  top: 2px;
 }
 ul li {
   list-style: none;

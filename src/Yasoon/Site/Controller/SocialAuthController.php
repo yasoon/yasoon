@@ -103,7 +103,7 @@ class SocialAuthController {
         $APP_ID = 4210679;
         $APP_SECRET = 'S3ycqYG0EOuEBdkZm9Pa';
         $REDIRECT_URI = 'http://yasoon.ru/socauth/vkontakte';
-        $PERMISSIONS = 'offline';
+        $PERMISSIONS = 'offline,email';
         $API_VERSION = '5.5';
         if(!isset($_GET['code']))
         {
@@ -127,7 +127,7 @@ class SocialAuthController {
         $token = $result->access_token;
         $uid = $result->user_id;
         
-        $response = $this->sendRequest('getProfiles', array('uids' => $uid, 'fields' => 'uid,first_name,last_name,city,country,contacts,photo_medium,screen_name'), $token);
+        $response = $this->sendRequest('getProfiles', array('uids' => $uid, 'fields' => 'uid,first_name,last_name,city,country,contacts,photo_medium,screen_name,email'), $token);
         
         try {
             $new_user = false;
@@ -142,7 +142,7 @@ class SocialAuthController {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
                 $user = (new AuthorEntity())
                     ->setName($name)
-                    ->setEmail('')
+                    ->setEmail($response['response'][0]['email'])
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setPassword('')
                     ->setSubscribed(1)
@@ -285,7 +285,7 @@ class SocialAuthController {
         $new_user = false;
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
-            $request_url = $URL_GET_ME.'?access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+            $request_url = $URL_GET_ME.'?scope=email&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -303,11 +303,11 @@ class SocialAuthController {
                 ->getQuery()->getResult();
             
             $name = $userInfo->name;
-            
+            $email = $userInfo->email;
             if (count($user) < 1 || !is_object($user[0])) {
                 $user = (new AuthorEntity())
                     ->setName($name)
-                    ->setEmail('')
+                    ->setEmail($email)
                     ->setPassword('')
                     ->setHomepage($userInfo->link)
                     ->setSubscribed(1)

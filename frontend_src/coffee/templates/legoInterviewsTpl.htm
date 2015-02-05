@@ -13,6 +13,12 @@
 </div>
 <section class="main-layout">
 <div class="content">
+    <div class="social-likes-post_down">
+        <div class="fb-share-button" data-href="https://yasoon.ru/social/inteview/<%= id %>" data-layout="button_count"></div>
+        <div id="fb-root"></div>
+        <div id="vk_share_button"></div>
+    </div>
+        </div>
     <% _.each(questions, function(question) { %>
         <article questionid="<%= question.question_id %>" class="questionContent question-content">
                 <h3 class="questionTitle js-open floating" data-toggle="collapse">
@@ -21,7 +27,16 @@
                 <div class="collapse">
                 <% _.each(question.answers, function(answer) { %>
                 <article class="margin-top-20">
-                    <div class="speaker-avatar">
+                    
+                    <div class="like-title like-title-interview" data-postId="<%= answer.postId %>">
+                        <span class="like-this">
+                            <b><i></i></b>
+                            <span class="counter">
+                                    <%= answer.post_likes %>
+                            </span>
+                            <span>вдохновились</span>
+                        </span>
+                        <div class="speaker-avatar speaker-avatar-interview">
                             <a href="#/speaker/<%= answer.authorId %>/posts">
                                 <div class="legoImg">
                                     <% if(answer.avatarImg === null) { %>
@@ -34,6 +49,7 @@
                                     <%= answer.authorName %>, <%= answer.authorJob %>
                                 </div>
                             </a>
+                        </div>
                     </div>
                     <div class="answer_lego_text">
                             <a href="#/post/<%= answer.postId %>" alt="<%= answer.postTitle %>">
@@ -48,5 +64,54 @@
         </article>
 	<% }); %>
         <div></div>
+        <div class="social-likes-post_down">
+            <div class="fb-share-button" data-href="https://yasoon.ru/social/interview/<%= id %>" data-layout="button_count"></div>
+            <div id="vk_share_button_down"></div>
+        </div>
 </div>
 </section>
+
+<script type='text/javascript'>
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '644685618912154',
+          xfbml      : true,
+          version    : 'v2.1'
+        });
+
+      };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "//connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    document.getElementById('vk_share_button').innerHTML = VK.Share.button(
+       {
+           url : 'https://yasoon.ru/social/interview/<%= id %>',
+           title: '<%= title %>',
+           description: '<%= description %>',
+           img: 'https://yasoon.ru/web/upload/interviews/<%= image %>'
+       }, 
+       {
+           type: 'round', 
+           text: 'Share'
+       }
+   );
+   document.getElementById('vk_share_button_down').innerHTML = VK.Share.button(
+       {
+           url : 'https://yasoon.ru/social/interview/<%= id %>',
+           title: '<%= title %>',
+           description: '<%= description %>',
+           img: 'https://yasoon.ru/web/upload/interviews/<%= image %>'
+       }, 
+       {
+           type: 'round', 
+           text: 'Share'
+       }
+   );
+ </script>
+         

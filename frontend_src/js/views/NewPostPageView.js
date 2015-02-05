@@ -144,6 +144,14 @@
         return answers;
       };
 
+      WritePostPage.prototype.getImg = function() {
+        if ($('.content').find('img:first').length) {
+          return $('.content').find('img:first').attr('src');
+        } else {
+          return '';
+        }
+      };
+
       WritePostPage.prototype.getObj = function(iterator, item) {
         return {
           'id': iterator,
@@ -161,7 +169,8 @@
 
       WritePostPage.prototype.sendPostData = function() {
         return $.post('/api/post/savePost', {
-          postData: this.model.toJSON()
+          postData: this.model.toJSON(),
+          imgUrl: this.getImg()
         }, (function(_this) {
           return function(data) {
             return _this.changeLocation(data);
