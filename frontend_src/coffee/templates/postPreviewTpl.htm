@@ -1,3 +1,8 @@
+<% if (typeof(previewPostImg) !== "undefined" && previewPostImg !== '') { %>
+        <div class="post-preview-all">
+            <img src="<%= previewPostImg %>" class="post-preview-img active">
+        </div>
+    <% } %>
 <div class="speaker-avatar">
 	<a href="#/speaker/<%= authorId %>/posts">
 		<% if(avatarImg === null) { %>
@@ -29,6 +34,7 @@
     <a href="#/post/<%= id %>/edit" class="editable"></a>
     <% } %>
 </h2>
+
 <div class="content">
     <p>
         <% if (typeof(preview) !== "undefined") { %>

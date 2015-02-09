@@ -92,5 +92,5 @@ define(
         window.reload = true
         
       getImg: ->
-        if $('.content').find('img:first').length then  $('.content').find('img:first').attr('src') else ''
+        if $('#questionsList').find('img:first').length then  $('.post-edit').find('img:first').attr('src') else ''
 )

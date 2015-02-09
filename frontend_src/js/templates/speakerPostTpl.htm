@@ -1,4 +1,9 @@
 <div class="like-title">
+        <% if (typeof(previewPostImg) !== "undefined" && previewPostImg !== '') { %>
+            <div class="post-preview">
+                <img src="<%= previewPostImg %>" class="post-preview-img active">
+            </div>
+        <% } %>
 	<span class="like-this">
 		<b><i></i></b>
 		<span class="counter">

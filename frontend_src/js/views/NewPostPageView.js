@@ -89,7 +89,6 @@
       };
 
       WritePostPage.prototype.getInterviewQuestions = function() {
-        console.log(this.model.get('interviewId'));
         return $.get("/api/interview/questions/" + (this.model.get('interviewId')), (function(_this) {
           return function(data) {
             return _this.model.set('interviewQuestions', data);
@@ -145,8 +144,8 @@
       };
 
       WritePostPage.prototype.getImg = function() {
-        if ($('.content').find('img:first').length) {
-          return $('.content').find('img:first').attr('src');
+        if ($('#questionsList').find('img:first').length) {
+          return $('#questionsList').find('img:first').attr('src');
         } else {
           return '';
         }

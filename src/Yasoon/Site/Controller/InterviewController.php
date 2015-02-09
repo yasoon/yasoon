@@ -109,11 +109,21 @@ class InterviewController {
     }
     
     /**
-     * @Route("/get_interviews_lego_all")
+     * @Route("/get_interviews_lego_best")
      * @Method({"GET"})
      */
-    public function get_interviews_lego_all() {
-        $result = $this->service->getInterviewsLegoAll();
+    public function get_interviews_lego_best() {
+        $result = $this->service->getInterviewsLegoBest();
+
+        return  $result;
+    }
+    
+    /**
+     * @Route("/get_interviews_by_type/{typeId}")
+     * @Method({"GET"})
+     */
+    public function get_interviews_by_type($typeId) {
+        $result = $this->service->getInterviewsByType($typeId);
 
         return  $result;
     }

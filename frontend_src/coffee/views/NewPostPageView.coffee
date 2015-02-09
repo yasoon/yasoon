@@ -73,7 +73,6 @@ define(
         @$('#categories').append(@postCategories.render().$el)
 
       getInterviewQuestions: ->
-        console.log(@model.get('interviewId'))
         $.get("/api/interview/questions/#{@model.get('interviewId')}", (data) => @model.set('interviewQuestions', data))
 
       createInterviewsList: ->
@@ -98,7 +97,7 @@ define(
         answers
       
       getImg: ->
-        if $('.content').find('img:first').length then  $('.content').find('img:first').attr('src') else ''
+        if $('#questionsList').find('img:first').length then  $('#questionsList').find('img:first').attr('src') else ''
           
         
       getObj: (iterator, item) ->

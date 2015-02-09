@@ -151,7 +151,8 @@ class PostCategoryService extends AbstractApiService {
                             'timeToRead'    => $timeToRead,
                             'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
                             'interview_name'=> $interviewName,
-                            'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId()];
+                            'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
+                            'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg()];
                 unset($tags);
                 } catch(\Exception $e) {
                     $count_all--;

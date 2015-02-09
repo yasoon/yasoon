@@ -26,6 +26,12 @@ error_reporting(E_ALL);
 class InterviewService extends AbstractApiService {
 
     /**
+     * 
+     * limit for lego interviews best
+     */
+    
+    const INTERVIEW_LEGO_BEST_LIMIT = 3;
+    /**
      * @var \Symfony\Component\Security\Core\SecurityContextInterface
      *
      * @DI\Inject("security.context")
@@ -181,18 +187,18 @@ class InterviewService extends AbstractApiService {
     /**
       * @return array
       */
-    public function getInterviewsLegoAll()
+    public function getInterviewsLegoBest()
     {
         $answer = ['error' => true, 'errorText' => 'Истории не сформированы'];
         
         $result = [];
-        $interviews = $this->em->createQueryBuilder()
-            ->select('i')
-            ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
-            ->where('i.lego = :lego')
-            ->orderBy('i.position')
-            ->setParameter('lego', '1')
-            ->getQuery()->getResult();
+        
+        $interviews = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')
+            ->findBy(
+                array('lego' => '1'),
+                array('position' => 'ASC'),
+                InterviewService::INTERVIEW_LEGO_BEST_LIMIT
+            );
         
         foreach($interviews as $interview)
         {
@@ -237,13 +243,88 @@ class InterviewService extends AbstractApiService {
                             ];
             } 
         }
+        $options = [];
+        $interviewTypes = $this->em->getRepository('Yasoon\Site\Entity\InterviewTypeEntity')->findAll();
+        foreach ($interviewTypes as $type) {
+            $options[] = array('id' => $type->getId(), 'type' => $type->getType());
+        }
         if (!empty($result)) {
-            $answer = ['error' => false, 'result' => $result];
+            $answer = ['error' => false, 'interviews' => $result, 'options' => $options];
         } 
         
         return $answer;
     }
     
+     /**
+      * @return array
+      */
+    public function getInterviewsByType($typeId = null)
+    {
+        $answer = ['error' => true, 'errorText' => 'Истории не сформированы'];
+        
+        $result = [];
+        $interviews = [];
+        
+        if ($typeId != null && $typeId != 0) {
+        $interviews = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')
+            ->findBy(
+                array('lego' => '1', 'type_id' => $typeId)
+            );
+        } else {
+            $interviews = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')
+            ->findBy(
+                array('lego' => '1')
+            );
+        }
+        foreach($interviews as $interview)
+        {
+            $questions = $interview->getQuestions();
+            $strLength = 0;
+            $posts = [];
+            
+            foreach ($questions as $question) {
+                $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $question->getId(), 'lego' => '1'));
+                
+                foreach ($answers as $answer) {
+                    $posts[] = $answer->getPostId();
+                    $strLength += strlen(strip_tags($answer->getAnswer()));
+                }      
+            }
+            $timeRead = round($strLength/4200);
+            $timeToRead = $timeRead > 1 ? $timeRead : 1;
+            
+            $posts = array_unique($posts);
+            if (!empty($posts)) {
+                $likesQuery = $this->em->createQueryBuilder()
+                        ->select('sum(pl.count_likes)')
+                        ->from('Yasoon\Site\Entity\PostLikesEntity', 'pl')
+                        ->where('pl.post_id IN (:posts)')
+                        ->setParameter('posts', $posts)
+                        ->getQuery()->getSingleScalarResult();
+
+                $likes = $likesQuery == null ? 0 : $likesQuery;
+                $speakers = $this->em->createQueryBuilder()
+                        ->select('count(distinct p.authorId)')
+                        ->from('Yasoon\Site\Entity\PostEntity', 'p')
+                        ->where('p.id IN (:posts)')
+                        ->setParameter('posts', $posts)
+                        ->getQuery()->getSingleScalarResult();
+
+                $result[] = [   'id' => $interview->getId(),
+                                'name' => $interview->getName(),
+                                'image' => $interview->getImg(),
+                                'likes' => $likes,
+                                'speakers' => $speakers,
+                                'timeToRead' => $timeToRead
+                            ];
+            } 
+        }
+        if (!empty($result)) {
+            $answer = ['error' => false, 'interviews' => $result];
+        } 
+        
+        return $answer;
+    }
 
     /**
      * @return array

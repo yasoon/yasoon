@@ -7349,6 +7349,20 @@ section {
 .like-title-interview {
   top: 2px;
 }
+.post-preview {
+  float: left;
+}
+.post-preview-all {
+  float: right;
+}
+.post-preview-img.active {
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+}
+.open > .dropdown-menu {
+  z-index: 999;
+}
 ul li {
   list-style: none;
   padding: 0;

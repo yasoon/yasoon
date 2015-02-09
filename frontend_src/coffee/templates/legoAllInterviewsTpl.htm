@@ -1,7 +1,9 @@
 <div class="content">
+    <% if(options !== '' && options !== 'undefined' && options !== null) { %>
     <div class="interview-title">
         <h2><%= _.getContent(65) %></h2>
     </div>
+    <% }; %>
     <% _.each(interviews, function(interview) { %>
         <article interviewId="<%= interview.id %>" class="LegoInterviewsList">
             <a href="#/interview/<%= interview.id %>">
@@ -17,4 +19,25 @@
              <%= interview.timeToRead %> минут чтения | <%= interview.speakers %> спикеров | <%= interview.likes %> вдохновились
         </article>
 	<% }); %>
+        <% if(options !== '' && options !== 'undefined' && options !== null) { %>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">выберите тему <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                    <% _.each(options, function(option) { %>
+                        <li><a href="#" class="legoSelectType" data-id="<%= option.id %>"><%= option.type %></a></li>
+                    <% }); %>
+                    </ul>
+                  </li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <% }; %>
+    <div class="filterLegoContainer">
+    </div>
 </div>

@@ -1,0 +1,21 @@
+<div id="interviewFilter">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <% _.each(types, function(type) { %>
+                    <li><a href="#" data-id="<%= type.id %>"><%= type.type %></a></li>
+                <% }); %>
+                </ul>
+              </li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+  </nav>
+</div>
+<div class="filteredInterviews">
+</div>

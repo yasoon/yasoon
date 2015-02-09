@@ -717,7 +717,8 @@ class PostService extends AbstractApiService {
                 'post_likes'    => $post->getLikes(),
                 'timeToRead'    => $timeToRead,
                 'interview_name'=> $interviewName,
-                'interview_id'  => $post->getInterview()->getId()
+                'interview_id'  => $post->getInterview()->getId(),
+                'previewPostImg'    => $post->getPreviewImg()
             ];
         }
 

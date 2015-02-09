@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS `interview_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;

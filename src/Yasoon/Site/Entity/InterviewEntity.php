@@ -53,6 +53,13 @@ class InterviewEntity
     protected $order;
     
     /**
+     * @var integer $type_id
+     *
+     * @ORM\Column(name="`type_id`", type="integer", nullable=false)
+     */
+    protected $type_id;
+    
+    /**
      * @var integer
      *
      * @ORM\Column(name="position", type="integer", nullable=false)
@@ -104,6 +111,24 @@ class InterviewEntity
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function setTypeId($idType)
+    {
+        $this->type_id = $idType;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTypeId()
+    {
+        return $this->type_id;
     }
 
     
