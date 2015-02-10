@@ -213,7 +213,7 @@ class InterviewController {
         $file = $files[0];
 
         $fileInfo    = $file->move($absolutePath, $file->getClientOriginalName());
-        $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/');
+        $resultImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/', '200', '200');
         sleep(1);
         $resultPreviewImage = $this->imageService->resizeImage($fileInfo, $absolutePath . '/', '1020', '487');
 

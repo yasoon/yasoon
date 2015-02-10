@@ -56,6 +56,7 @@ define(
         button = $(event.currentTarget)
         oldText = button.text()
         button.text('Сохранено').prop('disabled', yes)
+        @model.set('type', $('#interview-type').val())
         $.post('/api/interview/save_interview', {interview: _.extend({}, @model.toJSON(), {questions: @getInterviewQuestions()})}, => @changeButtonText(button, oldText))
 
       getInterviewQuestions: ->

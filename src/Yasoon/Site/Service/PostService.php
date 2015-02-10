@@ -621,7 +621,6 @@ class PostService extends AbstractApiService {
                     ->where('pa.post_id = :idPost')
                     ->setParameter('idPost', $postId)
                     ->getQuery()->getResult();
-
         foreach($posts as $post)
         {
             $visits = $post->getVisits();
@@ -952,7 +951,8 @@ class PostService extends AbstractApiService {
                 'preview'    => $post->getPreview(),
                 'id'         => $post->getId(),
                 'avatarImg'  => $post->getAuthor()->getImage(),
-                'timeToRead'  => $timeToRead
+                'timeToRead' => $timeToRead,
+                'user'       => $post->getAuthor()->getRole() == 4 ? 'admin' : 'user'
             ];
         }
 

@@ -4,7 +4,9 @@
         <h2><%= _.getContent(65) %></h2>
     </div>
     <% }; %>
+    <ul class="three-columns">
     <% _.each(interviews, function(interview) { %>
+    <li>
         <article interviewId="<%= interview.id %>" class="LegoInterviewsList">
             <a href="#/interview/<%= interview.id %>">
                 <% if(interview.image === null || interview.image === '') { %>
@@ -18,7 +20,9 @@
             </a>
              <%= interview.timeToRead %> минут чтения | <%= interview.speakers %> спикеров | <%= interview.likes %> вдохновились
         </article>
+    </li>
 	<% }); %>
+    </ul>
         <% if(options !== '' && options !== 'undefined' && options !== null) { %>
         <nav class="navbar navbar-default">
             <div class="container-fluid">

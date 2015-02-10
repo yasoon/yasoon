@@ -139,6 +139,11 @@ class PostCategoryService extends AbstractApiService {
                 {
                     $tags[] = $pc->getCategoryId();
                 }
+                $user = 'user';
+                $role = $results_postsSort[$i]->getPost()->getAuthor()->getRole();
+                if ($role == 4) {
+                    $user = 'admin';
+                }
                 $postsSort[] = ['id'    => $id,
                             'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
                             'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
@@ -152,7 +157,8 @@ class PostCategoryService extends AbstractApiService {
                             'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
                             'interview_name'=> $interviewName,
                             'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
-                            'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg()];
+                            'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
+                            'user'          => $user];
                 unset($tags);
                 } catch(\Exception $e) {
                     $count_all--;

@@ -45,6 +45,7 @@ class IndexController {
      */
     private $interview_service;
     
+    const KEYWORDS_CONTENT_ID = 80;
     /**
      * @Route("/")
      *
@@ -63,12 +64,12 @@ class IndexController {
        
         $category = $this->category_service->getCategoryList();
         $content = $this->content_service->getAllContent(0);
-        
+        $keyWords = $this->content_service->getTextById(IndexController::KEYWORDS_CONTENT_ID);
         $response = implode(
             '', 
             [
                 $this->_initDocType(),
-                $this->_initHead(),
+                $this->_initHead($keyWords),
                 $this->_initBody($category, $content)
             ]
         );
@@ -80,11 +81,13 @@ class IndexController {
      {
          $postId = $request->get('id');
          $post = $this->service->getPost(array($postId));
+         $keyWords = $this->content_service->getTextById(IndexController::KEYWORDS_CONTENT_ID);
          $html = "<!DOCTYPE html>
                 <html>
                 <head>
                     <meta name='title' content='".$post[0]['title']."' />
                     <meta name='description' content='".$post[0]['description']."' />
+                    <meta name='keywords' content='".$keyWords."' />
                     <meta property='og:type' content='article'>
                     <meta property='og:url' content='https://yasoon.ru/social/post/".$postId."' />
                     <meta property='og:title' content='".$post[0]['title']."' />
@@ -111,6 +114,7 @@ class IndexController {
      
      public function interviewsocialAction(Request $request) 
      {
+         $keyWords = $this->content_service->getTextById(IndexController::KEYWORDS_CONTENT_ID);
          $interviewId = $request->get('id');
          $interview = $this->interview_service->getInterviewById($interviewId);
 
@@ -119,6 +123,7 @@ class IndexController {
                 <head>
                     <meta name='title' content='".$interview[0]['title']."' />
                     <meta name='description' content='".$interview[0]['description']."' />
+                    <meta name='keywords' content='".$keyWords."' />
                     <meta property='og:type' content='article'>
                     <meta property='og:url' content='https://yasoon.ru/social/interview/".$interviewId."' />
                     <meta property='og:title' content='".$interview[0]['title']."' />
@@ -188,12 +193,12 @@ class IndexController {
      *
      * @return Head
      */
-    public function _initHead()
+    public function _initHead($keyWords)
     {
-        
         return "<head>
                     <meta charset='utf-8'>
                     <title>Yasoon</title>
+                    <meta name='keywords' content='".$keyWords."' />
                     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no' />
                     <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />

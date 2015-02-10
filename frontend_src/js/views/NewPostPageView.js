@@ -14,7 +14,8 @@
       WritePostPage.prototype.events = function() {
         return {
           'click :submit': 'savePost',
-          'click .js-cancel': 'cancelPost'
+          'click .js-cancel': 'cancelPost',
+          'click .write-good-story-title': 'showHint'
         };
       };
 
@@ -218,6 +219,11 @@
         if (this.confirmAction()) {
           return window.location = "/#/speaker/" + window.config.userId + "/posts/";
         }
+      };
+
+      WritePostPage.prototype.showHint = function(event) {
+        event.preventDefault();
+        return $('.write-good-story .content').toggleClass('active');
       };
 
       return WritePostPage;

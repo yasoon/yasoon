@@ -25,8 +25,10 @@ define(
   ) ->
     class WritePostPage extends ValidationView
       events: ->
-        'click :submit':            'savePost'
-        'click .js-cancel':         'cancelPost'
+        'click :submit':                  'savePost'
+        'click .js-cancel':               'cancelPost'
+        'click .write-good-story-title':  'showHint'
+        
       bindings:
         '#description':             'description'
         '#title':                   'title'
@@ -134,4 +136,7 @@ define(
         event.preventDefault()
         if @confirmAction() then window.location = "/#/speaker/#{window.config.userId}/posts/"
 
+      showHint: (event) ->
+        event.preventDefault()
+        $('.write-good-story .content').toggleClass('active')
 )

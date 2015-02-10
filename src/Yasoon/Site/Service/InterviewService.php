@@ -112,13 +112,20 @@ class InterviewService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\InterviewEntity', 'i')
             ->getQuery()->getResult();
         
+        $options = [];
+        $interviewTypes = $this->em->getRepository('Yasoon\Site\Entity\InterviewTypeEntity')->findAll();
+        foreach ($interviewTypes as $type) {
+            $options[] = array('id' => $type->getId(), 'type' => $type->getType());
+        }
+        
         $i = 0;
         foreach($interviews as $interview)
         {
             $result[$i] = [ 'id' => $interview->getId(),
                             'name' => $interview->getName(),
                             'order' => $interview->getOrder(),
-                            'status' => $interview->getStatus()];
+                            'status' => $interview->getStatus(),
+                            'options' => $options];
                          
             $questions = $interview->getQuestions();
             foreach($questions as $question)
@@ -440,6 +447,7 @@ class InterviewService extends AbstractApiService {
         }
             if($interview)
             {
+                $interview->setTypeId($data['type']);
                 $interview->setName($data['name']);
                 $interview->setOrder($data['order']);
                 $interview->setStatus($data['status']);

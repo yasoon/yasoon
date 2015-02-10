@@ -1,0 +1,5 @@
+INSERT INTO content (id, text, description, tagId) VALUES ('76', 'Как написать хорошую историю', 'Название подсказки для написания поста', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('77', '<h4><b>Что можно! </b></h4> <h5>Опишите место и мероприятия <br> Укажите что понравилось или не понравилось лично Вам <br> ... <br> </h5><h4><b>Что нельзя </b></h4> <h5>Исользовать угрозы, ругательства и так далее</h5>', 'Текст подсказки для написания поста', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('78', 'background-color: rgb(255, 242, 153);', 'Цвет фона для постов администраторов', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('79', 'Создать историю', 'Кнопка входа для не зарегистрированных пользователей', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('80', 'Ясун, yasoon', 'Ключевые слова через запятую', 'NULL');

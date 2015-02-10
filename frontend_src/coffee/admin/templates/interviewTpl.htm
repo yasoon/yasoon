@@ -9,6 +9,13 @@
 <div class="editBlock form-group">
     <input type="text" id="order" placeholder="Введите порядковый номер" class="form-control interviewOrder" />
 </div>
+<div class="editBlock form-group">
+    <select name="type" id="interview-type">
+    <% _.each(options, function(option) { %>
+       <option value="<%= option.id %>"><%= option.type %></option>
+    <% }); %>
+    </select>
+</div>
 <form role="form">
     <div class="questions">
         <% _.each(questions, function(question) { %>

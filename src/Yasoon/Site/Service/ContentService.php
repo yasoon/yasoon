@@ -248,4 +248,15 @@ class ContentService extends AbstractApiService {
 
         return ['text' => $entity->getText()];
     }
+    
+    /**
+     * @param  $contentId
+     * @return array
+     */
+    public function getTextById($contentId) {
+        /** @var ContentEntity $entity */
+        $entity = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find($contentId);
+
+        return $entity->getText();
+    }
 }

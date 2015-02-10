@@ -1,3 +1,4 @@
+<div style="<%= typeof(user) !== "undefined" && user == 'admin' ? _.getContent(78) : ''%>">
 <% if (typeof(previewPostImg) !== "undefined" && previewPostImg !== '') { %>
         <div class="post-preview-all">
             <img src="<%= previewPostImg %>" class="post-preview-img active">
@@ -46,3 +47,4 @@
 </div>
 
 <div class="hr"></div>
+</div>

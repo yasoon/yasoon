@@ -861,8 +861,8 @@ article {
 }
 
 .content{
-  font-size: 1.3em;
-  line-height: 1.6em;
+  font-size: 1.4em;
+  line-height: 1.7em;
   padding-bottom: 1em;
   .transition(margin .5s ease);
   img{
@@ -1415,12 +1415,9 @@ article, section{
     color: green;
     font-weight: bold;
 }
-.interview-lego-small {
-    width: 132px;
-    height: 122px;
+.interview-lego-small { 
     z-index: 2;
     display: inline-block;
-    float: left;
     padding-right: 10px;
 }
 
@@ -1495,3 +1492,107 @@ article, section{
 .open > .dropdown-menu {
     z-index: 999;
 }
+
+.three-columns {
+  font-size: 0;
+}
+.three-columns li {
+  display: inline-block;
+  vertical-align: top;
+  width: 33%;
+  font-size: 14px;
+}
+
+.question_content {
+    ul {
+        li {
+           list-style: disc;
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .three-columns li {
+        width: 100%;
+        
+        .interview-lego-small {
+            float: left;
+        }
+    }
+    
+    .container-fluid {
+        .collapse {
+            display: inline-block;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .three-columns li {
+        .interview-lego-small {
+            float: none;
+        }
+    }
+}
+
+.LegoInterviewsList {
+    article.cat-title {
+        border: none;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .hint-mobile {
+        display: none;
+    }
+    .write-good-story{
+        width: 321px;
+        float: right;
+        top: 75px;
+        right: 10px;
+        position: fixed;
+        z-index: 9999;
+
+        .write-good-story-title {
+            margin-left: 25px;
+             width: 320px;
+        }
+        .content {
+            display: none;
+            background-color: #fff;
+            border: 1px solid lightgray;
+            padding-bottom: 0px;
+            .write-good-story-box {
+                border: 1px solid lightgray;
+                margin: 7px;
+                background-color: lightyellow;
+
+                .write-good-story-text {
+                    margin: 5px;
+                }
+            }
+        }
+        
+        .content.active {
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 1279px) {
+    .write-good-story{
+        display: none;
+    }
+    
+    .write-good-story-box {
+        border: 1px solid lightgray;
+        margin: 10px;
+        background-color: lightyellow;
+
+        .write-good-story-text {
+            margin: 5px;
+        }
+    }
+    
+}
+

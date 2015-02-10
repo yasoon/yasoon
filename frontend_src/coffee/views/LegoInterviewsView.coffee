@@ -21,7 +21,6 @@ define(
 
       initialize: ->
         $.get("/api/interview/get_interviews_lego_best", {}, (data) => @checkErrors(data, 'best')) 
-        @getInterviewsByType()
         
       events: ->
         'click .legoSelectType': 'selectByType'
@@ -36,6 +35,7 @@ define(
         if type == 'all'
           $('.filterLegoContainer').empty().append(@template(_.extend({}, {'interviews': data.interviews}, {'options': ''})))
         else
+          @getInterviewsByType()
           @$el.empty().append(@template(_.extend({}, {'interviews': data.interviews}, {'options': data.options})))
 
       showError: (data, type) ->
