@@ -29,13 +29,6 @@
                 <article class="margin-top-20">
                     
                     <div class="like-title like-title-interview" data-postId="<%= answer.postId %>">
-                        <span class="like-this">
-                            <b><i></i></b>
-                            <span class="counter">
-                                    <%= answer.post_likes %>
-                            </span>
-                            <span>вдохновились</span>
-                        </span>
                         <div class="speaker-avatar speaker-avatar-interview">
                             <a href="#/speaker/<%= answer.authorId %>/posts">
                                 <div class="legoImg">
@@ -55,6 +48,15 @@
                             <a href="#/post/<%= answer.postId %>" alt="<%= answer.postTitle %>">
                                <%= answer.text %>
                             </a>
+                    </div>
+                    <div class="like-title like-title-interview">
+                        <span class="like-this like-this-lego">
+                            <b><i></i></b>
+                            <span class="counter">
+                                    <%= answer.post_likes %>
+                            </span>
+                            <span>вдохновились</span>
+                        </span>
                     </div>
                 </article>
                 <% }); %>
@@ -113,5 +115,22 @@
            text: 'Share'
        }
    );
+   
+   $(document).scroll(function() {
+      $('article.questionContent').each(function(){
+            var top = $(document).scrollTop();
+            var topPos = $(this).offset().top;
+            var pip = $(this).next().offset().top;
+            var height = $(this).outerHeight()
+            if ($(this).find('.collapse:visible').length) {
+                if (top < pip - 70 && top > pip - height + 20) {
+
+                    $(this).find('.js-open').addClass('question-fix')
+                } else {
+                    $(this).find('.js-open').removeClass('question-fix')
+                }
+            }
+      });
+   });
  </script>
          

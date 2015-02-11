@@ -3,3 +3,4 @@ INSERT INTO content (id, text, description, tagId) VALUES ('77', '<h4><b>Что 
 INSERT INTO content (id, text, description, tagId) VALUES ('78', 'background-color: rgb(255, 242, 153);', 'Цвет фона для постов администраторов', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('79', 'Создать историю', 'Кнопка входа для не зарегистрированных пользователей', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('80', 'Ясун, yasoon', 'Ключевые слова через запятую', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('81', 'Создание и продвижение Вашего личного профессионального бренда.', 'Описание страницы (отображается при социальном шаринге)', 'NULL');

@@ -6266,6 +6266,9 @@ header#header nav a:hover {
   margin: 0px auto 15px;
   border: 0px;
 }
+.main-w.static {
+  height: 550px;
+}
 .bg-panoram {
   background: #f75e5e border-box fixed no-repeat center center / cover;
   text-indent: -9999px;
@@ -6642,6 +6645,13 @@ blockquote {
 }
 .like-title .like-this {
   top: 15px;
+}
+.like-this-lego {
+  top: -20px !important;
+  zoom: 0.7;
+}
+.like-title .like-this-lego {
+  font-size: 1.4em;
 }
 .q-post {
   position: relative;
@@ -7334,14 +7344,17 @@ section {
 }
 .question-fix {
   position: fixed;
-  top: 10px;
+  top: 0px;
   z-index: 9999;
+  width: 100%;
 }
 .floating {
   background: #fff;
+  margin: 0;
+  padding: 10px 0px;
 }
 .social-likes-post_down #vk_share_button {
-  padding-top: 7px;
+  padding-top: 10px;
 }
 .like-title-interview {
   top: 2px;
@@ -7353,8 +7366,8 @@ section {
   float: right;
 }
 .post-preview-img.active {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  width: 150px;
   padding: 10px;
 }
 .open > .dropdown-menu {
@@ -7369,7 +7382,8 @@ section {
   width: 33%;
   font-size: 14px;
 }
-.question_content ul li {
+.question_content ul li,
+.answer_lego_text ul li {
   list-style: disc;
 }
 @media screen and (max-width: 767px) {
@@ -7398,12 +7412,25 @@ section {
   .write-good-story {
     width: 321px;
     float: right;
-    top: 75px;
+    top: 145px;
     right: 10px;
     position: fixed;
-    z-index: 9999;
+    z-index: 6;
+  }
+  .write-good-story a:after {
+    content: "";
+  }
+  .write-good-story a:first-child:before {
+    content: "  ";
+  }
+  .write-good-story a:first-child:after {
+    content: "\25BA";
+  }
+  .write-good-story a.active:first-child:after {
+    content: "\25BC";
   }
   .write-good-story .write-good-story-title {
+    font-size: 1.3em;
     margin-left: 25px;
     width: 320px;
   }
@@ -7437,6 +7464,9 @@ section {
   .write-good-story-box .write-good-story-text {
     margin: 5px;
   }
+}
+.admin-post-container {
+  min-height: 150px;
 }
 ul li {
   list-style: none;

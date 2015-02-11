@@ -46,6 +46,7 @@ class IndexController {
     private $interview_service;
     
     const KEYWORDS_CONTENT_ID = 80;
+    const DESCRIPTION_CONTENT_ID = 81;
     /**
      * @Route("/")
      *
@@ -65,11 +66,12 @@ class IndexController {
         $category = $this->category_service->getCategoryList();
         $content = $this->content_service->getAllContent(0);
         $keyWords = $this->content_service->getTextById(IndexController::KEYWORDS_CONTENT_ID);
+        $description = $this->content_service->getTextById(IndexController::DESCRIPTION_CONTENT_ID);
         $response = implode(
             '', 
             [
                 $this->_initDocType(),
-                $this->_initHead($keyWords),
+                $this->_initHead($keyWords, $description),
                 $this->_initBody($category, $content)
             ]
         );
@@ -193,7 +195,7 @@ class IndexController {
      *
      * @return Head
      */
-    public function _initHead($keyWords)
+    public function _initHead($keyWords, $description)
     {
         return "<head>
                     <meta charset='utf-8'>
@@ -203,7 +205,7 @@ class IndexController {
                     <link href='/frontend/img/logo.jpg' rel='image_src' />
                     <link href='/frontend/img/favicon.ico' rel='shortcut icon' type='image/x-icon' />
                     <link rel='stylesheet' href='/frontend/css/source.css' type='text/css' media='screen' />
-                    <meta name='description' content='Создание и продвижение Вашего личного профессионального бренда.'>
+                    <meta name='description' content='".$description."'>
                     <!--[if IE]><script src='/frontend/js/vendor/html5shiv.js'></script><![endif]-->
                     <script type='text/javascript' src='/frontend/js/vendor/require.js' data-main='/frontend/js/main.min.js'></script>
                     <script type='text/javascript' src='https://vk.com/js/api/share.js?90' charset='windows-1251'></script>

@@ -66,14 +66,6 @@ define(
           $('html, body').animate({
               scrollTop: $this.offset().top
           }, 1000);
-          
-          topPos = $this.offset().top;
-          $(window).on 'scroll':->
-            top = $(document).scrollTop() + 50
-            pip = $this.parent().next().offset().top
-            height = $this.outerHeight()
-            if (top > topPos && top < pip - height) then $this.addClass('question-fix').removeAttr("style") 
-            else if (top > pip - height) then $this.removeClass('question-fix')
-            else $this.removeClass('question-fix')
+
 
 )

@@ -138,5 +138,6 @@ define(
 
       showHint: (event) ->
         event.preventDefault()
+        $('.write-good-story a').toggleClass('active')
         $('.write-good-story .content').toggleClass('active')
 )

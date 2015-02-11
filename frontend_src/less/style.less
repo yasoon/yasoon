@@ -340,6 +340,10 @@ header#header {
   }
 }
 
+.main-w.static {
+   height: 550px; 
+}
+
 .bg-panoram {
   background: #F75E5E border-box fixed no-repeat center center / cover;
   text-indent: -9999px;
@@ -732,6 +736,15 @@ blockquote {
   .like-title &{
     top: 15px;
   }
+}
+
+.like-this-lego{
+    top: -20px !important;
+    zoom: 0.7;
+    
+    .like-title &{
+        font-size: 1.4em;
+    }
 }
 .q-post{
   position: relative;
@@ -1460,15 +1473,19 @@ article, section{
 
 .question-fix {
     position: fixed;
-    top: 10px; 
+    top: 0px; 
     z-index: 9999;
+    width: 100%;
 }
 .floating {
     background: #fff;
+    margin: 0;
+    padding: 10px 0px;
+    
 }
 
 .social-likes-post_down #vk_share_button {
-    padding-top: 7px;
+    padding-top: 10px;
 }
 
 .like-title-interview {
@@ -1484,8 +1501,8 @@ article, section{
 }
 
 .post-preview-img.active{
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     padding: 10px;
 }
 
@@ -1503,7 +1520,7 @@ article, section{
   font-size: 14px;
 }
 
-.question_content {
+.question_content, .answer_lego_text {
     ul {
         li {
            list-style: disc;
@@ -1548,12 +1565,27 @@ article, section{
     .write-good-story{
         width: 321px;
         float: right;
-        top: 75px;
+        top: 145px;
         right: 10px;
         position: fixed;
-        z-index: 9999;
-
+        z-index: 6;
+        
+        a:after {
+        content: "";
+       }
+       a:first-child:before {
+        content: "  ";
+       }
+       a:first-child:after {
+        content: "\25BA";
+       }
+       
+       a.active:first-child:after {
+           content: "\25BC";
+       }
+        
         .write-good-story-title {
+            font-size: 1.3em;
             margin-left: 25px;
              width: 320px;
         }
@@ -1594,5 +1626,9 @@ article, section{
         }
     }
     
+}
+
+.admin-post-container {
+    min-height: 150px;
 }
 

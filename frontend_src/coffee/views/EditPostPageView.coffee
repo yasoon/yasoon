@@ -24,13 +24,15 @@ define(
       bindings:
         '#description': 'description'
         '#title': 'title'
+        
 
       template: _.template(writePostTpl)
 
       events: ->
         'click :submit': 'updatePost'
         'click .js-delete': 'deleteCheck'
-
+        'click .write-good-story-title':  'showHint'
+        
       initialize: (options) ->
         @options = options || {}
         @handler()
@@ -93,4 +95,9 @@ define(
         
       getImg: ->
         if $('#questionsList').find('img:first').length then  $('.post-edit').find('img:first').attr('src') else ''
+        
+      showHint: (event) ->
+        event.preventDefault()
+        $('.write-good-story a').toggleClass('active')
+        $('.write-good-story .content').toggleClass('active')
 )

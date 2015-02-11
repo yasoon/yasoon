@@ -223,6 +223,7 @@
 
       WritePostPage.prototype.showHint = function(event) {
         event.preventDefault();
+        $('.write-good-story a').toggleClass('active');
         return $('.write-good-story .content').toggleClass('active');
       };
 
