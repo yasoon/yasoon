@@ -119,6 +119,17 @@ class InterviewController {
     }
     
     /**
+     * @Route("/get_moderator_interviews")
+     * @Method({"POST"})
+     */
+    public function get_moderator_interviews(Request $request) {
+        $ids = $request->request->get('interviews');
+        $result = $this->service->getInterviewsModerator($ids);
+
+        return  $result;
+    }
+    
+    /**
      * @Route("/get_interviews_by_type/{typeId}")
      * @Method({"GET"})
      */

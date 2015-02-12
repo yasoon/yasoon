@@ -7468,6 +7468,10 @@ section {
 .admin-post-container {
   min-height: 150px;
 }
+.speakerModerError {
+  margin: 10px;
+  font-size: 1.4em;
+}
 ul li {
   list-style: none;
   padding: 0;

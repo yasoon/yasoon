@@ -113,6 +113,13 @@ class AuthorEntity implements UserInterface, \Serializable
      * @ORM\Column(name="homepage", type="string", nullable=true)
      */
     protected $homepage;
+    
+    /**
+     * @var string $interviews_moderate
+     *
+     * @ORM\Column(name="interviews_moderate", type="string", nullable=true)
+     */
+    protected $interviews_moderate;
 
     /**
      * @var PostEntity[]
@@ -301,6 +308,24 @@ class AuthorEntity implements UserInterface, \Serializable
     public function getImage()
     {
         return $this->img;
+    }
+    
+    /**
+     * @param $interviews_moderate
+     * @return $this
+     */
+    public function setInterviewModerate($interviews)
+    {
+        $this->interviews_moderate = $interviews;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterviewModerate()
+    {
+        return $this->interviews_moderate;
     }
 
     /**

@@ -1062,6 +1062,8 @@ class AuthorService extends AbstractApiService {
                 $i++;
             }
             
+            $ainterviews = explode(',', $author->getInterviewModerate());
+
             $aquestions = [];
             $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->createQueryBuilder('q')
                 ->leftJoin('q.author', 'a')
@@ -1105,6 +1107,7 @@ class AuthorService extends AbstractApiService {
                         'dream' => $author->getDream(),
                         'homepage' => $author->getHomepage(),
                         'posts' => $aposts,
+                        'interviews' =>$ainterviews,
                         'friends' => $afriends,
                         'answers' => $aquestions,
                         'last_publish_date' => $date,
