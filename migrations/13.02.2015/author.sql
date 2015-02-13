@@ -1,0 +1,2 @@
+INSERT INTO content (id, text, description, tagId) VALUES ('82', 'Модерируемые потоки:', 'Заголовок для модерируемых потоков в профиле', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('83', 'Нет модерируемых потоков!', 'Текст для модератора потоков', 'NULL');

@@ -119,12 +119,11 @@ class InterviewController {
     }
     
     /**
-     * @Route("/get_moderator_interviews")
-     * @Method({"POST"})
+     * @Route("/get_moderator_interviews/{authorId}")
+     * @Method({"GET"})
      */
-    public function get_moderator_interviews(Request $request) {
-        $ids = $request->request->get('interviews');
-        $result = $this->service->getInterviewsModerator($ids);
+    public function get_moderator_interviews($authorId) {
+        $result = $this->service->getInterviewsModerator($authorId);
 
         return  $result;
     }
@@ -204,6 +203,15 @@ class InterviewController {
     public function delete_interview(Request $request) {
         $interview_id = $request->request->get('id');
         $result = $this->service->deleteInterview($interview_id);
+        return $result;
+    }
+    
+     /**
+     * @Route("/get_moderators/{interviewId}")
+     * @Method({"GET"})
+     */
+    public function get_moderators($interviewId) {
+        $result = $this->service->getModerators($interviewId);
         return $result;
     }
     

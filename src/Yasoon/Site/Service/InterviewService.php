@@ -12,6 +12,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 //use Yasoon\Site\Entity\PostAnswerEntity;
+use Yasoon\Site\Entity\InterviewModerator;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
@@ -265,69 +266,71 @@ class InterviewService extends AbstractApiService {
      /**
       * @return array
       */
-    public function getInterviewsModerator($ids)
+    public function getInterviewsModerator($authorId)
     {
         $answer = ['error' => true, 'errorText' => 'Нет модерируемых потоков!'];
         
         $result = [];
         $interviewsId = [];
         
-        foreach ($ids as $interviewId) {
-            $interviewsId[] = (int)$interviewId;
+        $interviewsModerate = $this->em->getRepository('Yasoon\Site\Entity\InterviewModeratorEntity')->findBy(array('authorId' => $authorId));
+        foreach ($interviewsModerate as $interviewModerate) {
+            $interviewsId[] = (int)$interviewModerate->getInterview();
         }
-        $interviews = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity', 'i')->findBy(
-           array('id' => $interviewsId)
-         );
-        if (!empty($interviews)) {
-            foreach($interviews as $interview)
-            {
-                $questions = $interview->getQuestions();
-                $strLength = 0;
-                $posts = [];
+        if (!empty($interviewsId)) {
+            $interviews = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity', 'i')->findBy(
+               array('id' => $interviewsId)
+             );
+            if (!empty($interviews)) {
+                foreach($interviews as $interview)
+                {
+                    $questions = $interview->getQuestions();
+                    $strLength = 0;
+                    $posts = [];
 
-                foreach ($questions as $question) {
-                    $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $question->getId(), 'lego' => '1'));
+                    foreach ($questions as $question) {
+                        $answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('question_id' => $question->getId(), 'lego' => '1'));
 
-                    foreach ($answers as $answer) {
-                        $posts[] = $answer->getPostId();
-                        $strLength += strlen(strip_tags($answer->getAnswer()));
-                    }      
-                }
-                $timeRead = round($strLength/4200);
-                $timeToRead = $timeRead > 1 ? $timeRead : 1;
+                        foreach ($answers as $answer) {
+                            $posts[] = $answer->getPostId();
+                            $strLength += strlen(strip_tags($answer->getAnswer()));
+                        }      
+                    }
+                    $timeRead = round($strLength/4200);
+                    $timeToRead = $timeRead > 1 ? $timeRead : 1;
 
-                $posts = array_unique($posts);
-                if (!empty($posts)) {
-                    $likesQuery = $this->em->createQueryBuilder()
-                            ->select('sum(pl.count_likes)')
-                            ->from('Yasoon\Site\Entity\PostLikesEntity', 'pl')
-                            ->where('pl.post_id IN (:posts)')
-                            ->setParameter('posts', $posts)
-                            ->getQuery()->getSingleScalarResult();
+                    $posts = array_unique($posts);
+                    if (!empty($posts)) {
+                        $likesQuery = $this->em->createQueryBuilder()
+                                ->select('sum(pl.count_likes)')
+                                ->from('Yasoon\Site\Entity\PostLikesEntity', 'pl')
+                                ->where('pl.post_id IN (:posts)')
+                                ->setParameter('posts', $posts)
+                                ->getQuery()->getSingleScalarResult();
 
-                    $likes = $likesQuery == null ? 0 : $likesQuery;
-                    $speakers = $this->em->createQueryBuilder()
-                            ->select('count(distinct p.authorId)')
-                            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-                            ->where('p.id IN (:posts)')
-                            ->setParameter('posts', $posts)
-                            ->getQuery()->getSingleScalarResult();
+                        $likes = $likesQuery == null ? 0 : $likesQuery;
+                        $speakers = $this->em->createQueryBuilder()
+                                ->select('count(distinct p.authorId)')
+                                ->from('Yasoon\Site\Entity\PostEntity', 'p')
+                                ->where('p.id IN (:posts)')
+                                ->setParameter('posts', $posts)
+                                ->getQuery()->getSingleScalarResult();
 
-                    $result[] = [   'id' => $interview->getId(),
-                                    'name' => $interview->getName(),
-                                    'image' => $interview->getImg(),
-                                    'likes' => $likes,
-                                    'speakers' => $speakers,
-                                    'timeToRead' => $timeToRead
-                                ];
+                        $result[] = [   'id' => $interview->getId(),
+                                        'name' => $interview->getName(),
+                                        'image' => $interview->getImg(),
+                                        'likes' => $likes,
+                                        'speakers' => $speakers,
+                                        'timeToRead' => $timeToRead
+                                    ];
+                    } 
                 } 
+            }
+
+            if (!empty($result)) {
+                $answer = ['error' => false, 'interviews' => $result];
             } 
         }
-
-        if (!empty($result)) {
-            $answer = ['error' => false, 'interviews' => $result];
-        } 
-        
         return $answer;
     }
     
@@ -408,8 +411,6 @@ class InterviewService extends AbstractApiService {
     public function getInterviewsLego($interviewId)
     {
         if (!empty($interviewId)) {
-            
-        
             $interview = $this->em->getRepository('Yasoon\Site\Entity\InterviewEntity')->findOneBy(array('id' => $interviewId, 'lego' => '1'));
 
             if (!empty($interview)) {
@@ -749,6 +750,36 @@ class InterviewService extends AbstractApiService {
         ];
         
         return $result;
+    }
+    
+    public function getModerators($interviewId)
+    {
+        $moderIds = [];
+        $moderatorIds = $this->em->createQueryBuilder()
+                    ->select('im.authorId')
+                    ->from('Yasoon\Site\Entity\InterviewModeratorEntity', 'im')
+                    ->where('im.interview_id = :interviewId')
+                    ->setParameter('interviewId', $interviewId)
+                    ->getQuery()->getResult();
+        foreach ($moderatorIds as $moderator) {
+            $moderIds[] = $moderator['authorId'];
+        }
+        if (!empty ($moderIds)) {
+            $moderators = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->findBy(array('id' => $moderIds));
+            
+            $result = [];
+            foreach ($moderators as $moderator) {
+                $result[] = [
+                    'id' => $moderator->getId(),
+                    'name'    => $moderator->getName(),
+                    'avatarImg'     => $moderator->getImage()
+                ];
+            }
+            
+            return ['error' => false, 'result' => $result];
+        }
+        
+        return ['error' => true, 'errorText' => 'Нет модераторов'];
     }
     
 }

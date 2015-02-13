@@ -1,11 +1,14 @@
 define(
   [
     'text!templates/legoInterviewsTpl.htm'
+    'text!templates/legoInterviewsModeratorsTpl.htm'
     'backbone'
     'stickit'
+    'bootstrap'
   ]
   (
     legoInterviewsTpl
+    legoInterviewsModeratorsTpl
     
   ) ->
     class LegoInterviewView extends Backbone.View
@@ -16,6 +19,7 @@ define(
       tagName: 'section'
 
       template: _.template(legoInterviewsTpl)
+      ModerTemplate: _.template(legoInterviewsModeratorsTpl)
 
       initialize: (options) ->
         @checkSocial(options)
@@ -30,6 +34,7 @@ define(
             @showError(data)
         else
             @$el.empty().append(@template(_.extend({}, {'questions': data.questions}, {'title': data.interviewTitle}, {'id': data.interviewId}, {'image': data.previewImg}, {'description': data.interviewDescription})))
+            $.get("/api/interview/get_moderators/" + data.interviewId, {}, (data) => @addModerators(data))
 
       showError: (data) ->
         @$el.empty().append('<div class="content">'+data.errorText+'</div>')
@@ -67,5 +72,6 @@ define(
               scrollTop: $this.offset().top
           }, 1000);
 
-
+      addModerators: (data) ->
+        if data.error is no and data.result.length then $('.moderators').empty().append(@ModerTemplate(_.extend({}, {'moderators': data.result})))
 )

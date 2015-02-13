@@ -1,0 +1,19 @@
+<div class="row-fluid">
+    <div class="span12">
+        <div style="overflow:auto;width:100%;">
+            <% _.each(moderators, function(moderator) { %>
+            <div class="one-moderator">
+                <a href="#/speaker/<%= moderator.id %>/posts" class="usr-name">
+                <% if(moderator.avatarImg === null) { %>
+                    <img src="/frontend/img/noAvatar.jpg" alt="<%= moderator.name %>">
+                    <% } else { %>
+                            <img src="/web/upload/avatar/<%= moderator.avatarImg %>" alt="<%= moderator.name %>">
+                    <% } %>
+                    <h5><%= moderator.name %></h5>
+                </a>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+    

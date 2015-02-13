@@ -1237,6 +1237,7 @@ class PostService extends AbstractApiService {
             $aquestions[] = ['id' => $question->getId(),
                              'authorId' => $question->getAuthorId(),
                              'ask_authorId' => $question->getAskAuthorId(),
+                             'ask_avatarImg'  => $question->getAuthorAsk()->getImg(),
                              'ask_authorName' => $question->getAuthorAsk()->getName(),
                              'ask_authorProf' => $question->getAuthorAsk()->getJob(),
                              'authorName' => $question->getAuthor()->getName(),

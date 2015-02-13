@@ -1,6 +1,6 @@
 define(
   [
-    'text!templates/legoAllInterviewsTpl.htm'
+    'text!templates/speakerInterviewsTpl.htm'
     'views/SpeakerPostsCollectionView'
     'views/SpeakerAnswersCollectionView'
     'views/EmptyView'
@@ -12,7 +12,7 @@ define(
     'backbone'
   ]
   (
-    legoAllInterviewsTpl
+    speakerInterviewsTpl
     SpeakerPostsCollectionView
     SpeakerAnswersCollectionView
     EmptyView
@@ -26,10 +26,10 @@ define(
       tagName: 'section'
       className: 'lim'
       
-      Interviewstemplate: _.template(legoAllInterviewsTpl)
+      interviewsTemplate: _.template(speakerInterviewsTpl)
 
       initialize: (options) ->
-        @model.set({'id': options.id, 'interviews': options.author.interviews, 'answers': options.author.answers, 'posts': options.author.posts, 'page': options.page})
+        @model.set({'id': options.id, 'answers': options.author.answers, 'posts': options.author.posts, 'page': options.page})
         @setHandlers()
         if @model.get('page') is 'answers' then @answersPage() else @postsPage()
 
@@ -48,20 +48,20 @@ define(
 
       postsPage: ->
         if @isAuthor() then @writeButton()
-        if @model.get('interviews').length then @getInterviews()
+        @getInterviews()
 
       writeButton: ->
         if not @writePostButton? then @writePostButton = new SpeakerWritePostButtonView() else @writePostButton.delegateEvents()
         @$el.append(@writePostButton.render().$el)
 
       getInterviews: ->
-        $.post("/api/interview/get_moderator_interviews", {'interviews': @model.get('interviews')}, (data) => @checkErrors(data))
+        $.get("/api/interview/get_moderator_interviews/"+@model.get('id'), {}, (data) => @checkErrors(data))
       
       getPosts: ->
         $.post("/api/post/getPosts", {'postid[]': @model.get('posts')}, (data) => @model.set('speakerPosts', data))
 
       createInterviews: (data) ->
-        @$el.append(@Interviewstemplate(_.extend({}, {'interviews': data.interviews}, {'options': ''})))
+        @$el.append(@interviewsTemplate(_.extend({},{'authorId': parseInt(@model.get('id'))}, {'interviews': data.interviews}, {'options': ''})))
         
       createPosts: ->
         postsCollection = new SpeakerPostsCollection(@model.get('speakerPosts'))
@@ -106,5 +106,5 @@ define(
         if @model.get('posts').length then @getPosts() else @emptyQuestions(34)
         
       showError: (data) ->
-        if @isAuthor() then @$el.append('<section class="speakerModerError">'+_.getContent(82)+'</section>')
+        if @isAuthor() then @$el.append('<section class="speakerModerError">'+_.getContent(83)+'</section>')
 )

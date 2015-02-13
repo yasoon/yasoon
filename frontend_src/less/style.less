@@ -1447,6 +1447,12 @@ article, section{
      margin-bottom: 20px;     
 }
 
+.interview-title-speaker {
+     padding-top: 20px;
+     padding-left: 20px;
+     margin-bottom: 20px;     
+}
+
 #lego {
     .file_upload_block {
         input {
@@ -1544,10 +1550,31 @@ article, section{
     }
 }
 
+@media screen and (min-width: 768px) {
+    .three-columns li {
+        article.cat-title {
+            padding-top: 0px;
+            padding-left: 0px;
+        }
+        .cat-title h3 {
+            text-align: center;
+        }
+    }
+}
+
+
+
 @media screen and (max-width: 480px) {
     .three-columns li {
         .interview-lego-small {
             float: none;
+        }
+        article.cat-title {
+            padding-top: 0px;
+            padding-left: 0px;
+        }
+        .cat-title h3 {
+            text-align: center;
         }
     }
 }
@@ -1555,6 +1582,12 @@ article, section{
 .LegoInterviewsList {
     article.cat-title {
         border: none;
+    }
+    
+    img {
+        height: 170px;
+        width: 170px;
+        
     }
 }
 
@@ -1635,5 +1668,24 @@ article, section{
 .speakerModerError {
     margin: 10px;
     font-size: 1.4em;
+}
+
+.speaker-interviews {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    
+    a img {
+        float: left;
+    }
+}
+
+.one-moderator{
+    display:inline-block;
+    margin: 0 10px;
+    
+    img {
+        height: 50px;
+        width: 50px;
+    }
 }
 

@@ -1,3 +1,10 @@
+<div class="legoImg">
+    <% if(ask_avatarImg === null) { %>
+            <img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= ask_authorName %>">
+    <% } else { %>
+            <img src="/web/upload/avatar/<%= ask_avatarImg %>" class="usr-ic-small" alt="<%= ask_authorName %>">
+    <% } %>
+</div>
 <div class="p-label small">
     <b>
         <span class="green">

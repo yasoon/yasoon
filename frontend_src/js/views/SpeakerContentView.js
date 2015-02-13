@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/legoAllInterviewsTpl.htm', 'views/SpeakerPostsCollectionView', 'views/SpeakerAnswersCollectionView', 'views/EmptyView', 'views/QuestionFormView', 'views/SpeakerWritePostButtonView', 'collections/SpeakerPostsCollection', 'collections/SpeakerAnswersCollection', 'models/QuestionModel', 'backbone'], function(legoAllInterviewsTpl, SpeakerPostsCollectionView, SpeakerAnswersCollectionView, EmptyView, QuestionFormView, SpeakerWritePostButtonView, SpeakerPostsCollection, SpeakerAnswersCollection, QuestionModel) {
+  define(['text!templates/speakerInterviewsTpl.htm', 'views/SpeakerPostsCollectionView', 'views/SpeakerAnswersCollectionView', 'views/EmptyView', 'views/QuestionFormView', 'views/SpeakerWritePostButtonView', 'collections/SpeakerPostsCollection', 'collections/SpeakerAnswersCollection', 'models/QuestionModel', 'backbone'], function(speakerInterviewsTpl, SpeakerPostsCollectionView, SpeakerAnswersCollectionView, EmptyView, QuestionFormView, SpeakerWritePostButtonView, SpeakerPostsCollection, SpeakerAnswersCollection, QuestionModel) {
     var SpeakerContentView;
     return SpeakerContentView = (function(_super) {
       __extends(SpeakerContentView, _super);
@@ -15,12 +15,11 @@
 
       SpeakerContentView.prototype.className = 'lim';
 
-      SpeakerContentView.prototype.Interviewstemplate = _.template(legoAllInterviewsTpl);
+      SpeakerContentView.prototype.interviewsTemplate = _.template(speakerInterviewsTpl);
 
       SpeakerContentView.prototype.initialize = function(options) {
         this.model.set({
           'id': options.id,
-          'interviews': options.author.interviews,
           'answers': options.author.answers,
           'posts': options.author.posts,
           'page': options.page
@@ -60,9 +59,7 @@
         if (this.isAuthor()) {
           this.writeButton();
         }
-        if (this.model.get('interviews').length) {
-          return this.getInterviews();
-        }
+        return this.getInterviews();
       };
 
       SpeakerContentView.prototype.writeButton = function() {
@@ -75,9 +72,7 @@
       };
 
       SpeakerContentView.prototype.getInterviews = function() {
-        return $.post("/api/interview/get_moderator_interviews", {
-          'interviews': this.model.get('interviews')
-        }, (function(_this) {
+        return $.get("/api/interview/get_moderator_interviews/" + this.model.get('id'), {}, (function(_this) {
           return function(data) {
             return _this.checkErrors(data);
           };
@@ -95,7 +90,9 @@
       };
 
       SpeakerContentView.prototype.createInterviews = function(data) {
-        return this.$el.append(this.Interviewstemplate(_.extend({}, {
+        return this.$el.append(this.interviewsTemplate(_.extend({}, {
+          'authorId': parseInt(this.model.get('id'))
+        }, {
           'interviews': data.interviews
         }, {
           'options': ''
@@ -208,7 +205,7 @@
 
       SpeakerContentView.prototype.showError = function(data) {
         if (this.isAuthor()) {
-          return this.$el.append('<section class="speakerModerError">' + _.getContent(82) + '</section>');
+          return this.$el.append('<section class="speakerModerError">' + _.getContent(83) + '</section>');
         }
       };
 
