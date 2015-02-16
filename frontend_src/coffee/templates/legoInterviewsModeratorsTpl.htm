@@ -5,7 +5,7 @@
             <div class="one-moderator">
                 <a href="#/speaker/<%= moderator.id %>/posts" class="usr-name">
                 <% if(moderator.avatarImg === null) { %>
-                    <img src="/frontend/img/noAvatar.jpg" alt="<%= moderator.name %>">
+                    <img src="/frontend/img/noAvatar.jpg" alt="<%= moderator.name %>" class="usr-ic-small" >
                     <% } else { %>
                             <img src="/web/upload/avatar/<%= moderator.avatarImg %>" alt="<%= moderator.name %>">
                     <% } %>

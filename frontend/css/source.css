@@ -6550,12 +6550,12 @@ article.lim .hr {
   zoom: 1;
 }
 a.editable {
-  background: url(../img/spr.png) no-repeat -98px -32px;
-  width: 16px;
-  height: 16px;
+  background: url(../img/spr.jpg) no-repeat -196px -65px;
+  width: 32px;
+  height: 32px;
   *display: inline;
   display: inline-block;
-  zoom: 1;
+  zoom: 0.5;
   cursor: pointer;
   margin-left: 5px;
 }
@@ -6682,7 +6682,7 @@ blockquote {
   float: left;
   width: 15px;
   height: 15px;
-  background: url(../img/spr.png) no-repeat;
+  background: url(../img/spr.jpg) no-repeat;
   margin-right: 5px;
 }
 .social-links a.ws {
@@ -7511,6 +7511,13 @@ section {
 .one-moderator img {
   height: 50px;
   width: 50px;
+  float: left;
+}
+.one-moderator .usr-name {
+  width: 100%;
+}
+.one-moderator .usr-name h5 {
+  float: left;
 }
 ul li {
   list-style: none;
