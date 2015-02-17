@@ -7,7 +7,7 @@
                 <% if(moderator.avatarImg === null) { %>
                     <img src="/frontend/img/noAvatar.jpg" alt="<%= moderator.name %>" class="usr-ic-small" >
                     <% } else { %>
-                            <img src="/web/upload/avatar/<%= moderator.avatarImg %>" alt="<%= moderator.name %>">
+                            <img src="/web/upload/avatar/<%= moderator.avatarImg %>" alt="<%= moderator.name %>"  class="usr-ic-small">
                     <% } %>
                     <h5><%= moderator.name %></h5>
                 </a>
