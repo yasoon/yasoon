@@ -5,91 +5,107 @@
  */
 namespace Yasoon\Site\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Author
- *
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\MaterializedPathRepository")
  * @ORM\Table(name="categories")
- * @ORM\Entity
+ * @Gedmo\Tree(type="materializedPath")
  */
 class CategoryEntity
 {
     /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
      */
-    protected $id;
+    private $id;
 
     /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", nullable=false)
+     * @Gedmo\TreePath(appendId=false, separator=",")
+     * @ORM\Column(name="path", type="string", length=3000, nullable=true)
      */
-    protected $name;
+    private $path;
+    
+    /**
+     * @ORM\Column(name="description", type="string")
+     */
+    private $description;
 
     /**
-     * @var string $description
-     *
-     * @ORM\Column(name="description", type="string", nullable=false)
+     * @Gedmo\TreePathSource
+     * @ORM\Column(name="title", type="string", length=64)
      */
-    protected $description;
+    private $title;
 
     /**
-     * @param $id
-     * @return $this
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="CategoryEntity", inversedBy="children")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
      */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
+    private $parent;
 
     /**
-     * @return int
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer", nullable=true)
      */
+    private $level;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CategoryEntity", mappedBy="parent")
+     */
+    private $children;
+
     public function getId()
     {
         return $this->id;
     }
 
-
-    /**
-     * @param $name
-     * @return $this
-     */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
-        return $this;
+        $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
-    
-    /**
-     * @param $description
-     * @return $this
-     */
+
+    public function setParent(CategoryEntity $parent = null)
+    {
+        $this->parent = $parent;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
     public function setDescription($description)
     {
         $this->description = $description;
-        return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function getLevel()
+    {
+        return $this->level;
     }
 }

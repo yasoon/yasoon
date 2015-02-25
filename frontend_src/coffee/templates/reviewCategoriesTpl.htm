@@ -1,22 +1,19 @@
-<% if(image === null || image === '' || image === 'undefined') { %>
-<div class="interview-intro" style="background-image: url('/frontend/img/i6.jpg');">
-<% } else { %>
-<div class="interview-intro" style="background-image: url('/web/upload<%= image %>');">
-<% } %>
-    <div class="main-w static">
-	<div class="interview-title">
+<div class="p-box stories">
+    <div class="storiesNewButtons">
+        <a href="" id="window-close">отмена</a>
+    
+        <div class="content">
+            <div>
+                <h3>
+                    <%=  _.getContent(84) %>
+                </h3>
+            </div>
+
+            <div class="auto-complete">
+                <input type="text" class="category-for-review" />
+                <ul class="found-categories"></ul>
+            </div>
+
         </div>
-    </div>  
+    </div>
 </div>
-<section class="page-layout row">
-    <div class="content">
-        <div class="col-md-8 col-md-push-2">
-            <h1>
-                <%= heading %>
-            </h1>
-            <br/>
-            <%= text %>
-        </div>
-	
-</div>
-</section>

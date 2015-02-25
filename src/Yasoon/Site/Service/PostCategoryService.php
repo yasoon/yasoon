@@ -271,4 +271,5 @@ class PostCategoryService extends AbstractApiService {
         
         return array('count_all' => count($authors), 'result' =>$result);
     }
+    
 }

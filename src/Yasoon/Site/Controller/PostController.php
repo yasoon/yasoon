@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\DiExtraBundle\Annotation as DI;
 use Yasoon\Site\Service\PostService;
+use Yasoon\Site\Service\CategoryService;
 use Yasoon\Site\Service\PostAnswerService;
 use Yasoon\Site\Service\PartnerService;
 use Yasoon\Site\Service\AuthorService;
@@ -35,6 +36,13 @@ class PostController {
      * @DI\Inject("yasoon.service.post")
      */
     private $service;
+    
+    /**
+     * @var CategoryService
+     *
+     * @DI\Inject("yasoon.service.category")
+     */
+    private $category_service;
 
     /**
      * @var PostAnswerService
@@ -84,6 +92,19 @@ class PostController {
         $data = $request->request->get('postData');
         $url = $request->request->get('imgUrl');
         return  $this->service->addPost($data, $url);
+    }
+    
+     /**
+     * @Route("/saveReview")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function saveReviewAction(Request $request) {
+        $data = $request->request->get('formData');
+        return  $this->service->addReview($data);
     }
 
 
@@ -161,6 +182,19 @@ class PostController {
         $post_id = $request->request->get('post_id');
         return $this->service->delete($post_id);
     }
+    
+    /**
+     * @Route("/deleteReview")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function deleteReview(Request $request) {
+        $review_id = $request->request->get('review_id');
+        return $this->service->deleteReview($review_id);
+    }
+    
 
 
     /**
@@ -195,6 +229,23 @@ class PostController {
         }
 
         $result = $this->service->getPost($postId);
+        return $result;
+    }
+    
+    /**
+     * @Route("/getReview")
+     * @Method({"POST"})
+     *
+     */
+    public function getReviewAction(Request $request)
+    {
+        $reviewId = $request->request->get('reviewid');
+        if(!is_array($reviewId))
+        {
+            $reviewId = [$reviewId];
+        }
+
+        $result = $this->service->getReview($reviewId);
         return $result;
     }
 
@@ -312,6 +363,23 @@ class PostController {
                 
         return $result;
     }
+    
+    /**
+     * @Route("/add_likes_review")
+     * @Method({"POST"})
+     */
+    public function addReviewLikes(Request $request)
+    {
+        $data = $request->request->get('reviewlike');
+        $result = [];
+
+        if($data['type'] == 'add')
+        {
+            $result = $this->service->likeReview($data['reviewId'], $data['type']);
+        }
+                
+        return $result;
+    }
     /**
      * @Route("/get_all_last_week")
      * @Method({"GET"})
@@ -394,6 +462,31 @@ class PostController {
         unlink($absolutePath  . '/' . $fileInfo->getFilename());
        
         return $fileSource;
+    }
+    
+    //reviews
+    
+    /**
+     * @Route("/get-reviews-categories/{text}")
+     * @Method({"GET"})
+     */
+    public function getReviewCategories($text)
+    {
+        $result = $this->category_service->getAllByText($text);
+
+        return $result;
+    }
+
+    
+    /**
+     * @Route("/get-category/{idCategory}")
+     * @Method({"GET"})
+     */
+    public function getCategoryById($idCategory)
+    {
+        $result = $this->category_service->getById($idCategory);
+
+        return $result;
     }
 
 }

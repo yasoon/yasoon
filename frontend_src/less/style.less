@@ -1047,7 +1047,7 @@ footer {
     &.stories {
       min-width: 450px;
       min-height: 300px;
-      box-shadow: 0 0 0 rgba(0,0,0,.5);
+      box-shadow: 0 0 10 rgba(0,0,0,.5);
       .storiesNewButtons{
           vertical-align: middle;
           margin-top: 15%;
@@ -1696,5 +1696,72 @@ article, section{
             float: left;
         }
     }
+}
+
+.auto-complete {
+    position: relative;
+    li {
+        display: block;
+        padding: 0 5px;
+        line-height: 1.4em;
+        text-align: left;
+    }
+    
+    li:hover {
+        background: #AAA;
+        cursor: pointer;
+    }
+    
+    a {
+       
+       white-space: pre-line !important;
+    }
+}
+.auto-complete > * {
+    width: 100%;
+}
+.auto-complete > ul {
+    background: #FFF;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 0 5px #000;
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+.expert {
+    background: url(../img/expert_grey.png) no-repeat;
+    width: 60px;
+    height: 50px;
+    
+    &:hover{
+        background: url(../img/expert_green.png) no-repeat;
+        cursor: pointer;
+    }
+    &.active {
+        background: url(../img/expert_green.png) no-repeat;
+    }
+}
+
+.expert-left {
+    float:left;
+}
+
+.symbol {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.symbol-empty {
+  background: url(../img/empty_circle_grey.png) no-repeat;
+}
+
+.symbol-filled {
+  background: url(../img/yasoon_logo3.png) no-repeat;
+}
+
+.category-type-review {
+    margin-bottom: 30px;
 }
 

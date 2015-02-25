@@ -17,6 +17,7 @@ requirejs.config({
     'EventEmitter':     'vendor/EventEmitter'
     'eventie':          'vendor/eventie'
     'moderniz':         'vendor/moderniz'
+    'bootstrap-rating': 'vendor/bootstrap-rating.min'
 
   }
   shim: {

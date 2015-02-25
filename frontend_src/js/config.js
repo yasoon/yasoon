@@ -17,7 +17,8 @@
       'imagesloaded': 'vendor/imagesloaded',
       'EventEmitter': 'vendor/EventEmitter',
       'eventie': 'vendor/eventie',
-      'moderniz': 'vendor/moderniz'
+      'moderniz': 'vendor/moderniz',
+      'bootstrap-rating': 'vendor/bootstrap-rating.min'
     },
     shim: {
       'backbone': {

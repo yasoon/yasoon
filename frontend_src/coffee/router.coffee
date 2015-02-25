@@ -15,10 +15,13 @@ define([
         '': 'index'
         'posts/:category/:sort(/)': 'posts'
         'post/new(/:id)(/)': 'newPost'
+        'review/new(/:id)(/)': 'newReview'
         'interview/:id(/)': 'showInterview'
         'interviews(/)': 'interviews'
         'post/:id(/)': 'showPost'
+        'review/:id(/)': 'showReview'
         'post/:id/edit(/)': 'editPost'
+        'review/:id/edit(/)': 'editReview'
         'register(/)': 'registerSpeaker'
         'speakers(/:category)(/)': 'speakers'
         'speaker/:id/edit(/)': 'editSpeaker'
@@ -55,12 +58,21 @@ define([
 
       newPost: (id) ->
         userModel.deferred.done( => if @isUser() then Controller.newPost(id, true) else if window.newPost? then Controller.newPost(id, true) else Controller.newPost(id, false))
+        
+      newReview: (id) ->
+        userModel.deferred.done( => if @isUser() then Controller.newReview(id, true) else if window.newReview? then Controller.newReview(id, true) else Controller.newReview(id, false))
 
       showPost: (id) ->
         Controller.post(id)
+        
+      showReview: (id) ->
+        Controller.review(id)
 
       editPost: (id) ->
         userModel.deferred.done( => if window.config.admin or @isUser() then Controller.editPost(id) else @navigate('#/404'))
+        
+      editReview: (id) ->
+        userModel.deferred.done( => if window.config.admin or @isUser() then Controller.editReview(id) else @navigate('#/404'))
 
       speakers: (category) ->
         userModel.deferred.done( => Controller.speakers(category))

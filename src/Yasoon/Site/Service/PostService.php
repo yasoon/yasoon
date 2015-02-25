@@ -13,9 +13,11 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
 use Yasoon\Site\Entity\PostEntity;
+use Yasoon\Site\Entity\ReviewEntity;
 use Yasoon\Site\Entity\PostCategoryEntity;
 use Yasoon\Site\Entity\PostAnswerEntity;
 use Yasoon\Site\Entity\PostLikesEntity;
+use Yasoon\Site\Entity\ReviewLikesEntity;
 use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
@@ -152,6 +154,73 @@ class PostService extends AbstractApiService {
         }
 
         $result = ['error' => false, 'postId' => $postEntity->getId()];
+
+        return $result;
+
+    }
+    
+    /**
+     * @param array $post
+     * @return array
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function addReview($data) {
+        $review = [];
+        parse_str($data, $review);
+        $authorId = (int) $this->securityContext->getToken()->getUsername();
+        if (!is_int($authorId)) {
+            throw new AccessDeniedException();
+        }
+
+        try {
+            if (!empty($review['reviewId'])) {
+                $reviewEntity = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($review['reviewId']);
+                $reviewEntity->setTitle($review['title'])
+                    ->setText($review['text'])
+                    ->setReviewTypeId($review['review-type'])
+                    ->setExpert($review['expert'])
+                    ->setRating($review['rating']);
+                } else {
+                /** @var $reviewEntity ReviewEntity */
+                $reviewEntity = (new ReviewEntity())
+                    ->setTitle($review['title'])
+                    ->setText($review['text'])
+                    ->setCategoryId($review['category-id'])
+                    ->setAuthorId($authorId)
+                    ->setDate(new \DateTime())
+                    ->setReviewTypeId($review['review-type'])
+                    ->setExpert($review['expert'])
+                    ->setRating($review['rating'])
+                    ->setLikes(0)
+                    ->setVisits(0);
+                $reviewEntity->setAuthor($this->em->getReference('Yasoon\Site\Entity\AuthorEntity', $authorId));
+                $this->em->persist($reviewEntity);
+                $this->em->flush();
+
+                $review_id = $reviewEntity->getId();
+
+                $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+
+
+                foreach($friends as $friend)
+                {
+                    try {
+                        $reviewTimelineEntity = (new ReviewsTimelineEntity())
+                            ->setReviewId($review_id)
+                            ->setAuthorId($friend->getId());
+
+                        $this->em->persist($reviewTimelineEntity);
+                        $this->em->flush();
+                    } catch(Exception $e) {
+                        return ['error' => true, 'errorText' => $e->getMessage()];
+                    }
+                }
+            }
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+
+        $result = ['error' => false, 'reviewId' => $reviewEntity->getId()];
 
         return $result;
 
@@ -603,6 +672,83 @@ class PostService extends AbstractApiService {
         }
         return ['error' => false, 'errorText' => ''];
     }
+    
+     /**
+     * @param $review_id
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteReview($review_id) {
+        try {
+            $authorId = (int) $this->securityContext->getToken()->getUsername();
+            if (!is_int($authorId)) {
+                return ['error' => true, 'errorText' => 'accessDenied'];
+            }
+
+            $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($review_id);
+
+            if(!$review)
+            {
+                return ['error' => true, 'errorText' => 'notFound'];
+            }
+
+            if ($review->getAuthorId() != $authorId && !$this->allf->isAdmin()) {
+                return ['error' => true, 'errorText' => 'accessDenied'];
+            }
+
+            $this->em->remove($review);
+            $this->em->flush();
+
+            $review_like = $this->em->getRepository('Yasoon\Site\Entity\ReviewLikesEntity')
+                ->createQueryBuilder('l')
+                ->where('l.review_id = '.$review_id)
+                ->getQuery()->getResult();
+
+            foreach($review_like as $like)
+            {
+                $this->em->remove($like);
+                $this->em->flush();
+            }
+
+//            $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+//
+//            foreach($friends as $friend)
+//            {
+//                $timeline =  $this->em->createQueryBuilder()
+//                    ->select('t')
+//                    ->from('Yasoon\Site\Entity\TimelineEntity', 't')
+//                    ->where('t.author_id = :aid')
+//                    ->setParameter('aid', $friend->getId())
+//                    ->getQuery()->getResult();
+//                if (count($timeline) < 1 || !is_object($timeline[0])) {
+//                    $timeline = (new TimelineEntity())
+//                        ->setAuthorId($friend->getId())
+//                        ->setPostsCount('0')
+//                        ->setQuestionsCount('0')
+//                        ->setAnswersCount('0');
+//
+//                    $this->em->persist($timeline);
+//                    $this->em->flush();
+//                }
+//                else
+//                {
+//                    if($timeline[0]->getPostsCount() > 0)
+//                    {
+//                        $timeline[0]->setPostsCount(($timeline[0]->getPostsCount()*1) - 1);
+//                        $this->em->merge($timeline[0]);
+//                        $this->em->flush();
+//                    }
+//                }
+//            }
+
+            $data = json_encode(['_id' => 'review_'.$review_id]);
+            $batchDataBody = '[' . $data . ']';
+            $this->allf->indexistoQueryDelete($batchDataBody);
+
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+        return ['error' => false, 'errorText' => ''];
+    }
 
     public function getPost($postId) {
 
@@ -657,6 +803,55 @@ class PostService extends AbstractApiService {
 //        $access = $this->getAccessLevel($post->getAuthorId());
 //
 //        return ['access' => $access, 'data' => $result];
+
+        return $result;
+    }
+    
+    public function getReview($reviewId) {
+
+        /** @var PostEntity $post */
+        $reviews = $this->em->createQueryBuilder()
+            ->select('r')
+            ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+            ->where('r.id IN('.implode(',', $reviewId).')')
+            ->getQuery()->getResult();
+
+        foreach($reviews as $review)
+        {
+            $visits = $review->getVisits();
+            $visits++;
+            
+            $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->find($review->getCategoryId());
+            
+            $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')->find($review->getReviewTypeId());
+            
+            $types = [];
+            $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')->findAll();
+            foreach ($review_types as $type) {
+                $types[] = array('id' => $type->getId(), 'name' => $type->getName());
+            }
+            
+            $result[] = [
+                'id'            => $review->getId(),
+                'authorId'      => $review->getAuthorId(),
+                'authorName'    => $review->getAuthor()->getName(),
+                'title'         => $review->getTitle(),
+                'text'          => $review->getText(),
+                'rating'        => $review->getRating(),
+                'publishDate'   => $review->getDate()->format('d/m/Y'),
+                'expert'        => $review->getExpert(),
+                'category'      => $category->getTitle(),
+                'categoryId'    => $category->getId(),
+                'typeReview'    => $reviewType->getName(),
+                'typeReviewId'  => $reviewType->getId(),
+                'types'         => $types,
+                'post_likes'    => $review->getLikes()
+            ];
+            
+            $reviewSave = $review->setVisits($visits);
+            $this->em->merge($reviewSave);
+            $this->em->flush();
+        }
 
         return $result;
     }
@@ -1174,6 +1369,87 @@ class PostService extends AbstractApiService {
         }
 
         return ['count' => $result_likes, 'postId' => $postId];
+    }
+    
+    /**
+     * @param $reviewId
+     * @return array
+     */
+    public function likeReview($reviewId, $type)
+    {
+        $authorId = $this->securityContext->getToken()->getUsername();
+        
+        if ($authorId == 'anon.') {
+            $authorId = 0;
+            $user_ip = $_SERVER['REMOTE_ADDR'];
+        }
+        else
+        {
+            $authorId = $authorId*1;
+            $user_ip = '0';
+        }
+        
+        try {
+            $review_like = $this->em->getRepository('Yasoon\Site\Entity\ReviewLikesEntity')
+                ->createQueryBuilder('rl')
+                ->where("(rl.authorId = ".$authorId." AND rl.user_ip = '$user_ip') AND rl.review_id = $reviewId")
+                ->getQuery()
+                ->getResult();
+
+
+            if(count($review_like) < 1)
+            {
+                /*if((time() - $post_like[0]->getLastDate()->getTimestamp()) < 86400)
+                {
+                    return ['error' => true, 'errorText' => 'timeLimit'];
+                }*/
+                $entity = new ReviewLikesEntity();
+                $entity->setAuthorId($authorId);
+
+                $entity->setUserIp($user_ip);
+
+                $entity->setReviewId($reviewId);
+                $entity->setAuthorId($authorId);
+                $entity->setLastDate(new \DateTime());
+                $entity->setCountLikes(1);
+                $entity->setReview($this->em->getReference('Yasoon\Site\Entity\ReviewEntity', $reviewId));
+
+                $entity->getReview()->setLikes(($entity->getReview()->getLikes()*1) + 1);
+
+                $this->em->persist($entity);
+                $this->em->flush();
+
+                $result_likes = $entity->getReview()->getLikes();
+            }
+            else
+            {
+                if((time() - $review_like[0]->getLastDate()->getTimestamp()) < 86400)
+                {
+                    if($user_ip != '0')
+                    {
+                        $errtext = 'userLiked';
+                    }
+                    else
+                    {
+                        $errtext = 'timeLimit';
+                    }
+                    return ['error' => true, 'errorText' => $errtext];
+                }
+                $review_like[0]->setCountLikes(($post_like[0]->getCountLikes()*1) + 1);
+                $review_like[0]->setLastDate(new \DateTime());
+
+                $review_like[0]->getReview()->setLikes(($review_like[0]->getReview()->getLikes()*1) + 1);
+
+                $this->em->persist($review_like[0]);
+                $this->em->flush();
+
+                $result_likes = $review_like[0]->getReview()->getLikes();
+            }
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
+
+        return ['count' => $result_likes, 'postId' => $reviewId];
     }
 
     /**

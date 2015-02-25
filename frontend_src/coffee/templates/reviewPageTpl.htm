@@ -1,0 +1,45 @@
+<div class="like-title">
+    <% if (expert === "1") { %>
+    <div class="expert active expert-left"></div>
+    <% } %>
+    <div class="category-type-review"><h1><%= category %></h1> (<%= typeReview %>) </div>
+    <span class="like-this">
+            <b><i></i></b>
+            <span class="counter">
+                    <%= post_likes %>
+            </span>
+            <span>вдохновились</span>
+    </span>
+    <h2>
+            <%= title %>
+            <% if (authorId === window.config.userId) { %>
+                    <a href="#/review/<%= id %>/edit" class="editable"></a>
+            <% } %>
+            <span class="media-pub">
+                    опубликовано <%= _.getDateText(publishDate) %>
+            </span>
+    </h2>
+</div>
+<div class="content">
+        <article  class="questionContent">
+            <div class="question_content">
+                <%= text %>
+            </div>
+        </article>
+</div>
+<div class="q-box">
+    <span class="like-this">
+            <b><i></i></b>
+            <span class="counter">
+                    <%= post_likes %>
+            </span>
+            <span>
+                    вдохновились
+            </span>
+    </span>
+
+    <span class="q-post">
+            <a href="/#/speaker/<%= authorId %>/answers"><i></i></a> <%= questionCount %> вопросов этому автору
+    </span>
+</div>
+

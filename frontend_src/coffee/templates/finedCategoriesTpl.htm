@@ -1,0 +1,5 @@
+<% _.each(categories, function(category) { %>
+<li>
+    <a href="#/review/new/<%= category.id %>" class="create-new-review" > <%= category.text %> </a>
+</li>
+<% }); %>

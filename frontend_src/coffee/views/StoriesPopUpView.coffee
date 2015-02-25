@@ -3,21 +3,25 @@ define(
     'text!templates/storiesPopUpTpl.htm'
     'views/PopUpView'
     'views/ButtonsStoriesView'
+    'views/ReviewCategoriesView'
     'backbone'
   ]
   (
     storiesPopUpTpl
     PopUpView
     ButtonsStoriesView
+    ReviewCategoriesView
   ) ->
     class StoriesPopUpView extends PopUpView
         
       initialize: ->
         @setInterviews()
+      
 
       events: ->
         _.extend {}, super,
           'click .connect p a': 'closePopup'
+          
       className: 'barrier'
 
       template: _.template(storiesPopUpTpl)
@@ -43,4 +47,5 @@ define(
                 }).render().$el)
             )
         )
+      
 )

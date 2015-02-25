@@ -28,6 +28,12 @@ doctrine:
         connection: default
         mappings:
           YasoonSiteBundle: ~
+          
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
 
 jms_di_extra:
   locations:

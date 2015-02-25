@@ -30,6 +30,7 @@ class AppKernel extends Kernel{
             new \Yasoon\Site\YasoonSiteBundle(),
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Export\ExcelBundle\ExportExcelBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             //new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             //new FOS\UserBundle\FOSUserBundle(),
         ];

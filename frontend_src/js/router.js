@@ -6,10 +6,13 @@
         '': 'index',
         'posts/:category/:sort(/)': 'posts',
         'post/new(/:id)(/)': 'newPost',
+        'review/new(/:id)(/)': 'newReview',
         'interview/:id(/)': 'showInterview',
         'interviews(/)': 'interviews',
         'post/:id(/)': 'showPost',
+        'review/:id(/)': 'showReview',
         'post/:id/edit(/)': 'editPost',
+        'review/:id/edit(/)': 'editReview',
         'register(/)': 'registerSpeaker',
         'speakers(/:category)(/)': 'speakers',
         'speaker/:id/edit(/)': 'editSpeaker',
@@ -67,14 +70,41 @@
           };
         })(this));
       },
+      newReview: function(id) {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (_this.isUser()) {
+              return Controller.newReview(id, true);
+            } else if (window.newReview != null) {
+              return Controller.newReview(id, true);
+            } else {
+              return Controller.newReview(id, false);
+            }
+          };
+        })(this));
+      },
       showPost: function(id) {
         return Controller.post(id);
+      },
+      showReview: function(id) {
+        return Controller.review(id);
       },
       editPost: function(id) {
         return userModel.deferred.done((function(_this) {
           return function() {
             if (window.config.admin || _this.isUser()) {
               return Controller.editPost(id);
+            } else {
+              return _this.navigate('#/404');
+            }
+          };
+        })(this));
+      },
+      editReview: function(id) {
+        return userModel.deferred.done((function(_this) {
+          return function() {
+            if (window.config.admin || _this.isUser()) {
+              return Controller.editReview(id);
             } else {
               return _this.navigate('#/404');
             }

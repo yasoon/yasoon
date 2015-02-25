@@ -1,5 +1,5 @@
 (function() {
-  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/AboutPageView', 'views/RulesPageView', 'views/NewPostPageView', 'views/EditPostPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'views/InterviewsView', 'views/LegoInterviewView', 'views/LegoInterviewsView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, AboutPageView, RulesPageView, NewPostPageView, EditPostPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, InterviewsView, LegoInterviewView, LegoInterviewsView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel) {
+  define(['views/LayoutView', 'views/MainPageView', 'views/PostsPageView', 'views/PostPageView', 'views/ReviewPageView', 'views/AboutPageView', 'views/RulesPageView', 'views/NewPostPageView', 'views/NewReviewPageView', 'views/EditPostPageView', 'views/EditReviewPageView', 'views/SpeakersPageView', 'views/SpeakerPageView', 'views/RegisterPageView', 'views/ErrorPageView', 'views/EditSpeakerView', 'views/TimelinePageView', 'views/InterviewsView', 'views/LegoInterviewView', 'views/LegoInterviewsView', 'models/UserRegisterModel', 'models/UserUpdateModel', 'models/userModel', 'models/PostPageModel', 'models/PostsPageModel', 'models/SpeakersPageModel', 'models/TimelinePageModel', 'models/ReviewPageModel', 'backbone'], function(LayoutView, MainPageView, PostsPageView, PostPageView, ReviewPageView, AboutPageView, RulesPageView, NewPostPageView, NewReviewPageView, EditPostPageView, EditReviewPageView, SpeakersPageView, SpeakerPageView, RegisterPageView, ErrorPageView, EditSpeakerView, TimelinePageView, InterviewsView, LegoInterviewView, LegoInterviewsView, UserRegisterModel, UserUpdateModel, userModel, PostPageModel, PostsPageModel, SpeakersPageModel, TimelinePageModel, ReviewPageModel) {
     var Controller;
     Controller = (function() {
       function Controller() {}
@@ -44,6 +44,17 @@
         });
         LayoutView.contentRegion.$el.empty().append(this.postPageView.$el);
         this.postPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.review = function(id) {
+        $('body').removeClass().addClass('review');
+        $('#js-login').removeClass();
+        this.reviewPageView = new ReviewPageView({
+          id: id
+        });
+        LayoutView.contentRegion.$el.empty().append(this.reviewPageView.$el);
+        this.reviewPageView.delegateEvents();
         return this;
       };
 
@@ -92,6 +103,21 @@
         return this;
       };
 
+      Controller.prototype.newReview = function(id, isUser) {
+        if (window.newPost != null) {
+          delete window.newPost;
+        }
+        $('body').removeClass().addClass('new-review');
+        $('#js-login').removeClass();
+        this.newReviewPageView = new NewReviewPageView({
+          id: id,
+          isUser: isUser
+        });
+        LayoutView.contentRegion.$el.empty().append(this.newReviewPageView.$el);
+        this.newReviewPageView.delegateEvents();
+        return this;
+      };
+
       Controller.prototype.editPost = function(id) {
         $('body').removeClass().addClass('edit-post');
         $('#js-login').removeClass();
@@ -101,6 +127,18 @@
         });
         LayoutView.contentRegion.$el.empty().append(this.editPostPageView.$el);
         this.editPostPageView.delegateEvents();
+        return this;
+      };
+
+      Controller.prototype.editReview = function(id) {
+        $('body').removeClass().addClass('edit-review');
+        $('#js-login').removeClass();
+        this.editReviewPageView = new EditReviewPageView({
+          id: id,
+          model: new ReviewPageModel()
+        });
+        LayoutView.contentRegion.$el.empty().append(this.editReviewPageView.$el);
+        this.editReviewPageView.delegateEvents();
         return this;
       };
 

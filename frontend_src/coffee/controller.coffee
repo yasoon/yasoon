@@ -4,10 +4,13 @@ define(
     'views/MainPageView'
     'views/PostsPageView'
     'views/PostPageView'
+    'views/ReviewPageView'
     'views/AboutPageView'
     'views/RulesPageView'
     'views/NewPostPageView'
+    'views/NewReviewPageView'
     'views/EditPostPageView'
+    'views/EditReviewPageView'
     'views/SpeakersPageView'
     'views/SpeakerPageView'
     'views/RegisterPageView'
@@ -24,6 +27,7 @@ define(
     'models/PostsPageModel'
     'models/SpeakersPageModel'
     'models/TimelinePageModel'
+    'models/ReviewPageModel'
     'backbone'
   ]
   (
@@ -31,10 +35,13 @@ define(
     MainPageView
     PostsPageView
     PostPageView
+    ReviewPageView
     AboutPageView
     RulesPageView
     NewPostPageView
+    NewReviewPageView
     EditPostPageView
+    EditReviewPageView
     SpeakersPageView
     SpeakerPageView
     RegisterPageView
@@ -51,7 +58,7 @@ define(
     PostsPageModel
     SpeakersPageModel
     TimelinePageModel
-    
+    ReviewPageModel
   ) ->
     class Controller
       constructor: () ->
@@ -88,6 +95,14 @@ define(
         LayoutView.contentRegion.$el.empty().append(@postPageView.$el)
         @postPageView.delegateEvents()
         @
+        
+      review: (id) ->
+        $('body').removeClass().addClass('review')
+        $('#js-login').removeClass()
+        @reviewPageView = new ReviewPageView({id: id})
+        LayoutView.contentRegion.$el.empty().append(@reviewPageView.$el)
+        @reviewPageView.delegateEvents()
+        @
 
       interview: (id) -> 
         $('body').removeClass().addClass('interview')
@@ -121,6 +136,15 @@ define(
         LayoutView.contentRegion.$el.empty().append(this.newPostPageView.$el)
         @newPostPageView.delegateEvents()
         @
+        
+      newReview: (id, isUser) ->
+        if window.newPost? then delete window.newPost
+        $('body').removeClass().addClass('new-review')
+        $('#js-login').removeClass()
+        @newReviewPageView = new NewReviewPageView({id: id,  isUser: isUser;})
+        LayoutView.contentRegion.$el.empty().append(this.newReviewPageView.$el)
+        @newReviewPageView.delegateEvents()
+        @
 
       editPost: (id) ->
         $('body').removeClass().addClass('edit-post')
@@ -128,6 +152,14 @@ define(
         @editPostPageView = new EditPostPageView({id: id, model: new PostPageModel()})
         LayoutView.contentRegion.$el.empty().append(this.editPostPageView.$el)
         @editPostPageView.delegateEvents()
+        @
+        
+      editReview: (id) ->
+        $('body').removeClass().addClass('edit-review')
+        $('#js-login').removeClass()
+        @editReviewPageView = new EditReviewPageView({id: id, model: new ReviewPageModel()})
+        LayoutView.contentRegion.$el.empty().append(this.editReviewPageView.$el)
+        @editReviewPageView.delegateEvents()
         @
 
       speakers: (category) ->
