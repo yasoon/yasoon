@@ -1,0 +1,57 @@
+<form role="form" class="review-form">
+    <div class="post-edit">
+        <article>
+            <h3 class="t-center">
+                <input type="hidden" name="reviewId" value="<%= id %>">
+                <input type="hidden" name="category-id" value="<%= categoryId %>">
+                <%= category %>
+            </h3>
+            <div class="review-title"> <%=  _.getContent(85) %> </div>
+            <input type="hidden" name="rating" class="rating" 
+                   data-filled="symbol symbol-filled" 
+                   data-empty="symbol symbol-empty" 
+                   value="<%= rating %>" 
+                   data-start="0" data-stop="5"/>
+            <div class="hr"></div>
+        </article>
+
+        <div class="di form-group">
+                <input type="text" class="form-control" name="title" id="title" placeholder="<%=  _.getContent(86) %>" value="<%= title %>" >
+        </div>
+        
+         <div class="di form-group">
+            <textarea class="description form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"><%= text %></textarea>
+
+        </div>
+        
+        <div class="di form-group">
+            <input type="hidden" name="expert" id="expert" value=<%= expert %>>
+            <div class="expert <% if (expert == "1") { %> active <% } %>"></div>
+        </div>
+        
+        <div class="di form-group">
+            <select name="review-type">
+            <% _.each(types, function(type) { %>
+                 <% if (typeReviewId == type.id) { %>
+                    <option  value="<%= type.id %>" selected>
+                <% } else { %>
+                    <option  value="<%= type.id %>">
+                <% } %>
+                <%= type.name %>
+            </option>
+            <% }); %>
+            </select>
+        </div>
+        
+        <div class="di t-center buttons_area">
+            <div class="row">
+                <div class="col-sm-6 text-right">
+                    <button type="submit" class="btn"><%= _.getContent(45) %></button>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <button type="button" class="btn color-red js-delete">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `root` int(11),
   `parent_id` int(11),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AVG_ROW_LENGTH=744 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
