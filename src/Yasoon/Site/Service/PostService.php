@@ -180,6 +180,8 @@ class PostService extends AbstractApiService {
                     ->setReviewTypeId($review['review-type'])
                     ->setExpert($review['expert'])
                     ->setRating($review['rating']);
+                $this->em->persist($reviewEntity);
+                $this->em->flush();
                 } else {
                 /** @var $reviewEntity ReviewEntity */
                 $reviewEntity = (new ReviewEntity())
