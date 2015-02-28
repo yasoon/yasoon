@@ -3,6 +3,7 @@ define(
     'text!templates/headerTpl.htm'
     'views/HeaderLoginView'
     'views/HeaderLoggedView'
+    'views/ReviewCategoriesView'
     'models/userModel'
     'backbone'
   ]
@@ -10,9 +11,14 @@ define(
     headerTpl
     HeaderLoginView
     HeaderLoggedView
+    ReviewCategoriesView
     userModel
   ) ->
     class HeaderRegionView extends Backbone.View
+    
+      events: ->
+        'click nav a.categoriesBtn': 'showCategories'
+        
       template: _.template(headerTpl)
 
       className: 'inside'
@@ -34,4 +40,9 @@ define(
         headerLogin= new HeaderLoginView()
         if not @headerLoginView? then @headerLoginView = headerLogin else @headerLoginView.delegateEvents()
         @userNav.removeClass().empty().append(@headerLoginView.render().$el)
+        
+      showCategories:(event) ->
+        event.preventDefault()
+        @reviewCategoriesView = new ReviewCategoriesView({type: 'review'})
+        $('body').append(@reviewCategoriesView.render().$el)
 )

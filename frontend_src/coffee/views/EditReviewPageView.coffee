@@ -5,11 +5,14 @@ define(
     'views/NewReviewPageView'
     'models/ReviewViewModel'
     'backbone'
+    'editor'
     'stickit'
     'mediator'
     'bootstrap'
     'bootstrap-rating'
     'jqueryUi'
+    'multiselect-filter'
+    'jquery-multiselect'
   ]
   (
     editReviewTpl
@@ -21,10 +24,10 @@ define(
       template: _.template(editReviewTpl)
 
       events: ->
-        'click :submit':        'updateReview'
-        'click .js-delete':     'deleteCheck'
-        'click .expert':        'selectExpert'
-#        'click .write-good-story-title':  'showHint'
+        'click :submit':                  'updateReview'
+        'click .js-delete':               'deleteCheck'
+        'click .expert':                  'selectExpert'
+        'click .write-good-story-title':  'showHint'
         
       initialize: (options) ->
         @options = options || {}
@@ -34,10 +37,14 @@ define(
       setCategory:(data) ->
         @model.set('reviewData', data)
         @$el.empty().append(@template(_.extend({}, @model.get('reviewData'))))
-        @addRating()
+        @runPlugins()
         
-      addRating: ->
+      runPlugins: ->
         $('.rating').rating()
+        $('.review-type').multiselect({header: false, noneSelectedText: 'выбрать тип', selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
+        @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
+        $( window ).resize -> 
+          if ($('.ui-multiselect-menu').is(':visible')) then $('.ui-multiselect').click()
         
       selectExpert: ->
         $('.expert').toggleClass('active');

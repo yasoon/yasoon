@@ -1,3 +1,13 @@
+<div class="write-good-story">
+    <a href="" class="write-good-story-title"><%=  _.getContent(76) %></a>
+    <div class="content">
+        <div class="write-good-story-box">
+            <div class="write-good-story-text">
+                <%=  _.getContent(77) %>
+            </div>
+        </div>
+    </div>
+</div>
 <form role="form" class="review-form">
     <div class="post-edit">
         <article>
@@ -7,6 +17,7 @@
                 <%= category %>
             </h3>
             <div class="review-title"> <%=  _.getContent(85) %> </div>
+            <div class="review-rating-title"> <%=  _.getContent(99) %> </div>
             <input type="hidden" name="rating" class="rating" 
                    data-filled="symbol symbol-filled" 
                    data-empty="symbol symbol-empty" 
@@ -14,35 +25,74 @@
                    data-start="0" data-stop="5"/>
             <div class="hr"></div>
         </article>
+        
+        <div class="di panel-group hint-mobile" id="collapse-hint">
+            <div class="panel panel-default">
+                <a data-toggle="collapse" data-parent="#collapse-hint" href="#mobile-hint-post">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <%=  _.getContent(76) %>
+                        </h4>
+                    </div>
+                </a>
+
+                <div id="mobile-hint-post" class="panel-collapse collapse">
+                    <div class="write-good-story-box">
+                        <div class="write-good-story-text">
+                        <%=  _.getContent(77) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="di form-group">
-                <input type="text" class="form-control" name="title" id="title" placeholder="<%=  _.getContent(86) %>" value="<%= title %>" >
+            <input type="text" class="form-control" name="title" id="title" placeholder="<%=  _.getContent(86) %>" value="<%= title %>" >
+            <!--<p class="help-block"></p>-->
         </div>
         
          <div class="di form-group">
-            <textarea class="description form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"><%= text %></textarea>
-
+            <title><%=  _.getContent(87) %></title>
+            <textarea class="editor form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"><%= text %></textarea>
+            <!--<p class="help-block"></p>-->
         </div>
         
+        <div class="di form-group">
+            <div>
+                <p class="review-questions"><%=  _.getContent(96) %></p>
+                <input type="checkbox" name="question1" value="1" <% if (question1 == "1") { %> checked <% } %>><br>
+            </div>
+        </div>
+        
+        <div class="di form-group">
+            <div>
+                <p class="review-questions"><%=  _.getContent(97) %></p> 
+                <input type="checkbox" name="question2" value="1" <% if (question2 == "1") { %> checked <% } %>><br>
+            </div>
+        </div>
+
         <div class="di form-group">
             <input type="hidden" name="expert" id="expert" value=<%= expert %>>
             <div class="expert <% if (expert == "1") { %> active <% } %>"></div>
         </div>
         
         <div class="di form-group">
-            <select name="review-type">
+            <select name="review-type[]"  class="review-type" multiple="multiple" required>
             <% _.each(types, function(type) { %>
-                 <% if (typeReviewId == type.id) { %>
-                    <option  value="<%= type.id %>" selected>
-                <% } else { %>
-                    <option  value="<%= type.id %>">
-                <% } %>
+                <option  value="<%= type.id %>" <%= type.selected %>>
                 <%= type.name %>
-            </option>
+                </option>
             <% }); %>
             </select>
         </div>
-        
+        <div class="bottom-prospects">
+            <div class="review-rating-title"> <%=  _.getContent(98) %> </div>
+                <input type="hidden" name="prospects" class="rating" 
+                       data-filled="symbol symbol-filled small" 
+                       data-empty="symbol symbol-empty small" 
+                       value="<%= prospects %>" 
+                       data-start="0" data-stop="5"/>
+        </div>
         <div class="di t-center buttons_area">
             <div class="row">
                 <div class="col-sm-6 text-right">

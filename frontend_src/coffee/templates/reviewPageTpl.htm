@@ -2,7 +2,13 @@
     <% if (expert === "1") { %>
     <div class="expert active expert-left"></div>
     <% } %>
-    <div class="category-type-review"><h1><%= category %></h1> (<%= typeReview %>) </div>
+    <div class="category-type-review"><h1><%= category %></h1> 
+        <% _.each(types, function(type) { %>
+            <% if (type.selected !== "") { %>
+                  <%= type.name %> <br>   
+            <% } %>
+        <% }); %>
+    </div>
     <span class="like-this">
             <b><i></i></b>
             <span class="counter">

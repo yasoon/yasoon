@@ -9,6 +9,8 @@ define(
     'bootstrap'
     'bootstrap-rating'
     'jqueryUi'
+    'multiselect-filter'
+    'jquery-multiselect'
   ]
   (
     writeReviewTpl
@@ -21,6 +23,7 @@ define(
         'click .js-cancel':               'cancelReview'
         'click .addLike':                 'addLike'
         'click .expert':                  'selectExpert'
+        'click .write-good-story-title':  'showHint'
         
       className:                    'page-layout m-page'
       tagName:                      'section'
@@ -28,6 +31,7 @@ define(
       template:                     _.template(writeReviewTpl)
 
       initialize: (options) ->
+        @options = options || {} 
         @getCategory(options)
 
       getCategory: (options) ->
@@ -36,10 +40,12 @@ define(
 
       setCategory:(data) ->
         @$el.empty().append(@template(_.extend({}, {'category': data.category}, {'types': data.types}, {'categoryId': data.categoryId})))
-        @addRating()
+        @runPlugins()
         
-      addRating: ->
+      runPlugins: ->
         $('.rating').rating()
+        $('.review-type').multiselect({header: false, noneSelectedText: 'выбрать тип', selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
+        @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         
       selectExpert: ->
         $('.expert').toggleClass('active');
@@ -53,7 +59,11 @@ define(
 
       cancelReview: (event) ->
         event.preventDefault()
-        if @confirmAction() then window.location = "/#/speaker/#{window.config.userId}/posts/"
+        if @confirmAction() 
+          if not @options.isUser 
+            window.location = "/#/"
+          else
+            window.location = "/#/speaker/#{window.config.userId}/posts/"
 
       saveReview: (event) ->
         event.preventDefault()
@@ -65,8 +75,11 @@ define(
         $.post('/api/post/saveReview', {formData}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
-        window.location = "#/review/#{data.reviewId}/"
-        window.reload = true
+        if not @options.isUser 
+          $('#js-login').trigger 'click'
+        else   
+          window.location = "#/review/#{data.reviewId}/"
+          window.reload = true
 
       showErrors: (errors) ->
         _.each(errors, (error) => @showError(error))

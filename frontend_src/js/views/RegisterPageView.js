@@ -188,19 +188,24 @@
         return $.post('/api/author/editinfo', this.model.toJSON(), (function(_this) {
           return function(data) {
             if (data.authorData === true) {
-              return _this.loadUser();
+              return _this.loadUser(data);
             }
           };
         })(this));
       };
 
-      Register.prototype.loadUser = function() {
-        if (window.newPost != null) {
-          window.location = "/#/post/new/" + window.newPost;
+      Register.prototype.loadUser = function(data) {
+        if (data.reviewId != null) {
+          window.location = "/#/review/" + data.reviewId;
+          return window.location.reload(true);
         } else {
-          window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
+          if (window.newPost != null) {
+            window.location = "/#/post/new/" + window.newPost;
+          } else {
+            window.location = "/#/speaker/" + (this.model.get('id')) + "/posts/";
+          }
+          return window.location.reload(true);
         }
-        return window.location.reload(true);
       };
 
       return Register;

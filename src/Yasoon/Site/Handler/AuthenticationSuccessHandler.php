@@ -8,6 +8,7 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 /**
@@ -80,7 +81,23 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
                          'interest' => $interest,
                          'last_publish_date' => $post_date,
                          'dreamProfession' => $dreamProfession];
-
+            
+            $session = new Session();
+            
+            if (!empty($session->get('reviewStatus'))) {
+                $reviewId = $session->get('reviewStatus');
+                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review->setStatus('saved')
+                        ->setAuthorId($id);
+                
+                $this->em->merge($review);
+                $this->em->flush();
+                
+                $session->remove('reviewStatus');
+                
+                return new JsonResponse(['error' => 'false', 'userData' => $userdata, 'reviewId' => $reviewId], 200);
+            }
+            
             return new JsonResponse(['error' => 'false', 'userData' => $userdata], 200);
         //}
 

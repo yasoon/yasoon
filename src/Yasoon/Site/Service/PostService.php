@@ -9,6 +9,7 @@
 namespace Yasoon\Site\Service;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Yasoon\Site\Entity\AuthorEntity;
@@ -22,6 +23,7 @@ use Yasoon\Site\Entity\PostOfTheDayEntity;
 use Yasoon\Site\Entity\QuestionEntity;
 use Yasoon\Site\Entity\TimelineEntity;
 use Yasoon\Site\Entity\PostsTimelineEntity;
+use Yasoon\Site\Entity\ReviewTypeRelationsEntity;
 use Symfony\Component\Debug\Debug;
 
 //Debug::enable();
@@ -171,27 +173,38 @@ class PostService extends AbstractApiService {
         if (!is_int($authorId)) {
             throw new AccessDeniedException();
         }
+        
+        
 
         try {
+            $review['question1'] = empty($review['question1']) ? 0 : $review['question1'];
+            $review['question2'] = empty($review['question2']) ? 0 : $review['question2'];
+            
             if (!empty($review['reviewId'])) {
                 $reviewEntity = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($review['reviewId']);
                 $reviewEntity->setTitle($review['title'])
                     ->setText($review['text'])
-                    ->setReviewTypeId($review['review-type'])
                     ->setExpert($review['expert'])
+                    ->setQuestion1($review['question1'])
+                    ->setQuestion2($review['question2'])
+                    ->setProspects($review['prospects'])
                     ->setRating($review['rating']);
                 $this->em->persist($reviewEntity);
                 $this->em->flush();
-                } else {
+            } else {
                 /** @var $reviewEntity ReviewEntity */
+                $status = $authorId == 0 ? 'draft' : 'saved';
                 $reviewEntity = (new ReviewEntity())
                     ->setTitle($review['title'])
                     ->setText($review['text'])
                     ->setCategoryId($review['category-id'])
                     ->setAuthorId($authorId)
+                    ->setStatus($status)
                     ->setDate(new \DateTime())
-                    ->setReviewTypeId($review['review-type'])
                     ->setExpert($review['expert'])
+                    ->setQuestion1($review['question1'])
+                    ->setQuestion2($review['question2'])
+                    ->setProspects($review['prospects'])  
                     ->setRating($review['rating'])
                     ->setLikes(0)
                     ->setVisits(0);
@@ -201,23 +214,47 @@ class PostService extends AbstractApiService {
 
                 $review_id = $reviewEntity->getId();
 
-                $friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+                if ($status == 'draft') {
+                    $session = new Session();
 
-
-                foreach($friends as $friend)
-                {
-                    try {
-                        $reviewTimelineEntity = (new ReviewsTimelineEntity())
-                            ->setReviewId($review_id)
-                            ->setAuthorId($friend->getId());
-
-                        $this->em->persist($reviewTimelineEntity);
-                        $this->em->flush();
-                    } catch(Exception $e) {
-                        return ['error' => true, 'errorText' => $e->getMessage()];
-                    }
+                    // set and get session attributes
+                    $session->set('reviewStatus', $review_id);
                 }
+                //$friends = $this->em->getRepository('Yasoon\Site\Entity\AuthorEntity')->find($authorId)->getWriters();
+
+
+//                foreach($friends as $friend)
+//                {
+//                    try {
+//                        $reviewTimelineEntity = (new ReviewsTimelineEntity())
+//                            ->setReviewId($review_id)
+//                            ->setAuthorId($friend->getId());
+//
+//                        $this->em->persist($reviewTimelineEntity);
+//                        $this->em->flush();
+//                    } catch(Exception $e) {
+//                        return ['error' => true, 'errorText' => $e->getMessage()];
+//                    }
+//                }
+            }     
+            $isDeleted = $this->em->createQueryBuilder()
+                ->delete()
+                ->from('Yasoon\Site\Entity\ReviewTypeRelationsEntity', 'rtr')
+                ->where('rtr.reviewId  = :id')
+                ->setParameter("id", $reviewEntity->getId())
+                ->getQuery()->execute();
+            
+            foreach($review['review-type'] as $typeId) {
+
+
+                $reviewTypeEntity = new ReviewTypeRelationsEntity();
+                $reviewTypeEntity->setReviewId($reviewEntity->getId());
+                $reviewTypeEntity->setTypeId($typeId);
+                $this->em->persist($reviewTypeEntity);
+                $this->em->flush();
+
             }
+            
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
@@ -823,14 +860,17 @@ class PostService extends AbstractApiService {
             $visits = $review->getVisits();
             $visits++;
             
-            $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->find($review->getCategoryId());
-            
-            $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')->find($review->getReviewTypeId());
+            $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                    ->find($review->getCategoryId());
             
             $types = [];
-            $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')->findAll();
+            $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
+                    ->findAll();
             foreach ($review_types as $type) {
-                $types[] = array('id' => $type->getId(), 'name' => $type->getName());
+                $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
+                        ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
+                $selectedValue = !empty($reviewType) ? "selected" : "";
+                $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
             }
             
             $result[] = [
@@ -844,8 +884,9 @@ class PostService extends AbstractApiService {
                 'expert'        => $review->getExpert(),
                 'category'      => $category->getTitle(),
                 'categoryId'    => $category->getId(),
-                'typeReview'    => $reviewType->getName(),
-                'typeReviewId'  => $reviewType->getId(),
+                'question1'     => $review->getQuestion1(),
+                'question2'     => $review->getQuestion2(),
+                'prospects'     => $review->getProspects(),
                 'types'         => $types,
                 'post_likes'    => $review->getLikes()
             ];

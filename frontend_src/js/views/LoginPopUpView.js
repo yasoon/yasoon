@@ -92,7 +92,7 @@
         if (data.error === true) {
           return this.checkError(data.errorType);
         } else {
-          return this.changeLocation(data.userData);
+          return this.changeLocation(data);
         }
       };
 
@@ -144,7 +144,10 @@
       };
 
       LoginPopUpView.prototype.changeLocation = function(data) {
-        window.config.userId = data.id;
+        window.config.userId = data.userData.id;
+        if (data.reviewId != null) {
+          window.location = "/#/review/" + data.reviewId;
+        }
         return window.location.reload(true);
       };
 

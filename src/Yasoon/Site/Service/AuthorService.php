@@ -863,6 +863,21 @@ class AuthorService extends AbstractApiService {
             
             $this->allf->indexistoQueryAdd($data);
             
+            $session = new Session();
+            
+            if (!empty($session->get('reviewStatus'))) {
+                $reviewId = $session->get('reviewStatus');
+                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review->setStatus('saved')
+                        ->setAuthorId($entity->getId());
+                
+                $this->em->merge($review);
+                $this->em->flush();
+                
+                $session->remove('reviewStatus');
+                
+                return ['authorData' => true, 'reviewId' => $reviewId];
+            }
             return ['authorData' => true];
         } catch(\Exception $e) {
             return ['authorData' => false, 'message' => $e->getMessage()];

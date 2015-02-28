@@ -757,7 +757,7 @@ blockquote {
   max-width: 250px;
   i {
     margin-top: -8px;
-    background-position-x: -49px;
+    background-position-x: -48px;
   }
 }
 
@@ -1748,20 +1748,66 @@ article, section{
 }
 
 .symbol {
+    cursor: pointer;
   display: inline-block;
   width: 50px;
   height: 50px;
+  &.small {
+    width: 35px;
+    height: 35px;
+  }
 }
 
 .symbol-empty {
   background: url(../img/empty_circle_grey.png) no-repeat;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  
 }
 
 .symbol-filled {
   background: url(../img/yasoon_logo3.png) no-repeat;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+  
+  
 }
 
 .category-type-review {
     margin-bottom: 30px;
+}
+
+.not-have-category {
+    text-align: left;
+    margin-top: 15px;
+}
+
+.bottom-prospects {
+    margin-left: 5px;
+}
+
+.review-questions {
+    display:inline-block;
+    width: 90%;
+    margin-right: 5%;
+}
+
+.review-form {
+    font-size: 2em;
+}
+
+.ui-multiselect-checkboxes {
+    font-size: 1.5em; 
+}
+
+.review-rating-title, .review-questions, .ui-multiselect{
+    font-size: 0.7em;
+}
+
+.review-rating-title {
+   margin-top: 15px;
+   margin-bottom: 5px;
 }
 

@@ -53,13 +53,6 @@ class ReviewEntity
     protected $categoryId;
 
     /**
-     * @var int $interviewId
-     *
-     * @ORM\Column(name="review_type_id", type="integer", nullable=false)
-     */
-    protected $reviewTypeId;
-
-    /**
      * @var AuthorEntity $author
      *
      * @ORM\ManyToOne(targetEntity="AuthorEntity",  inversedBy="posts")
@@ -101,10 +94,42 @@ class ReviewEntity
     /**
      * @var int
      *
+     * @ORM\Column(name="question1", type="string", columnDefinition="ENUM(0, 1)")
+     *
+     */
+    protected $question1;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="question2", type="string", columnDefinition="ENUM(0, 1)")
+     *
+     */
+    protected $question2;
+    
+    /**
+     * @var int
+     *
      * @ORM\Column(name="rating", type="integer", nullable=false)
      *
      */
     protected $rating;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="prospects", type="integer", nullable=false)
+     *
+     */
+    protected $prospects;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", columnDefinition="ENUM('draft', 'saved')")
+     *
+     */
+    protected $status;
 
     /**
      * @param $author
@@ -280,24 +305,6 @@ class ReviewEntity
     }
     
     /**
-     * @param int $typeId
-     * @return $this
-     */
-    public function setReviewTypeId($typeId)
-    {
-        $this->reviewTypeId = $typeId;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getReviewTypeId()
-    {
-        return $this->reviewTypeId;
-    }
-    
-    /**
      * @param int $rating
      * @return $this
      */
@@ -332,8 +339,78 @@ class ReviewEntity
     {
         return $this->expert;
     }
+    
+    /**
+     * @param int $prospects
+     * @return $this
+     */
+    public function setProspects($prospects)
+    {
+        $this->prospects = $prospects;
+        return $this;
+    }
 
+    /**
+     * @return int
+     */
+    public function getProspects()
+    {
+        return $this->prospects;
+    }
 
+    /**
+     * @param int $question1
+     * @return $this
+     */
+    public function setQuestion1($question1)
+    {
+        $this->question1 = $question1;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuestion1()
+    {
+        return $this->question1;
+    }
+    
+    /**
+     * @param int $question2
+     * @return $this
+     */
+    public function setQuestion2($question2)
+    {
+        $this->question2 = $question2;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuestion2()
+    {
+        return $this->question2;
+    }
+    
+    /**
+     * @param $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
 
 

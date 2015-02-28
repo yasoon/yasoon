@@ -63,7 +63,7 @@ define(
         $.post('/login_check', {email: @model.get('email'), password: @model.get('password')}, (data) => @showAnswer(data))
 
       showAnswer: (data) ->
-        if data.error is yes then @checkError(data.errorType) else @changeLocation(data.userData)
+        if data.error is yes then @checkError(data.errorType) else @changeLocation(data)
 
       checkError: (data) ->
         @toggleButton(off)
@@ -75,7 +75,8 @@ define(
         else if data is 'alliswell' then @showNoErrors([{name: 'email', message:  _.getContent(63)}])
 
       changeLocation: (data) ->
-        window.config.userId = data.id
+        window.config.userId = data.userData.id
+        if data.reviewId? then window.location = "/#/review/"+data.reviewId
         window.location.reload(true)
 
       showErrors: (errors) ->

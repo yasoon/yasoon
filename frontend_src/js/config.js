@@ -18,7 +18,9 @@
       'EventEmitter': 'vendor/EventEmitter',
       'eventie': 'vendor/eventie',
       'moderniz': 'vendor/moderniz',
-      'bootstrap-rating': 'vendor/bootstrap-rating.min'
+      'bootstrap-rating': 'vendor/bootstrap-rating.min',
+      'multiselect-filter': 'vendor/jquery.multiselect.filter.min',
+      'jquery-multiselect': 'vendor/jquery.multiselect.min'
     },
     shim: {
       'backbone': {

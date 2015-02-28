@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLoggedView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLoggedView, userModel) {
+  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLoggedView', 'views/ReviewCategoriesView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLoggedView, ReviewCategoriesView, userModel) {
     var HeaderRegionView;
     return HeaderRegionView = (function(_super) {
       __extends(HeaderRegionView, _super);
@@ -10,6 +10,12 @@
       function HeaderRegionView() {
         return HeaderRegionView.__super__.constructor.apply(this, arguments);
       }
+
+      HeaderRegionView.prototype.events = function() {
+        return {
+          'click nav a.categoriesBtn': 'showCategories'
+        };
+      };
 
       HeaderRegionView.prototype.template = _.template(headerTpl);
 
@@ -53,6 +59,14 @@
           this.headerLoginView.delegateEvents();
         }
         return this.userNav.removeClass().empty().append(this.headerLoginView.render().$el);
+      };
+
+      HeaderRegionView.prototype.showCategories = function(event) {
+        event.preventDefault();
+        this.reviewCategoriesView = new ReviewCategoriesView({
+          type: 'review'
+        });
+        return $('body').append(this.reviewCategoriesView.render().$el);
       };
 
       return HeaderRegionView;

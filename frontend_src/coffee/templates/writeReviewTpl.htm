@@ -1,3 +1,13 @@
+<div class="write-good-story">
+    <a href="" class="write-good-story-title"><%=  _.getContent(76) %></a>
+    <div class="content">
+        <div class="write-good-story-box">
+            <div class="write-good-story-text">
+                <%=  _.getContent(77) %>
+            </div>
+        </div>
+    </div>
+</div>
 <form role="form" class="review-form">
     <div class="post-edit">
         <article>
@@ -6,9 +16,30 @@
                 <%= category %>
             </h3>
             <div class="review-title"> <%=  _.getContent(85) %> </div>
+            <div class="review-rating-title"> <%=  _.getContent(99) %> </div>
             <input type="hidden" name="rating" class="rating" data-filled="symbol symbol-filled" data-empty="symbol symbol-empty" value="1" data-start="0" data-stop="5"/>
             <div class="hr"></div>
         </article>
+        
+        <div class="di panel-group hint-mobile" id="collapse-hint">
+            <div class="panel panel-default">
+                <a data-toggle="collapse" data-parent="#collapse-hint" href="#mobile-hint-post">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <%=  _.getContent(76) %>
+                        </h4>
+                    </div>
+                </a>
+
+                <div id="mobile-hint-post" class="panel-collapse collapse">
+                    <div class="write-good-story-box">
+                        <div class="write-good-story-text">
+                        <%=  _.getContent(77) %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="di form-group">
             <input type="text" class="form-control" name="title" id="title" placeholder="<%=  _.getContent(86) %>">
@@ -16,8 +47,23 @@
         </div>
         
          <div class="di form-group">
-            <textarea class="description form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"></textarea>
+            <title><%=  _.getContent(87) %></title>
+            <textarea class="editor form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"></textarea>
             <!--<p class="help-block"></p>-->
+        </div>
+        
+        <div class="di form-group">
+            <div>
+                <p class="review-questions"><%=  _.getContent(96) %></p>
+                <input type="checkbox" name="question1" value="1"><br>
+            </div>
+        </div>
+        
+        <div class="di form-group">
+            <div>
+                <p class="review-questions"><%=  _.getContent(97) %></p> 
+                <input type="checkbox" name="question2" value="1"><br>
+            </div>
         </div>
         
         <div class="di form-group">
@@ -26,15 +72,22 @@
         </div>
         
         <div class="di form-group">
-            <select name="review-type">
+            <select name="review-type[]" class="review-type" multiple="multiple" required>
             <% _.each(types, function(type) { %>
-            <option value="<%= type.id %>">
+                <option value="<%= type.id %>">
                 <%= type.name %>
-            </option>
+                </option>
             <% }); %>
             </select>
         </div>
-        
+        <div class="bottom-prospects">
+            <div class="review-rating-title"> <%=  _.getContent(98) %> </div>
+                <input type="hidden" name="prospects" class="rating" 
+                       data-filled="symbol symbol-filled small" 
+                       data-empty="symbol symbol-empty small" 
+                       value="1" 
+                       data-start="0" data-stop="5"/>
+        </div>
         <div class="di t-center buttons_area">
             <div class="row">
                 <div class="col-sm-6 text-right">

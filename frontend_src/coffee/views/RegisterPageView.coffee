@@ -131,10 +131,14 @@ define(
         @$(event.currentTarget).prop('disabled', no)
 
       updateProfile: ->
-        $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser())
+        $.post('/api/author/editinfo', @model.toJSON(), (data) => if data.authorData is yes then @loadUser(data))
 
-      loadUser: ->
-        if window.newPost? then window.location = "/#/post/new/"+ window.newPost
-        else window.location = "/#/speaker/#{@model.get('id')}/posts/"
-        window.location.reload(yes)
+      loadUser: (data)->
+        if data.reviewId?
+          window.location = "/#/review/"+data.reviewId
+          window.location.reload(true)
+        else
+          if window.newPost? then window.location = "/#/post/new/"+ window.newPost
+          else window.location = "/#/speaker/#{@model.get('id')}/posts/"
+          window.location.reload(true)
 )

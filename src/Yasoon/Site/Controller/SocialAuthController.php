@@ -206,22 +206,56 @@ class SocialAuthController {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         
+        $session = new Session();
+        $reviewLinkId = '';
+        if (!empty($session->get('reviewStatus'))) {
+                $reviewId = $session->get('reviewStatus');
+                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review->setStatus('saved')
+                        ->setAuthorId($entity->getId());
+                
+                $this->em->merge($review);
+                $this->em->flush();
+                
+                $session->remove('reviewStatus');
+                
+                $reviewLinkId = $reviewId;
+        }
         header('Content-type: text/html');
         if($new_user)
         {
+            if (!empty($reviewLinkId)) {
+                $response = '<script>
+                            window.opener.location.hash=\'/review/'.$reviewLinkId.'/\';
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
+            } else {
+                
             $response = '<script>
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
                         </script>';
+            }
         }
         else
         {
-            $response = '<script>
+            if (!empty($reviewLinkId)) {
+                $response = '<script>
+                            window.opener.location.hash=\'/review/'.$reviewLinkId.'/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
                         </script>';
+            } else {
+                $response = '<script>
+                                window.opener.location.reload();
+                                window.opener.$(\'.barrier\').fadeOut(500);
+                                window.close();
+                            </script>';
+            }
         }
         return new Response($response);
             /*
@@ -392,21 +426,55 @@ class SocialAuthController {
         }
         
         header('Content-type: text/html');
+        
+        $session = new Session();
+        $reviewLinkId = '';
+        if (!empty($session->get('reviewStatus'))) {
+                $reviewId = $session->get('reviewStatus');
+                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review->setStatus('saved')
+                        ->setAuthorId($entity->getId());
+                
+                $this->em->merge($review);
+                $this->em->flush();
+                
+                $session->remove('reviewStatus');
+                
+                $reviewLinkId = $reviewId;
+        }
         if($new_user)
         {
-            $response = '<script>
+            if (!empty($reviewLinkId)) {
+                $response = '<script>
+                            window.opener.location.hash=\'/review/'.$reviewLinkId.'/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
                         </script>';
+            } else {
+                $response = '<script>
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
+            }
         }
         else
         {
-            $response = '<script>
+            if (!empty($reviewLinkId)) {
+                $response = '<script>
+                            window.opener.location.hash=\'/review/'.$reviewLinkId.'/\';
                             window.opener.location.reload();
                             window.opener.$(\'.barrier\').fadeOut(500);
                             window.close();
                         </script>';
+            } else {
+                $response = '<script>
+                            window.opener.location.reload();
+                            window.opener.$(\'.barrier\').fadeOut(500);
+                            window.close();
+                        </script>';
+            }
         }
         return new Response($response);
         /*
