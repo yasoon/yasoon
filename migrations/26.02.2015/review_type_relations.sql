@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `review_types_rel` (
+CREATE TABLE IF NOT EXISTS `review_types_relation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `review_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
