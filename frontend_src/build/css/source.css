@@ -6381,6 +6381,7 @@ footer nav {
   position: relative;
   float: left;
   width: 195px;
+  min-height: 150px;
 }
 .page-layout > aside ~ section {
   margin-left: 195px;
@@ -7612,6 +7613,9 @@ section {
 .review-rating-title {
   margin-top: 15px;
   margin-bottom: 5px;
+}
+.empty-text {
+  margin: 5px;
 }
 ul li {
   list-style: none;

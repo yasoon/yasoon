@@ -18,6 +18,7 @@ define(
         page: options.page
         sort: options.sort
         category: options.category
+        parent: options.parent
       }
       
     render: ->

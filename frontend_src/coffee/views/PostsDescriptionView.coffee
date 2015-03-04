@@ -8,6 +8,7 @@ define(
 ) ->
   Backbone.View.extend({
     tagName: 'section'
+    
     template: _.template(historyStoriesTpl)
 
     initialize: (options) ->

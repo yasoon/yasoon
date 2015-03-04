@@ -1,5 +1,9 @@
 <article class="cat-title">
-	<h3><%= name %></h3>
+        <% _.each(description, function(category) { %>
+            <a href="/#/posts/<%= category.id %>/<%= sort %>" id="<%= category.id %>">
+                <%= category.name %>
+            </a>
+        <% }); %>
 	<p><%= _.getContent(67) %></p>
 	<div class="hr"></div>
 </article>

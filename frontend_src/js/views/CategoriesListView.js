@@ -21,7 +21,8 @@
         return this.data = {
           page: options.page,
           sort: options.sort,
-          category: options.category
+          category: options.category,
+          parent: options.parent
         };
       };
 

@@ -34,6 +34,11 @@ class CategoryEntity
     private $description;
 
     /**
+     * @ORM\Column(name="parent_id", type="integer")
+     */
+    private $parentId;
+
+    /**
      * @Gedmo\TreePathSource
      * @ORM\Column(name="title", type="string", length=64)
      */
@@ -108,4 +113,10 @@ class CategoryEntity
     {
         return $this->level;
     }
+    
+    public function getParentId()
+    {
+        return $this->parentId;
+}
+    
 }

@@ -31,15 +31,41 @@
       };
 
       PostsPageView.prototype.getCategoryList = function() {
-        return this.model.set('categoryList', window.config.category);
+        if (parseInt(this.model.get('category')) === 0) {
+          return this.model.set('categoryList', window.config.category);
+        } else {
+          return this.getCategories();
+        }
+      };
+
+      PostsPageView.prototype.getCategories = function() {
+        return $.get("/api/post/get_categories/" + parseInt(this.model.get('category')), (function(_this) {
+          return function(data) {
+            return _this.checkCategoryErrors(data);
+          };
+        })(this));
+      };
+
+      PostsPageView.prototype.checkCategoryErrors = function(data) {
+        if (data.error === true) {
+          return this.model.set('categoryList', window.config.category);
+        } else {
+          return this.setDataCategories(data);
+        }
+      };
+
+      PostsPageView.prototype.setDataCategories = function(data) {
+        this.model.set('parent', data.result.parent);
+        this.model.set('pathData', data.path);
+        if (data.result.categories != null) {
+          return this.model.set('categoryList', data.result.categories);
+        } else {
+          return this.createsCategoryFilter();
+        }
       };
 
       PostsPageView.prototype.createsCategoryFilter = function() {
-        if (this.categoryListView == null) {
-          this.categoryList();
-        } else {
-          this.categoryListView.delegateEvents();
-        }
+        this.categoryList();
         this.$el.append(this.categoryListView.render().$el);
         return this.setDescription();
       };
@@ -60,10 +86,15 @@
         }
       };
 
-      PostsPageView.prototype.emptyPosts = function() {
+      PostsPageView.prototype.emptyPosts = function(errorText) {
+        var text;
+        if (errorText == null) {
+          errorText = null;
+        }
+        text = errorText != null ? errorText : _.getContent(34);
         if (this.emptyView == null) {
           this.emptyView = new EmptyView({
-            message: _.getContent(34)
+            message: text
           });
         } else {
           this.emptyView.delegateEvents();
@@ -73,20 +104,17 @@
 
       PostsPageView.prototype.setDescription = function() {
         var description;
-        description = parseInt(this.model.get('category')) === 0 ? {
-          'name': 'все отрасли'
-        } : _.where(this.model.get('categoryList'), {
-          id: parseInt(this.model.get('category'))
-        })[0];
+        description = parseInt(this.model.get('category')) === 0 ? [
+          {
+            'id': 0,
+            'name': 'все отрасли'
+          }
+        ] : this.model.get('pathData');
         return this.model.set('description', description);
       };
 
       PostsPageView.prototype.createPostsDescription = function() {
-        if (this.postsDescriptionView == null) {
-          this.postsDescription();
-        } else {
-          this.postsDescriptionView.delegateEvents();
-        }
+        this.postsDescription();
         this.$el.append(this.postsDescriptionView.render().$el);
         return this.getPostsList();
       };
@@ -107,7 +135,8 @@
           category: this.model.get('category'),
           sort: this.model.get('sort'),
           page: 'posts',
-          collection: categoryCollection
+          collection: categoryCollection,
+          parent: this.model.get('parent')
         });
       };
 
@@ -128,8 +157,8 @@
       };
 
       PostsPageView.prototype.checkErrors = function(data) {
-        if (data.errors === true) {
-          return this.emptyPosts;
+        if (data.error === true) {
+          return this.emptyPosts(data.errorText);
         } else {
           return this.model.set('postsList', data[this.model.get('sort')]);
         }

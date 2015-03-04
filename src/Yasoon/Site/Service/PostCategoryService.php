@@ -58,111 +58,113 @@ class PostCategoryService extends AbstractApiService {
             
             $category->leftJoin('c.post', 'p');
             
-            $clone = clone $category;
-           
-            $all = $clone->orderBy('p.id', 'DESC')->getQuery()->getResult();
-             if ($sort == 'dateSort') {
-                 $all = $clone->where('p.likes >= :likes')
-                    ->andWhere('p.date >= :dateTime')
-                    ->orderBy('p.id', 'DESC')
-                    ->setParameter('dateTime', $dateTime)
-                    ->setParameter('likes', (int) $minLikesCount->getText())
-                    ->getQuery()->getResult();
-             }
-            $count_all = count($all);
+                $clone = clone $category;
 
-            if($count_all < ($offset+$itemsPerPage))
-            {
-                //$itemsPerPage = ($count_all-$offset)-1;
-            }
-            //echo ' '.$count_all.' '.$offset.' '.$itemsPerPage.' ..'.($offset+$itemsPerPage).'.. ';
-            
-            
-            if($count_all < 0)
-            {
-                $itemsPerPage = 0;
-                $count_all = 0;
-            }
-            elseif($count_all == 0)
-            {
-                $itemsPerPage = 1;
-                $count_all = 1;
-                //echo 'test';
-            }
-            $results_postsSort = null;
-            if ($sort == 'dateSort') {
-                $results_postsSort = $category
-                    ->setMaxResults($itemsPerPage)
-                    ->setFirstResult($offset)
-                    ->where('p.likes >= :likes')
-                    ->andWhere('p.date >= :dateTime')
-                    ->orderBy('p.date', 'DESC')
-                    ->setParameter('dateTime', $dateTime)
-                    ->setParameter('likes', (int) $minLikesCount->getText())
-                    ->getQuery()
-                    ->getResult();
-            } else {
-                $results_postsSort = $category
-                    ->setMaxResults($itemsPerPage)
-                    ->setFirstResult($offset)
-                    ->orderBy('p.likes', 'DESC')
-                    ->getQuery()
-                    ->getResult();
-            }
-
-            $postsSort = [];
-            foreach($results_postsSort as $i => $v)
-            { 
-
-                try {
-                   
-                //echo $i.' ';
-                $post_categories = $results_postsSort[$i]->getPost()->getCategory();
-                $id = $results_postsSort[$i]->getPost()->getId();
-                
-                $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
-                $strLength = 0;
-                $interviewLego = 0;
-                foreach ($post_answers as $answer) {
-                   $strLength += strlen(strip_tags($answer->getAnswer()));
-                   if ($answer->getLego() > 0) {
-                       $interviewLego++;
-                   }
-                }
-                $interviewName = '';
-                if ($interviewLego > 0) {
-                    $interviewName = $results_postsSort[$i]->getPost()->getInterview()->getName();
-                } 
-                $timeToRead = round($strLength/4200);
-                
-                foreach($post_categories as $pc)
+                $all = $clone->orderBy('p.id', 'DESC')->getQuery()->getResult();
+            if (!empty($all)) {
+                 if ($sort == 'dateSort') {
+                     $all = $clone->andWhere('p.likes >= :likes')
+                        ->andWhere('p.date >= :dateTime')
+                        ->setParameter('dateTime', $dateTime)
+                        ->setParameter('likes', 0)
+                        ->orderBy('p.id', 'DESC')
+                        ->getQuery()->getResult();
+                 }
+                $count_all = count($all);
+                if($count_all < ($offset+$itemsPerPage))
                 {
-                    $tags[] = $pc->getCategoryId();
+                    //$itemsPerPage = ($count_all-$offset)-1;
                 }
-                $user = 'user';
-                $role = $results_postsSort[$i]->getPost()->getAuthor()->getRole();
-                if ($role == 4) {
-                    $user = 'admin';
+                //echo ' '.$count_all.' '.$offset.' '.$itemsPerPage.' ..'.($offset+$itemsPerPage).'.. ';
+
+                if($count_all < 0)
+                {
+                    $itemsPerPage = 0;
+                    $count_all = 0;
                 }
-                $postsSort[] = ['id'    => $id,
-                            'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
-                            'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
-                            'tags'          => $tags,
-                            'title'         => $results_postsSort[$i]->getPost()->getCaption(),
-                            'description'   => $results_postsSort[$i]->getPost()->getPreview(),
-                            'text'          => $results_postsSort[$i]->getPost()->getText(),
-                            'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                            'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
-                            'timeToRead'    => $timeToRead,
-                            'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
-                            'interview_name'=> $interviewName,
-                            'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
-                            'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
-                            'user'          => $user];
-                unset($tags);
-                } catch(\Exception $e) {
-                    $count_all--;
+                elseif($count_all == 0)
+                {
+                    $itemsPerPage = 1;
+                    $count_all = 1;
+                    //echo 'test';
                 }
+                
+                $results_postsSort = null;
+                if ($sort == 'dateSort') {
+                    $results_postsSort = $category
+                        ->setMaxResults($itemsPerPage)
+                        ->setFirstResult($offset)
+                        ->andWhere('p.likes >= :likes')
+                        ->andWhere('p.date >= :dateTime')
+                        ->setParameter('dateTime', $dateTime)
+                        ->setParameter('likes', 0)
+                        ->orderBy('p.date', 'DESC')
+                        ->getQuery()
+                        ->getResult();
+                } else {
+                    $results_postsSort = $category
+                        ->setMaxResults($itemsPerPage)
+                        ->setFirstResult($offset)
+                        ->orderBy('p.likes', 'DESC')
+                        ->getQuery()
+                        ->getResult();
+                }
+                $postsSort = [];
+                foreach($results_postsSort as $i => $v)
+                { 
+
+                    try {
+
+                    //echo $i.' ';
+                    $post_categories = $results_postsSort[$i]->getPost()->getCategory();
+                    $id = $results_postsSort[$i]->getPost()->getId();
+
+                    $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
+                    $strLength = 0;
+                    $interviewLego = 0;
+                    foreach ($post_answers as $answer) {
+                       $strLength += strlen(strip_tags($answer->getAnswer()));
+                       if ($answer->getLego() > 0) {
+                           $interviewLego++;
+                       }
+                    }
+                    $interviewName = '';
+                    if ($interviewLego > 0) {
+                        $interviewName = $results_postsSort[$i]->getPost()->getInterview()->getName();
+                    } 
+                    $timeToRead = round($strLength/4200);
+
+                    foreach($post_categories as $pc)
+                    {
+                        $tags[] = $pc->getCategoryId();
+                    }
+                    $user = 'user';
+                    $role = $results_postsSort[$i]->getPost()->getAuthor()->getRole();
+                    if ($role == 4) {
+                        $user = 'admin';
+                    }
+                    $postsSort[] = ['id'    => $id,
+                                'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
+                                'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
+                                'tags'          => $tags,
+                                'title'         => $results_postsSort[$i]->getPost()->getCaption(),
+                                'description'   => $results_postsSort[$i]->getPost()->getPreview(),
+                                'text'          => $results_postsSort[$i]->getPost()->getText(),
+                                'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                                'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
+                                'timeToRead'    => $timeToRead,
+                                'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
+                                'interview_name'=> $interviewName,
+                                'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
+                                'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
+                                'user'          => $user];
+                    unset($tags);
+                    } catch(\Exception $e) {
+                        $count_all--;
+                    }
+                }
+            } else {
+               return ['error' => true, 'errorText' => 'Нет отзывов и интервью по этой тематике']; 
             }
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];

@@ -488,5 +488,16 @@ class PostController {
 
         return $result;
     }
+    
+    /**
+     * @Route("/get_categories/{idCategory}")
+     * @Method({"GET"})
+     */
+    public function getCategoryList($idCategory)
+    {
+        $result = $this->category_service->getCategoryListById($idCategory);
+
+        return $result;
+    }
 
 }

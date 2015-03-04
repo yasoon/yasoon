@@ -53,7 +53,6 @@ class IndexController {
      * @return Response
      */
     public function indexAction() {
-
         //$content = str_replace("\\n", "\\\\n", json_encode($this->service->getAllContent()));
         /*$content =  json_encode([[
                 'id' => '1',
@@ -63,7 +62,7 @@ class IndexController {
 
         // the URI being requested (e.g. /about) minus any query parameters
        
-        //$category = $this->category_service->getCategoryList();
+        $category = $this->category_service->getCategoryList();
         $content = $this->content_service->getAllContent(0);
         $keyWords = $this->content_service->getTextById(IndexController::KEYWORDS_CONTENT_ID);
         $description = $this->content_service->getTextById(IndexController::DESCRIPTION_CONTENT_ID);
@@ -72,7 +71,7 @@ class IndexController {
             [
                 $this->_initDocType(),
                 $this->_initHead($keyWords, $description),
-                $this->_initBody(1, $content)
+                $this->_initBody($category, $content)
             ]
         );
 
@@ -255,7 +254,7 @@ class IndexController {
                     </footer>
                     <script>
                         window.config = {
-                            category: ".json_encode(array(array('id'=>1, 'name'=> 'Безопасность', 'description' => 'описание'))).",
+                            category: ".json_encode($category).",
                             content: ".json_encode($content).",
                             userId: false
                         }
