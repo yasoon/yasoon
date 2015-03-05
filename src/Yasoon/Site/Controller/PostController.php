@@ -490,6 +490,17 @@ class PostController {
     }
     
     /**
+     * @Route("/get_category_edit/{idCategory}/{idParent}")
+     * @Method({"GET"})
+     */
+    public function getOneCategoryById($idCategory, $idParent = 0)
+    {
+        $result = $this->category_service->getOneById($idCategory, $idParent);
+
+        return $result;
+    }
+    
+    /**
      * @Route("/get_categories/{idCategory}")
      * @Method({"GET"})
      */
@@ -498,6 +509,28 @@ class PostController {
         $result = $this->category_service->getCategoryListById($idCategory);
 
         return $result;
+    }
+    
+    /**
+     * @Route("/save_category")
+     * @Method({"POST"})
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function saveCategory(Request $request) {
+        $data = $request->request->get('formData');
+        return $this->category_service->save($data);
+    }
+    
+    /**
+     * @Route("/delete-category/{categoryId}")
+     * @Method({"GET"})
+     * 
+     * @return int parentId
+     */
+    public function deleteCategory($categoryId) {
+        return $this->category_service->delete($categoryId);
     }
 
 }

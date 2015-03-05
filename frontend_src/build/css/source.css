@@ -7617,6 +7617,9 @@ section {
 .empty-text {
   margin: 5px;
 }
+.categories-path {
+  margin: 15px 0;
+}
 ul li {
   list-style: none;
   padding: 0;

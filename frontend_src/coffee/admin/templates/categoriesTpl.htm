@@ -1,0 +1,55 @@
+<% if (parent) { %>
+<a href="" class="btn btn-sm add-category" data-id="<%= parent.id %>">Добавить категорию</a>
+<% } else {%>
+<a href="" class="btn btn-sm add-category"  data-id="0">Добавить категорию</a>
+<% } %>
+<div class="row-fluid categories-path">
+    <div class="span10 form-horizontal">
+        <fieldset>
+            <div class="control-group">
+                <a href="" class="go-parent" data-id="0">Все-></a>
+                <% if (path) { %>
+                    <% _.each(path, function(cat) { %>
+                    <a href="" class="go-parent" data-id="<%= cat.id %>"><%= cat.name %>-></a>
+                    <% }); %>
+                <% } %>
+            </div>
+        </fieldset>
+    </div>
+</div>
+    
+<div class="row-fluid">
+    <div class="span10">
+        <table class="table table-striped" id="customersList">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(categories, function(category) { %>
+                <tr>
+                    <td><a href="" class="open-category" data-id="<%= category.id %>">
+                            <%= category.name %>
+                        </a>
+                    </td>
+                    <td><%= category.description %></td>
+                    <td>
+                        <a class="btn btn-mini remove-category" href="" data-id="<%= category.id %>">
+                            Удалить
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-mini edit-category" href="" data-id="<%= category.id %>">
+                            Редактировать
+                        </a>
+                    </td>                                
+                </tr>
+                <% }); %>                      
+            </tbody>
+        </table>
+    </div>
+</div>
