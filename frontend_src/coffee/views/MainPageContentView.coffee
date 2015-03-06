@@ -73,4 +73,5 @@ define(
       render: ->
         @$el.empty().append(@template())
         @
+        
 )

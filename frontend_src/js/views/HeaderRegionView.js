@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLoggedView', 'views/ReviewCategoriesView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLoggedView, ReviewCategoriesView, userModel) {
+  define(['text!templates/headerTpl.htm', 'views/HeaderLoginView', 'views/HeaderLoggedView', 'views/ReviewCategoriesView', 'views/SearchCategoriesView', 'models/userModel', 'backbone'], function(headerTpl, HeaderLoginView, HeaderLoggedView, ReviewCategoriesView, SearchCategoriesView, userModel) {
     var HeaderRegionView;
     return HeaderRegionView = (function(_super) {
       __extends(HeaderRegionView, _super);
@@ -13,7 +13,8 @@
 
       HeaderRegionView.prototype.events = function() {
         return {
-          'click nav a.categoriesBtn': 'showCategories'
+          'click nav a.categoriesBtn': 'showCategories',
+          'click a.search-categories': 'showCategories'
         };
       };
 
@@ -62,9 +63,11 @@
       };
 
       HeaderRegionView.prototype.showCategories = function(event) {
+        var type;
         event.preventDefault();
+        type = $(event.currentTarget).attr('data-type');
         this.reviewCategoriesView = new ReviewCategoriesView({
-          type: 'review'
+          type: type
         });
         return $('body').append(this.reviewCategoriesView.render().$el);
       };

@@ -2,12 +2,16 @@ define(
   [
     'text!templates/reviewCategoriesTpl.htm'
     'text!templates/finedCategoriesTpl.htm'
+    'text!templates/categoriesSearchTpl.htm'
+    'text!templates/categoriesSearchResultTpl.htm'    
     'views/PopUpView'
     'backbone'
   ]
   (
     reviewCategoriesTpl
     finedCategoriesTpl
+    categoriesSearchTpl
+    categoriesSearchResultTpl
     PopUpView
   ) ->
     class ReviewCategoriesView extends PopUpView
@@ -20,14 +24,24 @@ define(
           'click .connect p a'              : 'closePopup'
           'keyup input.category-for-review' : 'getCategories'
           'click .create-new-review'        : 'closePopup'
+          'click .goPostsReviews'        : 'closePopup'
+          
           
       className: 'barrier'
 
       template: _.template(reviewCategoriesTpl)
+      
       categoriesTemplate: _.template(finedCategoriesTpl)
+      
+      searchTemplate: _.template(categoriesSearchTpl)
+      
+      searchCategoriesTemplate: _.template(categoriesSearchResultTpl)
 
       render: ->
-        @$el.empty().append(@template())
+        if @options.type == 'review'
+          @$el.empty().append(@template())
+        else
+          @$el.empty().append(@searchTemplate())
         super
         @onRender()
         @
@@ -41,7 +55,10 @@ define(
       getCategories: ->
         categoryText = $('input.category-for-review').val();
         if (categoryText.length >= 2)
-          $.get("/api/post/get-reviews-categories/"+ categoryText, (data) => @checkErrors(data))
+          if @options.type == 'review'
+            $.get("/api/post/get-reviews-categories/"+ categoryText, (data) => @checkErrors(data))
+          else if @options.type = 'search'
+            $.get("/api/post/search-categories/"+ categoryText, (data) => @checkErrors(data))
         else 
           $('.found-categories').hide()
 
@@ -50,7 +67,10 @@ define(
         if data.error is yes then @showError(data.errorText) else @setCategoriesData(data.result)
         
       setCategoriesData: (data) ->
-        $('.found-categories').empty().append(@categoriesTemplate(_.extend({}, {'categories': data})))
+        if @options.type == 'review'
+          $('.found-categories').empty().append(@categoriesTemplate(_.extend({}, {'categories': data})))
+        else
+          $('.found-categories').empty().append(@searchCategoriesTemplate(_.extend({}, {'categories': data})))
         $('.found-categories').show()
       
       showError: (data) ->

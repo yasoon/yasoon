@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/mainPageHeadingTpl.htm', 'backbone', 'videoBG', 'moderniz'], function(mainPageHeadingTpl) {
+  define(['text!templates/mainPageHeadingTpl.htm', 'text!templates/categoriesSearchResultTpl.htm', 'backbone', 'videoBG', 'moderniz'], function(mainPageHeadingTpl, categoriesSearchResultTpl) {
     var MainPageHeadingView;
     return MainPageHeadingView = (function(_super) {
       __extends(MainPageHeadingView, _super);
@@ -14,6 +14,14 @@
       MainPageHeadingView.prototype.className = 'mainPage-intro';
 
       MainPageHeadingView.prototype.template = _.template(mainPageHeadingTpl);
+
+      MainPageHeadingView.prototype.categoriesTemplate = _.template(categoriesSearchResultTpl);
+
+      MainPageHeadingView.prototype.events = function() {
+        return {
+          'keyup input.category-for-review-main': 'getCategoriesMain'
+        };
+      };
 
       MainPageHeadingView.prototype.render = function() {
         this.$el.html(this.template()).css({
@@ -53,6 +61,39 @@
             }
           }), 200);
         }
+      };
+
+      MainPageHeadingView.prototype.getCategoriesMain = function() {
+        var categoryText;
+        categoryText = $('input.category-for-review-main').val();
+        if (categoryText.length >= 2) {
+          return $.get("/api/post/search-categories/" + categoryText, (function(_this) {
+            return function(data) {
+              return _this.checkErrorsMain(data);
+            };
+          })(this));
+        } else {
+          return $('.found-categories-main').hide();
+        }
+      };
+
+      MainPageHeadingView.prototype.checkErrorsMain = function(data) {
+        if (data.error === true) {
+          return this.showErrorMain(data.errorText);
+        } else {
+          return this.setCategoriesDataMain(data.result);
+        }
+      };
+
+      MainPageHeadingView.prototype.setCategoriesDataMain = function(data) {
+        $('.found-categories-main').empty().append(this.categoriesTemplate(_.extend({}, {
+          'categories': data
+        })));
+        return $('.found-categories-main').show();
+      };
+
+      MainPageHeadingView.prototype.showErrorMain = function(data) {
+        return $('.found-categories-main').hide();
       };
 
       return MainPageHeadingView;

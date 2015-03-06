@@ -69,9 +69,36 @@ class CategoryService extends AbstractApiService {
             if (empty($last)) {
                 $string = $searchResult->getPath();
                 $string1 = rtrim($string, ",");
-                $string2 = str_replace($text,'<b>'.$text.'</b>', $string1);
+                $string2 = preg_replace("/".$text."/i", "<b>\$0</b>", $string1);
                 $categories[] =  array('id' => $id, 'text' => $string2);
             } 
+        }
+        
+        if (!empty($categories)) {
+            $result = ['error' => false, 'result' => $categories];
+        }
+        
+        return $result;
+    }
+    
+    public function getCategoriesByText($text) 
+    {
+        $result = ['error' => true, 'errorText' => 'Нет совпадений'];
+        
+        $searchResults = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                ->createQueryBuilder('c')
+                ->where('c.title LIKE :text')
+                ->setParameter('text', '%'.$text.'%')
+                ->getQuery()
+                ->getResult();
+        
+        $categories = [];
+        foreach ($searchResults as $searchResult) {
+            $id = $searchResult->getId();
+
+            $string = $searchResult->getTitle();
+            $string1 = preg_replace("/".$text."/i", "<b>\$0</b>", $string);
+            $categories[] =  array('id' => $id, 'text' => $string1);
         }
         
         if (!empty($categories)) {

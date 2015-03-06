@@ -4,6 +4,7 @@ define(
     'views/HeaderLoginView'
     'views/HeaderLoggedView'
     'views/ReviewCategoriesView'
+    'views/SearchCategoriesView'
     'models/userModel'
     'backbone'
   ]
@@ -12,12 +13,14 @@ define(
     HeaderLoginView
     HeaderLoggedView
     ReviewCategoriesView
+    SearchCategoriesView
     userModel
   ) ->
     class HeaderRegionView extends Backbone.View
     
       events: ->
         'click nav a.categoriesBtn': 'showCategories'
+        'click a.search-categories': 'showCategories'
         
       template: _.template(headerTpl)
 
@@ -43,6 +46,7 @@ define(
         
       showCategories:(event) ->
         event.preventDefault()
-        @reviewCategoriesView = new ReviewCategoriesView({type: 'review'})
+        type = $(event.currentTarget).attr('data-type')
+        @reviewCategoriesView = new ReviewCategoriesView({type: type})
         $('body').append(@reviewCategoriesView.render().$el)
 )

@@ -476,6 +476,17 @@ class PostController {
 
         return $result;
     }
+    
+    /**
+     * @Route("/search-categories/{text}")
+     * @Method({"GET"})
+     */
+    public function getCategoriesByText($text)
+    {
+        $result = $this->category_service->getCategoriesByText($text);
+
+        return $result;
+    }
 
     
     /**

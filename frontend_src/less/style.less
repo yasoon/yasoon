@@ -1722,12 +1722,25 @@ article, section{
     width: 100%;
 }
 .auto-complete > ul {
-    background: #FFF;
     border-radius: 0 0 3px 3px;
     box-shadow: 0 0 5px #000;
     display: none;
     margin: 0;
     padding: 0;
+}
+
+.auto-complete-main {
+    width: 50%;
+    margin: auto;
+    .found-categories-main {
+        font-size: 1.4em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .auto-complete-main {
+        width: 90%;
+    }
 }
 
 .expert {
@@ -1818,6 +1831,11 @@ article, section{
 
 .categories-path {
     margin: 15px 0;
+}
+
+.found-categories {
+    max-height: 137px;
+    overflow-y: auto;
 }
 
 
