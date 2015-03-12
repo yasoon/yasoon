@@ -13,7 +13,7 @@ define(
 
       initialize: ->
         @createMainPageHeading()
-        @createMainPageContent()
+        #@createMainPageContent()
         @
 
       createMainPageHeading: ->

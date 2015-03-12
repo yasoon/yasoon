@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['views/CategoriesListView', 'views/PostsPagePreviews', 'views/PostsDescriptionView', 'views/EmptyView', 'collections/CategoryCollection', 'collections/PostsPreviewsList', 'backbone'], function(CategoriesListView, PostsPreviews, PostsDescriptionView, EmptyView, CategoryCollection, PostsPreviewsList) {
+  define(['views/CategoriesListView', 'views/PostsPagePreviews', 'views/PostsDescriptionView', 'views/EmptyView', 'views/StatisticPreview', 'collections/CategoryCollection', 'collections/PostsPreviewsList', 'backbone', 'bootstrap-rating'], function(CategoriesListView, PostsPreviews, PostsDescriptionView, EmptyView, StatisticPreview, CategoryCollection, PostsPreviewsList) {
     var PostsPageView;
     return PostsPageView = (function(_super) {
       __extends(PostsPageView, _super);
@@ -14,6 +14,12 @@
       PostsPageView.prototype.tagName = 'section';
 
       PostsPageView.prototype.className = 'page-layout';
+
+      PostsPageView.prototype.events = function() {
+        return {
+          'click .nav-cat li a': 'checkCategoryChildren'
+        };
+      };
 
       PostsPageView.prototype.initialize = function(options) {
         this.model.set({
@@ -92,6 +98,9 @@
           errorText = null;
         }
         text = errorText != null ? errorText : _.getContent(34);
+        if ($('.items-list').length) {
+          $('.items-list').parent().remove();
+        }
         if (this.emptyView == null) {
           this.emptyView = new EmptyView({
             message: text
@@ -107,7 +116,7 @@
         description = parseInt(this.model.get('category')) === 0 ? [
           {
             'id': 0,
-            'name': 'все отрасли'
+            'name': 'Все'
           }
         ] : this.model.get('pathData');
         return this.model.set('description', description);
@@ -116,15 +125,17 @@
       PostsPageView.prototype.createPostsDescription = function() {
         this.postsDescription();
         this.$el.append(this.postsDescriptionView.render().$el);
-        return this.getPostsList();
+        return this.getReviewsStatistic();
       };
 
       PostsPageView.prototype.createPosts = function() {
-        if (this.postsPreviews == null) {
-          this.posts();
-        } else {
-          this.postsPreviews.delegateEvents();
+        if ($('.items-list').length) {
+          $('.items-list').parent().remove();
         }
+        if ($('.empty-text').length) {
+          $('.empty-text').parent().remove();
+        }
+        this.posts();
         return this.$el.append(this.postsPreviews.render().$el);
       };
 
@@ -160,7 +171,63 @@
         if (data.error === true) {
           return this.emptyPosts(data.errorText);
         } else {
-          return this.model.set('postsList', data[this.model.get('sort')]);
+          this.model.set('postsList', data[this.model.get('sort')]);
+          return this.model.trigger('change:postsList');
+        }
+      };
+
+      PostsPageView.prototype.checkCategoryChildren = function(event) {
+        var element, obj;
+        if ($(event.currentTarget).attr('data-last') === '0') {
+          _.each($('.nav-cat li a'), (function(_this) {
+            return function(category) {
+              return $(category).removeClass('active');
+            };
+          })(this));
+          element = $(event.currentTarget);
+          $(".nav-cat a:first").addClass('active');
+          element.addClass('active');
+          event.preventDefault();
+          this.model.set('category', event.target.id);
+          obj = {
+            Url: '#/posts/' + event.target.id + '/' + this.model.get('sort')
+          };
+          window.history.pushState(obj, 'yasoon', obj.Url);
+          $(".cat-title a.active").remove();
+          if (event.target.id !== '0') {
+            element.clone().insertAfter(".cat-title a:last");
+          }
+          return this.getReviewsStatistic();
+        }
+      };
+
+      PostsPageView.prototype.getReviewsStatistic = function() {
+        if ($('.cat-statistic').length) {
+          $('.cat-statistic').parent().remove();
+        }
+        if ($('.items-list').length) {
+          $('.items-list').parent().remove();
+        }
+        if ($('.empty-text').length) {
+          $('.empty-text').parent().remove();
+        }
+        return $.get("/api/post/get_reviewsStatistic/" + (this.model.get('category')), (function(_this) {
+          return function(data) {
+            return _this.checkStatisticsErrors(data);
+          };
+        })(this));
+      };
+
+      PostsPageView.prototype.checkStatisticsErrors = function(data) {
+        this.getPostsList();
+        if (data.error === true) {
+          if ($('.cat-statistic').length) {
+            return $('.cat-statistic').parent().remove();
+          }
+        } else {
+          this.statisticPreview = new StatisticPreview(data.result);
+          this.$el.append(this.statisticPreview.render().$el);
+          return $('.ratingCategory').rating();
         }
       };
 

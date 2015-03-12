@@ -1,11 +1,14 @@
 <article class="cat-title">
-        <% _.each(description, function(category) { %>
-            <a href="/#/posts/<%= category.id %>/<%= sort %>" id="<%= category.id %>">
-                <%= category.name %>
-            </a>
-        <% }); %>
-	<p><%= _.getContent(67) %></p>
-	<div class="hr"></div>
+    <a href="/#/posts/0/<%= sort %>" id="0">Все</a>
+    <% _.each(description, function(category) { %>
+        <% if (category.id != 0) { %>
+        <a href="/#/posts/<%= category.id %>/<%= sort %>" id="<%= category.id %>">
+            <%= category.name %>
+        </a>
+        <% } %>
+    <% }); %>
+    <p><%= _.getContent(67) %></p>
+    <div class="hr"></div>
 </article>
 
 <nav class="navigate">

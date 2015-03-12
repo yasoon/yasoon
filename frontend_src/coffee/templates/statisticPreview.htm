@@ -1,0 +1,29 @@
+<article class="cat-statistic" style="<%= _.getContent(109) %>">
+    <div>
+    <label for="rating"><%= _.getContent(104) %></label>
+    <input type="hidden" name="rating" class="ratingCategory" 
+        data-filled="symbol symbol-filled small" 
+        data-empty="symbol symbol-empty small" 
+        readonly="readonly"
+        value="<%= rating %>" 
+        data-start="0" data-stop="5"/>
+    </div>
+    <div>
+    <label><%= _.getContent(105) %></label>
+    <input type="hidden" name="prospects" class="ratingCategory" 
+        data-filled="symbol symbol-filled small" 
+        data-empty="symbol symbol-empty small" 
+        readonly="readonly"
+        value="<%= prospects %>" 
+        data-start="0" data-stop="5"/>
+    </div>
+    <div>
+        <label><%= _.getContent(106) %></label><%= question1 %>%
+    </div>
+    <div>
+        <label><%= _.getContent(107) %></label><%= question2 %>%
+    </div>
+    <div>
+        <label><%= _.getContent(108) %></label><%= all %>
+    </div>
+</article>

@@ -1,0 +1,39 @@
+<div style="<%= typeof(user) !== "undefined" && user == 'admin' ? _.getContent(78) : ''%>">
+<% if (typeof(previewPostImg) !== "undefined" && previewPostImg !== '') { %>
+    <div class="admin-post-container">
+        <div class="post-preview-all">
+            <img src="<%= previewPostImg %>" class="post-preview-img active">
+        </div>
+    <% } %>
+<div class="speaker-avatar">
+	<a href="#/speaker/<%= authorId %>/posts">
+		<% if(avatarImg === null) { %>
+			<img src="/frontend/img/noAvatar.jpg" alt="" class="usr-ic-small" alt="<%= name %>">
+		<% } else { %>
+			<img src="/web/upload/avatar/<%= avatarImg %>" class="usr-ic-small" alt="<%= name %>">
+		<% } %>
+                
+                <%= authorName %> | отзыв
+	</a>
+</div>
+<h2>
+    <a href="#/review/<%= id %>">
+        <%= title %>
+    </a>
+    <% if (authorId === window.config.userId) { %>
+    <a href="#/review/<%= id %>/edit" class="editable"></a>
+    <% } %>
+</h2>
+
+<div class="content">
+    <p>
+        <%= text %>
+
+    </p>
+</div>
+
+<div class="hr"></div>
+<% if (typeof(previewPostImg) !== "undefined" && previewPostImg !== '') { %>
+</div>
+<% } %>
+</div>

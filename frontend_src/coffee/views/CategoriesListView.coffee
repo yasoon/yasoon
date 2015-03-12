@@ -30,7 +30,6 @@ define(
         @addOne(category)
       )
       @$("a##{@data.category}").addClass('active')
-
       @
 
     addOne: (category) ->

@@ -15,6 +15,7 @@ use Yasoon\Site\Entity\CategoryEntity;
 use Yasoon\Site\Entity\PostCategoryEntity;
 use Yasoon\Site\Entity\PostEntity;
 use Yasoon\Site\Entity\PostAnswerEntity;
+use Yasoon\Site\Entity\ReviewEntity;
 
 error_reporting(E_ALL);
 
@@ -41,6 +42,8 @@ class PostCategoryService extends AbstractApiService {
      */
     public function getPostsByCategory($categoryId, $page, $itemsPerPage, $sort)
     {
+        $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
+        $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
         try {
             $offset = ($page*$itemsPerPage)-$itemsPerPage;
             
@@ -66,7 +69,7 @@ class PostCategoryService extends AbstractApiService {
                      $all = $clone->andWhere('p.likes >= :likes')
                         ->andWhere('p.date >= :dateTime')
                         ->setParameter('dateTime', $dateTime)
-                        ->setParameter('likes', 0)
+                        ->setParameter('likes', (int) $minLikesCount->getText())
                         ->orderBy('p.id', 'DESC')
                         ->getQuery()->getResult();
                  }
@@ -97,7 +100,7 @@ class PostCategoryService extends AbstractApiService {
                         ->andWhere('p.likes >= :likes')
                         ->andWhere('p.date >= :dateTime')
                         ->setParameter('dateTime', $dateTime)
-                        ->setParameter('likes', 0)
+                        ->setParameter('likes', (int) $minLikesCount->getText())
                         ->orderBy('p.date', 'DESC')
                         ->getQuery()
                         ->getResult();
@@ -157,20 +160,43 @@ class PostCategoryService extends AbstractApiService {
                                 'interview_name'=> $interviewName,
                                 'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
                                 'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
-                                'user'          => $user];
+                                'user'          => $user,
+                                'type'          => 'post'];
                     unset($tags);
                     } catch(\Exception $e) {
                         $count_all--;
                     }
                 }
-            } else {
-               return ['error' => true, 'errorText' => 'Нет отзывов и интервью по этой тематике']; 
+                
+                
             }
+            
+            $reviews = $this->getReviews($categoryId, $itemsPerPage, $offset, $sort, $minLikesCount, $dateTime);
+            $allResults =[];
+            if (!empty($postsSort) ) {
+                if (!empty($reviews)) {
+                    $allResults = array_merge($postsSort, $reviews);
+                } else {
+                    $allResults = $postsSort;
+                }
+            } else {
+                if (!empty($reviews)) {
+                    $allResults = $reviews;
+                    $count_all = count($reviews);
+                } else {
+                    return ['error' => true, 'errorText' => 'Нет отзывов и интервью по этой тематике']; 
+                }
+            }
+            
+            $name = 'publishDate';
+            usort($allResults, function ($a, $b) use(&$name){
+                return $a[$name] - $b[$name];
+            });
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         
-        $result = [$sort   => $postsSort,
+        $result = ['error' => false, $sort   => $allResults,
                    'postsCount' => $count_all];
         
         return $result;
@@ -272,6 +298,92 @@ class PostCategoryService extends AbstractApiService {
         }
         
         return array('count_all' => count($authors), 'result' =>$result);
+    }
+    
+    protected function getReviews($categoryId,$itemsPerPage, $offset, $sort, $minLikesCount, $dayLimit)
+    {
+        if ($categoryId == 0) {
+            $categoriesAll = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findAll();
+        } else {
+            $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->find($categoryId);
+
+            $categoriesAll = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                    ->createQueryBuilder('c')
+                    ->where('c.path LIKE :text')
+                    ->setParameter('text', '%'.$category->getPath().'%')
+                    ->getQuery()
+                    ->getResult();
+        }
+        $categories =[];
+        foreach ($categoriesAll as $categoryOne) {
+            $categories[] = $categoryOne->getId();  
+        }
+
+        $results_reviewsSort = null;
+        if ($sort == 'dateSort') {
+            $results_reviewsSort =  $this->em->createQueryBuilder()
+                ->select('p')
+                ->from('Yasoon\Site\Entity\ReviewEntity', 'p')
+                ->setMaxResults($itemsPerPage)
+                ->setFirstResult($offset)
+                ->where('p.categoryId IN (:categories)')
+                ->andWhere('p.date >= :dateTime')
+                ->andWhere('p.likes >= :likes')
+                ->setParameter('categories', $categories)
+                ->setParameter('dateTime', $dayLimit)
+                ->setParameter('likes', (int) $minLikesCount->getText())
+                ->orderBy('p.date', 'DESC')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $results_reviewsSort =$this->em->createQueryBuilder()
+                ->select('p')
+                ->from('Yasoon\Site\Entity\ReviewEntity', 'p')
+                ->setMaxResults($itemsPerPage)
+                ->setFirstResult($offset)
+                ->orderBy('p.likes', 'DESC')
+                ->getQuery()
+                ->getResult();
+        }
+        $reviewsSort = [];
+        foreach($results_reviewsSort as $review)
+        { 
+            $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                    ->find($review->getCategoryId());
+            if (!empty($category)) {
+                $types = [];
+                $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
+                        ->findAll();
+                foreach ($review_types as $type) {
+                    $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
+                            ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
+                    $selectedValue = !empty($reviewType) ? "selected" : "";
+                    $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
+                }
+
+                $reviewsSort[] = [
+                    'id'            => $review->getId(),
+                    'authorId'      => $review->getAuthorId(),
+                    'authorName'    => $review->getAuthor()->getName(),
+                    'avatarImg'     => $review->getAuthor()->getImage(),
+                    'title'         => $review->getTitle(),
+                    'text'          => $review->getText(),
+                    'rating'        => $review->getRating(),
+                    'publishDate'   => $review->getDate()->format('d/m/Y'),
+                    'expert'        => $review->getExpert(),
+                    'category'      => $category->getTitle(),
+                    'categoryId'    => $category->getId(),
+                    'question1'     => $review->getQuestion1(),
+                    'question2'     => $review->getQuestion2(),
+                    'prospects'     => $review->getProspects(),
+                    'types'         => $types,
+                    'post_likes'    => $review->getLikes(),
+                    'type'          => 'review'
+                ];
+            }
+        }
+        
+        return $reviewsSort;
     }
     
 }

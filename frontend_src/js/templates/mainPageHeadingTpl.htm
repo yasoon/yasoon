@@ -1,8 +1,9 @@
 <div class="main-w">
 	<%= _.getContent(1) %>
         <a href="#/post/new/1" class="btn green">Рассказать историю</a> <br />
+        <div><h2><%= _.getContent(101) %></h2></div>
 	<div class="auto-complete auto-complete-main">
-            <input type="text" class="category-for-review-main" />
+            <input type="text" class="category-for-review-main" placeholder="<%= _.getContent(102) %>"/>
             <ul class="found-categories-main"></ul>
         </div>
 </div>

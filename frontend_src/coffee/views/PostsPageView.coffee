@@ -4,21 +4,27 @@ define(
     'views/PostsPagePreviews'
     'views/PostsDescriptionView'
     'views/EmptyView'
+    'views/StatisticPreview'
     'collections/CategoryCollection'
     'collections/PostsPreviewsList'
     'backbone'
+    'bootstrap-rating'
   ]
   (
     CategoriesListView
     PostsPreviews
     PostsDescriptionView
     EmptyView
+    StatisticPreview
     CategoryCollection
     PostsPreviewsList
   ) ->
     class PostsPageView extends Backbone.View
       tagName: 'section'
       className: 'page-layout'
+      
+      events: ->
+        'click .nav-cat li a': 'checkCategoryChildren'
 
       initialize: (options) ->
         @model.set({'category': options.category, 'sort': options.sort || 'dateSort'})
@@ -60,20 +66,23 @@ define(
 
       emptyPosts: (errorText = null)->
         text = errorText  ? _.getContent(34)
+        if $('.items-list').length then $('.items-list').parent().remove()
         if not @emptyView? then @emptyView = new EmptyView({message:text}) else @emptyView.delegateEvents()
         @$el.append(@emptyView.render().$el)
 
       setDescription: ->
-        description = if parseInt(@model.get('category')) is 0 then [{'id': 0, 'name': 'все отрасли'}] else @model.get('pathData')
+        description = if parseInt(@model.get('category')) is 0 then [{'id': 0, 'name': 'Все'}] else @model.get('pathData')
         @model.set('description', description)
 
       createPostsDescription: ->
         @postsDescription()
         @$el.append(@postsDescriptionView.render().$el)
-        @getPostsList()
+        @getReviewsStatistic()
 
       createPosts: ->
-        if not @postsPreviews? then @posts() else @postsPreviews.delegateEvents()
+        if $('.items-list').length then $('.items-list').parent().remove()
+        if $('.empty-text').length then $('.empty-text').parent().remove()
+        @posts()
         @$el.append(@postsPreviews.render().$el)
 
       categoryList: ->
@@ -89,7 +98,39 @@ define(
       checkErrors: (data) ->
         if data.error is yes
           @emptyPosts(data.errorText)
-        else 
+        else
           @model.set('postsList', data[@model.get('sort')])
+          @model.trigger('change:postsList')
         
+      checkCategoryChildren: (event) ->
+        if $(event.currentTarget).attr('data-last') == '0'
+          _.each($('.nav-cat li a'), (category) => $(category).removeClass('active'))
+          element = $(event.currentTarget)
+          $(".nav-cat a:first").addClass('active')
+          element.addClass('active')
+          event.preventDefault()
+          @model.set('category', event.target.id)
+          obj = {Url: '#/posts/'+event.target.id+'/' + @model.get('sort') };
+          window.history.pushState(obj, 'yasoon', obj.Url)
+          $(".cat-title a.active").remove()
+          if (event.target.id != '0') then element.clone().insertAfter( ".cat-title a:last" )
+          @getReviewsStatistic()
+          
+      getReviewsStatistic: ->
+        if $('.cat-statistic').length then $('.cat-statistic').parent().remove()
+        if $('.items-list').length then $('.items-list').parent().remove()
+        if $('.empty-text').length then $('.empty-text').parent().remove()
+        $.get("/api/post/get_reviewsStatistic/#{@model.get('category')}", (data) => @checkStatisticsErrors(data))
+
+      checkStatisticsErrors: (data) ->
+        @getPostsList()
+        if data.error is yes
+          if $('.cat-statistic').length then $('.cat-statistic').parent().remove()
+        else
+          @statisticPreview = new StatisticPreview(data.result)
+          @$el.append(@statisticPreview.render().$el)
+          $('.ratingCategory').rating()
+        
+         
+          
 )

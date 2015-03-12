@@ -478,6 +478,18 @@ class PostController {
     }
     
     /**
+     * @Route("/get_reviewsStatistic/{categoryId}")
+     * @Method({"GET"})
+     */
+    public function getReviewsStatistic($categoryId)
+    {
+        $result = $this->category_service->getCategoryStatistic($categoryId);
+
+        return $result;
+    }
+    
+    
+    /**
      * @Route("/search-categories/{text}")
      * @Method({"GET"})
      */

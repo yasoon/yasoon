@@ -14,7 +14,7 @@
       HeaderRegionView.prototype.events = function() {
         return {
           'click nav a.categoriesBtn': 'showCategories',
-          'click a.search-categories': 'showCategories'
+          'click .search-categories': 'showCategories'
         };
       };
 

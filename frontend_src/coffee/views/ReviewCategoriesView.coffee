@@ -48,6 +48,7 @@ define(
 
       onRender: ->
         @$el.show()
+        $('.category-for-review').focus()
 
       closePopup: ->
         $('.popUpBackground').click()
@@ -62,7 +63,6 @@ define(
         else 
           $('.found-categories').hide()
 
-        
       checkErrors: (data) ->
         if data.error is yes then @showError(data.errorText) else @setCategoriesData(data.result)
         

@@ -36,15 +36,20 @@ class CategoryService extends AbstractApiService {
         
         /** @var CategoryEntity[] $categories */
         $categories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy(['level' => $lvl], ['title' => 'ASC']);
-
+        
         $result = [];
         foreach($categories as $cat)
         {
+            $children = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy(array('parentId' => $cat->getId()));
+                    
+            $isLast = !empty($children) ? 1 : 0;
+            
             $result[] = [
                 'id'            => $cat->getId(),
                 'name'          => $cat->getTitle(),
                 'description'   => $cat->getDescription(),
-                'parentId'      => $cat->getParent()
+                'parentId'      => $cat->getParent(),
+                'isLast'        => $isLast
             ];
         }
         
@@ -81,6 +86,76 @@ class CategoryService extends AbstractApiService {
         return $result;
     }
     
+    public function getCategoryStatistic($id) 
+    {
+        $result = ['error' => true, 'errorText' => 'Нет совпадений'];
+        
+        if (!empty($id)) {
+            $parents = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy(array('parent' => $id));
+            if (empty($parents)) {
+                $reviewsCount = $this->em->createQueryBuilder()
+                    ->select('count(r.id)')
+                    ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                    ->where('r.categoryId = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getSingleScalarResult();
+                if ($reviewsCount > 0) {
+                    $categoryRating = $this->em->createQueryBuilder()
+                        ->select('AVG( r.rating )')
+                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                        ->where('r.categoryId = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getSingleScalarResult();
+
+                    $categoryProspects = $this->em->createQueryBuilder()
+                        ->select('AVG( r.prospects )')
+                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                        ->where('r.categoryId = :id')
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getSingleScalarResult();
+
+                    $categoryQuestion1Count = $this->em->createQueryBuilder()
+                        ->select('count(r.id)')
+                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                        ->where('r.categoryId = :id')
+                        ->andWhere('r.question1 = :question')
+                        ->setParameter('id', $id)
+                        ->setParameter('question', '1')
+                        ->getQuery()
+                        ->getSingleScalarResult();   
+
+                    $categoryQuestion2Count =  $this->em->createQueryBuilder()
+                        ->select('count(r.id)')
+                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                        ->where('r.categoryId = :id')
+                        ->andWhere('r.question2 = :question')
+                        ->setParameter('id', $id)
+                        ->setParameter('question', '1')
+                        ->getQuery()
+                        ->getSingleScalarResult();
+                    
+                    $result = [
+                            'error'     => false, 
+                            'result'    => [
+                                'all'       => $reviewsCount,
+                                'rating'    => intval($categoryRating),
+                                'prospects' => intval($categoryProspects),
+                                'question1' => intval($categoryQuestion1Count*100/$reviewsCount),
+                                'question2' => intval($categoryQuestion2Count*100/$reviewsCount)
+                                ]
+                        ];
+                }
+                
+            }       
+            
+        }
+        return $result;
+        
+    }
+
     public function getCategoriesByText($text) 
     {
         $result = ['error' => true, 'errorText' => 'Нет совпадений'];
@@ -170,15 +245,16 @@ class CategoryService extends AbstractApiService {
                         'parentId'      => $parentId, 
                         'type'          => 'parent');
                 foreach ($searchResults as $searchResult) {
+                    $children = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy(array('parentId' => $searchResult->getId()));
+                    
+                    $isLast = !empty($children) ? 1 : 0;
                     $categories['categories'][] =  array(
                         'id'            => $searchResult->getId(), 
                         'name'          => $searchResult->getTitle(), 
                         'description'   => $searchResult->getDescription(),
+                        'isLast'        => $isLast,
                         'type'          => 'child');
                 }
-
-
-
                 $path = explode(",", $category->getPath());
                 $searchCategories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
                     ->createQueryBuilder('c')

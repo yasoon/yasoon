@@ -20,7 +20,7 @@ define(
     
       events: ->
         'click nav a.categoriesBtn': 'showCategories'
-        'click a.search-categories': 'showCategories'
+        'click .search-categories': 'showCategories'
         
       template: _.template(headerTpl)
 

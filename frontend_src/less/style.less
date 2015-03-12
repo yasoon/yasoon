@@ -855,6 +855,18 @@ article {
     font-family: 'MuseoSansCyrl-700', Arial;
     color: #000;
     .ht-style;
+    
+    a{
+        font-size: 16px;
+    }
+    
+    a:first-child::before {
+        content: "";
+    }
+    
+    a::before {
+        content: "\25BA";
+    }
 
     p {
       font-size: 18px;
@@ -1092,6 +1104,10 @@ footer {
       }
     }
   }
+}
+
+.p-box.search {
+    padding: 0px !important;
 }
 
 aside li {
@@ -1837,5 +1853,37 @@ article, section{
     max-height: 137px;
     overflow-y: auto;
 }
+
+.search-categories {
+    background: url(../img/toolbar_find.png) no-repeat;
+    background-size: 20px 20px;
+    height: 30px;
+    width: 30px;
+    left: 95px;
+    top: 15px !important;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.category-for-review-main, .category-for-review {
+    height: 40px;
+    background-color: #fff !important;
+    padding-left: 45px !important;
+    background: url(../img/toolbar_find.png) no-repeat;
+    background-size: 40px 40px;
+    background-origin: padding-box; 
+}
+
+.cat-statistic {
+    font-size: 1.4em;
+    padding: 10px 0 10px 10px;
+    border-left: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+    
+    label {
+        width: 65%;
+    }
+}
+
 
 
