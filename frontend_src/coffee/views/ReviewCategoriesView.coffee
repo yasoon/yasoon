@@ -24,7 +24,8 @@ define(
           'click .connect p a'              : 'closePopup'
           'keyup input.category-for-review' : 'getCategories'
           'click .create-new-review'        : 'closePopup'
-          'click .goPostsReviews'        : 'closePopup'
+          'click .goPostsReviews'           : 'closePopup'
+          
           
           
       className: 'barrier'
@@ -48,7 +49,9 @@ define(
 
       onRender: ->
         @$el.show()
-        $('.category-for-review').focus()
+        setTimeout ( ->
+          $('.category-for-review').focus()
+        ), 1000
 
       closePopup: ->
         $('.popUpBackground').click()

@@ -109,7 +109,10 @@
         } else {
           this.postsList.delegateEvents();
         }
-        return this.$el.append(this.postsList.render().$el);
+        this.$el.append(this.postsList.render().$el);
+        return setTimeout((function() {
+          return $('.ratingSpeaker').rating();
+        }), 1000);
       };
 
       SpeakerContentView.prototype.getAnswers = function() {

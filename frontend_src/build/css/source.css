@@ -6609,7 +6609,8 @@ blockquote {
   display: block;
 }
 .like-this i,
-.q-post i {
+.q-post i,
+.like-this-review i {
   background: url(../img/spr.jpg) no-repeat 0 0;
   background-size: 115px auto;
   width: 50px;
@@ -6620,13 +6621,15 @@ blockquote {
   top: 0;
 }
 .like-this span,
-.q-post span {
+.q-post span,
+.like-this-review span {
   display: block;
   color: #7a7a7a;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.like-this {
+.like-this,
+.like-this-review {
   position: absolute;
   top: 50%;
   margin-top: -16px;
@@ -6638,13 +6641,16 @@ blockquote {
   color: #238C00;
   cursor: pointer;
 }
-.post .like-this {
+.post .like-this,
+.post .like-this-review {
   top: 20px;
 }
-.q-box .like-this {
+.q-box .like-this,
+.q-box .like-this-review {
   top: 25px;
 }
-.like-title .like-this {
+.like-title .like-this,
+.like-title .like-this-review {
   top: 15px;
 }
 .like-this-lego {
@@ -7649,21 +7655,16 @@ section {
 }
 .search-categories {
   background: url(../img/toolbar_find.png) no-repeat;
-  background-size: 20px 20px;
+  background-size: 16px 16px;
   height: 30px;
   width: 30px;
-  left: 95px;
-  top: 15px !important;
-  cursor: pointer;
-  z-index: 2;
+  top: 3px !important;
+  border: 0;
 }
 .category-for-review-main,
 .category-for-review {
   height: 40px;
   background-color: #fff !important;
-  padding-left: 45px !important;
-  background: url(../img/toolbar_find.png) no-repeat;
-  background-size: 40px 40px;
   background-origin: padding-box;
 }
 .cat-statistic {
@@ -7673,7 +7674,12 @@ section {
   border-bottom: 1px solid #e2e2e2;
 }
 .cat-statistic label {
-  width: 65%;
+  width: 20%;
+}
+@media screen and (max-width: 900px) {
+  .cat-statistic label {
+    width: 40%;
+  }
 }
 ul li {
   list-style: none;

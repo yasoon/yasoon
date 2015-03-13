@@ -697,7 +697,7 @@ blockquote {
   }
 }
 
-.like-this, .q-post {
+.like-this, .q-post, .like-this-review {
   & i {
     background: url(../img/spr.jpg) no-repeat 0 0;
     background-size: 115px auto;
@@ -716,7 +716,7 @@ blockquote {
   }
 }
 
-.like-this {
+.like-this, .like-this-review {
   position: absolute;
   top: 50%;
   margin-top: -16px;
@@ -1856,21 +1856,16 @@ article, section{
 
 .search-categories {
     background: url(../img/toolbar_find.png) no-repeat;
-    background-size: 20px 20px;
+    background-size: 16px 16px;
     height: 30px;
     width: 30px;
-    left: 95px;
-    top: 15px !important;
-    cursor: pointer;
-    z-index: 2;
+    top: 3px !important;
+    border: 0;
 }
 
 .category-for-review-main, .category-for-review {
     height: 40px;
     background-color: #fff !important;
-    padding-left: 45px !important;
-    background: url(../img/toolbar_find.png) no-repeat;
-    background-size: 40px 40px;
     background-origin: padding-box; 
 }
 
@@ -1881,8 +1876,14 @@ article, section{
     border-bottom: 1px solid #e2e2e2;
     
     label {
-        width: 65%;
+        width: 20%;
     }
+    
+    @media screen and (max-width: 900px) {
+    label {
+        width: 40%;
+    }
+}
 }
 
 

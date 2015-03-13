@@ -1,0 +1,44 @@
+<div class="like-title">
+    <% if (expert === "1") { %>
+    <div class="expert active expert-left"></div>
+    <% } %>
+    <div class="category-type-review"><h2><%= category %></h2> 
+        <% _.each(types, function(type) { %>
+            <% if (type.selected !== "") { %>
+                  <%= type.name %> <br>   
+            <% } %>
+        <% }); %>
+    </div>
+    <span class="like-this-review">
+            <b><i></i></b>
+            <span class="counter">
+                    <%= post_likes %>
+            </span>
+            <span>вдохновились</span>
+    </span>
+    <h2>
+        <a href="#/review/<%= id %>"><%= title %></a>
+        <% if (authorId === window.config.userId) { %>
+                <a href="#/review/<%= id %>/edit" class="editable"></a>
+        <% } %>
+        <span class="media-pub">
+            <%= _.getDateText(publishDate) %> | 
+            <label for="rating"><%= _.getContent(104) %></label>
+            <input type="hidden" name="rating" class="ratingSpeaker" 
+                data-filled="symbol symbol-filled small" 
+                data-empty="symbol symbol-empty small" 
+                readonly="readonly"
+                value="<%= rating %>" 
+                data-start="0" data-stop="5"/>
+
+        </span>
+    </h2>
+</div>
+<div class="content">
+        <article  class="questionContent">
+            <div class="question_content">
+                <%= text %>
+            </div>
+        </article>
+</div>
+<div class="hr"></div>

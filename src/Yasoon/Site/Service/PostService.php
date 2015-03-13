@@ -912,9 +912,12 @@ class PostService extends AbstractApiService {
             ->from('Yasoon\Site\Entity\PostEntity', 'p')
             ->where('p.id IN('.implode(',', $postId).')')
             ->getQuery()->getResult();
-
-        foreach($posts as $post)
+        $authorId = '';
+        foreach($posts as $key => $post)
         {
+            if ($key == 0) {
+                $authorId = $post->getAuthorId();
+            }
             $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
                 ->leftJoin('c.post', 'p')
                 ->where('c.post_id = '.$post->getId())
@@ -942,7 +945,7 @@ class PostService extends AbstractApiService {
                 $interviewName = $post->getInterview()->getName();
             } 
             
-            $result[] = [
+            $results_posts[] = [
                 'id'            => $post->getId(),
                 'authorId'      => $post->getAuthorId(),
                 'authorName'    => $post->getAuthor()->getName(),
@@ -955,9 +958,72 @@ class PostService extends AbstractApiService {
                 'timeToRead'    => $timeToRead,
                 'interview_name'=> $interviewName,
                 'interview_id'  => $post->getInterview()->getId(),
-                'previewPostImg'    => $post->getPreviewImg()
+                'previewPostImg'=> $post->getPreviewImg(),
+                'type'          => 'post'
             ];
         }
+
+        $results_reviews = $this->em->createQueryBuilder()
+            ->select('r')
+            ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+            ->where('r.authorId = :id')
+            ->setParameter('id', $authorId)
+            ->getQuery()
+            ->getResult();
+        
+        $reviews = [];
+        foreach($results_reviews as $review) { 
+            $rcategory = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                    ->find($review->getCategoryId());
+            if (!empty($rcategory)) {
+                $types = [];
+                $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
+                        ->findAll();
+                foreach ($review_types as $type) {
+                    $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
+                            ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
+                    $selectedValue = !empty($reviewType) ? "selected" : "";
+                    $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
+                }
+
+                $reviews[] = [
+                    'id'            => $review->getId(),
+                    'authorId'      => $review->getAuthorId(),
+                    'authorName'    => $review->getAuthor()->getName(),
+                    'avatarImg'     => $review->getAuthor()->getImage(),
+                    'title'         => $review->getTitle(),
+                    'text'          => $review->getText(),
+                    'rating'        => $review->getRating(),
+                    'publishDate'   => $review->getDate()->format('d/m/Y'),
+                    'expert'        => $review->getExpert(),
+                    'category'      => $rcategory->getTitle(),
+                    'categoryId'    => $rcategory->getId(),
+                    'question1'     => $review->getQuestion1(),
+                    'question2'     => $review->getQuestion2(),
+                    'prospects'     => $review->getProspects(),
+                    'types'         => $types,
+                    'post_likes'    => $review->getLikes(),
+                    'type'          => 'review'
+                ];
+            }
+        }
+        
+        if (!empty($results_posts) ) {
+            if (!empty($reviews)) {
+                $result = array_merge($results_posts, $reviews);
+                $name = 'publishDate';
+                usort($result, function ($a, $b) use(&$name){
+                    return $a[$name] - $b[$name];
+                });
+            } else {
+                $result = $results_posts;
+            }
+        } else {
+            if (!empty($reviews)) {
+                $result = $reviews;
+            }
+        }
+
 
 //        $access = $this->getAccessLevel($post->getAuthorId());
 //
@@ -1014,7 +1080,7 @@ class PostService extends AbstractApiService {
                     $pcats[] = $tag->getCategoryId();
                 }
                 $result[] = [
-                    'postId'          => $post->getId(),
+                    'postId'      => $post->getId(),
                     'authorId'    => $post->getAuthorId(),
                     'avatarImg'   => $post->getAuthor()->getImg(),
                     'authorName'  => $post->getAuthor()->getName(),

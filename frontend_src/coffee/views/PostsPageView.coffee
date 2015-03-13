@@ -65,7 +65,7 @@ define(
         if @model.get('postsList').length > 0 then @createPosts() else @emptyPosts()
 
       emptyPosts: (errorText = null)->
-        text = errorText  ? _.getContent(34)
+        text = _.getContent(34)
         if $('.items-list').length then $('.items-list').parent().remove()
         if not @emptyView? then @emptyView = new EmptyView({message:text}) else @emptyView.delegateEvents()
         @$el.append(@emptyView.render().$el)

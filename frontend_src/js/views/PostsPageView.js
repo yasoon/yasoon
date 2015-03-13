@@ -97,7 +97,7 @@
         if (errorText == null) {
           errorText = null;
         }
-        text = errorText != null ? errorText : _.getContent(34);
+        text = _.getContent(34);
         if ($('.items-list').length) {
           $('.items-list').parent().remove();
         }

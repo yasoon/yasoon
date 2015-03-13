@@ -67,6 +67,10 @@ define(
         postsCollection = new SpeakerPostsCollection(@model.get('speakerPosts'))
         if not @postsList? then @postsList = new SpeakerPostsCollectionView({collection: postsCollection}) else @postsList.delegateEvents()
         @$el.append(@postsList.render().$el)
+        setTimeout ( ->
+          $('.ratingSpeaker').rating()
+        ), 1000
+        
 
       getAnswers: ->
         $.post('/api/post/getQuestions', {'questionid[]': @model.get('answers')}, (data) => @model.set('speakerAnswers', data))

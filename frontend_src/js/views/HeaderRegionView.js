@@ -69,7 +69,10 @@
         this.reviewCategoriesView = new ReviewCategoriesView({
           type: type
         });
-        return $('body').append(this.reviewCategoriesView.render().$el);
+        $('body').append(this.reviewCategoriesView.render().$el);
+        return setTimeout((function() {
+          return $('.category-for-review').focus();
+        }), 1000);
       };
 
       return HeaderRegionView;

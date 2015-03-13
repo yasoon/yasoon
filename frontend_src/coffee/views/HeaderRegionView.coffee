@@ -49,4 +49,7 @@ define(
         type = $(event.currentTarget).attr('data-type')
         @reviewCategoriesView = new ReviewCategoriesView({type: type})
         $('body').append(@reviewCategoriesView.render().$el)
+        setTimeout ( ->
+          $('.category-for-review').focus()
+        ), 1000
 )
