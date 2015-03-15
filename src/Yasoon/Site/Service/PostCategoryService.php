@@ -66,12 +66,20 @@ class PostCategoryService extends AbstractApiService {
                 $all = $clone->orderBy('p.id', 'DESC')->getQuery()->getResult();
             if (!empty($all)) {
                  if ($sort == 'dateSort') {
-                     $all = $clone->andWhere('p.likes >= :likes')
-                        ->andWhere('p.date >= :dateTime')
-                        ->setParameter('dateTime', $dateTime)
-                        ->setParameter('likes', (int) $minLikesCount->getText())
-                        ->orderBy('p.id', 'DESC')
-                        ->getQuery()->getResult();
+                     if ((int) $minLikesCount->getText() == 0) {
+                         $all = $clone
+                           ->andWhere('p.date >= :dateTime')
+                           ->setParameter('dateTime', $dateTime)
+                           ->orderBy('p.id', 'DESC')
+                           ->getQuery()->getResult();
+                     } else {
+                        $all = $clone->andWhere('p.likes >= :likes')
+                           ->andWhere('p.date >= :dateTime')
+                           ->setParameter('dateTime', $dateTime)
+                           ->setParameter('likes', (int) $minLikesCount->getText())
+                           ->orderBy('p.id', 'DESC')
+                           ->getQuery()->getResult();
+                     }
                  }
                 $count_all = count($all);
                 if($count_all < ($offset+$itemsPerPage))
@@ -341,6 +349,8 @@ class PostCategoryService extends AbstractApiService {
                 ->from('Yasoon\Site\Entity\ReviewEntity', 'p')
                 ->setMaxResults($itemsPerPage)
                 ->setFirstResult($offset)
+                ->where('p.categoryId IN (:categories)')
+                ->setParameter('categories', $categories)
                 ->orderBy('p.likes', 'DESC')
                 ->getQuery()
                 ->getResult();
@@ -367,7 +377,7 @@ class PostCategoryService extends AbstractApiService {
                     'authorName'    => $review->getAuthor()->getName(),
                     'avatarImg'     => $review->getAuthor()->getImage(),
                     'title'         => $review->getTitle(),
-                    'text'          => $review->getText(),
+                    'description'   => $review->getDescription(),
                     'rating'        => $review->getRating(),
                     'publishDate'   => $review->getDate()->format('d/m/Y'),
                     'expert'        => $review->getExpert(),

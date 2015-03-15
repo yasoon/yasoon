@@ -36,7 +36,7 @@ define(
 
       setCategory:(data) ->
         @model.set('reviewData', data)
-        @$el.empty().append(@template(_.extend({}, @model.get('reviewData'))))
+        @$el.empty().append(@template(_.extend({}, @model.get('reviewData'), {maxLength: 255})))
         @runPlugins()
         
       runPlugins: ->

@@ -30,16 +30,22 @@ define(
 
       template:                     _.template(writeReviewTpl)
 
+
       initialize: (options) ->
         @options = options || {} 
         @getCategory(options)
-
+        @model.set({'maxLength': 255})
+        @handler()
+        
+      handler: ->
+        @listenTo(@model, 'change:description', @symbolsCounter)
+        
       getCategory: (options) ->
         $.get("/api/post/get-category/"+options.id, (data) => @setCategory(data.result))
         @$('input:text:visible:first').focus()
 
       setCategory:(data) ->
-        @$el.empty().append(@template(_.extend({}, {'category': data.category}, {'types': data.types}, {'categoryId': data.categoryId})))
+        @$el.empty().append(@template(_.extend({}, {'category': data.category}, {maxLength: 255}, {'types': data.types}, {'categoryId': data.categoryId})))
         @runPlugins()
         
       runPlugins: ->

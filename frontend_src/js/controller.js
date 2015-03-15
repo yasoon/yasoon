@@ -111,6 +111,7 @@
         $('#js-login').removeClass();
         this.newReviewPageView = new NewReviewPageView({
           id: id,
+          model: new ReviewPageModel(),
           isUser: isUser
         });
         LayoutView.contentRegion.$el.empty().append(this.newReviewPageView.$el);

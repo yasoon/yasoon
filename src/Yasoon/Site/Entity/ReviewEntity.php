@@ -37,6 +37,13 @@ class ReviewEntity
      * @ORM\Column(name="text", type="string", nullable=false)
      */
     protected $text;
+    
+    /**
+     * @var string $text
+     *
+     * @ORM\Column(name="description", type="string", nullable=false)
+     */
+    protected $description;
 
     /**
      * @var int $authorId
@@ -247,6 +254,24 @@ class ReviewEntity
     public function getText()
     {
         return $this->text;
+    }
+    
+    /**
+     * @param $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
 

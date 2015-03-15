@@ -1,29 +1,69 @@
 <article class="cat-statistic" style="<%= _.getContent(109) %>">
     <div>
-    <label for="rating"><%= _.getContent(104) %></label>
-    <input type="hidden" name="rating" class="ratingCategory" 
-        data-filled="symbol symbol-filled small" 
-        data-empty="symbol symbol-empty small" 
-        readonly="readonly"
-        value="<%= rating %>" 
-        data-start="0" data-stop="5"/>
+        <input type="hidden" name="rating" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics-big" 
+            data-empty="symbol symbol-empty statistics-big" 
+            readonly="readonly"
+            value="<%= ratingRound %>" 
+            data-start="0" data-stop="5"/> (<%= all %>)
+        <div class="averageValStat">Средняя оценка <%= rating %> из 5</div>
     </div>
     <div>
+        <input type="hidden" name="rating5" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics" 
+            data-empty="symbol symbol-empty statistics" 
+            readonly="readonly"
+            value="5" 
+            data-start="0" data-stop="5"/> (<%= rating5 %>)
+    </div>
+    <div>
+        <input type="hidden" name="rating4" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics" 
+            data-empty="symbol symbol-empty statistics" 
+            readonly="readonly"
+            value="4" 
+            data-start="0" data-stop="5"/> (<%= rating4 %>)
+    </div>
+    <div>
+        <input type="hidden" name="rating5" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics" 
+            data-empty="symbol symbol-empty statistics" 
+            readonly="readonly"
+            value="3" 
+            data-start="0" data-stop="5"/> (<%= rating3 %>)
+    </div>
+    <div>
+        <input type="hidden" name="rating5" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics" 
+            data-empty="symbol symbol-empty statistics" 
+            readonly="readonly"
+            value="2" 
+            data-start="0" data-stop="5"/> (<%= rating2 %>)
+    </div>
+    <div>
+        <input type="hidden" name="rating5" class="ratingCategory" 
+            data-filled="symbol symbol-filled statistics" 
+            data-empty="symbol symbol-empty statistics" 
+            readonly="readonly"
+            value="1" 
+            data-start="0" data-stop="5"/> (<%= rating1 %>)
+    </div>
+<!--    <div>
     <label><%= _.getContent(105) %></label>
     <input type="hidden" name="prospects" class="ratingCategory" 
-        data-filled="symbol symbol-filled small" 
-        data-empty="symbol symbol-empty small" 
+        data-filled="symbol symbol-filled statistics" 
+        data-empty="symbol symbol-empty statistics" 
         readonly="readonly"
-        value="<%= prospects %>" 
+        value="0" 
         data-start="0" data-stop="5"/>
     </div>
     <div>
-        <label><%= _.getContent(106) %></label><%= question1 %>%
+        <label><%= _.getContent(106) %></label>
     </div>
     <div>
-        <label><%= _.getContent(107) %></label><%= question2 %>%
+        <label><%= _.getContent(107) %></label>
     </div>
     <div>
-        <label><%= _.getContent(108) %></label><%= all %>
-    </div>
+        <label><%= _.getContent(108) %></label>
+    </div>-->
 </article>

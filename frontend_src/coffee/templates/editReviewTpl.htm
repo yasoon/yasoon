@@ -51,13 +51,21 @@
             <!--<p class="help-block"></p>-->
         </div>
         
+        <div class="di form-group">
+            <textarea class="description form-control"  name="description" id="description" placeholder="<%=  _.getContent(40) %>" maxlength="<%= maxLength %>"><%= description %></textarea>
+            <!--<p class="help-block"></p>-->
+            <span class="counter">
+                <%= maxLength %>
+            </span>
+        </div>
+        
          <div class="di form-group">
             <title><%=  _.getContent(87) %></title>
             <textarea class="editor form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"><%= text %></textarea>
             <!--<p class="help-block"></p>-->
         </div>
         
-        <div class="di form-group">
+<!--        <div class="di form-group">
             <div>
                 <p class="review-questions"><%=  _.getContent(96) %></p>
                 <input type="checkbox" name="question1" value="1" <% if (question1 == "1") { %> checked <% } %>><br>
@@ -69,12 +77,7 @@
                 <p class="review-questions"><%=  _.getContent(97) %></p> 
                 <input type="checkbox" name="question2" value="1" <% if (question2 == "1") { %> checked <% } %>><br>
             </div>
-        </div>
-
-        <div class="di form-group">
-            <input type="hidden" name="expert" id="expert" value=<%= expert %>>
-            <div class="expert <% if (expert == "1") { %> active <% } %>"></div>
-        </div>
+        </div>-->
         
         <div class="di form-group">
             <select name="review-type[]"  class="review-type" multiple="multiple" required>
@@ -92,6 +95,11 @@
                        data-empty="symbol symbol-empty small" 
                        value="<%= prospects %>" 
                        data-start="0" data-stop="5"/>
+        </div>
+
+        <div class="di form-group">
+            <input type="hidden" name="expert" id="expert" value=<%= expert %>>
+            <div class="expert <% if (expert == "1") { %> active <% } %>"></div>
         </div>
         <div class="di t-center buttons_area">
             <div class="row">

@@ -46,13 +46,21 @@
             <!--<p class="help-block"></p>-->
         </div>
         
+        <div class="di form-group">
+            <textarea class="description form-control"  name="description" id="description" placeholder="<%=  _.getContent(40) %>" maxlength="<%= maxLength %>"></textarea>
+            <!--<p class="help-block"></p>-->
+            <span class="counter">
+                <%= maxLength %>
+            </span>
+        </div>
+        
          <div class="di form-group">
             <title><%=  _.getContent(87) %></title>
             <textarea class="editor form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"></textarea>
             <!--<p class="help-block"></p>-->
         </div>
         
-        <div class="di form-group">
+<!--        <div class="di form-group">
             <div>
                 <p class="review-questions"><%=  _.getContent(96) %></p>
                 <input type="checkbox" name="question1" value="1"><br>
@@ -64,12 +72,7 @@
                 <p class="review-questions"><%=  _.getContent(97) %></p> 
                 <input type="checkbox" name="question2" value="1"><br>
             </div>
-        </div>
-        
-        <div class="di form-group">
-            <input type="hidden" name="expert" id="expert" value="0">
-            <div class="expert"></div>
-        </div>
+        </div>-->
         
         <div class="di form-group">
             <select name="review-type[]" class="review-type" multiple="multiple" required>
@@ -88,6 +91,12 @@
                        value="1" 
                        data-start="0" data-stop="5"/>
         </div>
+
+        <div class="di form-group">
+            <input type="hidden" name="expert" id="expert" value="0">
+            <div class="expert"></div>
+        </div>
+
         <div class="di t-center buttons_area">
             <div class="row">
                 <div class="col-sm-6 text-right">

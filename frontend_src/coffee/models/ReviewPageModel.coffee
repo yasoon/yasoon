@@ -23,6 +23,13 @@ define(
           message: 'Поле не может быть пустым'
         )
         
+      if not attrs.description
+        errors.push(
+          name: 'description'
+          message: 'Поле не может быть пустым'
+        )
+        
+        
       if not attrs.review-type
         errors.push(
           name: 'review-type[]'

@@ -141,7 +141,7 @@ define(
         if window.newPost? then delete window.newPost
         $('body').removeClass().addClass('new-review')
         $('#js-login').removeClass()
-        @newReviewPageView = new NewReviewPageView({id: id,  isUser: isUser;})
+        @newReviewPageView = new NewReviewPageView({id: id, model: new ReviewPageModel(),  isUser: isUser;})
         LayoutView.contentRegion.$el.empty().append(this.newReviewPageView.$el)
         @newReviewPageView.delegateEvents()
         @

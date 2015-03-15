@@ -7601,6 +7601,14 @@ section {
   width: 35px;
   height: 35px;
 }
+.symbol.statistics {
+  width: 20px;
+  height: 20px;
+}
+.symbol.statistics-big {
+  width: 30px;
+  height: 30px;
+}
 .symbol-empty {
   background: url(../img/empty_circle_grey.png) no-repeat;
   -moz-background-size: cover;
@@ -7680,6 +7688,9 @@ section {
   .cat-statistic label {
     width: 40%;
   }
+}
+.averageValStat {
+  padding-bottom: 10px;
 }
 ul li {
   list-style: none;
