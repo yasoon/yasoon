@@ -29,7 +29,7 @@ class PostCategoryService extends AbstractApiService {
      *
      * @DI\Inject("security.context")
      */
-//    public  $securityContext;
+    public  $securityContext;
 
     /**
      * @param $categoryId
@@ -202,8 +202,7 @@ class PostCategoryService extends AbstractApiService {
                 return $a[$name] - $b[$name];
             });
         } catch(\Exception $e) {
-            return $e->getLine();
-            return ['error' => true, 'errorText' => $e->getMessage()];
+            //return ['error' => true, 'errorText' => $e->getMessage()];
         }
         
         $result = ['error' => false, $sort   => $allResults,
