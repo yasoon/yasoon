@@ -1,14 +1,4 @@
 <div class="like-title">
-    <% if (expert === "1") { %>
-    <div class="expert active expert-left"></div>
-    <% } %>
-    <div class="category-type-review"><h2><%= category %></h2> 
-        <% _.each(types, function(type) { %>
-            <% if (type.selected !== "") { %>
-                  <%= type.name %> <br>   
-            <% } %>
-        <% }); %>
-    </div>
     <span class="like-this-review">
             <b><i></i></b>
             <span class="counter">
@@ -25,8 +15,8 @@
             <%= _.getDateText(publishDate) %> | 
             <label for="rating"><%= _.getContent(104) %></label>
             <input type="hidden" name="rating" class="ratingSpeaker" 
-                data-filled="symbol symbol-filled small" 
-                data-empty="symbol symbol-empty small" 
+                data-filled="symbol symbol-filled statistics" 
+                data-empty="symbol symbol-empty statistics" 
                 readonly="readonly"
                 value="<%= rating %>" 
                 data-start="0" data-stop="5"/>

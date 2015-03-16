@@ -307,36 +307,10 @@ class CategoryService extends AbstractApiService {
                         'isLast'        => $isLast,
                         'type'          => 'child');
                 }
-                $path = explode(",", $category->getPath());
-                $searchCategories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
-                    ->createQueryBuilder('c')
-                    ->where('c.path LIKE :path')
-                    ->andWhere('c.level < :level')
-                    ->setParameter('path', '%'.$path[0].'%')
-                    ->setParameter('level', $lvlOld)
-                    ->orderBy('c.path', 'DESC')
-                    ->getQuery()
-                    ->getResult();
+                
+                $categoryPath = $this->getCategoryPath($id);
 
-                $categoryPath = [];
-
-                $categoryPath[] = array(
-                    'id' => $category->getId(),
-                    'name' => $category->getTitle()
-                );
-                foreach ($searchCategories as $key => $oneCategory) {
-
-                    if (($key > 0 && $oneCategory->getId() == $searchCategories[$key-1]->getParentId())
-                        || $oneCategory->getId() == $category->getParentId()) {
-
-                        $categoryPath[] = array(
-                            'id' => $oneCategory->getId(),
-                            'name' => $oneCategory->getTitle()
-                        );
-                    }
-                }
-
-                $result = ['error' => false, 'result' => $categories, 'path' => array_reverse($categoryPath)];
+                $result = ['error' => false, 'result' => $categories, 'path' => $categoryPath];
 
             }
         }
@@ -425,5 +399,46 @@ class CategoryService extends AbstractApiService {
         }
         
         return ['error' => true, 'errorText' => 'Категории не существует, перезагрузите страницу!'];
+    }
+    
+    public function getCategoryPath($id)
+    {
+        $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->find($id);
+        
+        $categoryPath = [];
+        if (!empty($category)) {
+            $lvlOld = $category->getLevel();
+            $path = explode(",", $category->getPath());
+            $searchCategories = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                ->createQueryBuilder('c')
+                ->where('c.path LIKE :path')
+                ->andWhere('c.level < :level')
+                ->setParameter('path', '%'.$path[0].'%')
+                ->setParameter('level', $lvlOld)
+                ->orderBy('c.path', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            $categoryPath = [];
+
+            $categoryPath[] = array(
+                'id' => $category->getId(),
+                'name' => $category->getTitle()
+            );
+            foreach ($searchCategories as $key => $oneCategory) {
+
+                if (($key > 0 && $oneCategory->getId() == $searchCategories[$key-1]->getParentId())
+                    || $oneCategory->getId() == $category->getParentId()) {
+
+                    $categoryPath[] = array(
+                        'id' => $oneCategory->getId(),
+                        'name' => $oneCategory->getTitle()
+                    );
+                }
+            }
+
+        }
+        
+        return array_reverse($categoryPath);
     }
 }

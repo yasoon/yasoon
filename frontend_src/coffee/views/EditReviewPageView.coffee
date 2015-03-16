@@ -32,10 +32,14 @@ define(
       initialize: (options) ->
         @options = options || {}
         @model.set({'reviewId': @options.id})
-        $.post("/api/post/getReview", {reviewid: @options.id}, (data) => @setCategory(data[0]))
+        $.post("/api/post/getReview", {reviewid: @options.id}, (data) => @checkErrors(data))
+        
+      checkErrors: (data) ->
+        if data.error == false then @setCategory(data)
 
       setCategory:(data) ->
-        @model.set('reviewData', data)
+        @model.set('reviewData', data.result[0])
+        @model.set('path', data.path)
         @$el.empty().append(@template(_.extend({}, @model.get('reviewData'), {maxLength: 255})))
         @runPlugins()
         

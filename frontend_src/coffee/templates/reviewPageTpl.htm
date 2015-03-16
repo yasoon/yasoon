@@ -1,14 +1,28 @@
 <div class="like-title">
-    <% if (expert === "1") { %>
-    <div class="expert active expert-left"></div>
-    <% } %>
-    <div class="category-type-review"><h1><%= category %></h1> 
+    <div class="category-type-review"><h2><%= category %></h2> 
+        <article class="cat-title cat-title-speaker">
+        <% _.each(path, function(category) { %>
+            <% if (category.id != 0) { %>
+            <a href="/#/posts/<%= category.id %>/dateSort" id="<%= category.id %>">
+                <%= category.name %>
+            </a>
+            <% } %>
+        <% }); %>
+        </article>
         <% _.each(types, function(type) { %>
             <% if (type.selected !== "") { %>
-                  <%= type.name %> <br>   
+                 <span class="speaker-type-review"><%= type.name %></span>
             <% } %>
         <% }); %>
     </div>
+    
+    <input type="hidden" name="rating" class="ratingSpeaker" 
+                data-filled="symbol symbol-filled small" 
+                data-empty="symbol symbol-empty small" 
+                readonly="readonly"
+                value="<%= rating %>" 
+                data-start="0" data-stop="5"/>
+    
     <span class="like-this">
             <b><i></i></b>
             <span class="counter">

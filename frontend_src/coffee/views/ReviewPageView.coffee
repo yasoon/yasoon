@@ -50,9 +50,10 @@ define(
         reviewModel = new ReviewPageModel(@setReviewModel())
         if not @reviewPage? then @reviewPage = new ReviewPageModelView({model: reviewModel}) else @reviewPage.delegateEvents()
         @$el.append(@reviewPage.render().$el)
+        $('.ratingSpeaker').rating();
 
       setReviewModel: ->
-        _.extend({}, @model.get('reviewData'), {'questionCount': @model.get('userData').answers_count})
+        _.extend({}, @model.get('reviewData'), {'questionCount': @model.get('userData').answers_count}, {'path': @model.get('path')})
 
       
       addLike: (event) ->
@@ -66,7 +67,12 @@ define(
         if not data.error and data.count then @$el.find('.like-this .counter').text(data.count)
 
       setSocial: (data) ->
-        @model.set('reviewData', data[0])
+        if data.error == false then @setData(data)
+        
+      setData: (data) ->
+        @model.set('path', data.path)
+        @model.set('reviewData', data.result[0])
+        
         
         
         

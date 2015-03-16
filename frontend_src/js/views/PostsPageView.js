@@ -136,7 +136,8 @@
           $('.empty-text').parent().remove();
         }
         this.posts();
-        return this.$el.append(this.postsPreviews.render().$el);
+        this.$el.append(this.postsPreviews.render().$el);
+        return $('.ratingSpeaker').rating();
       };
 
       PostsPageView.prototype.categoryList = function() {

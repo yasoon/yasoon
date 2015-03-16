@@ -6768,6 +6768,11 @@ article.cat-title {
 article.cat-title .hr {
   margin-left: -20px;
 }
+article.cat-title.cat-title-speaker {
+  padding-top: 0px;
+  padding-left: 0px;
+  border-left: 0px;
+}
 article.cat-title a {
   font-size: 16px;
 }
@@ -7691,6 +7696,19 @@ section {
 }
 .averageValStat {
   padding-bottom: 10px;
+}
+.speaker-type-review {
+  margin-left: 5px;
+}
+.speaker-type-review:after {
+  content: ", ";
+  color: #aaa;
+}
+.speaker-type-review:last-child:after {
+  content: "";
+}
+.ratingSpeaker {
+  cursor: auto;
 }
 ul li {
   list-style: none;
@@ -8686,11 +8704,13 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   .like-title {
     padding-right: 60px;
   }
-  .like-this {
+  .like-this,
+  .like-this-review {
     width: 0;
     padding-left: 48px;
   }
-  .like-this .counter {
+  .like-this .counter,
+  .like-this-review .counter {
     width: 100%;
     position: absolute;
     top: 100%;
@@ -8698,7 +8718,8 @@ body .redactor_toolbar li a.redactor_btn_alignment {
     text-align: center;
     margin-top: 10px;
   }
-  .q-box .like-this .counter {
+  .q-box .like-this .counter,
+  .q-box .like-this-review .counter {
     top: 50%;
     margin-top: -6px;
     left: 0;
@@ -8892,7 +8913,8 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   .content {
     font-size: 15px;
   }
-  .postinfo .like-this {
+  .postinfo .like-this,
+  .postinfo .like-this-review {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -9019,7 +9041,8 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   .like-this i,
   .q-post i,
   .social-links a,
-  .editable i {
+  .editable i,
+  .like-this-review i {
     background-image: url(../img/spr_x2.jpg);
     background-size: 115px auto;
   }

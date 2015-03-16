@@ -246,6 +246,11 @@ class PostController {
         }
 
         $result = $this->service->getReview($reviewId);
+        
+        if ($result['error'] == false) {
+            $path = $this->category_service->getCategoryPath($result['categoryId']);
+            $result['path'] = $path;
+        }
         return $result;
     }
 

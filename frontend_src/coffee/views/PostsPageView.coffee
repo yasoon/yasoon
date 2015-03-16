@@ -84,6 +84,7 @@ define(
         if $('.empty-text').length then $('.empty-text').parent().remove()
         @posts()
         @$el.append(@postsPreviews.render().$el)
+        $('.ratingSpeaker').rating();
 
       categoryList: ->
         categoryCollection = new CategoryCollection(@model.get('categoryList'))

@@ -850,6 +850,7 @@ class PostService extends AbstractApiService {
     
     public function getReview($reviewId) {
 
+        $result = ['error' => true, 'errorText' => 'Категория отсутствует или была удалена!'];
         /** @var PostEntity $post */
         $reviews = $this->em->createQueryBuilder()
             ->select('r')
@@ -864,39 +865,43 @@ class PostService extends AbstractApiService {
             
             $category = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
                     ->find($review->getCategoryId());
+            if (!empty($category)) {
             
-            $types = [];
-            $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
-                    ->findAll();
-            foreach ($review_types as $type) {
-                $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
-                        ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
-                $selectedValue = !empty($reviewType) ? "selected" : "";
-                $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
-            }
-            $description = $review->getDescription() != null ? $review->getDescription() : '';
-            $result[] = [
-                'id'            => $review->getId(),
-                'authorId'      => $review->getAuthorId(),
-                'authorName'    => $review->getAuthor()->getName(),
-                'title'         => $review->getTitle(),
-                'text'          => $review->getText(),
-                'description'   => $description,
-                'rating'        => $review->getRating(),
-                'publishDate'   => $review->getDate()->format('d/m/Y'),
-                'expert'        => $review->getExpert(),
-                'category'      => $category->getTitle(),
-                'categoryId'    => $category->getId(),
-                'question1'     => $review->getQuestion1(),
-                'question2'     => $review->getQuestion2(),
-                'prospects'     => $review->getProspects(),
-                'types'         => $types,
-                'post_likes'    => $review->getLikes()
-            ];
-            
-            $reviewSave = $review->setVisits($visits);
-            $this->em->merge($reviewSave);
-            $this->em->flush();
+                $types = [];
+                $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
+                        ->findAll();
+                foreach ($review_types as $type) {
+                    $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
+                            ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
+                    $selectedValue = !empty($reviewType) ? "selected" : "";
+                    $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
+                }
+                $description = $review->getDescription() != null ? $review->getDescription() : '';
+                $reviewData[] = [
+                    'id'            => $review->getId(),
+                    'authorId'      => $review->getAuthorId(),
+                    'authorName'    => $review->getAuthor()->getName(),
+                    'title'         => $review->getTitle(),
+                    'text'          => $review->getText(),
+                    'description'   => $description,
+                    'rating'        => $review->getRating(),
+                    'publishDate'   => $review->getDate()->format('d/m/Y'),
+                    'expert'        => $review->getExpert(),
+                    'category'      => $category->getTitle(),
+                    'categoryId'    => $category->getId(),
+                    'question1'     => $review->getQuestion1(),
+                    'question2'     => $review->getQuestion2(),
+                    'prospects'     => $review->getProspects(),
+                    'types'         => $types,
+                    'post_likes'    => $review->getLikes()
+                ];
+
+                $reviewSave = $review->setVisits($visits);
+                $this->em->merge($reviewSave);
+                $this->em->flush();
+                
+                $result = ['error' => false, 'result' => $reviewData, 'categoryId' => $category->getId()];
+            } 
         }
 
         return $result;
