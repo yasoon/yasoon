@@ -41,7 +41,7 @@ class PostCategoryService extends AbstractApiService {
     {
         $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
         $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
-        try {
+        //try {
             $offset = ($page*$itemsPerPage)-$itemsPerPage;
             
             $minLikesCount = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(75);
@@ -201,9 +201,9 @@ class PostCategoryService extends AbstractApiService {
             usort($allResults, function ($a, $b) use(&$name){
                 return $a[$name] - $b[$name];
             });
-        } catch(\Exception $e) {
+        //} catch(\Exception $e) {
             //return ['error' => true, 'errorText' => $e->getMessage()];
-        }
+        //}
         
         $result = ['error' => false, $sort   => $allResults,
                    'postsCount' => $count_all];
