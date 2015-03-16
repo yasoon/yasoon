@@ -205,6 +205,7 @@ class PostCategoryService extends AbstractApiService {
                 return $a[$name] - $b[$name];
             });
         } catch(\Exception $e) {
+            return $e->getLine();
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
         
