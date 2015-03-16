@@ -184,6 +184,7 @@ class PostService extends AbstractApiService {
                 $reviewEntity = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($review['reviewId']);
                 $reviewEntity->setTitle($review['title'])
                     ->setText($review['text'])
+                    ->setDescription($review['description'])
                     ->setExpert($review['expert'])
                     ->setQuestion1($review['question1'])
                     ->setQuestion2($review['question2'])
@@ -197,6 +198,7 @@ class PostService extends AbstractApiService {
                 $reviewEntity = (new ReviewEntity())
                     ->setTitle($review['title'])
                     ->setText($review['text'])
+                    ->setDescription($review['description'])
                     ->setCategoryId($review['category-id'])
                     ->setAuthorId($authorId)
                     ->setStatus($status)
@@ -872,13 +874,14 @@ class PostService extends AbstractApiService {
                 $selectedValue = !empty($reviewType) ? "selected" : "";
                 $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
             }
-            
+            $description = $review->getDescription() != null ? $review->getDescription() : '';
             $result[] = [
                 'id'            => $review->getId(),
                 'authorId'      => $review->getAuthorId(),
                 'authorName'    => $review->getAuthor()->getName(),
                 'title'         => $review->getTitle(),
                 'text'          => $review->getText(),
+                'description'   => $description,
                 'rating'        => $review->getRating(),
                 'publishDate'   => $review->getDate()->format('d/m/Y'),
                 'expert'        => $review->getExpert(),
@@ -985,6 +988,7 @@ class PostService extends AbstractApiService {
                     $selectedValue = !empty($reviewType) ? "selected" : "";
                     $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
                 }
+                $description = $review->getDescription() != null ? $review->getDescription() : '';
 
                 $reviews[] = [
                     'id'            => $review->getId(),
@@ -992,7 +996,7 @@ class PostService extends AbstractApiService {
                     'authorName'    => $review->getAuthor()->getName(),
                     'avatarImg'     => $review->getAuthor()->getImage(),
                     'title'         => $review->getTitle(),
-                    'text'          => $review->getText(),
+                    'description'   => $description,
                     'rating'        => $review->getRating(),
                     'publishDate'   => $review->getDate()->format('d/m/Y'),
                     'expert'        => $review->getExpert(),
