@@ -31,6 +31,9 @@ class PostCategoryService extends AbstractApiService {
      */
     public  $securityContext;
 
+    
+    
+    
     /**
      * @param $categoryId
      * @param $page
@@ -41,7 +44,7 @@ class PostCategoryService extends AbstractApiService {
     {
         $daysLimit = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(74);
         $dateTime = new \DateTime('-'.$daysLimit->getText().' day');
-        //try {
+        try {
             $offset = ($page*$itemsPerPage)-$itemsPerPage;
             
             $minLikesCount = $this->em->getRepository('Yasoon\Site\Entity\ContentEntity')->find(75);
@@ -120,61 +123,57 @@ class PostCategoryService extends AbstractApiService {
                 $postsSort = [];
                 foreach($results_postsSort as $i => $v)
                 { 
-                    if (!empty($results_postsSort[$i]->getPost())) {
-                        $post = $results_postsSort[$i]->getPost();
-                        try {
-                        
-                            //echo $i.' ';
-                            $post_categories = $post->getCategory();
-                            $id = $post->getId();
 
-                            $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
-                            $strLength = 0;
-                            $interviewLego = 0;
-                            foreach ($post_answers as $answer) {
-                               $strLength += strlen(strip_tags($answer->getAnswer()));
-                               if ($answer->getLego() > 0) {
-                                   $interviewLego++;
-                               }
-                            }
-                            $interviewName = '';
-                            if ($interviewLego > 0) {
-                                $interviewName = $post->getInterview()->getName();
-                            } 
-                            $timeToRead = round($strLength/4200);
+                    try {
 
-                            foreach($post_categories as $pc)
-                            {
-                                $tags[] = $pc->getCategoryId();
-                            }
-                            $user = 'user';
-                            $role = $post->getAuthor()->getRole();
-                            if ($role == 4) {
-                                $user = 'admin';
-                            }
-                            $postsSort[] = ['id'    => $id,
-                                        'authorId'      => $post->getAuthorId(),
-                                        'authorName'    => $post->getAuthor()->getName(),
-                                        'tags'          => $tags,
-                                        'title'         => $post->getCaption(),
-                                        'description'   => $post->getPreview(),
-                                        'text'          => $post->getText(),
-                                        'publishDate'   => $post->getDate()->format('d/m/Y'),
-                                        'post_likes'    => $post->getLikes(),
-                                        'timeToRead'    => $timeToRead,
-                                        'avatarImg'     => $post->getAuthor()->getImage(),
-                                        'interview_name'=> $interviewName,
-                                        'interview_id'  => $post->getInterview()->getId(),
-                                        'previewPostImg'=> $post->getPreviewImg(),
-                                        'user'          => $user,
-                                        'type'          => 'post'];
-                        
-                            unset($tags);
-                        } catch(\Exception $e) {
-                            $count_all--;
-                        }
+                    //echo $i.' ';
+                    $post_categories = $results_postsSort[$i]->getPost()->getCategory();
+                    $id = $results_postsSort[$i]->getPost()->getId();
+
+                    $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
+                    $strLength = 0;
+                    $interviewLego = 0;
+                    foreach ($post_answers as $answer) {
+                       $strLength += strlen(strip_tags($answer->getAnswer()));
+                       if ($answer->getLego() > 0) {
+                           $interviewLego++;
+                       }
                     }
-                
+                    $interviewName = '';
+                    if ($interviewLego > 0) {
+                        $interviewName = $results_postsSort[$i]->getPost()->getInterview()->getName();
+                    } 
+                    $timeToRead = round($strLength/4200);
+
+                    foreach($post_categories as $pc)
+                    {
+                        $tags[] = $pc->getCategoryId();
+                    }
+                    $user = 'user';
+                    $role = $results_postsSort[$i]->getPost()->getAuthor()->getRole();
+                    if ($role == 4) {
+                        $user = 'admin';
+                    }
+                    $postsSort[] = ['id'    => $id,
+                                'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
+                                'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
+                                'tags'          => $tags,
+                                'title'         => $results_postsSort[$i]->getPost()->getCaption(),
+                                'description'   => $results_postsSort[$i]->getPost()->getPreview(),
+                                'text'          => $results_postsSort[$i]->getPost()->getText(),
+                                'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                                'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
+                                'timeToRead'    => $timeToRead,
+                                'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
+                                'interview_name'=> $interviewName,
+                                'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
+                                'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
+                                'user'          => $user,
+                                'type'          => 'post'];
+                    unset($tags);
+                    } catch(\Exception $e) {
+                        $count_all--;
+                    }
                 }
                 
                 
@@ -201,9 +200,9 @@ class PostCategoryService extends AbstractApiService {
             usort($allResults, function ($a, $b) use(&$name){
                 return $a[$name] - $b[$name];
             });
-        //} catch(\Exception $e) {
-            //return ['error' => true, 'errorText' => $e->getMessage()];
-        //}
+        } catch(\Exception $e) {
+            return ['error' => true, 'errorText' => $e->getMessage()];
+        }
         
         $result = ['error' => false, $sort   => $allResults,
                    'postsCount' => $count_all];
@@ -371,12 +370,21 @@ class PostCategoryService extends AbstractApiService {
                     $selectedValue = !empty($reviewType) ? "selected" : "";
                     $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
                 }
-
+                $authorId = $review->getAuthorId();
+                
+                if ($authorId == 0) {
+                    $authorName = 'аноним';
+                    $authorImg = null;
+                } else {
+                    $authorName = $review->getAuthor()->getName();
+                    $authorImg = $review->getAuthor()->getImage();
+ 
+                }
                 $reviewsSort[] = [
                     'id'            => $review->getId(),
                     'authorId'      => $review->getAuthorId(),
-                    'authorName'    => $review->getAuthor()->getName(),
-                    'avatarImg'     => $review->getAuthor()->getImage(),
+                    'authorName'    => $authorName,
+                    'avatarImg'     => $authorImg,
                     'title'         => $review->getTitle(),
                     'description'   => $review->getDescription(),
                     'rating'        => $review->getRating(),
