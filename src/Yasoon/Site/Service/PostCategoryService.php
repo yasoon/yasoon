@@ -29,11 +29,8 @@ class PostCategoryService extends AbstractApiService {
      *
      * @DI\Inject("security.context")
      */
-    public  $securityContext;
+//    public  $securityContext;
 
-    
-    
-    
     /**
      * @param $categoryId
      * @param $page
