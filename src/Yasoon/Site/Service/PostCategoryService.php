@@ -66,7 +66,7 @@ class PostCategoryService extends AbstractApiService {
                 $all = $clone->orderBy('p.id', 'DESC')->getQuery()->getResult();
             if (!empty($all)) {
                  if ($sort == 'dateSort') {
-                     if ((int) $minLikesCount->getText() == 0) {
+                     if ($minLikesCount->getText() == '0') {
                          $all = $clone
                            ->andWhere('p.date >= :dateTime')
                            ->setParameter('dateTime', $dateTime)
@@ -123,57 +123,61 @@ class PostCategoryService extends AbstractApiService {
                 $postsSort = [];
                 foreach($results_postsSort as $i => $v)
                 { 
+                    if (!empty($results_postsSort[$i]->getPost())) {
+                        $post = $results_postsSort[$i]->getPost();
+                        try {
+                        
+                            //echo $i.' ';
+                            $post_categories = $post->getCategory();
+                            $id = $post->getId();
 
-                    try {
+                            $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
+                            $strLength = 0;
+                            $interviewLego = 0;
+                            foreach ($post_answers as $answer) {
+                               $strLength += strlen(strip_tags($answer->getAnswer()));
+                               if ($answer->getLego() > 0) {
+                                   $interviewLego++;
+                               }
+                            }
+                            $interviewName = '';
+                            if ($interviewLego > 0) {
+                                $interviewName = $post->getInterview()->getName();
+                            } 
+                            $timeToRead = round($strLength/4200);
 
-                    //echo $i.' ';
-                    $post_categories = $results_postsSort[$i]->getPost()->getCategory();
-                    $id = $results_postsSort[$i]->getPost()->getId();
-
-                    $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $id));
-                    $strLength = 0;
-                    $interviewLego = 0;
-                    foreach ($post_answers as $answer) {
-                       $strLength += strlen(strip_tags($answer->getAnswer()));
-                       if ($answer->getLego() > 0) {
-                           $interviewLego++;
-                       }
+                            foreach($post_categories as $pc)
+                            {
+                                $tags[] = $pc->getCategoryId();
+                            }
+                            $user = 'user';
+                            $role = $post->getAuthor()->getRole();
+                            if ($role == 4) {
+                                $user = 'admin';
+                            }
+                            $postsSort[] = ['id'    => $id,
+                                        'authorId'      => $post->getAuthorId(),
+                                        'authorName'    => $post->getAuthor()->getName(),
+                                        'tags'          => $tags,
+                                        'title'         => $post->getCaption(),
+                                        'description'   => $post->getPreview(),
+                                        'text'          => $post->getText(),
+                                        'publishDate'   => $post->getDate()->format('d/m/Y'),
+                                        'post_likes'    => $post->getLikes(),
+                                        'timeToRead'    => $timeToRead,
+                                        'avatarImg'     => $post->getAuthor()->getImage(),
+                                        'interview_name'=> $interviewName,
+                                        'interview_id'  => $post->getInterview()->getId(),
+                                        'previewPostImg'=> $post->getPreviewImg(),
+                                        'user'          => $user,
+                                        'type'          => 'post'];
+                        
+                            unset($tags);
+                        } catch(\Exception $e) {
+                            $count_all--;
+                        }
                     }
-                    $interviewName = '';
-                    if ($interviewLego > 0) {
-                        $interviewName = $results_postsSort[$i]->getPost()->getInterview()->getName();
-                    } 
-                    $timeToRead = round($strLength/4200);
-
-                    foreach($post_categories as $pc)
-                    {
-                        $tags[] = $pc->getCategoryId();
-                    }
-                    $user = 'user';
-                    $role = $results_postsSort[$i]->getPost()->getAuthor()->getRole();
-                    if ($role == 4) {
-                        $user = 'admin';
-                    }
-                    $postsSort[] = ['id'    => $id,
-                                'authorId'      => $results_postsSort[$i]->getPost()->getAuthorId(),
-                                'authorName'    => $results_postsSort[$i]->getPost()->getAuthor()->getName(),
-                                'tags'          => $tags,
-                                'title'         => $results_postsSort[$i]->getPost()->getCaption(),
-                                'description'   => $results_postsSort[$i]->getPost()->getPreview(),
-                                'text'          => $results_postsSort[$i]->getPost()->getText(),
-                                'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
-                                'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
-                                'timeToRead'    => $timeToRead,
-                                'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
-                                'interview_name'=> $interviewName,
-                                'interview_id'  => $results_postsSort[$i]->getPost()->getInterview()->getId(),
-                                'previewPostImg'=> $results_postsSort[$i]->getPost()->getPreviewImg(),
-                                'user'          => $user,
-                                'type'          => 'post'];
-                    unset($tags);
-                    } catch(\Exception $e) {
-                        $count_all--;
-                    }
+                
                 }
                 
                 
