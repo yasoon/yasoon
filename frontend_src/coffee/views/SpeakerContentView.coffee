@@ -58,7 +58,7 @@ define(
         $.get("/api/interview/get_moderator_interviews/"+@model.get('id'), {}, (data) => @checkErrors(data))
       
       getPosts: ->
-        $.post("/api/post/getPosts", {'postid[]': @model.get('posts')}, (data) => @model.set('speakerPosts', data))
+        $.post("/api/post/getPosts", {'postid[]': @model.get('posts'), 'authorId': parseInt(@model.get('id'))}, (data) => @model.set('speakerPosts', data))
 
       createInterviews: (data) ->
         @$el.append(@interviewsTemplate(_.extend({},{'authorId': parseInt(@model.get('id'))}, {'interviews': data.interviews}, {'options': ''})))

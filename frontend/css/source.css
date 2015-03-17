@@ -7518,7 +7518,9 @@ section {
   min-height: 150px;
 }
 .speakerModerError {
-  margin: 10px;
+  padding: 10px;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   font-size: 1.4em;
 }
 .speaker-interviews {

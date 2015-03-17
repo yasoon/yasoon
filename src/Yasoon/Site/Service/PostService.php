@@ -912,108 +912,112 @@ class PostService extends AbstractApiService {
      * @return array
      */
     
-    public function getPosts($postId) {
+    public function getPosts($postId, $authorId = '') {
 
         /** @var PostEntity $post */
-        $posts = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from('Yasoon\Site\Entity\PostEntity', 'p')
-            ->where('p.id IN('.implode(',', $postId).')')
-            ->getQuery()->getResult();
-        $authorId = '';
-        foreach($posts as $key => $post)
-        {
-            if ($key == 0) {
-                $authorId = $post->getAuthorId();
-            }
-            $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
-                ->leftJoin('c.post', 'p')
-                ->where('c.post_id = '.$post->getId())
-                ->orderBy('p.date', 'desc')->getQuery()->getResult();
-            $pcats = [];
-            foreach($tags as $tag)
-            {
-                $pcats[] = $tag->getCategoryId();
-            }
-            
-            $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
-            
-            $strLength = 0;
-            $interviewLego = 0;
-            foreach ($post_answers as $answer) {
-               $strLength += strlen(strip_tags($answer->getAnswer()));
-               if ($answer->getLego() > 0) {
-                   $interviewLego++;
-               }
-            }        
-            $timeToRead = round($strLength/4200);
-                
-            $interviewName = '';
-            if ($interviewLego > 0) {
-                $interviewName = $post->getInterview()->getName();
-            } 
-            
-            $results_posts[] = [
-                'id'            => $post->getId(),
-                'authorId'      => $post->getAuthorId(),
-                'authorName'    => $post->getAuthor()->getName(),
-                'tags'          => $pcats,
-                'title'         => $post->getCaption(),
-                'description'   => $post->getPreview(),
-                'text'          => $post->getText(), // $questionAnswerArray,
-                'publishDate'   => $post->getDate()->format('d/m/Y'),
-                'post_likes'    => $post->getLikes(),
-                'timeToRead'    => $timeToRead,
-                'interview_name'=> $interviewName,
-                'interview_id'  => $post->getInterview()->getId(),
-                'previewPostImg'=> $post->getPreviewImg(),
-                'type'          => 'post'
-            ];
-        }
-
-        $results_reviews = $this->em->createQueryBuilder()
-            ->select('r')
-            ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-            ->where('r.authorId = :id')
-            ->setParameter('id', $authorId)
-            ->getQuery()
-            ->getResult();
         
-        $reviews = [];
-        foreach($results_reviews as $review) { 
-            $rcategory = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
-                    ->find($review->getCategoryId());
-            if (!empty($rcategory)) {
-                $types = [];
-                $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
-                        ->findAll();
-                foreach ($review_types as $type) {
-                    $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
-                            ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
-                    $selectedValue = !empty($reviewType) ? "selected" : "";
-                    $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
+        if (!empty($postId) && $postId[0] != null) {
+            $posts = $this->em->createQueryBuilder()
+                ->select('p')
+                ->from('Yasoon\Site\Entity\PostEntity', 'p')
+                ->where('p.id IN('.implode(',', $postId).')')
+                ->getQuery()->getResult();
+            
+            foreach($posts as $key => $post)
+            {
+                if ($key == 0) {
+                    $authorId = $post->getAuthorId();
                 }
-                $description = $review->getDescription() != null ? $review->getDescription() : '';
+                $tags = $this->em->getRepository('Yasoon\Site\Entity\PostCategoryEntity')->createQueryBuilder('c')
+                    ->leftJoin('c.post', 'p')
+                    ->where('c.post_id = '.$post->getId())
+                    ->orderBy('p.date', 'desc')->getQuery()->getResult();
+                $pcats = [];
+                foreach($tags as $tag)
+                {
+                    $pcats[] = $tag->getCategoryId();
+                }
 
-                $reviews[] = [
-                    'id'            => $review->getId(),
-                    'authorId'      => $review->getAuthorId(),
-                    'authorName'    => $review->getAuthor()->getName(),
-                    'avatarImg'     => $review->getAuthor()->getImage(),
-                    'title'         => $review->getTitle(),
-                    'description'   => $description,
-                    'rating'        => $review->getRating(),
-                    'publishDate'   => $review->getDate()->format('d/m/Y'),
-                    'expert'        => $review->getExpert(),
-                    'category'      => $rcategory->getTitle(),
-                    'categoryId'    => $rcategory->getId(),
-                    'question1'     => $review->getQuestion1(),
-                    'question2'     => $review->getQuestion2(),
-                    'prospects'     => $review->getProspects(),
-                    'types'         => $types,
-                    'post_likes'    => $review->getLikes(),
-                    'type'          => 'review'
+                $post_answers = $this->em->getRepository('Yasoon\Site\Entity\PostAnswerEntity')->findBy(array('post_id' => $post->getId()));
+
+                $strLength = 0;
+                $interviewLego = 0;
+                foreach ($post_answers as $answer) {
+                   $strLength += strlen(strip_tags($answer->getAnswer()));
+                   if ($answer->getLego() > 0) {
+                       $interviewLego++;
+                   }
+                }        
+                $timeToRead = round($strLength/4200);
+
+                $interviewName = '';
+                if ($interviewLego > 0) {
+                    $interviewName = $post->getInterview()->getName();
+                } 
+
+                $results_posts[] = [
+                    'id'            => $post->getId(),
+                    'authorId'      => $post->getAuthorId(),
+                    'authorName'    => $post->getAuthor()->getName(),
+                    'tags'          => $pcats,
+                    'title'         => $post->getCaption(),
+                    'description'   => $post->getPreview(),
+                    'text'          => $post->getText(), // $questionAnswerArray,
+                    'publishDate'   => $post->getDate()->format('d/m/Y'),
+                    'post_likes'    => $post->getLikes(),
+                    'timeToRead'    => $timeToRead,
+                    'interview_name'=> $interviewName,
+                    'interview_id'  => $post->getInterview()->getId(),
+                    'previewPostImg'=> $post->getPreviewImg(),
+                    'type'          => 'post'
                 ];
+            }
+        }
+        if ($authorId != '' && $authorId != 0) {
+            $results_reviews = $this->em->createQueryBuilder()
+                ->select('r')
+                ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
+                ->where('r.authorId = :id')
+                ->setParameter('id', $authorId)
+                ->getQuery()
+                ->getResult();
+
+            $reviews = [];
+            foreach($results_reviews as $review) { 
+                $rcategory = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')
+                        ->find($review->getCategoryId());
+                if (!empty($rcategory)) {
+                    $types = [];
+                    $review_types = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypesEntity')
+                            ->findAll();
+                    foreach ($review_types as $type) {
+                        $reviewType = $this->em->getRepository('Yasoon\Site\Entity\ReviewTypeRelationsEntity')
+                                ->findOneBy(array('reviewId' => $review->getId(), 'typeId' => $type->getId()));
+                        $selectedValue = !empty($reviewType) ? "selected" : "";
+                        $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
+                    }
+                    $description = $review->getDescription() != null ? $review->getDescription() : '';
+
+                    $reviews[] = [
+                        'id'            => $review->getId(),
+                        'authorId'      => $review->getAuthorId(),
+                        'authorName'    => $review->getAuthor()->getName(),
+                        'avatarImg'     => $review->getAuthor()->getImage(),
+                        'title'         => $review->getTitle(),
+                        'description'   => $description,
+                        'rating'        => $review->getRating(),
+                        'publishDate'   => $review->getDate()->format('d/m/Y'),
+                        'expert'        => $review->getExpert(),
+                        'category'      => $rcategory->getTitle(),
+                        'categoryId'    => $rcategory->getId(),
+                        'question1'     => $review->getQuestion1(),
+                        'question2'     => $review->getQuestion2(),
+                        'prospects'     => $review->getProspects(),
+                        'types'         => $types,
+                        'post_likes'    => $review->getLikes(),
+                        'type'          => 'review'
+                    ];
+                }
             }
         }
         

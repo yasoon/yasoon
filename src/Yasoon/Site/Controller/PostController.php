@@ -205,12 +205,13 @@ class PostController {
     public function getPostsAction(Request $request)
     {
         $postId = $request->request->get('postid');
+        $authorId = $request->request->get('authorId');
         if(!is_array($postId))
         {
             $postId = [$postId];
         }
         
-        $result = $this->service->getPosts($postId);
+        $result = $this->service->getPosts($postId, $authorId);
 
         return $result;
     }

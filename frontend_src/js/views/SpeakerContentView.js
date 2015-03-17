@@ -82,7 +82,8 @@
 
       SpeakerContentView.prototype.getPosts = function() {
         return $.post("/api/post/getPosts", {
-          'postid[]': this.model.get('posts')
+          'postid[]': this.model.get('posts'),
+          'authorId': parseInt(this.model.get('id'))
         }, (function(_this) {
           return function(data) {
             return _this.model.set('speakerPosts', data);
