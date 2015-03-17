@@ -29,7 +29,7 @@ define(
       interviewsTemplate: _.template(speakerInterviewsTpl)
 
       initialize: (options) ->
-        @model.set({'id': options.id, 'answers': options.author.answers, 'posts': options.author.posts, 'page': options.page})
+        @model.set({'id': options.id, 'answers': options.author.answers, 'posts': options.author.posts, 'page': options.page, 'reviews': options.author.reviews})
         @setHandlers()
         if @model.get('page') is 'answers' then @answersPage() else @postsPage()
 
@@ -107,7 +107,7 @@ define(
         
       checkErrors: (data) ->
         if data.error is yes then @showError(data) else @createInterviews(data)
-        if @model.get('posts').length then @getPosts() else @emptyQuestions(34)
+        if @model.get('posts').length or @model.get('reviews').length then @getPosts() else @emptyQuestions(34)
         
       showError: (data) ->
         if @isAuthor() then @$el.append('<section class="speakerModerError">'+_.getContent(83)+'</section>')

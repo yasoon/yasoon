@@ -1077,6 +1077,17 @@ class AuthorService extends AbstractApiService {
                 $i++;
             }
             
+            $areviews = [];
+            $reviews = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->createQueryBuilder('r')
+                ->leftJoin('r.author', 'a')
+                ->where('a.id = '.$author->getId())
+                ->orderBy('r.date', 'desc')->getQuery()->getResult();
+            
+            foreach($reviews as $review)
+            {
+                $areviews[] = $review->getId();
+            }
+            
             $aquestions = [];
             $questions = $this->em->getRepository('Yasoon\Site\Entity\QuestionEntity')->createQueryBuilder('q')
                 ->leftJoin('q.author', 'a')
@@ -1120,6 +1131,7 @@ class AuthorService extends AbstractApiService {
                         'dream' => $author->getDream(),
                         'homepage' => $author->getHomepage(),
                         'posts' => $aposts,
+                        'reviews' => $areviews,
                         'friends' => $afriends,
                         'answers' => $aquestions,
                         'last_publish_date' => $date,

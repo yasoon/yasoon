@@ -22,7 +22,8 @@
           'id': options.id,
           'answers': options.author.answers,
           'posts': options.author.posts,
-          'page': options.page
+          'page': options.page,
+          'reviews': options.author.reviews
         });
         this.setHandlers();
         if (this.model.get('page') === 'answers') {
@@ -199,7 +200,7 @@
         } else {
           this.createInterviews(data);
         }
-        if (this.model.get('posts').length) {
+        if (this.model.get('posts').length || this.model.get('reviews').length) {
           return this.getPosts();
         } else {
           return this.emptyQuestions(34);
