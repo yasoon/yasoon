@@ -162,6 +162,7 @@ class PostCategoryService extends AbstractApiService {
                                 'description'   => $results_postsSort[$i]->getPost()->getPreview(),
                                 'text'          => $results_postsSort[$i]->getPost()->getText(),
                                 'publishDate'   => $results_postsSort[$i]->getPost()->getDate()->format('d/m/Y'),
+                                'dateSort'      => $results_postsSort[$i]->getPost()->getDateTimeStamp(),
                                 'post_likes'    => $results_postsSort[$i]->getPost()->getLikes(),
                                 'timeToRead'    => $timeToRead,
                                 'avatarImg'     => $results_postsSort[$i]->getPost()->getAuthor()->getImage(),
@@ -184,6 +185,12 @@ class PostCategoryService extends AbstractApiService {
             if (!empty($postsSort) ) {
                 if (!empty($reviews)) {
                     $allResults = array_merge($postsSort, $reviews);
+                    usort($allResults, function($a, $b) {
+                    if ($a['dateSort'] == $b['dateSort']) {
+                        return 0;
+                    }
+                    return ($a['dateSort'] < $b['dateSort']) ? -1 : 1;
+                });
                 } else {
                     $allResults = $postsSort;
                 }
@@ -389,6 +396,7 @@ class PostCategoryService extends AbstractApiService {
                     'description'   => $review->getDescription(),
                     'rating'        => $review->getRating(),
                     'publishDate'   => $review->getDate()->format('d/m/Y'),
+                    'dateSort'      => $review->getDateTimeStamp(),
                     'expert'        => $review->getExpert(),
                     'category'      => $category->getTitle(),
                     'categoryId'    => $category->getId(),

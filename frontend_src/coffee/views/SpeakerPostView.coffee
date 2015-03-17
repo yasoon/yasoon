@@ -37,7 +37,7 @@ define(
 
       render: ->
         if @model.get('type') == 'post' then  @$el.html(@template(@model.toJSON()))
-        else @$el.html(@reviewTemplate(@model.toJSON()))
+        else  if @model.get('type') == 'review' then @$el.html(@reviewTemplate(@model.toJSON()))
         @
         
 )

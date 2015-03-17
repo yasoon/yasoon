@@ -103,6 +103,7 @@
 
       SpeakerContentView.prototype.createPosts = function() {
         var postsCollection;
+        console.log(this.model.get('speakerPosts'));
         postsCollection = new SpeakerPostsCollection(this.model.get('speakerPosts'));
         if (this.postsList == null) {
           this.postsList = new SpeakerPostsCollectionView({

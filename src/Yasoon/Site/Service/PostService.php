@@ -921,6 +921,7 @@ class PostService extends AbstractApiService {
                 ->select('p')
                 ->from('Yasoon\Site\Entity\PostEntity', 'p')
                 ->where('p.id IN('.implode(',', $postId).')')
+                ->orderBy('p.date', 'desc')
                 ->getQuery()->getResult();
             
             foreach($posts as $key => $post)
@@ -964,6 +965,7 @@ class PostService extends AbstractApiService {
                     'description'   => $post->getPreview(),
                     'text'          => $post->getText(), // $questionAnswerArray,
                     'publishDate'   => $post->getDate()->format('d/m/Y'),
+                    'dateSort'      => $post->getDateTimeStamp(),
                     'post_likes'    => $post->getLikes(),
                     'timeToRead'    => $timeToRead,
                     'interview_name'=> $interviewName,
@@ -979,6 +981,7 @@ class PostService extends AbstractApiService {
                 ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
                 ->where('r.authorId = :id')
                 ->setParameter('id', $authorId)
+                ->orderBy('r.date', 'desc')
                 ->getQuery()
                 ->getResult();
 
@@ -1007,6 +1010,7 @@ class PostService extends AbstractApiService {
                         'description'   => $description,
                         'rating'        => $review->getRating(),
                         'publishDate'   => $review->getDate()->format('d/m/Y'),
+                        'dateSort'      => $review->getDateTimeStamp(),
                         'expert'        => $review->getExpert(),
                         'category'      => $rcategory->getTitle(),
                         'categoryId'    => $rcategory->getId(),
@@ -1024,9 +1028,11 @@ class PostService extends AbstractApiService {
         if (!empty($results_posts) ) {
             if (!empty($reviews)) {
                 $result = array_merge($results_posts, $reviews);
-                $name = 'publishDate';
-                usort($result, function ($a, $b) use(&$name){
-                    return $a[$name] - $b[$name];
+                usort($result, function($a, $b) {
+                    if ($a['dateSort'] == $b['dateSort']) {
+                        return 0;
+                    }
+                    return ($a['dateSort'] < $b['dateSort']) ? -1 : 1;
                 });
             } else {
                 $result = $results_posts;

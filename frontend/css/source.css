@@ -7454,12 +7454,12 @@ section {
   height: 170px;
   width: 170px;
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 900px) {
   .hint-mobile {
     display: none;
   }
   .write-good-story {
-    width: 321px;
+    width: 15%;
     float: right;
     top: 145px;
     right: 10px;
@@ -7480,7 +7480,6 @@ section {
   }
   .write-good-story .write-good-story-title {
     font-size: 1.3em;
-    margin-left: 25px;
     width: 320px;
   }
   .write-good-story .content {
@@ -7501,7 +7500,7 @@ section {
     display: block;
   }
 }
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 899px) {
   .write-good-story {
     display: none;
   }
@@ -7574,6 +7573,7 @@ section {
 .auto-complete-main {
   width: 50%;
   margin: auto;
+  margin-bottom: 25px;
 }
 .auto-complete-main .found-categories-main {
   font-size: 1.4em;
@@ -7711,6 +7711,10 @@ section {
 }
 .ratingSpeaker {
   cursor: auto;
+}
+.ratingTitle {
+  float: left;
+  width: 110px;
 }
 ul li {
   list-style: none;

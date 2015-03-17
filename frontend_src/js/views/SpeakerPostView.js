@@ -69,7 +69,7 @@
       SpeakerPostView.prototype.render = function() {
         if (this.model.get('type') === 'post') {
           this.$el.html(this.template(this.model.toJSON()));
-        } else {
+        } else if (this.model.get('type') === 'review') {
           this.$el.html(this.reviewTemplate(this.model.toJSON()));
         }
         return this;

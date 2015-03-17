@@ -64,6 +64,7 @@ define(
         @$el.append(@interviewsTemplate(_.extend({},{'authorId': parseInt(@model.get('id'))}, {'interviews': data.interviews}, {'options': ''})))
         
       createPosts: ->
+        console.log(@model.get('speakerPosts'))
         postsCollection = new SpeakerPostsCollection(@model.get('speakerPosts'))
         if not @postsList? then @postsList = new SpeakerPostsCollectionView({collection: postsCollection}) else @postsList.delegateEvents()
         @$el.append(@postsList.render().$el)

@@ -260,7 +260,7 @@ class PostEntity
      */
     public function getDateTimeStamp()
     {
-        $date = $date->setTimestamp($this->date);
+        $date = $this->date->getTimestamp();
         return $date;
     }
 

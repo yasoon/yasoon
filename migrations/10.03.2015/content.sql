@@ -7,3 +7,5 @@ INSERT INTO content (id, text, description, tagId) VALUES ('106', 'Вопрос 
 INSERT INTO content (id, text, description, tagId) VALUES ('107', 'Вопрос 2', 'Заголовок для статистики в категориях "Вопрос 2"', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('108', 'Всего записей', 'Заголовок для статистики в категориях "Всего записей"', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('109', 'background-color: rgb(255, 242, 153);', 'Цвет фона для статистики отзывов', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('110', 'Рассказать историю', 'Кнопка на главной странице для создания поста', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('111', 'Рейтинг категории', 'Описание для рейтинга категорий', 'NULL');
