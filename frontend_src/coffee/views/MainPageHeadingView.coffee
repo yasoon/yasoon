@@ -2,6 +2,7 @@ define(
   [
     'text!templates/mainPageHeadingTpl.htm'
     'text!templates/categoriesSearchResultTpl.htm'
+    'views/ReviewCategoriesView'
     'backbone'
     'videoBG'
     'moderniz'
@@ -9,6 +10,7 @@ define(
   (
     mainPageHeadingTpl
     categoriesSearchResultTpl
+    ReviewCategoriesView
   ) ->
     class MainPageHeadingView extends Backbone.View
       className: 'mainPage-intro'
@@ -19,6 +21,7 @@ define(
       
       events: ->
         'keyup input.category-for-review-main' : 'getCategoriesMain'
+        'click a.categoriesBtn': 'showCategories'
         
       render: ->
         @$el.html(@template()).css({'background-image': "url(web/upload#{_.getContent(13)})", 'background-size': "cover"})
@@ -58,6 +61,15 @@ define(
       
       showErrorMain: (data) ->
         $('.found-categories-main').hide()
+        
+      showCategories:(event) ->
+        event.preventDefault()
+        type = $(event.currentTarget).attr('data-type')
+        @reviewCategoriesView = new ReviewCategoriesView({type: type})
+        $('body').append(@reviewCategoriesView.render().$el)
+        setTimeout ( ->
+          $('.category-for-review').focus()
+        ), 1000
             
 
 )

@@ -464,8 +464,7 @@ class PostService extends AbstractApiService {
             $post->setCaption($dataPost['title'])
                 ->setPreview($dataPost['description'])
                 ->setPreviewImg($urlImg)
-                ->setText('')
-                ->setDate(new \DateTime());
+                ->setText('');
 
             $this->em->merge($post);
             $this->em->flush();
@@ -921,7 +920,6 @@ class PostService extends AbstractApiService {
                 ->select('p')
                 ->from('Yasoon\Site\Entity\PostEntity', 'p')
                 ->where('p.id IN('.implode(',', $postId).')')
-                ->orderBy('p.date', 'desc')
                 ->getQuery()->getResult();
             
             foreach($posts as $key => $post)
@@ -981,7 +979,6 @@ class PostService extends AbstractApiService {
                 ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
                 ->where('r.authorId = :id')
                 ->setParameter('id', $authorId)
-                ->orderBy('r.date', 'desc')
                 ->getQuery()
                 ->getResult();
 

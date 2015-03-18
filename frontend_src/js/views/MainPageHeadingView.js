@@ -2,7 +2,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['text!templates/mainPageHeadingTpl.htm', 'text!templates/categoriesSearchResultTpl.htm', 'backbone', 'videoBG', 'moderniz'], function(mainPageHeadingTpl, categoriesSearchResultTpl) {
+  define(['text!templates/mainPageHeadingTpl.htm', 'text!templates/categoriesSearchResultTpl.htm', 'views/ReviewCategoriesView', 'backbone', 'videoBG', 'moderniz'], function(mainPageHeadingTpl, categoriesSearchResultTpl, ReviewCategoriesView) {
     var MainPageHeadingView;
     return MainPageHeadingView = (function(_super) {
       __extends(MainPageHeadingView, _super);
@@ -19,7 +19,8 @@
 
       MainPageHeadingView.prototype.events = function() {
         return {
-          'keyup input.category-for-review-main': 'getCategoriesMain'
+          'keyup input.category-for-review-main': 'getCategoriesMain',
+          'click a.categoriesBtn': 'showCategories'
         };
       };
 
@@ -94,6 +95,19 @@
 
       MainPageHeadingView.prototype.showErrorMain = function(data) {
         return $('.found-categories-main').hide();
+      };
+
+      MainPageHeadingView.prototype.showCategories = function(event) {
+        var type;
+        event.preventDefault();
+        type = $(event.currentTarget).attr('data-type');
+        this.reviewCategoriesView = new ReviewCategoriesView({
+          type: type
+        });
+        $('body').append(this.reviewCategoriesView.render().$el);
+        return setTimeout((function() {
+          return $('.category-for-review').focus();
+        }), 1000);
       };
 
       return MainPageHeadingView;

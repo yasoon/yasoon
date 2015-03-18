@@ -1,12 +1,12 @@
 <article class="cat-statistic" style="<%= _.getContent(109) %>">
-    <div><%= _.getContent(111) %></div>
+    <div class="rating-title"><%= _.getContent(111) %></div>
     <div>
         <input type="hidden" name="rating" class="ratingCategory" 
             data-filled="symbol symbol-filled statistics-big" 
             data-empty="symbol symbol-empty statistics-big" 
             readonly="readonly"
             value="<%= ratingRound %>"
-            data-start="0" data-stop="5"/> (<%= all %>)
+            data-start="0" data-stop="5"/> <span class="rating-count-big">(<%= all %>) </span>
         <div class="averageValStat">Средняя оценка <%= rating %> из 5</div>
     </div>
     <div>
@@ -16,7 +16,7 @@
             data-empty="symbol symbol-empty statistics" 
             readonly="readonly"
             value="5" 
-            data-start="0" data-stop="5"/> (<%= rating5 %>)
+            data-start="0" data-stop="5"/> <span class="rating-count">(<%= rating5 %>)</span>
     </div>
     <div>
         <div class="ratingTitle"><%= _.getContent(92) %></div> 
@@ -25,7 +25,7 @@
             data-empty="symbol symbol-empty statistics" 
             readonly="readonly"
             value="4" 
-            data-start="0" data-stop="5"/> (<%= rating4 %>)
+            data-start="0" data-stop="5"/> <span class="rating-count">(<%= rating4 %>)</span>
     </div>
     <div>
         <div class="ratingTitle"><%= _.getContent(91) %></div>
@@ -34,7 +34,7 @@
             data-empty="symbol symbol-empty statistics" 
             readonly="readonly"
             value="3" 
-            data-start="0" data-stop="5"/> (<%= rating3 %>)
+            data-start="0" data-stop="5"/> <span class="rating-count">(<%= rating3 %>)</span>
     </div>
     <div>
         <div class="ratingTitle"><%= _.getContent(90) %></div>
@@ -43,7 +43,7 @@
             data-empty="symbol symbol-empty statistics" 
             readonly="readonly"
             value="2" 
-            data-start="0" data-stop="5"/> (<%= rating2 %>)
+            data-start="0" data-stop="5"/> <span class="rating-count">(<%= rating2 %>)</span>
     </div>
     <div>
         <div class="ratingTitle"><%= _.getContent(89) %></div>
@@ -52,7 +52,7 @@
             data-empty="symbol symbol-empty statistics" 
             readonly="readonly"
             value="1" 
-            data-start="0" data-stop="5"/> (<%= rating1 %>)
+            data-start="0" data-stop="5"/> <span class="rating-count">(<%= rating1 %>)</span>
     </div>
 <!--    <div>
     <label><%= _.getContent(105) %></label>

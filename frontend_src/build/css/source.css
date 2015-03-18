@@ -6749,6 +6749,10 @@ article .speaker-info .usr-name,
 article .speaker-info .p-label {
   padding-top: 0;
 }
+article .speaker-avatar span {
+  position: relative;
+  top: 2px;
+}
 article .usr-ic {
   margin: 20px;
 }
@@ -7698,6 +7702,7 @@ section {
 }
 .averageValStat {
   padding-bottom: 10px;
+  margin: 5px 0;
 }
 .speaker-type-review {
   margin-left: 5px;
@@ -7715,6 +7720,19 @@ section {
 .ratingTitle {
   float: left;
   width: 110px;
+}
+.rating-title {
+  margin-bottom: 10px;
+}
+.rating-count {
+  position: relative;
+  top: -5px;
+  margin-left: 10px;
+}
+.rating-count-big {
+  position: relative;
+  top: -9px;
+  margin-left: 10px;
 }
 ul li {
   list-style: none;

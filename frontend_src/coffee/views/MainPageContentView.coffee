@@ -53,12 +53,14 @@ define(
         @$el.find('.mainPage-content').append(@mainPageHistoryView.render().$el)
 
       createMainPageStories: ->
-        $.get('/api/post/get_best_posts', (data) => @postPreviews(data))
+        $.get('/api/post/get_categoryPosts/0/1/10/dateSort', (data) => @postPreviews(data))
 
       postPreviews: (data) ->
-        postPreviews = new PostsPreviews({collection: new PostsPreviewsList(data)})
+        postPreviews = new PostsPreviews({collection: new PostsPreviewsList(data.dateSort)})
         if not @postsPreviews? then @postsPreviews = postPreviews else @postsPreviews.delegateEvents()
         @$el.find('.mainPage-content').append(@postsPreviews.render().$el)
+        $('.bottom-toolbar').remove()
+        $('.ratingSpeaker').rating()
 
       changeMainPageView: (event) ->
         event.preventDefault()

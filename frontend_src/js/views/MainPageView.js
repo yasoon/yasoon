@@ -15,6 +15,7 @@
 
       MainPageView.prototype.initialize = function() {
         this.createMainPageHeading();
+        this.createMainPageContent();
         return this;
       };
 

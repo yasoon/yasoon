@@ -79,7 +79,7 @@
       };
 
       MainPageContentView.prototype.createMainPageStories = function() {
-        return $.get('/api/post/get_best_posts', (function(_this) {
+        return $.get('/api/post/get_categoryPosts/0/1/10/dateSort', (function(_this) {
           return function(data) {
             return _this.postPreviews(data);
           };
@@ -89,14 +89,16 @@
       MainPageContentView.prototype.postPreviews = function(data) {
         var postPreviews;
         postPreviews = new PostsPreviews({
-          collection: new PostsPreviewsList(data)
+          collection: new PostsPreviewsList(data.dateSort)
         });
         if (this.postsPreviews == null) {
           this.postsPreviews = postPreviews;
         } else {
           this.postsPreviews.delegateEvents();
         }
-        return this.$el.find('.mainPage-content').append(this.postsPreviews.render().$el);
+        this.$el.find('.mainPage-content').append(this.postsPreviews.render().$el);
+        $('.bottom-toolbar').remove();
+        return $('.ratingSpeaker').rating();
       };
 
       MainPageContentView.prototype.changeMainPageView = function(event) {
