@@ -57,7 +57,11 @@ define(
         @runPlugins()
         
       runPlugins: ->
-        $('.rating').rating()
+        $('.rating').rating extendSymbol: (rate) ->
+          $(this).tooltip
+            container: 'body'
+            placement: 'bottom'
+            title: _.getContent(88 + rate)
         $('.review-type').multiselect({header: false, noneSelectedText: _.getContent(112), selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         
