@@ -24,6 +24,13 @@ define(
         'click .addLike':                 'addLike'
         'click .expert':                  'selectExpert'
         'click .write-good-story-title':  'showHint'
+        'keyup #description':            'validateDescription'
+        
+      bindings:
+        '#description':              'description'
+        '#title':                    'title'
+        '#text':                     'text'
+        '#reviewType':               'reviewType'
         
       className:                    'page-layout m-page'
       tagName:                      'section'
@@ -36,6 +43,7 @@ define(
         @getCategory(options)
         @model.set({'maxLength': 255})
         @handler()
+        @stickit()
         
       handler: ->
         @listenTo(@model, 'change:description', @symbolsCounter)
@@ -50,7 +58,7 @@ define(
         
       runPlugins: ->
         $('.rating').rating()
-        $('.review-type').multiselect({header: false, noneSelectedText: 'выбрать тип', selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
+        $('.review-type').multiselect({header: false, noneSelectedText: _.getContent(112), selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         
       selectExpert: ->
@@ -78,6 +86,10 @@ define(
 
       sendReviewData: ->
         formData = $('form.review-form').serialize()
+        @model.set('description': $('#description').val(), 'title': $('#title').val(), 'text': @getText(), 'reviewType': $('.review-type').val())
+        if @model.isValid() then @savePostData(formData) else @showErrors(@model.validationError)
+
+      savePostData: (formData) ->
         $.post('/api/post/saveReview', {formData}, (data) => @changeLocation(data))
 
       changeLocation: (data) ->
@@ -105,4 +117,13 @@ define(
         event.preventDefault()
         $('.write-good-story a').toggleClass('active')
         $('.write-good-story .content').toggleClass('active')
+        
+      getDescription: ->
+        if @model.get('description')? then @model.get('description') else ''
+        
+      getText: ->
+        if $('#text').val() != '<p><br></p>' then $('#text').val() else ''
+        
+      validateDescription: ->
+        @model.set('description': $('#description').val())
 )

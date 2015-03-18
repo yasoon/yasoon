@@ -16,6 +16,7 @@
                 <input type="hidden" name="category-id" value="<%= categoryId %>">
                 <%= category %>
             </h3>
+            <div class="hr"></div>
             <div class="review-title"> <%=  _.getContent(85) %> </div>
             <div class="review-rating-title"> <%=  _.getContent(99) %> </div>
             <input type="hidden" name="rating" class="rating" 
@@ -54,7 +55,7 @@
         <div class="di form-group">
             <textarea class="description form-control"  name="description" id="description" placeholder="<%=  _.getContent(40) %>" maxlength="<%= maxLength %>"><%= description %></textarea>
             <!--<p class="help-block"></p>-->
-            <span class="counter">
+            <span class="counter counter-small">
                 <%= maxLength %>
             </span>
         </div>
@@ -80,7 +81,7 @@
         </div>-->
         
         <div class="di form-group">
-            <select name="review-type[]"  class="review-type" multiple="multiple" required>
+            <select name="review-type[]"  class="review-type" multiple="multiple" required id="reviewType">
             <% _.each(types, function(type) { %>
                 <option  value="<%= type.id %>" <%= type.selected %>>
                 <%= type.name %>

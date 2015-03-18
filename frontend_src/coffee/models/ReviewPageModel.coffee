@@ -29,11 +29,10 @@ define(
           message: 'Поле не может быть пустым'
         )
         
-        
-      if not attrs.review-type
+      if not attrs.reviewType
         errors.push(
-          name: 'review-type[]'
-          message: 'Необходимо выбрать хотя бы одно значение'
+          name: 'reviewType'
+          message: 'Необходимо выбрать хотя бы одно поле'
         )
 
       if errors.length > 0 then errors else false

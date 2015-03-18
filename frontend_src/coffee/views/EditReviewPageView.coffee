@@ -21,6 +21,10 @@ define(
   ) ->
     class EditReviewPageView extends ValidationView
 
+      bindings:
+        '#description': 'description'
+        '#title': 'title'
+      
       template: _.template(editReviewTpl)
 
       events: ->
@@ -28,14 +32,20 @@ define(
         'click .js-delete':               'deleteCheck'
         'click .expert':                  'selectExpert'
         'click .write-good-story-title':  'showHint'
+        'keyup #description':             'validateDescription'
         
       initialize: (options) ->
         @options = options || {}
         @model.set({'reviewId': @options.id})
+        @model.set({'maxLength': 255})
+        @handler()
         $.post("/api/post/getReview", {reviewid: @options.id}, (data) => @checkErrors(data))
         
       checkErrors: (data) ->
         if data.error == false then @setCategory(data)
+        
+      handler: ->
+        @listenTo(@model, 'change:description', @symbolsCounter)
 
       setCategory:(data) ->
         @model.set('reviewData', data.result[0])
@@ -45,7 +55,7 @@ define(
         
       runPlugins: ->
         $('.rating').rating()
-        $('.review-type').multiselect({header: false, noneSelectedText: 'выбрать тип', selectedText: 'выбрано # ', imageUpload: '/api/post/upload_image'})
+        $('.review-type').multiselect({header: false, noneSelectedText: _.getContent(112), selectedText: _.getContent(113), imageUpload: '/api/post/upload_image'})
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         $( window ).resize -> 
           if ($('.ui-multiselect-menu').is(':visible')) then $('.ui-multiselect').click()
@@ -74,8 +84,13 @@ define(
 
       sendReviewData: ->
         formData = $('form.review-form').serialize()
-        $.post('/api/post/saveReview', {formData}, (data) => @changeLocation(data))
+        @model.set('description': $('#description').val(), 'title': $('#title').val(), 'text': @getText(), 'reviewType': $('.review-type').val())
+        console.log(@model)
+        if @model.isValid() then @savePostData(formData) else @showErrors(@model.validationError)
 
+      savePostData: (formData) ->
+        $.post('/api/post/saveReview', {formData}, (data) => @changeLocation(data))
+      
       changeLocation: (data) ->
         window.location = "#/review/#{data.reviewId}/"
         window.reload = true
@@ -87,4 +102,13 @@ define(
         event.preventDefault()
         $('.write-good-story a').toggleClass('active')
         $('.write-good-story .content').toggleClass('active')
+        
+      getDescription: ->
+        if @model.get('description')? then @model.get('description') else ''
+        
+      getText: ->
+        if $('#text').val() != '<p><br></p>' then $('#text').val() else ''
+        
+      validateDescription: ->
+        @model.set('description': $('#description').val())
 )

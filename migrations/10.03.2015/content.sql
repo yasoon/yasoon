@@ -9,3 +9,5 @@ INSERT INTO content (id, text, description, tagId) VALUES ('108', 'Всего з
 INSERT INTO content (id, text, description, tagId) VALUES ('109', 'background-color: rgb(255, 242, 153);', 'Цвет фона для статистики отзывов', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('110', 'Рассказать историю', 'Кнопка на главной странице для создания поста', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('111', 'Рейтинг категории', 'Описание для рейтинга категорий', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('112', 'Выбрать тип', 'Название для выбора типа на странице отзыва', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('113', 'выбрано # ', 'Текст выбранного типа на странице отзыва', 'NULL');

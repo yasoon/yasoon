@@ -32,6 +32,7 @@ define(
       bindings:
         '#description':             'description'
         '#title':                   'title'
+        
       className:                    'page-layout m-page'
       tagName:                      'section'
 
