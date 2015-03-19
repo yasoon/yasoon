@@ -211,12 +211,12 @@ class SocialAuthController {
         $reviewLinkId = '';
         if (!empty($session->get('reviewStatus'))) {
                 $reviewId = $session->get('reviewStatus');
-                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review = $this->_em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
                 $review->setStatus('saved')
-                        ->setAuthorId($entity->getId());
+                        ->setAuthorId($user->getId());
                 
-                $this->em->merge($review);
-                $this->em->flush();
+                $this->_em->merge($review);
+                $this->_em->flush();
                 
                 $session->remove('reviewStatus');
                 
@@ -432,12 +432,12 @@ class SocialAuthController {
         $reviewLinkId = '';
         if (!empty($session->get('reviewStatus'))) {
                 $reviewId = $session->get('reviewStatus');
-                $review = $this->em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
+                $review = $this->_em->getRepository('Yasoon\Site\Entity\ReviewEntity')->find($reviewId);
                 $review->setStatus('saved')
-                        ->setAuthorId($entity->getId());
+                        ->setAuthorId($user->getId());
                 
-                $this->em->merge($review);
-                $this->em->flush();
+                $this->_em->merge($review);
+                $this->_em->flush();
                 
                 $session->remove('reviewStatus');
                 
