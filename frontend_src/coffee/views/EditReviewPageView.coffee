@@ -50,6 +50,7 @@ define(
       setCategory:(data) ->
         @model.set('reviewData', data.result[0])
         @model.set('path', data.path)
+        @model.set('authorId', data.result[0]['authorId'])
         @$el.empty().append(@template(_.extend({}, @model.get('reviewData'), {maxLength: 255})))
         @runPlugins()
         
@@ -89,7 +90,6 @@ define(
       sendReviewData: ->
         formData = $('form.review-form').serialize()
         @model.set('description': $('#description').val(), 'title': $('#title').val(), 'text': @getText(), 'reviewType': $('.review-type').val())
-        console.log(@model)
         if @model.isValid() then @savePostData(formData) else @showErrors(@model.validationError)
 
       savePostData: (formData) ->

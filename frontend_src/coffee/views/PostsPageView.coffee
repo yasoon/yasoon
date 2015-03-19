@@ -84,7 +84,7 @@ define(
         if $('.empty-text').length then $('.empty-text').parent().remove()
         @posts()
         @$el.append(@postsPreviews.render().$el)
-        $('.ratingSpeaker').rating();
+        $('.ratingSpeaker').rating()
 
       categoryList: ->
         categoryCollection = new CategoryCollection(@model.get('categoryList'))
@@ -98,6 +98,7 @@ define(
         
       checkErrors: (data) ->
         if data.error is yes
+          $('.downloadMore').hide()
           @emptyPosts(data.errorText)
         else
           @model.set('postsList', data[@model.get('sort')])

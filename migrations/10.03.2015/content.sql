@@ -11,3 +11,5 @@ INSERT INTO content (id, text, description, tagId) VALUES ('110', 'Расска�
 INSERT INTO content (id, text, description, tagId) VALUES ('111', 'Рейтинг категории', 'Описание для рейтинга категорий', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('112', 'Выбрать тип', 'Название для выбора типа на странице отзыва', 'NULL');
 INSERT INTO content (id, text, description, tagId) VALUES ('113', 'выбрано # ', 'Текст выбранного типа на странице отзыва', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('114', '<h2>или</h2>', 'Текст между поиском и кнопкой на главной', 'NULL');
+INSERT INTO content (id, text, description, tagId) VALUES ('115', 'Перспективы категории', 'Описание для перспектив категории', 'NULL');

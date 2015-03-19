@@ -93,79 +93,68 @@ class CategoryService extends AbstractApiService {
         if (!empty($id)) {
             $parents = $this->em->getRepository('Yasoon\Site\Entity\CategoryEntity')->findBy(array('parent' => $id));
             if (empty($parents)) {
-                $reviewsCount = $this->em->createQueryBuilder()
-                    ->select('count(r.id)')
+                $reviews = $this->em->createQueryBuilder()
+                    ->select('r')
                     ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
                     ->where('r.categoryId = :id')
                     ->setParameter('id', $id)
                     ->getQuery()
-                    ->getSingleScalarResult();
-                if ($reviewsCount > 0) {
-                    $categoryRating = $this->em->createQueryBuilder()
-                        ->select('AVG( r.rating )')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
+                    ->getResult();
+                if (!empty($reviews)) {
+                    $reviewsCount = 0;
+                    $rating1 = 0;
+                    $rating2 = 0;
+                    $rating3 = 0;
+                    $rating4 = 0;
+                    $rating5 = 0;
+                    $prospect1 = 0;
+                    $prospect2 = 0;
+                    $prospect3 = 0;
+                    $prospect4 = 0;
+                    $prospect5 = 0;
+                    foreach ($reviews as $review) {
+                        switch ($review->getRating()) {
+                            case 1:
+                                $rating1++;
+                                break;
+                            case 2:
+                                $rating2++;
+                                break;
+                            case 3:
+                                $rating3++;
+                                break;
+                            case 4:
+                                $rating4++;
+                                break;
+                            case 5:
+                                $rating5++;
+                                break;
+                        }
+                        
+                        switch ($review->getProspects()) {
+                            case 1:
+                                $prospect1++;
+                                break;
+                            case 2:
+                                $prospect2++;
+                                break;
+                            case 3:
+                                $prospect3++;
+                                break;
+                            case 4:
+                                $prospect4++;
+                                break;
+                            case 5:
+                                $prospect5++;
+                                break;
+                        }
+                        
+                        $reviewsCount++;
+                    }
                     
-                    $rating5 = $this->em->createQueryBuilder()
-                        ->select('count(r.id)')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->andWhere('r.rating = :rating')
-                        ->setParameter('rating', 5)
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
-                    
-                    $rating4 = $this->em->createQueryBuilder()
-                        ->select('count(r.id)')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->andWhere('r.rating = :rating')
-                        ->setParameter('rating', 4)
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
-                    
-                    $rating3 = $this->em->createQueryBuilder()
-                        ->select('count(r.id)')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->andWhere('r.rating = :rating')
-                        ->setParameter('rating', 3)
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
-                    
-                    $rating2 = $this->em->createQueryBuilder()
-                        ->select('count(r.id)')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->andWhere('r.rating = :rating')
-                        ->setParameter('rating', 2)
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
-                    
-                    $rating1 = $this->em->createQueryBuilder()
-                        ->select('count(r.id)')
-                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-                        ->where('r.categoryId = :id')
-                        ->andWhere('r.rating = :rating')
-                        ->setParameter('rating', 1)
-                        ->setParameter('id', $id)
-                        ->getQuery()
-                        ->getSingleScalarResult();
-//                    $categoryProspects = $this->em->createQueryBuilder()
-//                        ->select('AVG( r.prospects )')
-//                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
-//                        ->where('r.categoryId = :id')
-//                        ->setParameter('id', $id)
-//                        ->getQuery()
-//                        ->getSingleScalarResult();
-//
+                    $avgRating = ($rating1 + $rating2*2 + $rating3*3 + $rating4*4 + $rating5*5)/$reviewsCount;
+                    $avgProspect = ($prospect1 + $prospect2*2 + $prospect3*3 + $prospect4*4 + $prospect5*5)/$reviewsCount;
+                
 //                    $categoryQuestion1Count = $this->em->createQueryBuilder()
 //                        ->select('count(r.id)')
 //                        ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
@@ -186,19 +175,26 @@ class CategoryService extends AbstractApiService {
 //                        ->getQuery()
 //                        ->getSingleScalarResult();
                     
-                    $result = [
-                            'error'     => false, 
-                            'result'    => [
-                                'all'           => $reviewsCount,
-                                'rating'        => round($categoryRating, 2),
-                                'ratingRound'   => intval($categoryRating),
-                                'rating5'     => $rating5,
-                                'rating4'     => $rating4,
-                                'rating3'     => $rating3,
-                                'rating2'     => $rating2,
-                                'rating1'     => $rating1,
-                                ]
-                        ];
+                $result = [
+                        'error'     => false, 
+                        'result'    => [
+                            'all'           => $reviewsCount,
+                            'rating'        => round($avgRating, 2),
+                            'ratingRound'   => intval($avgRating),
+                            'prospect'        => round($avgProspect, 2),
+                            'prospectRound'   => intval($avgProspect),
+                            'rating5'     => $rating5,
+                            'rating4'     => $rating4,
+                            'rating3'     => $rating3,
+                            'rating2'     => $rating2,
+                            'rating1'     => $rating1,
+                            'prospect5'     => $prospect5,
+                            'prospect4'     => $prospect4,
+                            'prospect3'     => $prospect3,
+                            'prospect2'     => $prospect2,
+                            'prospect1'     => $prospect1,
+                            ]
+                    ];
                 }
                 
             }       

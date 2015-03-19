@@ -170,6 +170,7 @@
 
       PostsPageView.prototype.checkErrors = function(data) {
         if (data.error === true) {
+          $('.downloadMore').hide();
           return this.emptyPosts(data.errorText);
         } else {
           this.model.set('postsList', data[this.model.get('sort')]);

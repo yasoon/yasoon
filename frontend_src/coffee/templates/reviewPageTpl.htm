@@ -1,6 +1,6 @@
 <div class="like-title">
     <div class="category-type-review"><h2><%= category %></h2> 
-        <article class="cat-title cat-title-speaker">
+        <article class="cat-title cat-title-speaker speaker-path-review">
         <% _.each(path, function(category) { %>
             <% if (category.id != 0) { %>
             <a href="/#/posts/<%= category.id %>/dateSort" id="<%= category.id %>">
@@ -8,7 +8,7 @@
             </a>
             <% } %>
         <% }); %>
-        </article>
+        </article><br>
         <% _.each(types, function(type) { %>
             <% if (type.selected !== "") { %>
                  <span class="speaker-type-review"><%= type.name %></span>
