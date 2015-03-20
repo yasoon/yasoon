@@ -329,7 +329,7 @@ class SocialAuthController {
             $response = curl_exec($curl);
             curl_close($curl);
             $userInfo = json_decode($response);
-            
+            var_dump($userInfo); exit();
             $user =  $this->_em->createQueryBuilder()
                 ->select('u')
                 ->from('Yasoon\Site\Entity\AuthorEntity', 'u')
