@@ -295,7 +295,7 @@ class SocialAuthController {
         $APP_ID = 644685618912154;
         $APP_SECRET = '0a37ce622f4f7a32e4df8b3da4e54f8d';
         $URL_CALLBACK = 'http://yasoon.ru/socauth/facebook';
-        $URL_GET_ME = 'https://graph.facebook.com/me';
+        $URL_GET_ME = 'https://graph.facebook.com/me?scope=email';
 
         if(!isset($_GET['code']))
         {
@@ -320,7 +320,7 @@ class SocialAuthController {
         $new_user = false;
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
-            $request_url = $URL_GET_ME.'?scope=email&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+            $request_url = $URL_GET_ME.'&fields=id,name,email,link&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
