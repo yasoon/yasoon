@@ -150,7 +150,7 @@
 
       Register.prototype.registered = function(data) {
         this.model.set('id', data.userId);
-        this.$(event.currentTarget).prop('disabled', false);
+        this.$('.js-register').prop('disabled', false);
         this.showStep(1);
         return this.setModels();
       };

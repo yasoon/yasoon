@@ -110,7 +110,7 @@ define(
 
       registered: (data) ->
         @model.set('id', data.userId)
-        @$(event.currentTarget).prop('disabled', no)
+        @$('.js-register').prop('disabled', no)
         @showStep(1)
         @setModels()
 
