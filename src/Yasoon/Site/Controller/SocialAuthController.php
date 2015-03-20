@@ -174,6 +174,7 @@ class SocialAuthController {
             {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
                 $user[0]->setName($name)
+                    ->setEmail($response['response'][0]['email'])
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setVkontakteId($response['response'][0]['uid']);
                     
@@ -295,7 +296,7 @@ class SocialAuthController {
         $APP_ID = 644685618912154;
         $APP_SECRET = '0a37ce622f4f7a32e4df8b3da4e54f8d';
         $URL_CALLBACK = 'http://yasoon.ru/socauth/facebook';
-        $URL_GET_ME = 'https://graph.facebook.com/me?scope=email';
+        $URL_GET_ME = 'https://graph.facebook.com/me';
 
         if(!isset($_GET['code']))
         {
@@ -320,7 +321,7 @@ class SocialAuthController {
         $new_user = false;
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
-            $request_url = $URL_GET_ME.'&fields=id,name,email,link&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+            $request_url = $URL_GET_ME.'?scope=email&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -329,7 +330,7 @@ class SocialAuthController {
             $response = curl_exec($curl);
             curl_close($curl);
             $userInfo = json_decode($response);
-            var_dump($userInfo); exit();
+            
             $user =  $this->_em->createQueryBuilder()
                 ->select('u')
                 ->from('Yasoon\Site\Entity\AuthorEntity', 'u')
@@ -338,7 +339,9 @@ class SocialAuthController {
                 ->getQuery()->getResult();
             
             $name = $userInfo->name;
-            $email = $userInfo->email;
+            if (!empty($userInfo->email)) {
+                $email = $userInfo->email;
+            }
             if (count($user) < 1 || !is_object($user[0])) {
                 $user = (new AuthorEntity())
                     ->setName($name)
@@ -383,6 +386,7 @@ class SocialAuthController {
             } else {
 
                 $user[0]->setName($name)
+                    ->setEmail($email)
                     ->setHomepage($userInfo->link)
                     ->setFacebookId($userInfo->id);
                     
