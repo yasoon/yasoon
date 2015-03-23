@@ -105,7 +105,7 @@ class SocialAuthController {
         $APP_SECRET = 'S3ycqYG0EOuEBdkZm9Pa';
         $REDIRECT_URI = 'http://yasoon.ru/socauth/vkontakte';
         $PERMISSIONS = 'offline,email';
-        $API_VERSION = '5.5';
+        $API_VERSION = '5.29';
         if(!isset($_GET['code']))
         {
             header("Location: https://oauth.vk.com/authorize?client_id=".$APP_ID."&scope=".$PERMISSIONS."&redirect_uri=".$REDIRECT_URI."&response_type=code&v=".$API_VERSION);

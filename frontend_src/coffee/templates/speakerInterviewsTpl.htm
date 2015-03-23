@@ -20,8 +20,10 @@
         </article>
 	<% }); %>
     <% if (authorId === window.config.userId) { %>
-    <div class="interview-title-speaker">
-        <h4><%= _.getContent(83) %></h4>
-    </div>
+        <% if (interviews.length < 1) { %>
+        <div class="interview-title-speaker">
+            <h4><%= _.getContent(83) %></h4>
+        </div>
+        <% } %>
     <% } %>
 </div>

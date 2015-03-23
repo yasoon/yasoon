@@ -13,6 +13,7 @@
         <% } %>
         <span class="media-pub">
             <%= _.getDateText(publishDate) %> | 
+            <a href="#/posts/<%= categoryId %>/dateSort" ><%= category %></a> | 
             <label for="rating"><%= _.getContent(104) %></label>
             <input type="hidden" name="rating" class="ratingSpeaker" 
                 data-filled="symbol symbol-filled statistics" 
