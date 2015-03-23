@@ -387,12 +387,16 @@ class PostCategoryService extends AbstractApiService {
                     $authorImg = $review->getAuthor()->getImage();
  
                 }
+                $textLength = strlen(strip_tags($review->getText()));
+                $timeToRead = round($textLength/4200);
+                $timeRead = $timeToRead > 0 ? $timeToRead : 1;
                 $reviewsSort[] = [
                     'id'            => $review->getId(),
                     'authorId'      => $review->getAuthorId(),
                     'authorName'    => $authorName,
                     'avatarImg'     => $authorImg,
                     'title'         => $review->getTitle(),
+                    'timeToRead'    => $timeRead,
                     'description'   => $review->getDescription(),
                     'rating'        => $review->getRating(),
                     'publishDate'   => $review->getDate()->format('d/m/Y'),
