@@ -33,6 +33,8 @@ define(
         'click .expert':                  'selectExpert'
         'click .write-good-story-title':  'showHint'
         'keyup #description':             'validateDescription'
+        'focus .redactor_editor':         'removePlaceholder'
+        'focusout .redactor_editor':      'addPlaceHolder'
         
       initialize: (options) ->
         @options = options || {}
@@ -64,6 +66,15 @@ define(
         @$('.editor').redactor({imageUpload: '/api/post/upload_image'})
         $( window ).resize -> 
           if ($('.ui-multiselect-menu').is(':visible')) then $('.ui-multiselect').click()
+        @addPlaceHolder()
+          
+      addPlaceHolder: ->
+        if  @$('.redactor_editor p').html() == '<br>'
+          placeholder = _.getContent(87)
+          @$('.redactor_editor p').html('<span class="placeholder-redactor">' +placeholder+ '</span><br>')
+          
+      removePlaceholder: ->
+        $('.placeholder-redactor').remove()
         
       selectExpert: ->
         $('.expert').toggleClass('active');

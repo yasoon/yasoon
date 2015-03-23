@@ -876,12 +876,16 @@ class PostService extends AbstractApiService {
                     $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
                 }
                 $description = $review->getDescription() != null ? $review->getDescription() : '';
+                $textLength = strlen(strip_tags($review->getText()));
+                $timeToRead = round($textLength/4200);
+                $timeRead = $timeToRead > 0 ? $timeToRead : 1;
                 $reviewData[] = [
                     'id'            => $review->getId(),
                     'authorId'      => $review->getAuthorId(),
                     'authorName'    => $review->getAuthor()->getName(),
                     'title'         => $review->getTitle(),
                     'text'          => $review->getText(),
+                    'timeToRead'    => $timeRead,
                     'description'   => $description,
                     'rating'        => $review->getRating(),
                     'publishDate'   => $review->getDate()->format('d/m/Y'),
@@ -997,13 +1001,17 @@ class PostService extends AbstractApiService {
                         $types[] = array('id' => $type->getId(), 'name' => $type->getName(), 'selected' => $selectedValue);
                     }
                     $description = $review->getDescription() != null ? $review->getDescription() : '';
-
+                    $textLength = strlen(strip_tags($review->getText()));
+                    $timeToRead = round($textLength/4200);
+                    $timeRead = $timeToRead > 0 ? $timeToRead : 1;
+                    
                     $reviews[] = [
                         'id'            => $review->getId(),
                         'authorId'      => $review->getAuthorId(),
                         'authorName'    => $review->getAuthor()->getName(),
                         'avatarImg'     => $review->getAuthor()->getImage(),
                         'title'         => $review->getTitle(),
+                        'timeToRead'    => $timeRead,
                         'description'   => $description,
                         'rating'        => $review->getRating(),
                         'publishDate'   => $review->getDate()->format('d/m/Y'),

@@ -19,7 +19,9 @@
         <% } else { %>
             <%= authorName %>
         <% } %>
-        | <label for="rating"><%= _.getContent(104) %></label>
+        | 
+        <%= timeToRead %> мин чтения | 
+        <label for="rating"><%= _.getContent(104) %> <a href="#/posts/<%= categoryId %>/dateSort" ><%= category %></a></label>
             <input type="hidden" name="rating" class="ratingSpeaker" 
                 data-filled="symbol symbol-filled statistics" 
                 data-empty="symbol symbol-empty statistics" 
