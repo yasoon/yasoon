@@ -127,9 +127,12 @@ class SocialAuthController {
         $result = json_decode($response);
         $token = $result->access_token;
         $uid = $result->user_id;
-        
-        $response = $this->sendRequest('getProfiles', array('uids' => $uid, 'fields' => 'uid,first_name,last_name,city,country,contacts,photo_medium,screen_name,email'), $token);
-        
+        $email = '';
+        if (!empty($result->email)) {
+            $email = $result->email;
+        }
+        $response = $this->sendRequest('getProfiles', array('uids' => $uid, 'fields' => 'uid,first_name,last_name,city,country,contacts,photo_medium,screen_name'), $token);
+   
         try {
             $new_user = false;
             $user =  $this->_em->createQueryBuilder()
@@ -143,7 +146,7 @@ class SocialAuthController {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
                 $user = (new AuthorEntity())
                     ->setName($name)
-                    ->setEmail($response['response'][0]['email'])
+                    ->setEmail($email)
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setPassword('')
                     ->setSubscribed(1)
@@ -174,7 +177,7 @@ class SocialAuthController {
             {
                 $name = $response['response'][0]['first_name'].' '.$response['response'][0]['last_name'];
                 $user[0]->setName($name)
-                    ->setEmail($response['response'][0]['email'])
+                    ->setEmail($email)
                     ->setHomepage('http://vk.com/'.$response['response'][0]['screen_name'])
                     ->setVkontakteId($response['response'][0]['uid']);
                     
@@ -291,8 +294,8 @@ class SocialAuthController {
      */
     public function testfb(Request $request)
     {
-        $URL_OAUTH = 'https://www.facebook.com/dialog/oauth';
-        $URL_ACCESS_TOKEN = 'https://graph.facebook.com/oauth/access_token';
+        $URL_OAUTH = 'https://www.facebook.com/v2.2/dialog/oauth';
+        $URL_ACCESS_TOKEN = 'https://graph.facebook.com/v2.2/oauth/access_token';
         $APP_ID = 644685618912154;
         $APP_SECRET = '0a37ce622f4f7a32e4df8b3da4e54f8d';
         $URL_CALLBACK = 'http://yasoon.ru/socauth/facebook';
@@ -301,7 +304,7 @@ class SocialAuthController {
         if(!isset($_GET['code']))
         {
             $_SESSION['state'] = md5(uniqid(rand(), TRUE)); 
-            $link = $URL_OAUTH.'?client_id='.$APP_ID.'&redirect_uri='.urlencode($URL_CALLBACK)."&state=".$_SESSION['state'];
+            $link = $URL_OAUTH.'?scope=email&client_id='.$APP_ID.'&redirect_uri='.urlencode($URL_CALLBACK)."&state=".$_SESSION['state'];
             
             header("Location: $link");
             die;
@@ -321,7 +324,7 @@ class SocialAuthController {
         $new_user = false;
         if (count($tokenInfo) > 0 && isset($tokenInfo['access_token']))
         {
-            $request_url = $URL_GET_ME.'?scope=email&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+            $request_url = $URL_GET_ME.'?access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -339,9 +342,11 @@ class SocialAuthController {
                 ->getQuery()->getResult();
             
             $name = $userInfo->name;
+            $email = '';
             if (!empty($userInfo->email)) {
                 $email = $userInfo->email;
             }
+                 
             if (count($user) < 1 || !is_object($user[0])) {
                 $user = (new AuthorEntity())
                     ->setName($name)
@@ -355,8 +360,8 @@ class SocialAuthController {
                     ->setRole(1);
                     
                 
-                $enc = urlencode('SELECT current_location, pic_big FROM user WHERE uid IN ('.$userInfo->id.')');
-                $request_url = 'https://graph.facebook.com/fql?q='.$enc.'&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+                
+                $request_url = 'https://graph.facebook.com/v2.2/me/picture?type=large&redirect=false&access_token='.$tokenInfo['access_token'];
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -365,8 +370,8 @@ class SocialAuthController {
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $userCountry = json_decode($response);
-                
-                $url  = str_replace('https:', 'http:', $userCountry->data[0]->pic_big);
+
+               $url  = str_replace('https:', 'http:', $userCountry->data->url);
                 $image_name = time().'.jpg';
                 $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
                 
@@ -391,8 +396,7 @@ class SocialAuthController {
                     ->setFacebookId($userInfo->id);
                     
                 
-                $enc = urlencode('SELECT current_location, pic_big FROM user WHERE uid IN ('.$userInfo->id.')');
-                $request_url = 'https://graph.facebook.com/fql?q='.$enc.'&access_token='.$tokenInfo['access_token'].'&locale=ru_RU';
+                $request_url = 'https://graph.facebook.com/v2.2/me/picture?type=large&redirect=false&access_token='.$tokenInfo['access_token'];
                 $curl = curl_init();
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -401,8 +405,7 @@ class SocialAuthController {
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $userCountry = json_decode($response);
-                
-                $url  = str_replace('https:', 'http:', $userCountry->data[0]->pic_big);
+                $url  = str_replace('https:', 'http:', $userCountry->data->url);
                 $image_name = time().'.jpg';
                 $path = $_SERVER['DOCUMENT_ROOT'].'/upload/avatar/'.$image_name;
                 
