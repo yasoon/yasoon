@@ -54,7 +54,7 @@
             </span>
         </div>
         
-         <div class="di form-group">
+         <div class="di form-group  show-onerror">
             <textarea class="editor form-control"  name="text" id="text" placeholder="<%=  _.getContent(87) %>"></textarea>
             <!--<p class="help-block"></p>-->
         </div>
@@ -73,8 +73,8 @@
             </div>
         </div>-->
         
-        <div class="di form-group">
-            <select name="review-type[]" class="review-type" multiple="multiple" required>
+        <div class="di form-group show-onerror">
+            <select id="reviewType" name="review-type[]" class="review-type" multiple="multiple" required>
             <% _.each(types, function(type) { %>
                 <option value="<%= type.id %>">
                 <%= type.name %>
