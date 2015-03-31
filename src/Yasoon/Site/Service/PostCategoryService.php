@@ -185,12 +185,21 @@ class PostCategoryService extends AbstractApiService {
             if (!empty($postsSort) ) {
                 if (!empty($reviews)) {
                     $allResults = array_merge($postsSort, $reviews);
-                    usort($allResults, function($a, $b) {
-                    if ($a['dateSort'] == $b['dateSort']) {
-                        return 0;
+                    if ($sort == 'dateSort') {
+                        usort($allResults, function($a, $b) {
+                            if ($a['dateSort'] == $b['dateSort']) {
+                                return 0;
+                            }
+                            return ($a['dateSort'] < $b['dateSort']) ? 1 : -1;
+                        });
+                    } else {
+                        usort($allResults, function($a, $b) {
+                            if ($a['post_likes'] == $b['post_likes']) {
+                                return 0;
+                            }
+                            return ($a['post_likes'] < $b['post_likes']) ? 1 : -1;
+                        });
                     }
-                    return ($a['dateSort'] < $b['dateSort']) ? -1 : 1;
-                });
                 } else {
                     $allResults = $postsSort;
                 }
@@ -202,11 +211,6 @@ class PostCategoryService extends AbstractApiService {
                     return ['error' => true, 'errorText' => 'Нет отзывов и интервью по этой тематике']; 
                 }
             }
-            
-            $name = 'publishDate';
-            usort($allResults, function ($a, $b) use(&$name){
-                return $a[$name] - $b[$name];
-            });
         } catch(\Exception $e) {
             return ['error' => true, 'errorText' => $e->getMessage()];
         }
@@ -385,7 +389,6 @@ class PostCategoryService extends AbstractApiService {
                 } else {
                     $authorName = $review->getAuthor()->getName();
                     $authorImg = $review->getAuthor()->getImage();
- 
                 }
                 $textLength = strlen(strip_tags($review->getText()));
                 $timeToRead = round($textLength/4200);

@@ -7594,6 +7594,7 @@ section {
   background: url(../img/expert_grey.png) no-repeat;
   width: 60px;
   height: 50px;
+  margin-left: 2px;
 }
 .expert:hover {
   background: url(../img/expert_green.png) no-repeat;
@@ -7664,6 +7665,7 @@ section {
 .review-rating-title {
   margin-top: 15px;
   margin-bottom: 5px;
+  margin-left: 2px;
 }
 .empty-text {
   margin: 5px;
@@ -7746,6 +7748,9 @@ section {
 .left-column-statistics {
   float: left;
   width: 350px;
+}
+.show-onerror.has-error {
+  border: 1px solid red;
 }
 ul li {
   list-style: none;
@@ -9584,6 +9589,7 @@ body .redactor_toolbar li a.redactor_btn_alignment {
   z-index: 10000;
   text-align: left;
   border: 1px solid #ddd;
+  background-color: #fff;
 }
 .ui-multiselect-checkboxes {
   position: relative /* fixes bug in IE6/7 */;
