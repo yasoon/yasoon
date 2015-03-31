@@ -924,6 +924,7 @@ class PostService extends AbstractApiService {
                 ->select('p')
                 ->from('Yasoon\Site\Entity\PostEntity', 'p')
                 ->where('p.id IN('.implode(',', $postId).')')
+                ->orderBy('p.date', 'DESC')
                 ->getQuery()->getResult();
             
             foreach($posts as $key => $post)
@@ -983,6 +984,7 @@ class PostService extends AbstractApiService {
                 ->from('Yasoon\Site\Entity\ReviewEntity', 'r')
                 ->where('r.authorId = :id')
                 ->setParameter('id', $authorId)
+                ->orderBy('r.date', 'DESC')
                 ->getQuery()
                 ->getResult();
 
