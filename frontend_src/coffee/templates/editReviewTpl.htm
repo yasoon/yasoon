@@ -79,21 +79,20 @@
                 <input type="checkbox" name="question2" value="1" <% if (question2 == "1") { %> checked <% } %>><br>
             </div>
         </div>-->
-        
-        <div class="di form-group show-onerror">
-            <select id="reviewType" name="review-type[]"  class="review-type" multiple="multiple" required >
-            <% _.each(types, function(type) { %>
-                <option  value="<%= type.id %>" <%= type.selected %>>
-                <%= type.name %>
-                </option>
-            <% }); %>
-            </select>
-        </div>
+            <div class="di form-group show-onerror">
+                <select id="reviewType" name="review-type[]"  class="review-type" multiple="multiple" required >
+                <% _.each(types, function(type) { %>
+                    <option  value="<%= type.id %>" <%= type.selected %>>
+                    <%= type.name %>
+                    </option>
+                <% }); %>
+                </select>
+            </div>
         <div class="bottom-prospects">
             <div class="review-rating-title"> <%=  _.getContent(98) %> </div>
                 <input type="hidden" name="prospects" class="rating" 
-                       data-filled="symbol symbol-filled small" 
-                       data-empty="symbol symbol-empty small" 
+                       data-filled="symbol symbol-filled" 
+                       data-empty="symbol symbol-empty" 
                        value="<%= prospects %>" 
                        data-start="0" data-stop="5"/>
         </div>
