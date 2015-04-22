@@ -7508,6 +7508,12 @@ section {
   }
 }
 @media screen and (max-width: 899px) {
+  .panel-default a:not(.collapsed) .small-btn-good-story:first-child:after {
+    content: "\25BC";
+  }
+  .panel-default a.collapsed .small-btn-good-story:first-child:after {
+    content: "\25BA";
+  }
   .write-good-story {
     display: none;
   }
