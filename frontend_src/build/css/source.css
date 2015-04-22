@@ -7494,9 +7494,9 @@ section {
     background-color: #fff;
     border: 1px solid lightgray;
     padding-bottom: 0px;
+    background-color: lightyellow;
   }
   .write-good-story .content .write-good-story-box {
-    border: 1px solid lightgray;
     margin: 7px;
     background-color: lightyellow;
   }
@@ -7508,6 +7508,12 @@ section {
   }
 }
 @media screen and (max-width: 899px) {
+  .panel-default a:not(.collapsed) .small-btn-good-story:first-child:after {
+    content: "\25BC";
+  }
+  .panel-default a.collapsed .small-btn-good-story:first-child:after {
+    content: "\25BA";
+  }
   .write-good-story {
     display: none;
   }
